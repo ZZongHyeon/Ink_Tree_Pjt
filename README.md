@@ -97,7 +97,7 @@ spring.mvc.view.suffix=.jsp
 #Database config
 spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
 spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
-spring.datasource.username=metro_house
+spring.datasource.username=bookmanager
 spring.datasource.password=1234
 
 #mybatis config
