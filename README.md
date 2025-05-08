@@ -9,9 +9,10 @@
 | 구분 | 내용
 |-----|-----
 | **개발 언어** | Java (JDK 8 이상), JavaScript
-| **프레임워크** | Spring Framework + MyBatis
+| **프레임워크** | Spring Boot + MyBatis
 | **DB** | Oracle 11g 이상
-| **WAS** | Apache Tomcat 9
+| **빌드 도구** | Gradle
+| **내장 WAS** | Spring Boot 내장 Tomcat
 | **형상관리** | Git / GitHub
 | **협업 도구** | Jira, Notion
 
