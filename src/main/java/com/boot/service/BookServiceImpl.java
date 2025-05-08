@@ -12,8 +12,11 @@ import org.springframework.stereotype.Service;
 
 import com.boot.dao.BookDAO;
 import com.boot.dao.NoticeDAO;
+import com.boot.dao.UserDAO;
 import com.boot.dto.BookDTO;
 import com.boot.dto.BookRecordDTO;
+import com.boot.dto.NoticeCriteriaDTO;
+import com.boot.dto.ReviewDTO;
 import com.boot.dto.SearchBookCriteriaDTO;
 import com.boot.dto.UserBookBorrowingCriteriaDTO;
 import com.boot.dto.UserDTO;
@@ -124,5 +127,40 @@ public class BookServiceImpl implements BookService {
 		return total;
 	}
 
+	@Override
+	public int insertReview(HashMap<String, String> param) {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+		return dao.insertReview(param);
+	}
 
+	@Override
+	public void updateReview(HashMap<String, String> param) {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+		dao.updateReview(param);
+	}
+
+	@Override
+	public void deleteReview(HashMap<String, String> param) {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+		dao.deleteReview(param);
+	}
+
+	@Override
+	public ArrayList<ReviewDTO> getReview(NoticeCriteriaDTO criteria, HashMap<String, String> param) {
+        BookDAO dao = sqlSession.getMapper(BookDAO.class);
+        return dao.getReview(criteria, param);
+	}
+
+	@Override
+	public int getReviewCount(NoticeCriteriaDTO criteria, HashMap<String, String> param) {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+		int total = dao.getReviewCount(criteria, param);
+		return total;
+	}
+
+	@Override
+	public int checkReview(HashMap<String, String> param) {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+		return dao.checkReview(param);
+	}
 }

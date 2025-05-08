@@ -248,4 +248,108 @@
 		delete from bookinfo where bookNumber=#{bookNumber}
 	</update>
 
+
+
+<select id="getReviewCount" resultType="int">
+    SELECT COUNT(*) 
+    FROM BOOK_REVIEW 
+    WHERE BOOKNUMBER = #{param.bookNumber} 
+    AND REVIEWSTATUS = 'ACTIVE'
+</select>
+
+
+<select id="getReview" resultType="com.boot.dto.ReviewDTO">
+    <![CDATA[
+        SELECT *
+        FROM (
+            SELECT ROWNUM AS rn, r.*
+            FROM (
+                SELECT 
+                    r.REVIEW_ID, 
+                    r.BOOKNUMBER, 
+                    r.USERNUMBER, 
+                    r.REVIEWTITLE, 
+                    r.REVIEWCONTENT, 
+                    r.REVIEWRATING, 
+                    r.REVIEWDATE,
+                    r.REVIEWMODIFIED_DATE,
+                    r.REVIEWSTATUS,
+                    u.USERNAME  -- 사용자 이름도 함께 가져오기 (JOIN 사용)
+                FROM 
+                    BOOK_REVIEW r
+                JOIN 
+                    USERINFO u ON r.USERNUMBER = u.USERNUMBER
+                WHERE 
+                    r.BOOKNUMBER = #{param.bookNumber}
+                    AND r.REVIEWSTATUS = 'ACTIVE'  -- 활성 상태인 리뷰만 가져오기
+                ORDER BY 
+                    r.REVIEWDATE DESC
+            ) r
+            WHERE ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+        )
+        WHERE rn > (#{criteria.pageNum} - 1) * #{criteria.amount}
+    ]]>
+</select>
+
+
+<insert id="insertReview">
+    INSERT INTO BOOK_REVIEW (
+        REVIEW_ID,
+        BOOKNUMBER,
+        USERNUMBER,
+        REVIEWTITLE,
+        REVIEWCONTENT,
+        REVIEWRATING,
+        REVIEWDATE,
+        REVIEWMODIFIED_DATE,
+        REVIEWSTATUS
+    ) VALUES (
+        SEQ_REVIEW_ID.NEXTVAL,
+        #{bookNumber},
+        #{userNumber},
+        #{reviewTitle},
+        #{reviewContent},
+        #{reviewRating},
+        SYSDATE,
+        NULL,
+        'ACTIVE'
+    )
+</insert>
+
+<select id="checkReview" resultType="int">
+    SELECT COUNT(*) 
+    FROM BOOK_REVIEW
+    WHERE USERNUMBER = #{userNumber}
+    AND BOOKNUMBER = #{bookNumber}
+    AND REVIEWSTATUS = 'ACTIVE'
+</select>
+	
+	
+<!-- 리뷰 업데이트 -->
+<update id="updateReview" parameterType="com.boot.dto.ReviewDTO">
+    UPDATE BOOK_REVIEW 
+    SET 
+        REVIEWTITLE = #{reviewTitle},
+        REVIEWCONTENT = #{reviewContent},
+        REVIEWRATING = #{reviewRating},
+        REVIEWMODIFIED_DATE = SYSDATE
+    WHERE 
+        REVIEW_ID = #{reviewId}
+        AND USERNUMBER = #{userNumber}
+        AND REVIEWSTATUS = 'ACTIVE'
+</update>
+
+<!-- 리뷰 삭제 (소프트 삭제) -->
+<update id="deleteReview" parameterType="com.boot.dto.ReviewDTO">
+    UPDATE BOOK_REVIEW 
+    SET 
+        REVIEWSTATUS = 'DELETED',
+        REVIEWMODIFIED_DATE = SYSDATE
+    WHERE 
+        REVIEW_ID = #{reviewId}
+        AND USERNUMBER = #{userNumber}
+        AND REVIEWSTATUS = 'ACTIVE'
+</update>
+	
+	
 </mapper>

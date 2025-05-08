@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,10 +25,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.boot.dto.BookDTO;
 import com.boot.dto.BookRecordDTO;
+import com.boot.dto.NoticeCriteriaDTO;
 import com.boot.dto.PageDTO;
+import com.boot.dto.ReviewDTO;
 import com.boot.dto.SearchBookCriteriaDTO;
 import com.boot.dto.UserBookBorrowingCriteriaDTO;
 import com.boot.dto.UserDTO;
+import com.boot.service.BoardCommentServiceImpl;
 import com.boot.service.BookService;
 import com.boot.service.UtilService;
 
@@ -35,18 +39,101 @@ import com.boot.service.UtilService;
 @Controller
 public class BookController {
 
+    private final BoardCommentServiceImpl boardCommentServiceImpl;
+
 	@Autowired
 	private BookService service;
 	@Autowired
 	private UtilService utilService;
 
+    BookController(BoardCommentServiceImpl boardCommentServiceImpl) {
+        this.boardCommentServiceImpl = boardCommentServiceImpl;
+    }
+	
+    
+
+    
+//	@PostMapping("/checkReview")
+//	public ResponseEntity<Map<String, Object>> checkReview(@RequestParam HashMap<String, String> param){
+//		Map<String, Object> response = new HashMap<>();
+//	    // 이미 리뷰를 작성했는지 확인
+//	    if (service.checkReview(param) == 1) {
+//	        response.put("success", false);
+//	        response.put("message", "이미 이 도서에 대한 리뷰를 작성하셨습니다.");
+//	        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+//	    }
+//	}
+    
+	@PostMapping("/insertReview")
+	public ResponseEntity<Map<String, Object>> insertReview(
+	        @RequestParam HashMap<String, String> param,
+	        HttpSession session) {
+	    
+	    Map<String, Object> response = new HashMap<>();
+	    
+	    try {
+	    	
+	    	System.out.println("전달된 파라미터: " + param);
+
+	        // 로그인 확인
+	        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+	        
+	        if (!param.containsKey("reviewRating") || param.get("reviewRating").trim().isEmpty()) {
+	            response.put("success", false);
+	            response.put("message", "평점을 선택해주세요.");
+	            return ResponseEntity.badRequest().body(response);
+	        }
+	        
+	        if (!param.containsKey("reviewTitle") || param.get("reviewTitle").trim().isEmpty()) {
+	            response.put("success", false);
+	            response.put("message", "제목을 입력해주세요.");
+	            return ResponseEntity.badRequest().body(response);
+	        }
+	        
+	        if (!param.containsKey("reviewContent") || param.get("reviewContent").trim().isEmpty()) {
+	            response.put("success", false);
+	            response.put("message", "내용을 입력해주세요.");
+	            return ResponseEntity.badRequest().body(response);
+	        }
+	        
+	        
+	        // 사용자 정보 추가
+	        param.put("userNumber", String.valueOf(loginUser.getUserNumber()));
+	        
+		    // 이미 리뷰를 작성했는지 확인
+//		    if (service.checkReview(param) == 1) {
+//		        response.put("success", false);
+//		        response.put("message", "이미 이 도서에 대한 리뷰를 작성하셨습니다.");
+//		        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+//		    }
+	        // 리뷰 등록
+	        int result = service.insertReview(param);
+	        
+	        if (result > 0) {
+	            response.put("success", true);
+	            response.put("message", "리뷰가 성공적으로 등록되었습니다.");
+	            return ResponseEntity.ok(response);
+	        } else {
+	            response.put("success", false);
+	            response.put("message", "리뷰 등록에 실패했습니다.");
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	        }
+	    } catch (Exception e) {
+	        response.put("success", false);
+	        response.put("message", "서버 오류가 발생했습니다: " + e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
+	}
+
+	
 	@RequestMapping("/book_insert")
 	public String insertBook(HttpServletRequest request, @RequestParam HashMap<String, String> param) {
 		service.insertBook(param);
 
 		return "admin_view";
 	}
-
+	
+	
 	@RequestMapping("/update_book")
 	   public String updateBookView(@RequestParam HashMap<String, String> param, BookDTO book, Model model, HttpServletRequest request) {
 	      UserDTO user = (UserDTO) request.getSession().getAttribute("loginUser");
@@ -90,9 +177,18 @@ public class BookController {
 	}
 
 	@RequestMapping("/book_detail")
-	public String bookDetail(@RequestParam HashMap<String, String> param, Model model) {
+	public String bookDetail(NoticeCriteriaDTO noticeCriteriaDTO, @RequestParam HashMap<String, String> param, Model model) {
+		System.out.println("param => " + param);
 		BookDTO dto = service.bookDetailInfo(param);
+		
+		int total = service.getReviewCount(noticeCriteriaDTO, param);
+		
+		List<ReviewDTO> list = service.getReview(noticeCriteriaDTO, param);
+		
 		model.addAttribute("book", dto);
+		model.addAttribute("reviewList", list);
+	    model.addAttribute("total", total);
+	    model.addAttribute("pageMaker", new PageDTO(total, noticeCriteriaDTO));
 		return "book_detail";
 	}
 
@@ -224,5 +320,4 @@ public class BookController {
 	    
 	    return "user_book_borrowing";
 	}
-
 }

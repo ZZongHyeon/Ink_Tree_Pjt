@@ -16,7 +16,7 @@
     
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
+	<link rel="stylesheet" type="text/css" href="/resources/css/board_view.css">
     <style>
         :root {
             --primary: #4F46E5;
@@ -517,7 +517,7 @@
 
         .rating-input i {
             font-size: 1.5rem;
-            color: var(--gray-300);
+            color: var(--warning);
             cursor: pointer;
             transition: color 0.2s;
         }
@@ -558,6 +558,7 @@
             gap: 1.5rem;
         }
 
+        /* 리뷰 카드 스타일 수정 - 이미지와 같은 디자인 */
         .review-card {
             padding: 1.5rem;
             background-color: var(--gray-50);
@@ -568,7 +569,8 @@
         .review-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 1rem;
+            align-items: flex-start;
+            margin-top: 2%;
         }
 
         .reviewer-info {
@@ -576,78 +578,77 @@
             flex-direction: column;
             gap: 0.25rem;
         }
+		.reviewer-name-date {
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+		}
 
-        .reviewer-name {
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-
+		.reviewer-name {
+			font-weight: 600;
+			color: var(--gray-900);
+			font-size: 1.3rem;
+		}
         .review-date {
             font-size: 0.875rem;
             color: var(--gray-500);
         }
 
-        .review-rating {
-            color: var(--warning);
+        .review-actions-top {
+            display: flex;
+            gap: 0.75rem;
         }
+
+        .review-action-icon {
+            color: var(--gray-400);
+            cursor: pointer;
+            transition: color 0.2s;
+            font-size: 1.125rem;
+        }
+
+        .review-action-icon:hover {
+            color: var(--primary);
+        }
+
+        .review-action-icon.like:hover, .review-action-icon.like.active {
+            color: var(--primary);
+        }
+
+        .review-action-icon.edit:hover {
+            color: var(--primary);
+        }
+
+        .review-action-icon.delete:hover {
+            color: var(--danger);
+        }
+
+		.review-title-rating {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			margin-bottom: 0.5rem;
+			margin-top: 0px;
+		}
+
+		.review-title {
+			font-weight: 600;
+			color: var(--gray-900);
+			margin-bottom: 0;
+			font-size: 1.125rem;
+			margin-right: 0;
+		}
+
+		.review-rating {
+			display: flex;
+			gap: 0.1rem;
+			color: var(--warning);
+			font-size: 1.125rem;
+			flex-shrink: 0;
+		}
 
         .review-content {
             color: var(--gray-700);
             line-height: 1.6;
-        }
-
-        .review-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--gray-200);
-        }
-
-        .review-action {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--gray-500);
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .review-action:hover {
-            color: var(--primary);
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
-        }
-
-        .page-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: var(--radius);
-            background-color: white;
-            color: var(--gray-700);
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .page-item.active {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .page-item:hover:not(.active) {
-            background-color: var(--gray-100);
         }
 
         /* 모달 */
@@ -719,6 +720,38 @@
 
         .fade-in {
             animation: fadeIn 0.5s ease-out;
+        }
+
+        /* 페이지네이션 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .page-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: var(--radius);
+            background-color: white;
+            color: var(--gray-700);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .page-item.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .page-item:hover:not(.active) {
+            background-color: var(--gray-100);
         }
     </style>
 </head>
@@ -908,7 +941,9 @@
 
                                 <div class="review-form">
                                     <h3 class="form-title">리뷰 작성하기</h3>
-                                    <form id="reviewForm" onsubmit="submitReview(event)">
+                                    <form id="reviewForm">
+										<input type="hidden" name="reviewId" id="reviewId" value="">
+										<input type="hidden" name="bookNumber" id="bookNumberInput" value="${book.bookNumber}">
                                         <div class="form-group">
                                             <label class="form-label">평점</label>
                                             <div class="rating-input">
@@ -928,84 +963,112 @@
                                             <label class="form-label" for="reviewContent">내용</label>
                                             <textarea class="form-control" id="reviewContent" name="content" placeholder="리뷰 내용을 입력하세요" required></textarea>
                                         </div>
-                                        <div class="form-actions">
-                                            <button type="button" class="action-button secondary-button" onclick="resetReviewForm()">취소</button>
-                                            <button type="submit" class="action-button primary-button">리뷰 등록</button>
-                                        </div>
+										<div class="form-actions">
+											<button type="button" class="action-button secondary-button" onclick="resetReviewForm()">초기화</button>
+										    <button type="button" class="action-button primary-button" onclick="submitReview()">리뷰 등록</button>
+										</div>
                                     </form>
                                 </div>
 
-                                <div class="reviews-list">
-                                    <!-- 리뷰 예시 - 실제 구현 시 DB에서 가져온 리뷰로 대체 -->
-                                    <div class="review-card">
-                                        <div class="review-header">
-                                            <div class="reviewer-info">
-                                                <div class="reviewer-name">김독서</div>
-                                                <div class="review-date">2025-05-01</div>
-                                            </div>
-                                            <div class="review-rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                            </div>
-                                        </div>
-                                        <h4>정말 좋은 책이에요!</h4>
-                                        <div class="review-content">
-                                            <p>이 책은 정말 훌륭한 내용을 담고 있습니다. 저자의 깊은 통찰력과 명확한 설명이 인상적이었습니다. 특히 3장의 내용은 실무에 바로 적용할 수 있어서 매우 유용했습니다. 강력 추천합니다!</p>
-                                        </div>
-                                    </div>
+								<!-- <h3>${pageMaker}</h3> -->
 
-                                    <div class="review-card">
-                                        <div class="review-header">
-                                            <div class="reviewer-info">
-                                                <div class="reviewer-name">박지식</div>
-                                                <div class="review-date">2025-04-15</div>
-                                            </div>
-                                            <div class="review-rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                            </div>
-                                        </div>
-                                        <h4>대체로 만족스러운 책</h4>
-                                        <div class="review-content">
-                                            <p>전반적으로 내용이 알차고 이해하기 쉽게 설명되어 있습니다. 다만 일부 내용은 조금 더 깊이 있게 다루었으면 하는 아쉬움이 있습니다. 그래도 입문자에게는 매우 좋은 책입니다.</p>
-                                        </div>
-                                    </div>
+								<div class="div_page">
+								    <ul>
+								        <c:if test="${pageMaker.prev}">
+								            <li class="paginate_button">
+								                <a href="${pageMaker.startPage - 1}">
+								                    <i class="fas fa-caret-left"></i>
+								                </a>
+								            </li>
+								        </c:if>
 
-                                    <div class="review-card">
-                                        <div class="review-header">
-                                            <div class="reviewer-info">
-                                                <div class="reviewer-name">이책벌레</div>
-                                                <div class="review-date">2025-03-22</div>
-                                            </div>
-                                            <div class="review-rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                            </div>
-                                        </div>
-                                        <h4>기대보다는 조금 아쉬웠어요</h4>
-                                        <div class="review-content">
-                                            <p>책의 전반부는 매우 좋았으나, 후반부로 갈수록 내용이 다소 산만해지는 느낌이었습니다. 그래도 기본 개념을 이해하는 데는 도움이 되었습니다.</p>
-                                        </div>
-                                    </div>
-                                </div>
+								        <c:forEach var="num" begin="${pageMaker.startPage}"
+								            end="${pageMaker.endPage}">
+								            <li
+								                class="paginate_button ${pageMaker.noticeCriteriaDTO.pageNum==num ? 'active' : ''}">
+								                <a href="${num}">
+								                    ${num}
+								                </a>
+								            </li>
+								        </c:forEach>
 
-                                <div class="pagination">
-                                    <div class="page-item active">1</div>
-                                    <div class="page-item">2</div>
-                                    <div class="page-item">3</div>
-                                    <div class="page-item">
-                                        <i class="fas fa-chevron-right"></i>
-                                    </div>
-                                </div>
+								        <c:if test="${pageMaker.next}">
+								            <li class="paginate_button">
+								                <a href="${pageMaker.endPage+1}">
+								                    <i class="fas fa-caret-right"></i>
+								                </a>
+								            </li>
+								        </c:if>
+								    </ul>
+								</div>
+								<form id="actionForm" action="book_detail" method="get">
+								    <input type="hidden" name="pageNum" value="${pageMaker.noticeCriteriaDTO.pageNum}">
+								    <input type="hidden" name="amount" value="${pageMaker.noticeCriteriaDTO.amount}">
+								    <input type="hidden" name="bookNumber" value="${book.bookNumber}">
+								    <c:if test="${not empty pageMaker.noticeCriteriaDTO.type}">
+								        <input type="hidden" name="type" value="${pageMaker.noticeCriteriaDTO.type}">
+								    </c:if>
+								    <c:if test="${not empty pageMaker.noticeCriteriaDTO.keyword}">
+								        <input type="hidden" name="keyword" value="${pageMaker.noticeCriteriaDTO.keyword}">
+								    </c:if>
+								</form>
+								<div class="reviews-list">
+									<!-- 리뷰 목록 반복 -->
+									<c:forEach var="review" items="${reviewList}">
+										<div class="review-card">
+											<div class="review-rating">
+												<c:forEach begin="1" end="5" var="i">
+													<c:choose>
+														<c:when test="${i <= review.reviewRating}">
+															<i class="fas fa-star"></i>
+														</c:when>
+														<c:otherwise>
+															<i class="far fa-star"></i>
+														</c:otherwise>
+													</c:choose>
+												</c:forEach>
+											</div>
+											<div class="review-header">
+												<div class="reviewer-info">
+													<div class="reviewer-name-date">
+														<span class="reviewer-name">${review.userName}</span>
+														<span class="review-date"><fmt:formatDate value="${review.reviewDate}" pattern="yyyy-MM-dd" /></span>
+													</div>
+												</div>
+												<div class="review-actions-top">
+													<i class="far fa-thumbs-up review-action-icon like ${review.helpfulByCurrentUser ? 'active' : ''}" 
+													   onclick="markHelpful(${review.reviewId}, this)" 
+													   title="도움됨"></i>
+													<c:if test="${loginUser.userNumber == review.userNumber || loginUser.userAdmin == 1}">
+														<i class="fas fa-edit review-action-icon edit" 
+														   onclick="editReview(${review.reviewId})" 
+														   title="수정"></i>
+														<i class="fas fa-trash-alt review-action-icon delete" 
+														   onclick="confirmDeleteReview(${review.reviewId})" 
+														   title="삭제"></i>
+													</c:if>
+												</div>
+											</div>
+											
+											<div class="review-title-rating">
+												<h4 class="review-title">${review.reviewTitle}</h4>
+
+											</div>
+											
+											<div class="review-content">
+												<p>${review.reviewContent}</p>
+											</div>
+										</div>
+									</c:forEach>
+									
+									<!-- 리뷰가 없는 경우 메시지 표시 -->
+									<c:if test="${empty reviewList}">
+										<div class="no-reviews">
+											<p>아직 등록된 리뷰가 없습니다. 첫 번째 리뷰를 작성해보세요!</p>
+										</div>
+									</c:if>
+									
+								</div>
                             </div>
                         </div>
                     </div>
@@ -1042,6 +1105,21 @@
             </div>
         </div>
     </div>
+    
+    <!-- 리뷰 삭제 확인 모달 -->
+    <div id="deleteReviewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-icon error">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3 class="modal-title">리뷰 삭제</h3>
+            <p class="modal-message">정말로 이 리뷰를 삭제하시겠습니까?</p>
+            <div class="modal-actions">
+                <button class="action-button secondary-button" onclick="closeDeleteReviewModal()">취소</button>
+                <button class="action-button danger-button" onclick="deleteReview()">삭제</button>
+            </div>
+        </div>
+    </div>
 
     <!-- 폼 (AJAX 요청용) -->
     <form id="borrowForm" style="display: none;">
@@ -1051,8 +1129,46 @@
     <form id="deleteForm" style="display: none;">
         <input type="hidden" name="bookNumber" id="deleteBookNumber" value="">
     </form>
+    
+    <input type="hidden" id="deleteReviewId" value="">
 
     <script>
+		// 페이징처리
+		var actionForm = $("#actionForm");
+
+		// 페이지번호 처리
+		$(".paginate_button a").on("click", function (e) {
+		    e.preventDefault();
+		    console.log("click했음");
+		    console.log("@# href => " + $(this).attr("href"));
+
+		    // actionForm.find("input[name='pageNum']").val(this).attr("href");
+		    actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+
+		    // 버그처리(게시글 클릭 후 뒤로가기 누른 후 다른 페이지 클릭 할 때 content_view2가 작동되는 것을 해결)
+		    actionForm.attr("action", "book_detail").submit();
+		}); // end of paginate_button click
+
+		// 게시글 처리
+		$(".move_link").on("click", function (e) {
+		    e.preventDefault();
+		    console.log("move_link click");
+		    console.log("@# click => " + $(this).attr("href"));
+
+		    var targetBno = $(this).attr("href");
+
+		    // 버그처리(게시글 클릭 후 뒤로가기 누른 후 다른 게시글 클릭 할 때 &boardNo=번호 게속 누적되는 거 방지)
+		    var bno = actionForm.find("input[name='bookNumber']").val();
+		    if (bno != "") {
+		        actionForm.find("input[name='bookNumber']").remove();
+		    }
+
+		    // "content_view?boardNo=${dto.boardNo}"를 actionForm로 처리
+		    actionForm.append("<input type='hidden' name='bookNumber' value='" + targetBno + "'>");
+		    // actionForm.submit();
+		    // 컨트롤러에 content_view로 찾아감
+		    actionForm.attr("action", "book_detail").submit();
+		});
         // 탭 기능
         document.querySelectorAll('.tab-item').forEach(tab => {
             tab.addEventListener('click', () => {
@@ -1130,30 +1246,207 @@
         function resetReviewForm() {
             document.getElementById('reviewForm').reset();
             document.getElementById('ratingInput').value = 0;
+            document.getElementById('reviewId').value = '';
             document.querySelectorAll('.rating-input i').forEach(star => {
                 star.className = 'far fa-star';
             });
+            document.querySelector('.form-title').textContent = '리뷰 작성하기';
+            document.querySelector('.form-actions button[type="submit"]').textContent = '리뷰 등록';
+            document.getElementById('reviewForm').action = "add_review";
         }
 
-        // 리뷰 제출
-        function submitReview(event) {
-            event.preventDefault();
-            
-            const rating = document.getElementById('ratingInput').value;
-            const title = document.getElementById('reviewTitle').value;
-            const content = document.getElementById('reviewContent').value;
-            
-            if (rating === '0') {
-                showModal('error', '평점 필요', '리뷰를 등록하려면 평점을 선택해주세요.');
+		// 리뷰 제출
+		function submitReview() {
+		    // 폼에서 값 가져오기
+		    const reviewId = document.getElementById('reviewId').value;
+		    const bookNumber = document.getElementById('bookNumberInput').value;
+		    const rating = document.getElementById('ratingInput').value;
+		    const title = document.getElementById('reviewTitle').value;
+		    const content = document.getElementById('reviewContent').value;
+		    
+		    if (rating === '0') {
+		        showModal('error', '평점 필요', '리뷰를 등록하려면 평점을 선택해주세요.');
+		        return;
+		    }
+		    
+		    // 수정 또는 등록 여부에 따라 URL 결정
+		    const url = reviewId ? "updateReview" : "insertReview";
+		    
+		    console.log("전송 데이터:", {
+		        reviewId: reviewId,
+		        bookNumber: bookNumber,
+		        reviewRating: rating,
+		        reviewTitle: title,
+		        reviewContent: content
+		    });
+		    
+		    // AJAX 요청으로 리뷰 등록/수정
+		    $.ajax({
+		        type: "post",
+		        url: url,
+		        data: {
+		            reviewId: reviewId,
+		            bookNumber: bookNumber,
+		            reviewRating: rating,
+		            reviewTitle: title,
+		            reviewContent: content
+		        },
+		        success: function(response) {
+		            console.log("응답:", response);
+		            if (response.success) {
+		                showModal('success', reviewId ? '리뷰 수정 완료' : '리뷰 등록 완료', response.message);
+		                resetReviewForm();
+		                
+		                // 1.5초 후 페이지 새로고침하여 리뷰 목록 갱신
+		                setTimeout(function() {
+		                    location.reload();
+		                }, 1500);
+		            } else {
+		                showModal('error', '오류 발생', response.message || '처리 중 오류가 발생했습니다.');
+		            }
+		        },
+		        error: function(xhr, status, error) {
+		            console.error("AJAX 오류:", status, error);
+		            console.error("응답:", xhr.responseText);
+		            
+		            let errorMessage = '서버 통신 중 오류가 발생했습니다.';
+		            
+		            try {
+		                if (xhr.responseJSON && xhr.responseJSON.message) {
+		                    errorMessage = xhr.responseJSON.message;
+		                } else if (xhr.responseText) {
+		                    try {
+		                        const response = JSON.parse(xhr.responseText);
+		                        if (response.message) {
+		                            errorMessage = response.message;
+		                        }
+		                    } catch (e) {
+		                        // JSON 파싱 실패 시 원본 텍스트 사용
+		                        console.error("JSON 파싱 오류:", e);
+		                    }
+		                }
+		            } catch (e) {
+		                console.error("응답 처리 오류:", e);
+		            }
+		            
+		            showModal('error', '오류 발생', errorMessage);
+		        }
+		    });
+		}
+        
+        // 도움됨 버튼 기능
+        function markHelpful(reviewId, element) {
+            // 로그인 확인
+            <% if (user == null) { %>
+                showModal('error', '로그인 필요', '도움됨 기능은 로그인 후 이용 가능합니다.');
                 return;
-            }
+            <% } %>
             
-            // 실제 구현 시 AJAX 요청으로 리뷰 등록 기능 구현
-            showModal('success', '리뷰 등록 완료', '리뷰가 성공적으로 등록되었습니다.');
-            resetReviewForm();
+            // 이미 활성화된 경우 취소, 아니면 활성화
+            const isActive = element.classList.contains('active');
             
-            // 리뷰 목록 새로고침 (실제 구현 시)
-            // refreshReviews();
+            $.ajax({
+                type: "post",
+                url: isActive ? "review_unhelpful" : "review_helpful",
+                data: { reviewId: reviewId },
+                success: function(response) {
+                    if (response.success) {
+                        // UI 업데이트
+                        if (isActive) {
+                            element.classList.remove('active');
+                            element.className = 'far fa-thumbs-up review-action-icon like';
+                        } else {
+                            element.classList.add('active');
+                            element.className = 'fas fa-thumbs-up review-action-icon like active';
+                        }
+                    } else {
+                        showModal('error', '오류 발생', response.message || '도움됨 처리 중 오류가 발생했습니다.');
+                    }
+                },
+                error: function() {
+                    showModal('error', '오류 발생', '서버 통신 중 오류가 발생했습니다.');
+                }
+            });
+        }
+        
+        // 리뷰 수정 함수
+        function editReview(reviewId) {
+            // AJAX로 리뷰 정보 가져오기
+            $.ajax({
+                type: "get",
+                url: "get_review",
+                data: { reviewId: reviewId },
+                success: function(review) {
+                    // 리뷰 폼에 데이터 채우기
+                    document.getElementById('reviewForm').action = "update_review";
+                    document.getElementById('reviewId').value = review.reviewId;
+                    document.getElementById('reviewTitle').value = review.reviewTitle;
+                    document.getElementById('reviewContent').value = review.reviewContent;
+                    
+                    // 별점 설정
+                    const rating = review.reviewRating;
+                    document.getElementById('ratingInput').value = rating;
+                    
+                    // 별점 UI 업데이트
+                    document.querySelectorAll('.rating-input i').forEach((s, index) => {
+                        if (index < rating) {
+                            s.className = 'fas fa-star';
+                        } else {
+                            s.className = 'far fa-star';
+                        }
+                    });
+                    
+                    // 폼 제목 및 버튼 텍스트 변경
+                    document.querySelector('.form-title').textContent = '리뷰 수정하기';
+                    document.querySelector('.form-actions button[type="submit"]').textContent = '리뷰 수정';
+                    
+                    // 리뷰 폼으로 스크롤
+                    document.querySelector('.review-form').scrollIntoView({ behavior: 'smooth' });
+                },
+                error: function() {
+                    showModal('error', '오류 발생', '리뷰 정보를 가져오는 중 오류가 발생했습니다.');
+                }
+            });
+        }
+
+        // 리뷰 삭제 확인 모달 표시
+        function confirmDeleteReview(reviewId) {
+            // 삭제 확인 모달 표시
+            document.getElementById('deleteReviewId').value = reviewId;
+            document.getElementById('deleteReviewModal').classList.add('show');
+        }
+
+        // 리뷰 삭제 실행
+        function deleteReview() {
+            const reviewId = document.getElementById('deleteReviewId').value;
+            
+            $.ajax({
+                type: "post",
+                url: "delete_review",
+                data: { reviewId: reviewId },
+                success: function(response) {
+                    if (response.success) {
+                        showModal('success', '삭제 완료', '리뷰가 성공적으로 삭제되었습니다.');
+                        // 페이지 새로고침 또는 리뷰 목록 갱신
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        showModal('error', '삭제 실패', response.message || '리뷰 삭제에 실패했습니다.');
+                    }
+                },
+                error: function() {
+                    showModal('error', '오류 발생', '서버 통신 중 오류가 발생했습니다.');
+                }
+            });
+            
+            // 삭제 확인 모달 닫기
+            closeDeleteReviewModal();
+        }
+
+        // 리뷰 삭제 모달 닫기
+        function closeDeleteReviewModal() {
+            document.getElementById('deleteReviewModal').classList.remove('show');
         }
 
         // 대출하기

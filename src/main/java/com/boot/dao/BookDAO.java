@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Param;
 
 import com.boot.dto.BookDTO;
 import com.boot.dto.BookRecordDTO;
+import com.boot.dto.NoticeCriteriaDTO;
+import com.boot.dto.ReviewDTO;
 import com.boot.dto.SearchBookCriteriaDTO;
 import com.boot.dto.UserBookBorrowingCriteriaDTO;
 
@@ -18,17 +20,11 @@ public interface BookDAO {
 
 	public ArrayList<BookDTO> mainBookInfo();
 
-	public int getSearchBookTotalCount(
-	        @Param("criteria") SearchBookCriteriaDTO criteria,
-	        @Param("majorCategory") String majorCategory,
-	        @Param("subCategory") String subCategory
-	    );
+	public int getSearchBookTotalCount(@Param("criteria") SearchBookCriteriaDTO criteria,
+			@Param("majorCategory") String majorCategory, @Param("subCategory") String subCategory);
 
-	public ArrayList<BookDTO> searchBookInfo(
-	        @Param("criteria") SearchBookCriteriaDTO criteria,
-	        @Param("majorCategory") String majorCategory,
-	        @Param("subCategory") String subCategory
-	    );
+	public ArrayList<BookDTO> searchBookInfo(@Param("criteria") SearchBookCriteriaDTO criteria,
+			@Param("majorCategory") String majorCategory, @Param("subCategory") String subCategory);
 
 	public BookDTO bookDetailInfo(HashMap<String, String> param);
 
@@ -59,4 +55,22 @@ public interface BookDAO {
 
 	public int getRecordTotalCount(@Param("criteria") UserBookBorrowingCriteriaDTO criteria,
 			@Param("userNumber") int userNumber);
+
+
+	public int checkReview(HashMap<String, String> param);
+	
+	public int getReviewCount(
+			@Param("criteria") NoticeCriteriaDTO criteria,
+			@Param("param") HashMap<String, String> param);
+	
+	// 5개씩 정렬을 위해 NoticeCriteriaDTO 사용
+	public ArrayList<ReviewDTO> getReview(
+			@Param("criteria") NoticeCriteriaDTO criteria,
+			@Param("param") HashMap<String, String> param);
+	
+	public int insertReview(HashMap<String, String> param);
+
+	public void updateReview(HashMap<String, String> param);
+
+	public void deleteReview(HashMap<String, String> param);
 }

@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import com.boot.dto.BookDTO;
 import com.boot.dto.BookRecordDTO;
 import com.boot.dto.NoticeCriteriaDTO;
+import com.boot.dto.ReviewDTO;
 import com.boot.dto.SearchBookCriteriaDTO;
 import com.boot.dto.UserBookBorrowingCriteriaDTO;
 
@@ -19,7 +20,8 @@ public interface BookService {
 
 	public ArrayList<BookDTO> mainBookInfo();
 
-	public int getSearchBookTotalCount(SearchBookCriteriaDTO searchBookCriteriaDTO, String majorCategory, String subCategory);
+	public int getSearchBookTotalCount(SearchBookCriteriaDTO searchBookCriteriaDTO, String majorCategory,
+			String subCategory);
 
 	public ArrayList<BookDTO> searchBookInfo(SearchBookCriteriaDTO criteria, String majorCategory, String subCategory);
 
@@ -44,4 +46,21 @@ public interface BookService {
 
 	public int getRecordTotalCount(@Param("criteria") UserBookBorrowingCriteriaDTO criteria,
 			@Param("userNumber") int userNumber);
+
+	
+	public int checkReview(HashMap<String, String> param);
+	
+	
+	public ArrayList<ReviewDTO> getReview(@Param("criteria") NoticeCriteriaDTO criteria,
+			@Param("param") HashMap<String, String> param);
+
+	public int getReviewCount(
+			@Param("criteria") NoticeCriteriaDTO criteria,
+			@Param("param") HashMap<String, String> param);
+
+	public int insertReview(HashMap<String, String> param);
+
+	public void updateReview(HashMap<String, String> param);
+
+	public void deleteReview(HashMap<String, String> param);
 }
