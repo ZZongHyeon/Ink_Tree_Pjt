@@ -12,6 +12,8 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" type="text/css"
 	href="/resources/css/book_search.css">
+<link rel="stylesheet" type="text/css"
+	href="/resources/css/board_view.css">
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
 	rel="stylesheet">
@@ -51,12 +53,15 @@ function fn_submit() {
 				<i class="fas fa-book"></i> 도서 검색
 			</h1>
 
-			<form class="search-form" id="search-form">
+			<form class="search-form" id="search-form" method="get">
 				<!-- 메인 검색창 -->
 				<div class="search-main">
-					<input type="text" class="search-input-main" id="searchKeyword"
-						name="searchKeyword" value="${param.searchKeyword}"
-						placeholder="도서명, 저자, ISBN 또는 출판사를 입력하세요">
+<!--					<input type="text" class="search-input-main" id="searchKeyword"-->
+<!--						name="searchKeyword" value="${param.searchKeyword}"-->
+<!--						placeholder="도서명, 저자, ISBN 또는 출판사를 입력하세요">-->
+					<input type="text" class="search-input-main" id="keyword"
+					       name="keyword" value="${pageMaker.searchBookCriteriaDTO.keyword}"
+					       placeholder="도서명, 저자, ISBN 또는 출판사를 입력하세요">
 					<button type="button" class="search-button-main"
 						onclick="fn_submit()">
 						<i class="fas fa-search"></i>
@@ -65,19 +70,28 @@ function fn_submit() {
 
 				<!-- 필터 옵션 -->
 				<div class="search-filters">
+<!--					<div class="search-filter">-->
+<!--						<label class="filter-label" for="searchType">검색 유형</label> <select-->
+<!--							class="filter-select" id="searchType" name="searchType">-->
+<!--							<option value="title"-->
+<!--								${param.searchType == 'title' ? 'selected' : ''}>도서명</option>-->
+<!--							<option value="author"-->
+<!--								${param.searchType == 'author' ? 'selected' : ''}>저자</option>-->
+<!--							<option value="isbn"-->
+<!--								${param.searchType == 'isbn' ? 'selected' : ''}>ISBN</option>-->
+<!--							<option value="publisher"-->
+<!--								${param.searchType == 'publisher' ? 'selected' : ''}>출판사</option>-->
+<!--						</select>-->
+<!--					</div>-->
 					<div class="search-filter">
-						<label class="filter-label" for="searchType">검색 유형</label> <select
-							class="filter-select" id="searchType" name="searchType">
-							<option value="title"
-								${param.searchType == 'title' ? 'selected' : ''}>도서명</option>
-							<option value="author"
-								${param.searchType == 'author' ? 'selected' : ''}>저자</option>
-							<option value="isbn"
-								${param.searchType == 'isbn' ? 'selected' : ''}>ISBN</option>
-							<option value="publisher"
-								${param.searchType == 'publisher' ? 'selected' : ''}>출판사</option>
-						</select>
-					</div>
+			            <label class="filter-label" for="type">검색 유형</label>
+			            <select class="filter-select" id="type" name="type">
+			                <option value="T" ${pageMaker.searchBookCriteriaDTO.type eq 'T' ? 'selected' : ''}>도서명</option>
+			                <option value="A" ${pageMaker.searchBookCriteriaDTO.type eq 'A' ? 'selected' : ''}>저자</option>
+			                <option value="I" ${pageMaker.searchBookCriteriaDTO.type eq 'I' ? 'selected' : ''}>ISBN</option>
+			                <option value="P" ${pageMaker.searchBookCriteriaDTO.type eq 'P' ? 'selected' : ''}>출판사</option>
+			            </select>
+			        </div>
 
 					<div class="search-filter">
 						<label class="filter-label" for="majorCategory">대분류</label> <select
@@ -124,22 +138,23 @@ function fn_submit() {
 						</select>
 					</div>
 				</div>
-
-				<!-- 				<div class="search-actions"> -->
-				<!-- 					<button type="reset" class="reset-button"> -->
-				<!-- 						<i class="fas fa-undo"></i> 초기화 -->
-				<!-- 					</button> -->
-				<!-- 					<button type="button" class="search-button" onclick="fn_submit()"> -->
-				<!-- 						<i class="fas fa-search"></i> 검색 -->
-				<!-- 					</button> -->
-				<!-- 				</div> -->
+<!--				<input type="hidden" name="pageNum" value="1">-->
+<!--				<input type="hidden" name="amount" value="${pageMaker.criteriaDTO.amount}">-->
+			</form>
+			<form id="actionForm" action="book_search_view" method="get">
+			    <input type="hidden" name="pageNum" value="${pageMaker.searchBookCriteriaDTO.pageNum}">
+			    <input type="hidden" name="amount" value="${pageMaker.searchBookCriteriaDTO.amount}">
+			    <input type="hidden" name="type" value="${pageMaker.searchBookCriteriaDTO.type}">
+			    <input type="hidden" name="keyword" value="${pageMaker.searchBookCriteriaDTO.keyword}">
+			    <input type="hidden" name="majorCategory" value="${param.majorCategory}">
+			    <input type="hidden" name="subCategory" value="${param.subCategory}">
 			</form>
 		</div>
 
 		<div class="results-container">
 			<div class="results-header">
 				<h2 class="results-title">
-					검색 결과 <span class="results-count">${bookList.size()}권</span>
+					검색 결과 <span class="results-count">${total}권</span>
 				</h2>
 
 				<div class="results-sort">
@@ -206,34 +221,37 @@ function fn_submit() {
 						</c:forEach>
 					</div>
 
-					<!-- 페이지네이션 -->
-					<div class="pagination">
-						<c:if test="${currentPage > 1}">
-							<div class="page-item">
-								<a class="page-link"
-									href="?page=${currentPage - 1}&searchType=${param.searchType}&searchKeyword=${param.searchKeyword}&majorCategory=${param.majorCategory}&subCategory=${param.subCategory}">
-									<i class="fas fa-chevron-left"></i>
-								</a>
-							</div>
-						</c:if>
-
-						<c:forEach begin="1" end="${totalPages}" var="pageNum">
-							<div class="page-item ${pageNum == currentPage ? 'active' : ''}">
-								<a class="page-link"
-									href="?page=${pageNum}&searchType=${param.searchType}&searchKeyword=${param.searchKeyword}&majorCategory=${param.majorCategory}&subCategory=${param.subCategory}">
-									${pageNum} </a>
-							</div>
-						</c:forEach>
-
-						<c:if test="${currentPage < totalPages}">
-							<div class="page-item">
-								<a class="page-link"
-									href="?page=${currentPage + 1}&searchType=${param.searchType}&searchKeyword=${param.searchKeyword}&majorCategory=${param.majorCategory}&subCategory=${param.subCategory}">
-									<i class="fas fa-chevron-right"></i>
-								</a>
-							</div>
-						</c:if>
+					<div class="div_page">
+						<ul>
+							<c:if test="${pageMaker.prev}">
+								<li class="paginate_button">
+									<a href="${pageMaker.startPage - 1}">
+										<i class="fas fa-caret-left"></i>
+									</a>
+								</li>
+							</c:if>
+							
+							<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+								<li class="paginate_button ${pageMaker.searchBookCriteriaDTO.pageNum==num ? 'active' : ''}">
+									<a href="${num}">
+										${num}
+									</a>
+								</li>
+							</c:forEach>
+							
+							<c:if test="${pageMaker.next}">
+								<li class="paginate_button">
+									<a href="${pageMaker.endPage+1}">
+										<i class="fas fa-caret-right"></i>
+									</a>
+								</li>
+							</c:if>
+						</ul>
 					</div>
+					<form id="actionForm" action="board_view" method="get">
+						<input type="hidden" name="pageNum" value="${pageMaker.searchBookCriteriaDTO.pageNum}">
+						<input type="hidden" name="amount" value="${pageMaker.searchBookCriteriaDTO.amount}">
+					</form>
 				</c:otherwise>
 			</c:choose>
 		</div>
@@ -318,6 +336,71 @@ if (majorCategory === '000-총류') {
             currentUrl.searchParams.set('sort', sortType);
             window.location.href = currentUrl.toString();
         }
+		
+		// 페이징처리
+		var actionForm = $("#actionForm");
+
+		// 페이지번호 처리
+		// 페이지네이션 링크 클릭 이벤트 처리
+		$(".paginate_button a").on("click", function(e) {
+		    e.preventDefault();
+		    
+		    // 현재 URL 가져오기
+		    var url = new URL(window.location.href);
+		    var params = new URLSearchParams(url.search);
+		    
+		    // 페이지 번호 설정
+		    params.set("pageNum", $(this).attr("href"));
+
+		    // 새 URL로 이동
+		    window.location.href = url.pathname + "?" + params.toString();
+		});
+
+		// 게시글 처리
+		$(".move_link").on("click", function (e) {
+		    e.preventDefault();
+		    console.log("move_link click");
+		    console.log("@# click => " + $(this).attr("href"));
+
+		    var targetBno = $(this).attr("href");
+
+		    // 버그처리(게시글 클릭 후 뒤로가기 누른 후 다른 게시글 클릭 할 때 &boardNo=번호 게속 누적되는 거 방지)
+		    var bno = actionForm.find("input[name='boardNo']").val();
+		    if (bno != "") {
+		        actionForm.find("input[name='boardNo']").remove();
+		    }
+
+		    // "content_view?boardNo=${dto.boardNo}"를 actionForm로 처리
+		    actionForm.append("<input type='hidden' name='boardNo' value='" + targetBno + "'>");
+		    // actionForm.submit();
+		    // 컨트롤러에 content_view로 찾아감
+		    actionForm.attr("action", "board_detail_view").submit();
+		});
+
+		// 검색처리
+		var searchForm = $("#search-form");
+
+		$("#search-form button").on("click", function () {
+		    // alert("검색");
+
+		    // 키워드 입력 받을 조건
+<!--		    if (searchForm.find("option:selected").val() != "" && !searchForm.find("input[name='keyword']").val()) {-->
+<!--		        alert("키워드를 입력하세요.");-->
+<!--		        return false;-->
+<!--		    }-->
+
+		    // searchForm.find("input[name='pageNum']").val("1"); // 검색 시 1페이지로 이동
+		    searchForm.attr("action", "board_view").submit();
+		}); // end of searchForm click
+
+		// type 콤보박스 변경
+		$("#search-form select").on("change", function () {
+		    if (searchForm.find("option:selected").val() == "") {
+		        // 키워드를 널값으로 변경
+		        searchForm.find("input[name='keyword']").val("");
+		    }
+		}); // end of searchForm click 2
+		
     </script>
 </body>
 </html>

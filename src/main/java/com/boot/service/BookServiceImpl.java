@@ -14,6 +14,7 @@ import com.boot.dao.BookDAO;
 import com.boot.dao.NoticeDAO;
 import com.boot.dto.BookDTO;
 import com.boot.dto.BookRecordDTO;
+import com.boot.dto.SearchBookCriteriaDTO;
 import com.boot.dto.UserBookBorrowingCriteriaDTO;
 import com.boot.dto.UserDTO;
 
@@ -51,12 +52,18 @@ public class BookServiceImpl implements BookService {
 		return list;
 	}
 
+	
 	@Override
-	public ArrayList<BookDTO> searchBookInfo(HashMap<String, String> param) {
+	public int getSearchBookTotalCount(SearchBookCriteriaDTO criteria, String majorCategory, String subCategory) {
 		BookDAO dao = sqlSession.getMapper(BookDAO.class);
-		ArrayList<BookDTO> list = dao.searchBookInfo(param);
-
-		return list;
+	    return dao.getSearchBookTotalCount(criteria, majorCategory, subCategory);
+	}
+	
+	
+	@Override
+	public ArrayList<BookDTO> searchBookInfo(SearchBookCriteriaDTO criteria, String majorCategory, String subCategory) {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+	    return dao.searchBookInfo(criteria, majorCategory, subCategory);
 	}
 
 	@Override
@@ -116,4 +123,6 @@ public class BookServiceImpl implements BookService {
 		int total = dao.getRecordTotalCount(userBookBorrowingCriteriaDTO, userNumber);
 		return total;
 	}
+
+
 }

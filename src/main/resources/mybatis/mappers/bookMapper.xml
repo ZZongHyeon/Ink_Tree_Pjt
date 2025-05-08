@@ -52,53 +52,115 @@
 		WHERE ROWNUM &lt;= 10
 	</select>
 
+
+
+<select id="searchBookInfo" resultType="com.boot.dto.BookDTO">
+    SELECT * FROM (
+        SELECT a.*, ROWNUM rn FROM (
+            SELECT * FROM bookinfo
+            <where>
+                <choose>
+                    <when test='criteria.type != null and criteria.type.equals("T") and criteria.keyword != null and criteria.keyword != ""'>
+                        bookTitle LIKE '%' || #{criteria.keyword} || '%'
+                    </when>
+                    <when test='criteria.type != null and criteria.type.equals("A") and criteria.keyword != null and criteria.keyword != ""'>
+                        bookWrite LIKE '%' || #{criteria.keyword} || '%'
+                    </when>
+                    <when test='criteria.type != null and criteria.type.equals("I") and criteria.keyword != null and criteria.keyword != ""'>
+                        bookIsbn LIKE '%' || #{criteria.keyword} || '%'
+                    </when>
+                    <when test='criteria.type != null and criteria.type.equals("P") and criteria.keyword != null and criteria.keyword != ""'>
+                        bookPub LIKE '%' || #{criteria.keyword} || '%'
+                    </when>
+                </choose>
+                
+                <if test="majorCategory != null and majorCategory != ''">
+                    AND bookMajorCategory = #{majorCategory}
+                </if>
+                
+                <if test="subCategory != null and subCategory != ''">
+                    AND bookSubCategory = #{subCategory}
+                </if>
+            </where>
+            ORDER BY bookNumber DESC
+        ) a WHERE ROWNUM &lt;= #{criteria.pageNum} * #{criteria.amount}
+    ) WHERE rn > (#{criteria.pageNum} - 1) * #{criteria.amount}
+</select>
+
+<select id="getSearchBookTotalCount" resultType="int">
+    SELECT COUNT(*) FROM bookinfo
+    <where>
+        <choose>
+            <when test='criteria.type != null and criteria.type.equals("T") and criteria.keyword != null and criteria.keyword != ""'>
+                bookTitle LIKE '%' || #{criteria.keyword} || '%'
+            </when>
+            <when test='criteria.type != null and criteria.type.equals("A") and criteria.keyword != null and criteria.keyword != ""'>
+                bookWrite LIKE '%' || #{criteria.keyword} || '%'
+            </when>
+            <when test='criteria.type != null and criteria.type.equals("I") and criteria.keyword != null and criteria.keyword != ""'>
+                bookIsbn LIKE '%' || #{criteria.keyword} || '%'
+            </when>
+            <when test='criteria.type != null and criteria.type.equals("P") and criteria.keyword != null and criteria.keyword != ""'>
+                bookPub LIKE '%' || #{criteria.keyword} || '%'
+            </when>
+        </choose>
+        
+        <if test="majorCategory != null and majorCategory != ''">
+            AND bookMajorCategory = #{majorCategory}
+        </if>
+        
+        <if test="subCategory != null and subCategory != ''">
+            AND bookSubCategory = #{subCategory}
+        </if>
+    </where>
+</select>
 	<!-- 도서검색 카테고리별로 정리 -->
-	<select id="searchBookInfo"
-		resultType="com.boot.dto.BookDTO" parameterType="map">
-		SELECT
-		bookNumber,
-		bookIsbn,
-		bookTitle,
-		bookComent,
-		bookWrite,
-		bookPub,
-		bookDate,
-		SUBSTR(bookMajorCategory, INSTR(bookMajorCategory, '-') + 1) AS bookMajorCategory,
-		SUBSTR(bookSubCategory, INSTR(bookSubCategory, '-') + 1) AS bookSubCategory,
-		bookCount,
-		bookBorrowCount
-		FROM bookinfo
-		WHERE 1=1
+<!--	<select id="searchBookInfo"-->
+<!--		resultType="com.boot.dto.BookDTO" parameterType="map">-->
+<!--		SELECT-->
+<!--		bookNumber,-->
+<!--		bookIsbn,-->
+<!--		bookTitle,-->
+<!--		bookComent,-->
+<!--		bookWrite,-->
+<!--		bookPub,-->
+<!--		bookDate,-->
+<!--		SUBSTR(bookMajorCategory, INSTR(bookMajorCategory, '-') + 1) AS bookMajorCategory,-->
+<!--		SUBSTR(bookSubCategory, INSTR(bookSubCategory, '-') + 1) AS bookSubCategory,-->
+<!--		bookCount,-->
+<!--		bookBorrowCount-->
+<!--		FROM bookinfo-->
+<!--		WHERE 1=1-->
 
-		<choose>
-			<when
-				test="searchType == 'title' and searchKeyword != null and searchKeyword != ''">
-				AND bookTitle LIKE '%' || #{searchKeyword} || '%'
-			</when>
-			<when
-				test="searchType == 'author' and searchKeyword != null and searchKeyword != ''">
-				AND bookWrite LIKE '%' || #{searchKeyword} || '%'
-			</when>
-			<when
-				test="searchType == 'isbn' and searchKeyword != null and searchKeyword != ''">
-				AND bookIsbn LIKE '%' || #{searchKeyword} || '%'
-			</when>
-			<when
-				test="searchType == 'publisher' and searchKeyword != null and searchKeyword != ''">
-				AND bookPub LIKE '%' || #{searchKeyword} || '%'
-			</when>
-		</choose>
+<!--		<choose>-->
+<!--			<when-->
+<!--				test="searchType == 'title' and searchKeyword != null and searchKeyword != ''">-->
+<!--				AND bookTitle LIKE '%' || #{searchKeyword} || '%'-->
+<!--			</when>-->
+<!--			<when-->
+<!--				test="searchType == 'author' and searchKeyword != null and searchKeyword != ''">-->
+<!--				AND bookWrite LIKE '%' || #{searchKeyword} || '%'-->
+<!--			</when>-->
+<!--			<when-->
+<!--				test="searchType == 'isbn' and searchKeyword != null and searchKeyword != ''">-->
+<!--				AND bookIsbn LIKE '%' || #{searchKeyword} || '%'-->
+<!--			</when>-->
+<!--			<when-->
+<!--				test="searchType == 'publisher' and searchKeyword != null and searchKeyword != ''">-->
+<!--				AND bookPub LIKE '%' || #{searchKeyword} || '%'-->
+<!--			</when>-->
+<!--		</choose>-->
 
-		<if test="majorCategory != null and majorCategory != ''">
-			AND bookMajorCategory = #{majorCategory}
-		</if>
+<!--		<if test="majorCategory != null and majorCategory != ''">-->
+<!--			AND bookMajorCategory = #{majorCategory}-->
+<!--		</if>-->
 
-		<if test="subCategory != null and subCategory != ''">
-			AND bookSubCategory = #{subCategory}
-		</if>
+<!--		<if test="subCategory != null and subCategory != ''">-->
+<!--			AND bookSubCategory = #{subCategory}-->
+<!--		</if>-->
 
-		ORDER BY bookTitle ASC
-	</select>
+<!--		ORDER BY bookTitle ASC-->
+<!--	</select>-->
 
 	<!-- 책 디테일 -->
 	<select id="bookDetailInfo"

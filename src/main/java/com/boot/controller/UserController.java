@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.boot.dto.UserDTO;
 import com.boot.service.UserService;
+import com.boot.service.UtilService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,6 +37,8 @@ public class UserController {
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private UtilService utilService;
 
 //	@RequestMapping("/login_ok")
 //	public String login(HttpServletRequest request, @RequestParam HashMap<String, String> param) {
@@ -92,7 +95,15 @@ public class UserController {
 		UserDTO dto = (UserDTO) request.getSession().getAttribute("loginUser");
 
 		param.put("userNumber", String.valueOf(dto.getUserNumber()));
-
+	    int userRecord = utilService.getUserRecord(param);
+	    int userOver = utilService.getUserOver(param);
+	    int userBorrowedBooks = utilService.getUserBorrowed(param);
+//	    int userRecordCount = utilService.getBookRecordCount(param);
+	    
+	    model.addAttribute("userRecord", userRecord);
+	    model.addAttribute("userOver", userOver);
+	    model.addAttribute("userBorrowedBooks", userBorrowedBooks);
+//	    model.addAttribute("userRecordCount", userRecordCount);
 		return "mypage";
 	}
 

@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.boot.dto.BookDTO;
 import com.boot.dto.BookRecordDTO;
 import com.boot.dto.PageDTO;
+import com.boot.dto.SearchBookCriteriaDTO;
 import com.boot.dto.UserBookBorrowingCriteriaDTO;
 import com.boot.dto.UserDTO;
 import com.boot.service.BookService;
@@ -64,10 +66,27 @@ public class BookController {
 	}
 
 	@RequestMapping("/book_search_view")
-	public String searchBookView(@RequestParam HashMap<String, String> param, Model model) {
-		List<BookDTO> list = service.searchBookInfo(param);
-		model.addAttribute("bookList", list);
-		return "book_search";
+	public String searchBookView(
+	        @ModelAttribute("searchBookCriteriaDTO") SearchBookCriteriaDTO searchBookCriteriaDTO,
+	        @RequestParam(value = "majorCategory", required = false) String majorCategory,
+	        @RequestParam(value = "subCategory", required = false) String subCategory,
+	        Model model) {
+	    
+	    // amount가 0이면 기본값 설정
+	    if (searchBookCriteriaDTO.getAmount() <= 0) {
+	        searchBookCriteriaDTO.setAmount(10);
+	    }
+	    
+	    // 서비스 메서드 호출
+	    List<BookDTO> list = service.searchBookInfo(searchBookCriteriaDTO, majorCategory, subCategory);
+	    
+	    int total = service.getSearchBookTotalCount(searchBookCriteriaDTO, majorCategory, subCategory);
+	    
+	    model.addAttribute("bookList", list);
+	    model.addAttribute("total", total);
+	    model.addAttribute("pageMaker", new PageDTO(total, searchBookCriteriaDTO));
+	    
+	    return "book_search";
 	}
 
 	@RequestMapping("/book_detail")

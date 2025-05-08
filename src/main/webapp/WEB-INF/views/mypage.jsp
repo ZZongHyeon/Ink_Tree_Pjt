@@ -54,11 +54,6 @@
 
 	<%
 	UserDTO user = (UserDTO) session.getAttribute("loginUser");
-	if (user == null) {
-		response.sendRedirect("/loginView");
-		return;
-	}
-
 	Object userBorrowedBooksObj = request.getAttribute("userBorrowedBooks"); // 유저 현재 빌린 수
 	Object userBeforReturnCountObj = request.getAttribute("userRecord"); // 빌리자마자 올라가는 borrow 수
 	Object userRecordCountObj = request.getAttribute("userRecordCount"); // 반납하면 올라가는 borrow 수
@@ -87,22 +82,15 @@
 			// 변환 실패 시 기본값 유지
 		}
 	}
-	// 연체 도서 수
+	// 연체 도서 수 (예시 데이터)
 	int overdueCount = 0;
-	if (request.getAttribute("userOver") != null) {
-		try {
-			overdueCount = Integer.parseInt(String.valueOf(request.getAttribute("userOver")));
-		} catch (NumberFormatException e) {
-			// 변환 실패 시 기본값 유지
-		}
-	}
 	%>
 
 	<div class="mypage-container">
-		<div class="mypage-header">
+		<!-- <div class="mypage-header">
 			<h1 class="mypage-title">마이페이지</h1>
 			<p class="mypage-subtitle">회원 정보 및 도서 대출 현황을 확인하실 수 있습니다.</p>
-		</div>
+		</div> -->
 
 		<div class="mypage-content">
 			<div class="profile-sidebar">
@@ -116,11 +104,11 @@
 
 				<div class="profile-menu">
 					<div class="menu-item" onclick="showTab('profile', event)">
-						<i class="fas fa-user"></i> <span>내 정보</span>
+						<i class="fas fa-user"></i> <span>내 정보asdf</span>
 					</div>
-					<div class="menu-item" onclick="showTab('books', event)">
+					<!-- <div class="menu-item" onclick="showTab('books', event)">
 						<i class="fas fa-book"></i> <span>대출 현황 & 기록</span>
-					</div>
+					</div> -->
 					<div class="menu-item" onclick="showTab('update', event)">
 						<i class="fas fa-pen-to-square"></i> <span>정보 수정</span>
 					</div>
@@ -142,23 +130,23 @@
 								<i class="fas fa-book"></i>
 							</div>
 							<div class="stat-value"><%=borrowingCount%></div>
-							<div class="stat-label">대출 중인 도서</div>
+							<div class="stat-title">대출 중인 도서</div>
 						</div>
 
 						<div class="stat-card">
 							<div class="stat-icon">
 								<i class="fas fa-exclamation-circle"></i>
 							</div>
-							<div class="stat-value"><%=overdueCount%></div>
-							<div class="stat-label">연체 도서</div>
+							<div class="stat-value">${userOver + 2}</div>
+							<div class="stat-title">연체 도서</div>
 						</div>
 
 						<div class="stat-card">
 							<div class="stat-icon">
 								<i class="fas fa-clock"></i>
 							</div>
-							<div class="stat-value"><%=recordCount%></div>
-							<div class="stat-label">총 대출 이력</div>
+							<div class="stat-value">${userRecord}</div>
+							<div class="stat-title">총 대출 이력</div>
 						</div>
 					</div>
 

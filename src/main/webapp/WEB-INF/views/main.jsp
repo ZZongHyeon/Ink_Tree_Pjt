@@ -97,9 +97,12 @@ function fn_submit() {
 				<form class="search-form" id="search-form">
 					<!-- 메인 검색창 -->
 					<div class="search-main">
-						<input type="text" class="search-input-main" id="searchKeyword"
-							name="searchKeyword" value="${param.searchKeyword}"
-							placeholder="도서명, 저자, ISBN 또는 출판사를 입력하세요">
+<!--						<input type="text" class="search-input-main" id="searchKeyword"-->
+<!--							name="searchKeyword" value="${param.searchKeyword}"-->
+<!--							placeholder="도서명, 저자, ISBN 또는 출판사를 입력하세요">-->
+						<input type="text" class="search-input-main" id="keyword"
+						       name="keyword" value="${pageMaker.criteriaDTO.keyword}"
+						       placeholder="도서명, 저자, ISBN 또는 출판사를 입력하세요">
 						<button type="button" class="search-button-main"
 							onclick="fn_submit()">
 							<i class="fas fa-search"></i>
@@ -109,17 +112,13 @@ function fn_submit() {
 					<!-- 필터 옵션 -->
 					<div class="search-filters">
 						<div class="search-filter">
-							<label class="filter-label" for="searchType">검색 유형</label> <select
-								class="filter-select" id="searchType" name="searchType">
-								<option value="title"
-									${param.searchType == 'title' ? 'selected' : ''}>도서명</option>
-								<option value="author"
-									${param.searchType == 'author' ? 'selected' : ''}>저자</option>
-								<option value="isbn"
-									${param.searchType == 'isbn' ? 'selected' : ''}>ISBN</option>
-								<option value="publisher"
-									${param.searchType == 'publisher' ? 'selected' : ''}>출판사</option>
-							</select>
+						    <label class="filter-label" for="type">검색 유형</label>
+						    <select class="filter-select" id="type" name="type">
+						        <option value="T" ${pageMaker.criteriaDTO.type eq 'T' ? 'selected' : ''}>도서명</option>
+						        <option value="A" ${pageMaker.criteriaDTO.type eq 'A' ? 'selected' : ''}>저자</option>
+						        <option value="I" ${pageMaker.criteriaDTO.type eq 'I' ? 'selected' : ''}>ISBN</option>
+						        <option value="P" ${pageMaker.criteriaDTO.type eq 'P' ? 'selected' : ''}>출판사</option>
+						    </select>
 						</div>
 
 						<div class="search-filter">

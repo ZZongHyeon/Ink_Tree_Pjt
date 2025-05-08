@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.boot.dto.BookDTO;
 import com.boot.dto.BookRecordDTO;
+import com.boot.dto.SearchBookCriteriaDTO;
 import com.boot.dto.UserBookBorrowingCriteriaDTO;
 
 public interface BookDAO {
@@ -17,7 +18,17 @@ public interface BookDAO {
 
 	public ArrayList<BookDTO> mainBookInfo();
 
-	public ArrayList<BookDTO> searchBookInfo(HashMap<String, String> param);
+	public int getSearchBookTotalCount(
+	        @Param("criteria") SearchBookCriteriaDTO criteria,
+	        @Param("majorCategory") String majorCategory,
+	        @Param("subCategory") String subCategory
+	    );
+
+	public ArrayList<BookDTO> searchBookInfo(
+	        @Param("criteria") SearchBookCriteriaDTO criteria,
+	        @Param("majorCategory") String majorCategory,
+	        @Param("subCategory") String subCategory
+	    );
 
 	public BookDTO bookDetailInfo(HashMap<String, String> param);
 
@@ -34,23 +45,18 @@ public interface BookDAO {
 	public ArrayList<BookDTO> isReturned(HashMap<String, String> param);
 
 	public ArrayList<BookRecordDTO> bookBorrowed(
-	        @Param("criteria") UserBookBorrowingCriteriaDTO userBookBorrowingCriteriaDTO, 
-	        @Param("param") HashMap<String, String> param
-	    );
+			@Param("criteria") UserBookBorrowingCriteriaDTO userBookBorrowingCriteriaDTO,
+			@Param("param") HashMap<String, String> param);
 
-	    public ArrayList<BookRecordDTO> bookRecord(
-	        @Param("criteria") UserBookBorrowingCriteriaDTO userBookBorrowingCriteriaDTO, 
-	        @Param("param") HashMap<String, String> param
-	    );
+	public ArrayList<BookRecordDTO> bookRecord(
+			@Param("criteria") UserBookBorrowingCriteriaDTO userBookBorrowingCriteriaDTO,
+			@Param("param") HashMap<String, String> param);
+
 	public void deleteBook(HashMap<String, String> param);
 
-	public int getBorrowedTotalCount(
-	        @Param("criteria") UserBookBorrowingCriteriaDTO criteria, 
-	        @Param("userNumber") int userNumber
-	    );
-	    
-	    public int getRecordTotalCount(
-	        @Param("criteria") UserBookBorrowingCriteriaDTO criteria, 
-	        @Param("userNumber") int userNumber
-	    );
+	public int getBorrowedTotalCount(@Param("criteria") UserBookBorrowingCriteriaDTO criteria,
+			@Param("userNumber") int userNumber);
+
+	public int getRecordTotalCount(@Param("criteria") UserBookBorrowingCriteriaDTO criteria,
+			@Param("userNumber") int userNumber);
 }
