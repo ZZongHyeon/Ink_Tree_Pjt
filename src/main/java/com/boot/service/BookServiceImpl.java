@@ -17,6 +17,7 @@ import com.boot.dto.BookDTO;
 import com.boot.dto.BookRecordDTO;
 import com.boot.dto.NoticeCriteriaDTO;
 import com.boot.dto.ReviewDTO;
+import com.boot.dto.ReviewHelpfulDTO;
 import com.boot.dto.SearchBookCriteriaDTO;
 import com.boot.dto.UserBookBorrowingCriteriaDTO;
 import com.boot.dto.UserDTO;
@@ -166,5 +167,54 @@ public class BookServiceImpl implements BookService {
 	public ArrayList<ReviewDTO> getAllReviewsByBookNumber(int bookNumber) {
 		BookDAO dao = sqlSession.getMapper(BookDAO.class);
 		return dao.getAllReviewsByBookNumber(bookNumber);
+	}
+
+	@Override
+	public boolean addReviewHelpful(int reviewId, int userNumber) {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+
+		// 이미 도움됨 표시를 했는지 확인
+		ReviewHelpfulDTO checkDTO = new ReviewHelpfulDTO();
+		checkDTO.setReviewId(reviewId);
+		checkDTO.setUserNumber(userNumber);
+
+		if (dao.checkReviewHelpful(checkDTO) > 0) {
+			return false; // 이미 도움됨 표시를 한 경우
+		}
+
+		// 도움됨 추가
+		ReviewHelpfulDTO helpfulDTO = new ReviewHelpfulDTO();
+		helpfulDTO.setReviewId(reviewId);
+		helpfulDTO.setUserNumber(userNumber);
+
+		return dao.addReviewHelpful(helpfulDTO) > 0;
+	}
+
+	@Override
+	public boolean removeReviewHelpful(int reviewId, int userNumber) {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+
+		ReviewHelpfulDTO helpfulDTO = new ReviewHelpfulDTO();
+		helpfulDTO.setReviewId(reviewId);
+		helpfulDTO.setUserNumber(userNumber);
+
+		return dao.removeReviewHelpful(helpfulDTO) > 0;
+	}
+
+	@Override
+	public boolean checkReviewHelpful(int reviewId, int userNumber) {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+
+		ReviewHelpfulDTO helpfulDTO = new ReviewHelpfulDTO();
+		helpfulDTO.setReviewId(reviewId);
+		helpfulDTO.setUserNumber(userNumber);
+
+		return dao.checkReviewHelpful(helpfulDTO) > 0;
+	}
+
+	@Override
+	public int getReviewHelpfulCount(int reviewId) {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+		return dao.getReviewHelpfulCount(reviewId);
 	}
 }

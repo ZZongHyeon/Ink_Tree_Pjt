@@ -246,28 +246,30 @@
 									<!-- 리뷰 목록 반복 -->
 									<c:forEach var="review" items="${reviewList}">
 										<div class="review-card">
-										    <input type="hidden" class="review-id-hidden" value="${review.reviewId}">
-										    <div class="review-header">
-										        <div class="reviewer-info">
-										            <div class="reviewer-name-date">
-										                <span class="reviewer-name">${review.userName}</span>
-										                <span class="review-date"><fmt:formatDate value="${review.reviewDate}" pattern="yyyy-MM-dd" /></span>
-										            </div>
-										        </div>
-										        <div class="review-actions-top">
-										            <i class="far fa-thumbs-up review-action-icon like ${review.helpfulByCurrentUser ? 'active' : ''}" 
-										               onclick="markHelpful(${review.reviewId}, this)" 
-										               title="도움됨"></i>
-										            <c:if test="${loginUser.userNumber == review.userNumber || loginUser.userAdmin == 1}">
-										                <!-- onclick 속성 제거 -->
-										                <i class="fas fa-edit review-action-icon edit" 
-										                   title="수정"></i>
-										                <i class="fas fa-trash-alt review-action-icon delete" 
-										                   onclick="confirmDeleteReview(${review.reviewId})" 
-										                   title="삭제"></i>
-										            </c:if>
-										        </div>
-										    </div>
+											<input type="hidden" class="review-id-hidden" value="${review.reviewId}">
+											    <div class="review-header">
+											        <div class="reviewer-info">
+											            <div class="reviewer-name-date">
+											                <span class="reviewer-name">${review.userName}</span>
+											                <span class="review-date"><fmt:formatDate value="${review.reviewDate}" pattern="yyyy-MM-dd" /></span>
+											            </div>
+											        </div>
+											        <div class="review-actions-top">
+											            <span class="helpful-container">
+															<i class="${review.helpfulByCurrentUser ? 'fas' : 'far'} fa-thumbs-up review-action-icon like ${review.helpfulByCurrentUser ? 'active' : ''}" 
+															   onclick="markHelpful(${review.reviewId}, this)" 
+															   title="도움됨"></i>
+											                <span class="helpful-count">${review.helpfulCount}</span>
+											            </span>
+											            <c:if test="${loginUser.userNumber == review.userNumber || loginUser.userAdmin == 1}">
+											                <i class="fas fa-edit review-action-icon edit" 
+											                   title="수정"></i>
+											                <i class="fas fa-trash-alt review-action-icon delete" 
+											                   onclick="confirmDeleteReview(${review.reviewId})" 
+											                   title="삭제"></i>
+											            </c:if>
+											        </div>
+											    </div>
 										    <div class="review-rating">
 										        <c:forEach begin="1" end="5" var="i">
 										            <c:choose>
@@ -719,9 +721,9 @@
 		    });
 		});
 
-		// 페이지네이션 이벤트 바인딩 함수 완전히 새로 작성
+		// 페이지네이션 이벤트 바인딩 함수 개선
 		function bindPaginationEvents() {
-		    $(".paginate_button a").on("click", function (e) {
+		    $(".paginate_button a").off("click").on("click", function (e) {
 		        e.preventDefault();
 		        console.log("페이지 클릭");
 		        
@@ -752,14 +754,12 @@
 		                // 페이지네이션 이벤트 다시 바인딩
 		                bindPaginationEvents();
 		                
-		                // 현재 페이지 버튼 활성화 - 직접 DOM 조작
-		                document.querySelectorAll('.paginate_button').forEach(button => {
-		                    button.classList.remove('active');
-		                    const link = button.querySelector('a');
-		                    if (link && link.getAttribute('href') === pageNum) {
-		                        button.classList.add('active');
-		                    }
-		                });
+		                // 현재 페이지 버튼 활성화
+		                $('.paginate_button').removeClass('active');
+		                $(`.paginate_button a[href="${pageNum}"]`).parent().addClass('active');
+		                
+		                // 도움됨 버튼 상태 업데이트
+		                updateHelpfulButtonsUI();
 		            },
 		            error: function() {
 		                showModal('error', '오류 발생', '페이지 로드 중 오류가 발생했습니다.');
@@ -768,8 +768,124 @@
 		    });
 		}
 
-		// 페이지 로드 시 페이지네이션 이벤트 바인딩 및 현재 페이지 활성화
+		// 도움됨 버튼 UI 업데이트 함수
+		function updateHelpfulButtonsUI() {
+		    // 모든 도움됨 버튼 확인
+		    $('.review-card').each(function() {
+		        const likeButton = $(this).find('.review-action-icon.like');
+		        
+		        // 서버에서 받은 active 클래스 확인
+		        if (likeButton.hasClass('active')) {
+		            // 아이콘 클래스 업데이트 (far -> fas)
+		            likeButton.removeClass('far').addClass('fas');
+		        } else {
+		            // 아이콘 클래스 업데이트 (fas -> far)
+		            likeButton.removeClass('fas').addClass('far');
+		        }
+		    });
+		}
+
+		// 도움됨 버튼 기능 개선
+		function markHelpful(reviewId, element) {
+		    // 로그인 확인
+		    <% if (user == null) { %>
+		        showModal('error', '로그인 필요', '도움됨 기능은 로그인 후 이용 가능합니다.');
+		        return;
+		    <% } %>
+		    
+		    // 이미 활성화된 경우 취소, 아니면 활성화
+		    const isActive = $(element).hasClass('active');
+		    
+		    $.ajax({
+		        type: "post",
+		        url: isActive ? "review_unhelpful" : "review_helpful",
+		        data: { reviewId: reviewId },
+		        success: function(response) {
+		            if (response.success) {
+		                // UI 업데이트
+		                if (isActive) {
+		                    // 도움됨 취소
+		                    $(element).removeClass('active fas').addClass('far');
+		                } else {
+		                    // 도움됨 추가
+		                    $(element).removeClass('far').addClass('fas active');
+		                }
+		                
+		                // 도움됨 개수 업데이트
+		                const helpfulCountElement = $(element).closest('.helpful-container').find('.helpful-count');
+		                if (helpfulCountElement.length > 0) {
+		                    helpfulCountElement.text(response.helpfulCount);
+		                }
+		                
+		                // 로컬 스토리지에 상태 저장 (선택적)
+		                saveHelpfulState(reviewId, !isActive);
+		            } else {
+		                showModal('error', '오류 발생', response.message || '도움됨 처리 중 오류가 발생했습니다.');
+		            }
+		        },
+		        error: function(xhr) {
+		            let errorMessage = '서버 통신 중 오류가 발생했습니다.';
+		            try {
+		                const response = JSON.parse(xhr.responseText);
+		                if (response.message) {
+		                    errorMessage = response.message;
+		                }
+		            } catch (e) {
+		                console.error('JSON 파싱 오류:', e);
+		            }
+		            showModal('error', '오류 발생', errorMessage);
+		        }
+		    });
+		}
+
+		// 로컬 스토리지에 도움됨 상태 저장 (선택적)
+		function saveHelpfulState(reviewId, isHelpful) {
+		    <% if (user != null) { %>
+		    const userNumber = <%= user.getUserNumber() %>;
+		    const storageKey = `helpful_${userNumber}`;
+		    
+		    // 기존 데이터 가져오기
+		    let helpfulData = JSON.parse(localStorage.getItem(storageKey) || '{}');
+		    
+		    // 리뷰 ID를 키로 사용하여 상태 저장
+		    helpfulData[reviewId] = isHelpful;
+		    
+		    // 로컬 스토리지에 저장
+		    localStorage.setItem(storageKey, JSON.stringify(helpfulData));
+		    <% } %>
+		}
+
+		// 로컬 스토리지에서 도움됨 상태 복원 (선택적)
+		function restoreHelpfulState() {
+		    <% if (user != null) { %>
+		    const userNumber = <%= user.getUserNumber() %>;
+		    const storageKey = `helpful_${userNumber}`;
+		    
+		    // 저장된 데이터 가져오기
+		    const helpfulData = JSON.parse(localStorage.getItem(storageKey) || '{}');
+		    
+		    // 모든 도움됨 버튼에 상태 적용
+		    $('.review-card').each(function() {
+		        const reviewId = $(this).find('.review-id-hidden').val();
+		        const likeButton = $(this).find('.review-action-icon.like');
+		        
+		        // 서버에서 받은 active 클래스 확인
+		        if (likeButton.hasClass('active')) {
+		            // 아이콘 클래스 업데이트 (far -> fas)
+		            likeButton.removeClass('far').addClass('fas');
+		        } 
+		        // 로컬 스토리지에 저장된 상태 확인 (서버 상태가 우선)
+		        else if (helpfulData[reviewId]) {
+		            likeButton.addClass('active');
+		            likeButton.removeClass('far').addClass('fas');
+		        }
+		    });
+		    <% } %>
+		}
+
+		// 페이지 로드 시 이벤트 바인딩 및 초기화
 		$(document).ready(function() {
+		    // 페이지네이션 이벤트 바인딩
 		    bindPaginationEvents();
 		    
 		    // 현재 페이지 번호 가져오기
@@ -777,14 +893,25 @@
 		    
 		    // 현재 페이지 버튼 활성화
 		    if (currentPage) {
-		        document.querySelectorAll('.paginate_button').forEach(button => {
-		            const link = button.querySelector('a');
-		            if (link && link.getAttribute('href') === currentPage) {
-		                button.classList.add('active');
+		        $('.paginate_button').each(function() {
+		            const link = $(this).find('a');
+		            if (link.length && link.attr('href') === currentPage) {
+		                $(this).addClass('active');
 		            }
 		        });
 		    }
+		    
+		    // 도움됨 버튼 UI 업데이트
+		    updateHelpfulButtonsUI();
+		    
+		    // 로컬 스토리지에서 도움됨 상태 복원 (선택적)
+		    restoreHelpfulState();
 		});
+
+		// 도움됨 버튼 클래스 수정 (JSP 코드 수정 필요)
+		// <i class="far fa-thumbs-up review-action-icon like ${review.helpfulByCurrentUser ? 'active' : ''}" 
+		// 위 코드를 아래와 같이 수정:
+		// <i class="${review.helpfulByCurrentUser ? 'fas' : 'far'} fa-thumbs-up review-action-icon like ${review.helpfulByCurrentUser ? 'active' : ''}"
 
 		// 페이지 로드 시 페이지네이션 이벤트 바인딩
 		$(document).ready(function() {
@@ -992,40 +1119,6 @@
 		    });
 		}
         
-        // 도움됨 버튼 기능
-        function markHelpful(reviewId, element) {
-            // 로그인 확인
-            <% if (user == null) { %>
-                showModal('error', '로그인 필요', '도움됨 기능은 로그인 후 이용 가능합니다.');
-                return;
-            <% } %>
-            
-            // 이미 활성화된 경우 취소, 아니면 활성화
-            const isActive = element.classList.contains('active');
-            
-            $.ajax({
-                type: "post",
-                url: isActive ? "review_unhelpful" : "review_helpful",
-                data: { reviewId: reviewId },
-                success: function(response) {
-                    if (response.success) {
-                        // UI 업데이트
-                        if (isActive) {
-                            element.classList.remove('active');
-                            element.className = 'far fa-thumbs-up review-action-icon like';
-                        } else {
-                            element.classList.add('active');
-                            element.className = 'fas fa-thumbs-up review-action-icon like active';
-                        }
-                    } else {
-                        showModal('error', '오류 발생', response.message || '도움됨 처리 중 오류가 발생했습니다.');
-                    }
-                },
-                error: function() {
-                    showModal('error', '오류 발생', '서버 통신 중 오류가 발생했습니다.');
-                }
-            });
-        }
 
 		// 별점 표시를 위한 CSS 추가
 		function addStarRatingStyles() {

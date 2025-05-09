@@ -65,4 +65,16 @@ public interface BookService {
 
 	// 도서별 리뷰 통계 조회 (페이징 없이 모든 리뷰 가져오기)
 	public ArrayList<ReviewDTO> getAllReviewsByBookNumber(int bookNumber);
+
+	// 리뷰 도움됨 추가
+	boolean addReviewHelpful(int reviewId, int userNumber);
+
+	// 리뷰 도움됨 취소
+	boolean removeReviewHelpful(int reviewId, int userNumber);
+
+	// 리뷰 도움됨 여부 확인
+	boolean checkReviewHelpful(int reviewId, int userNumber);
+
+	// 리뷰별 도움됨 개수 조회
+	int getReviewHelpfulCount(int reviewId);
 }

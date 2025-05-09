@@ -490,4 +490,78 @@ public class BookController {
 
 		return "user_book_borrowing";
 	}
+	
+	@PostMapping("/review_helpful")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> addReviewHelpful(@RequestParam("reviewId") int reviewId, HttpSession session) {
+	    Map<String, Object> response = new HashMap<>();
+	    
+	    try {
+	        // 로그인 확인
+	        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+	        if (loginUser == null) {
+	            response.put("success", false);
+	            response.put("message", "로그인이 필요합니다.");
+	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+	        }
+	        
+	        int userNumber = loginUser.getUserNumber();
+	        
+	        // 도움됨 추가
+	        boolean result = service.addReviewHelpful(reviewId, userNumber);
+	        
+	        if (result) {
+	            response.put("success", true);
+	            response.put("message", "리뷰에 도움됨을 표시했습니다.");
+	            response.put("helpfulCount", service.getReviewHelpfulCount(reviewId));
+	            return ResponseEntity.ok(response);
+	        } else {
+	            response.put("success", false);
+	            response.put("message", "이미 도움됨을 표시한 리뷰입니다.");
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        response.put("success", false);
+	        response.put("message", "도움됨 처리 중 오류가 발생했습니다: " + e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
+	}
+
+	@PostMapping("/review_unhelpful")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> removeReviewHelpful(@RequestParam("reviewId") int reviewId, HttpSession session) {
+	    Map<String, Object> response = new HashMap<>();
+	    
+	    try {
+	        // 로그인 확인
+	        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+	        if (loginUser == null) {
+	            response.put("success", false);
+	            response.put("message", "로그인이 필요합니다.");
+	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+	        }
+	        
+	        int userNumber = loginUser.getUserNumber();
+	        
+	        // 도움됨 취소
+	        boolean result = service.removeReviewHelpful(reviewId, userNumber);
+	        
+	        if (result) {
+	            response.put("success", true);
+	            response.put("message", "리뷰에 도움됨 표시를 취소했습니다.");
+	            response.put("helpfulCount", service.getReviewHelpfulCount(reviewId));
+	            return ResponseEntity.ok(response);
+	        } else {
+	            response.put("success", false);
+	            response.put("message", "도움됨 표시를 취소할 수 없습니다.");
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        response.put("success", false);
+	        response.put("message", "도움됨 취소 처리 중 오류가 발생했습니다: " + e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
+	}
 }

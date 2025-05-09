@@ -24,4 +24,5 @@ public class ReviewDTO {
     private String userName;        // 사용자 이름
     private boolean helpfulByCurrentUser; // 현재 사용자가 도움됨 표시했는지 여부
     private int helpfulCount;       // 도움됨 수
+    
 }

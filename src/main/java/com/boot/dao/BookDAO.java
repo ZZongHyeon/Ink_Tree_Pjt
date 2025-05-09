@@ -10,6 +10,7 @@ import com.boot.dto.BookDTO;
 import com.boot.dto.BookRecordDTO;
 import com.boot.dto.NoticeCriteriaDTO;
 import com.boot.dto.ReviewDTO;
+import com.boot.dto.ReviewHelpfulDTO;
 import com.boot.dto.SearchBookCriteriaDTO;
 import com.boot.dto.UserBookBorrowingCriteriaDTO;
 
@@ -75,4 +76,16 @@ public interface BookDAO {
 
 	// 도서별 리뷰 통계 조회 (페이징 없이 모든 리뷰 가져오기)
 	public ArrayList<ReviewDTO> getAllReviewsByBookNumber(int bookNumber);
+
+	// 리뷰 도움됨 추가
+	int addReviewHelpful(ReviewHelpfulDTO helpfulDTO);
+
+	// 리뷰 도움됨 취소
+	int removeReviewHelpful(ReviewHelpfulDTO helpfulDTO);
+
+	// 리뷰 도움됨 여부 확인
+	int checkReviewHelpful(ReviewHelpfulDTO helpfulDTO);
+
+	// 리뷰별 도움됨 개수 조회
+	int getReviewHelpfulCount(int reviewId);
 }
