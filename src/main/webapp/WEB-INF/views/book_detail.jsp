@@ -17,743 +17,7 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="/resources/css/board_view.css">
-    <style>
-        :root {
-            --primary: #4F46E5;
-            --primary-light: #EEF2FF;
-            --primary-dark: #4338CA;
-            --secondary: #10B981;
-            --danger: #EF4444;
-            --warning: #F59E0B;
-            --gray-50: #F9FAFB;
-            --gray-100: #F3F4F6;
-            --gray-200: #E5E7EB;
-            --gray-300: #D1D5DB;
-            --gray-400: #9CA3AF;
-            --gray-500: #6B7280;
-            --gray-600: #4B5563;
-            --gray-700: #374151;
-            --gray-800: #1F2937;
-            --gray-900: #111827;
-            --radius: 0.5rem;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Noto Sans KR', sans-serif;
-        }
-
-        body {
-            background-color: var(--gray-50);
-            color: var(--gray-800);
-            line-height: 1.5;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-
-        /* 헤더 */
-        .page-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .page-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .back-link {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--gray-600);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .back-link:hover {
-            color: var(--primary);
-        }
-
-        /* 메인 콘텐츠 */
-        .book-detail {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-
-        @media (min-width: 768px) {
-            .book-detail {
-                grid-template-columns: 380px 1fr;
-            }
-        }
-
-        /* 도서 이미지 및 액션 섹션 */
-        .book-sidebar {
-            position: sticky;
-            top: 5rem; /* 헤더 높이를 고려하여 상단 여백 증가 */
-            height: fit-content;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius);
-            padding: 1.25rem;
-            background-color: white;
-            box-shadow: var(--shadow);
-            z-index: 5; /* 다른 요소보다 위에 표시되도록 z-index 추가 */
-        }
-
-        .book-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: 0.25rem;
-            line-height: 1.3;
-        }
-
-        .book-author {
-            font-size: 0.875rem;
-            color: var(--gray-700);
-            margin-bottom: 0.75rem;
-        }
-
-        .book-categories {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.375rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .book-category {
-            background-color: var(--primary-light);
-            color: var(--primary);
-            padding: 0.25rem 0.5rem;
-            border-radius: 2rem;
-            font-size: 0.75rem;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .book-category:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .book-image-section {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .book-cover {
-            width: 100%;
-            aspect-ratio: 3/2;
-            background-color: var(--gray-100);
-            border-radius: var(--radius);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .book-cover-placeholder {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            color: var(--gray-400);
-        }
-
-        .book-cover-placeholder i {
-            font-size: 3rem;
-        }
-
-        .book-info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .book-meta-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.125rem;
-        }
-
-        .meta-label {
-            font-size: 0.75rem;
-            color: var(--gray-500);
-            font-weight: 500;
-        }
-
-        .meta-value {
-            font-size: 0.875rem;
-            color: var(--gray-800);
-            font-weight: 500;
-        }
-
-        .book-status {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .status-badge {
-            display: flex;
-            align-items: center;
-            gap: 0.375rem;
-            padding: 0.375rem 0.625rem;
-            border-radius: var(--radius);
-            font-weight: 500;
-            font-size: 0.75rem;
-        }
-
-        .available {
-            background-color: rgba(16, 185, 129, 0.1);
-            color: var(--secondary);
-        }
-
-        .unavailable {
-            background-color: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-        }
-
-        .count-badge {
-            background-color: var(--gray-100);
-            color: var(--gray-700);
-        }
-
-        .book-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 0.625rem;
-        }
-
-        .action-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.625rem 1rem;
-            border-radius: var(--radius);
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
-            outline: none;
-            text-decoration: none;
-        }
-
-        .primary-button {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .primary-button:hover {
-            background-color: var(--primary-dark);
-        }
-
-        .primary-button:disabled {
-            background-color: var(--gray-400);
-            cursor: not-allowed;
-        }
-
-        .secondary-button {
-            background-color: white;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-
-        .secondary-button:hover {
-            background-color: var(--primary-light);
-        }
-
-        .danger-button {
-            background-color: var(--danger);
-            color: white;
-        }
-
-        .danger-button:hover {
-            background-color: #DC2626;
-        }
-
-        .admin-dropdown {
-            position: relative;
-            margin-top: 0.5rem;
-        }
-
-        .admin-dropdown-toggle {
-            width: 100%;
-            text-align: center;
-            background-color: var(--gray-100);
-            color: var(--gray-700);
-            padding: 0.5rem;
-            border-radius: var(--radius);
-            cursor: pointer;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .admin-dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background-color: white;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-md);
-            z-index: 10;
-            margin-top: 0.25rem;
-        }
-
-        .admin-dropdown-menu.show {
-            display: block;
-        }
-
-        .admin-dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.625rem 1rem;
-            color: var(--gray-700);
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .admin-dropdown-item:hover {
-            background-color: var(--gray-100);
-        }
-
-        .admin-dropdown-item.danger {
-            color: var(--danger);
-        }
-
-        /* 도서 정보 섹션 */
-        .book-content {
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius);
-            background-color: white;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
-
-        /* 탭 섹션 */
-        .tabs {
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .tab-list {
-            display: flex;
-            list-style: none;
-            gap: 1rem;
-            padding: 0 1.5rem;
-        }
-
-        .tab-item {
-            padding: 1rem 0;
-            font-weight: 500;
-            color: var(--gray-500);
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
-        }
-
-        .tab-item.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
-
-        .tab-content {
-            padding: 1.5rem;
-        }
-
-        .tab-panel {
-            display: none;
-        }
-
-        .tab-panel.active {
-            display: block;
-        }
-
-        /* 도서 설명 */
-        .book-description {
-            color: var(--gray-700);
-            line-height: 1.7;
-            font-size: 1rem;
-        }
-
-        /* 리뷰 섹션 */
-        .reviews-section {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .review-stats {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            padding: 1.5rem;
-            background-color: var(--gray-100);
-            border-radius: var(--radius);
-            margin-bottom: 1.5rem;
-        }
-
-        .average-rating {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .rating-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--gray-900);
-        }
-
-        .rating-count {
-            font-size: 0.875rem;
-            color: var(--gray-500);
-        }
-
-        .rating-stars {
-            display: flex;
-            gap: 0.25rem;
-            color: var(--warning);
-            font-size: 1.25rem;
-        }
-
-        .rating-distribution {
-            flex: 1;
-        }
-
-        .rating-bar {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .rating-label {
-            width: 1.5rem;
-            text-align: right;
-            font-size: 0.875rem;
-            color: var(--gray-600);
-        }
-
-        .rating-progress {
-            flex: 1;
-            height: 0.5rem;
-            background-color: var(--gray-200);
-            border-radius: 1rem;
-            overflow: hidden;
-        }
-
-        .rating-progress-fill {
-            height: 100%;
-            background-color: var(--warning);
-        }
-
-        .rating-percent {
-            width: 2.5rem;
-            font-size: 0.875rem;
-            color: var(--gray-600);
-        }
-
-        .review-form {
-            padding: 1.25rem;
-            background-color: var(--gray-50);
-            border-radius: var(--radius);
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--gray-200);
-        }
-
-        .form-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--gray-900);
-            margin-bottom: 0.75rem;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--gray-700);
-        }
-
-        .rating-input {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .rating-input i {
-            font-size: 1.5rem;
-            color: var(--warning);
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .rating-input i.active {
-            color: var(--warning);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--gray-300);
-            border-radius: var(--radius);
-            font-size: 1rem;
-            color: var(--gray-800);
-            transition: border-color 0.2s;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        textarea.form-control {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .form-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-        }
-
-        .reviews-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        /* 리뷰 카드 스타일 수정 - 이미지와 같은 디자인 */
-        .review-card {
-            padding: 1.5rem;
-            background-color: var(--gray-50);
-            border-radius: var(--radius);
-            border: 1px solid var(--gray-200);
-        }
-
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-top: 2%;
-        }
-
-        .reviewer-info {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-		.reviewer-name-date {
-			display: flex;
-			align-items: center;
-			gap: 0.75rem;
-		}
-
-		.reviewer-name {
-			font-weight: 600;
-			color: var(--gray-900);
-			font-size: 1.3rem;
-		}
-        .review-date {
-            font-size: 0.875rem;
-            color: var(--gray-500);
-        }
-
-        .review-actions-top {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .review-action-icon {
-            color: var(--gray-400);
-            cursor: pointer;
-            transition: color 0.2s;
-            font-size: 1.125rem;
-        }
-
-        .review-action-icon:hover {
-            color: var(--primary);
-        }
-
-        .review-action-icon.like:hover, .review-action-icon.like.active {
-            color: var(--primary);
-        }
-
-        .review-action-icon.edit:hover {
-            color: var(--primary);
-        }
-
-        .review-action-icon.delete:hover {
-            color: var(--danger);
-        }
-
-		.review-title-rating {
-			display: flex;
-			align-items: center;
-			gap: 0.5rem;
-			margin-bottom: 0.5rem;
-			margin-top: 0px;
-		}
-
-		.review-title {
-			font-weight: 600;
-			color: var(--gray-900);
-			margin-bottom: 0;
-			font-size: 1.125rem;
-			margin-right: 0;
-		}
-
-		.review-rating {
-			display: flex;
-			gap: 0.1rem;
-			color: var(--warning);
-			font-size: 1.125rem;
-			flex-shrink: 0;
-		}
-
-        .review-content {
-            color: var(--gray-700);
-            line-height: 1.6;
-        }
-
-        /* 모달 */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.show {
-            display: flex;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .modal-content {
-            background-color: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            padding: 2rem;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-        }
-
-        .modal-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .modal-icon.success {
-            color: var(--secondary);
-        }
-
-        .modal-icon.error {
-            color: var(--danger);
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--gray-900);
-        }
-
-        .modal-message {
-            font-size: 1rem;
-            color: var(--gray-700);
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-actions {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        /* 애니메이션 */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        /* 페이지네이션 */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
-        }
-
-        .page-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: var(--radius);
-            background-color: white;
-            color: var(--gray-700);
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .page-item.active {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .page-item:hover:not(.active) {
-            background-color: var(--gray-100);
-        }
-    </style>
+	<link rel="stylesheet" type="text/css" href="/resources/css/book_detail.css">
 </head>
 
 <body>
@@ -772,7 +36,30 @@
         <div class="book-detail fade-in">
             <!-- 좌측 사이드바 -->
             <div class="book-sidebar">
-                <h2 class="book-title">${book.bookTitle}</h2>
+                <%
+                UserDTO user = (UserDTO) session.getAttribute("loginUser");
+                BookDTO book = (BookDTO) request.getAttribute("book");
+                %>
+                
+                <div class="book-title-container">
+                    <h2 class="book-title">${book.bookTitle}</h2>
+                    <% if (user != null && user.getUserAdmin() == 1) { %>
+                    <div class="admin-menu-container">
+                        <button type="button" class="admin-menu-button" onclick="toggleAdminMenu()" aria-label="관리자 메뉴">
+                            <i class="fa-solid fa-gear"></i>
+                        </button>
+                        <div class="admin-menu-dropdown" id="adminMenuDropdown">
+                            <a href="/update_book?bookNumber=${book.bookNumber}" class="admin-menu-item">
+                                <i class="fas fa-edit"></i> 도서 정보 수정
+                            </a>
+                            <button type="button" class="admin-menu-item danger" onclick="confirmDelete(${book.bookNumber})">
+                                <i class="fas fa-trash"></i> 도서 삭제
+                            </button>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+                
                 <p class="book-author">${book.bookWrite}</p>
                 
                 <div class="book-categories">
@@ -844,29 +131,6 @@
                         <button class="action-button secondary-button" onclick="addToWishlist(${book.bookNumber})">
                             <i class="fas fa-heart"></i> 위시리스트에 추가
                         </button>
-                        
-                        <%
-                        UserDTO user = (UserDTO) session.getAttribute("loginUser");
-                        BookDTO book = (BookDTO) request.getAttribute("book");
-                        
-                        if (user != null && user.getUserAdmin() == 1) {
-                        %>
-                        <div class="admin-dropdown">
-                            <div class="admin-dropdown-toggle" onclick="toggleAdminMenu()">
-                                <i class="fas fa-cog"></i> 관리자 기능
-                            </div>
-                            <div class="admin-dropdown-menu" id="adminMenu">
-                                <a href="/update_book?bookNumber=${book.bookNumber}" class="admin-dropdown-item">
-                                    <i class="fas fa-edit"></i> 도서 정보 수정
-                                </a>
-                                <div class="admin-dropdown-item danger" onclick="confirmDelete(${book.bookNumber})">
-                                    <i class="fas fa-trash"></i> 도서 삭제
-                                </div>
-                            </div>
-                        </div>
-                        <%
-                        }
-                        %>
                     </div>
                 </div>
             </div>
@@ -945,7 +209,7 @@
 										<input type="hidden" name="reviewId" id="reviewId" value="">
 										<input type="hidden" name="bookNumber" id="bookNumberInput" value="${book.bookNumber}">
                                         <div class="form-group">
-                                            <label class="form-label">평점</label>
+<!--                                            <label class="form-label">평점</label>-->
                                             <div class="rating-input">
                                                 <i class="far fa-star" data-rating="1"></i>
                                                 <i class="far fa-star" data-rating="2"></i>
@@ -956,11 +220,11 @@
                                             <input type="hidden" name="rating" id="ratingInput" value="0">
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label" for="reviewTitle">제목</label>
+<!--                                            <label class="form-label" for="reviewTitle">제목</label>-->
                                             <input type="text" class="form-control" id="reviewTitle" name="title" placeholder="리뷰 제목을 입력하세요" required>
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label" for="reviewContent">내용</label>
+<!--                                            <label class="form-label" for="reviewContent">내용</label>-->
                                             <textarea class="form-control" id="reviewContent" name="content" placeholder="리뷰 내용을 입력하세요" required></textarea>
                                         </div>
 										<div class="form-actions">
@@ -970,102 +234,108 @@
                                     </form>
                                 </div>
 
-								<!-- <h3>${pageMaker}</h3> -->
-
-								<div class="div_page">
-								    <ul>
-								        <c:if test="${pageMaker.prev}">
-								            <li class="paginate_button">
-								                <a href="${pageMaker.startPage - 1}">
-								                    <i class="fas fa-caret-left"></i>
-								                </a>
-								            </li>
-								        </c:if>
-
-								        <c:forEach var="num" begin="${pageMaker.startPage}"
-								            end="${pageMaker.endPage}">
-								            <li
-								                class="paginate_button ${pageMaker.noticeCriteriaDTO.pageNum==num ? 'active' : ''}">
-								                <a href="${num}">
-								                    ${num}
-								                </a>
-								            </li>
-								        </c:forEach>
-
-								        <c:if test="${pageMaker.next}">
-								            <li class="paginate_button">
-								                <a href="${pageMaker.endPage+1}">
-								                    <i class="fas fa-caret-right"></i>
-								                </a>
-								            </li>
-								        </c:if>
-								    </ul>
-								</div>
-								<form id="actionForm" action="book_detail" method="get">
-								    <input type="hidden" name="pageNum" value="${pageMaker.noticeCriteriaDTO.pageNum}">
-								    <input type="hidden" name="amount" value="${pageMaker.noticeCriteriaDTO.amount}">
-								    <input type="hidden" name="bookNumber" value="${book.bookNumber}">
-								    <c:if test="${not empty pageMaker.noticeCriteriaDTO.type}">
-								        <input type="hidden" name="type" value="${pageMaker.noticeCriteriaDTO.type}">
-								    </c:if>
-								    <c:if test="${not empty pageMaker.noticeCriteriaDTO.keyword}">
-								        <input type="hidden" name="keyword" value="${pageMaker.noticeCriteriaDTO.keyword}">
-								    </c:if>
-								</form>
 								<div class="reviews-list">
 									<!-- 리뷰 목록 반복 -->
 									<c:forEach var="review" items="${reviewList}">
 										<div class="review-card">
-											<div class="review-rating">
-												<c:forEach begin="1" end="5" var="i">
-													<c:choose>
-														<c:when test="${i <= review.reviewRating}">
-															<i class="fas fa-star"></i>
-														</c:when>
-														<c:otherwise>
-															<i class="far fa-star"></i>
-														</c:otherwise>
-													</c:choose>
-												</c:forEach>
-											</div>
-											<div class="review-header">
-												<div class="reviewer-info">
-													<div class="reviewer-name-date">
-														<span class="reviewer-name">${review.userName}</span>
-														<span class="review-date"><fmt:formatDate value="${review.reviewDate}" pattern="yyyy-MM-dd" /></span>
-													</div>
-												</div>
-												<div class="review-actions-top">
-													<i class="far fa-thumbs-up review-action-icon like ${review.helpfulByCurrentUser ? 'active' : ''}" 
-													   onclick="markHelpful(${review.reviewId}, this)" 
-													   title="도움됨"></i>
-													<c:if test="${loginUser.userNumber == review.userNumber || loginUser.userAdmin == 1}">
-														<i class="fas fa-edit review-action-icon edit" 
-														   onclick="editReview(${review.reviewId})" 
-														   title="수정"></i>
-														<i class="fas fa-trash-alt review-action-icon delete" 
-														   onclick="confirmDeleteReview(${review.reviewId})" 
-														   title="삭제"></i>
-													</c:if>
-												</div>
-											</div>
-											
-											<div class="review-title-rating">
-												<h4 class="review-title">${review.reviewTitle}</h4>
-
-											</div>
-											
-											<div class="review-content">
-												<p>${review.reviewContent}</p>
-											</div>
+										    <input type="hidden" class="review-id-hidden" value="${review.reviewId}">
+										    <div class="review-header">
+										        <div class="reviewer-info">
+										            <div class="reviewer-name-date">
+										                <span class="reviewer-name">${review.userName}</span>
+										                <span class="review-date"><fmt:formatDate value="${review.reviewDate}" pattern="yyyy-MM-dd" /></span>
+										            </div>
+										        </div>
+										        <div class="review-actions-top">
+										            <i class="far fa-thumbs-up review-action-icon like ${review.helpfulByCurrentUser ? 'active' : ''}" 
+										               onclick="markHelpful(${review.reviewId}, this)" 
+										               title="도움됨"></i>
+										            <c:if test="${loginUser.userNumber == review.userNumber || loginUser.userAdmin == 1}">
+										                <!-- onclick 속성 제거 -->
+										                <i class="fas fa-edit review-action-icon edit" 
+										                   title="수정"></i>
+										                <i class="fas fa-trash-alt review-action-icon delete" 
+										                   onclick="confirmDeleteReview(${review.reviewId})" 
+										                   title="삭제"></i>
+										            </c:if>
+										        </div>
+										    </div>
+										    <div class="review-rating">
+										        <c:forEach begin="1" end="5" var="i">
+										            <c:choose>
+										                <c:when test="${i <= review.reviewRating}">
+										                    <i class="fas fa-star"></i>
+										                </c:when>
+										                <c:otherwise>
+										                    <i class="far fa-star"></i>
+										                </c:otherwise>
+										            </c:choose>
+										        </c:forEach>
+										    </div>
+										    
+										    <div class="review-title-rating">
+										        <h4 class="review-title">${review.reviewTitle}</h4>
+										    </div>
+										    
+										    <div class="review-content">
+										        <p>${review.reviewContent}</p>
+										    </div>
 										</div>
 									</c:forEach>
-									
+
+									<!-- <h3>${pageMaker}</h3> -->
+
+									<div class="div_page">
+									    <ul>
+									        <c:if test="${pageMaker.prev}">
+									            <li class="paginate_button">
+									                <a href="${pageMaker.startPage - 1}">
+									                    <i class="fas fa-caret-left"></i>
+									                </a>
+									            </li>
+									        </c:if>
+
+									        <c:forEach var="num" begin="${pageMaker.startPage}"
+									            end="${pageMaker.endPage}">
+									            <li
+									                class="paginate_button ${pageMaker.noticeCriteriaDTO.pageNum==num ? 'active' : ''}">
+									                <a href="${num}">
+									                    ${num}
+									                </a>
+									            </li>
+									        </c:forEach>
+
+									        <c:if test="${pageMaker.next}">
+									            <li class="paginate_button">
+									                <a href="${pageMaker.endPage+1}">
+									                    <i class="fas fa-caret-right"></i>
+									                </a>
+									            </li>
+									        </c:if>
+									    </ul>
+									</div>
+									<form id="actionForm" action="book_detail" method="get">
+									    <input type="hidden" name="pageNum" value="${pageMaker.noticeCriteriaDTO.pageNum}">
+									    <input type="hidden" name="amount" value="${pageMaker.noticeCriteriaDTO.amount}">
+									    <input type="hidden" name="bookNumber" value="${book.bookNumber}">
+									    <c:if test="${not empty pageMaker.noticeCriteriaDTO.type}">
+									        <input type="hidden" name="type" value="${pageMaker.noticeCriteriaDTO.type}">
+									    </c:if>
+									    <c:if test="${not empty pageMaker.noticeCriteriaDTO.keyword}">
+									        <input type="hidden" name="keyword" value="${pageMaker.noticeCriteriaDTO.keyword}">
+									    </c:if>
+									</form>
 									<!-- 리뷰가 없는 경우 메시지 표시 -->
 									<c:if test="${empty reviewList}">
-										<div class="no-reviews">
-											<p>아직 등록된 리뷰가 없습니다. 첫 번째 리뷰를 작성해보세요!</p>
-										</div>
+									    <div class="no-reviews">
+									        <div class="no-reviews-content">
+									            <div class="no-reviews-icon">
+									                <i class="fas fa-comment-slash"></i>
+									            </div>
+									            <h3 class="no-reviews-title">아직 등록된 리뷰가 없습니다</h3>
+									            <p class="no-reviews-message">이 책에 대한 첫 번째 리뷰를 작성해보세요!</p>
+									        </div>
+									    </div>
 									</c:if>
 									
 								</div>
@@ -1133,42 +403,412 @@
     <input type="hidden" id="deleteReviewId" value="">
 
     <script>
+
+		// 리뷰 수정 관련 JavaScript 코드 - 별 아이콘 유지 버전
+		$(document).ready(function() {
+		    // 리뷰 수정 버튼 클릭 이벤트
+		    $(document).on('click', '.review-action-icon.edit', function(e) {
+		        e.preventDefault();
+		        
+		        // 리뷰 카드와 리뷰 ID 찾기
+		        var reviewCard = $(this).closest('.review-card');
+		        var reviewId = reviewCard.find('.review-id-hidden').val();
+		        
+		        console.log('수정 버튼 클릭, 리뷰 ID:', reviewId);
+		        
+		        // 현재 리뷰 데이터 가져오기
+		        var reviewTitle = reviewCard.find('.review-title').text().trim();
+		        var reviewContent = reviewCard.find('.review-content p').text().trim();
+		        
+		        // 별점 계산 - 채워진 별의 개수 세기
+		        var reviewRating = reviewCard.find('.review-rating .fas.fa-star').length;
+		        console.log('현재 별점:', reviewRating);
+		        
+		        // 원래 내용 저장 (취소 시 복원용)
+		        reviewCard.data('originalTitle', reviewTitle);
+		        reviewCard.data('originalContent', reviewContent);
+		        reviewCard.data('originalRating', reviewRating);
+		        
+		        // 리뷰 제목을 입력 필드로 변경
+		        var titleInput = $('<input>').attr({
+		            'type': 'text',
+		            'class': 'edit-review-title',
+		            'value': reviewTitle,
+		            'placeholder': '리뷰 제목'
+		        });
+		        reviewCard.find('.review-title').empty().append(titleInput);
+		        
+		        // 리뷰 내용을 텍스트 영역으로 변경
+		        var contentTextarea = $('<textarea>').attr({
+		            'class': 'edit-review-content',
+		            'placeholder': '리뷰 내용'
+		        }).text(reviewContent);
+		        reviewCard.find('.review-content').empty().append(contentTextarea);
+		        
+		        // 별점 편집 UI 추가 - 별 아이콘 방식
+		        var ratingDiv = $('<div>').attr('class', 'edit-rating');
+		        
+		        // 별점 값을 저장할 hidden input 추가
+		        var ratingInput = $('<input>').attr({
+		            'type': 'hidden',
+		            'id': 'edit-rating-value',
+		            'value': reviewRating
+		        });
+		        
+		        // 별 아이콘 추가
+		        for (var i = 1; i <= 5; i++) {
+		            var starClass = (i <= reviewRating) ? 'fas fa-star' : 'far fa-star';
+		            var star = $('<i>').attr({
+		                'class': starClass + ' edit-star',
+		                'data-value': i
+		            });
+		            ratingDiv.append(star);
+		        }
+		        
+		        reviewCard.find('.review-rating').empty().append(ratingDiv).append(ratingInput);
+		        
+		        // 별점 클릭 이벤트 바인딩
+		        reviewCard.find('.edit-star').on('click', function() {
+		            var value = $(this).data('value');
+		            console.log('별점 클릭:', value);
+		            
+		            // 별점 UI 업데이트
+		            reviewCard.find('.edit-star').each(function(index) {
+		                if (index < value) {
+		                    $(this).removeClass('far').addClass('fas');
+		                } else {
+		                    $(this).removeClass('fas').addClass('far');
+		                }
+		            });
+		            
+		            // 별점 값 저장
+		            reviewCard.find('#edit-rating-value').val(value);
+		        });
+		        
+		        // 수정 완료/취소 버튼 추가
+		        var cancelButton = $('<button>').attr({
+		            'type': 'button',
+		            'class': 'action-button secondary-button cancel-edit'
+		        }).text('취소');
+		        
+		        var saveButton = $('<button>').attr({
+		            'type': 'button',
+		            'class': 'action-button primary-button save-edit',
+		            'data-review-id': reviewId
+		        }).text('저장');
+		        
+		        var actionsDiv = $('<div>').attr('class', 'edit-actions')
+		            .append(cancelButton)
+		            .append(saveButton);
+		        
+		        reviewCard.find('.review-content').append(actionsDiv);
+		        
+		        // 수정 모드 표시
+		        reviewCard.addClass('editing');
+		    });
+		    
+		    // 취소 버튼 클릭 이벤트
+		    $(document).on('click', '.cancel-edit', function() {
+		        var reviewCard = $(this).closest('.review-card');
+		        
+		        // 원래 데이터 복원
+		        var originalTitle = reviewCard.data('originalTitle');
+		        var originalContent = reviewCard.data('originalContent');
+		        var originalRating = reviewCard.data('originalRating');
+		        
+		        // 제목 복원
+		        reviewCard.find('.review-title').html(originalTitle);
+		        
+		        // 내용 복원
+		        reviewCard.find('.review-content').html('<p>' + originalContent + '</p>');
+		        
+		        // 별점 복원
+		        var ratingHtml = '';
+		        for (var i = 1; i <= 5; i++) {
+		            if (i <= originalRating) {
+		                ratingHtml += '<i class="fas fa-star"></i>';
+		            } else {
+		                ratingHtml += '<i class="far fa-star"></i>';
+		            }
+		        }
+		        reviewCard.find('.review-rating').html(ratingHtml);
+		        
+		        // 수정 모드 해제
+		        reviewCard.removeClass('editing');
+		    });
+		    
+		    // 저장 버튼 클릭 이벤트 - AJAX 직접 사용
+		    $(document).on('click', '.save-edit', function() {
+		        var reviewCard = $(this).closest('.review-card');
+		        var reviewId = $(this).data('review-id');
+		        
+		        // 수정된 데이터 가져오기
+		        var editedTitle = reviewCard.find('.edit-review-title').val();
+		        var editedContent = reviewCard.find('.edit-review-content').val();
+		        
+		        // 별점 값 가져오기
+		        var editedRating = parseInt(reviewCard.find('#edit-rating-value').val());
+		        console.log('저장할 별점:', editedRating);
+		        
+		        // 유효성 검사
+		        if (!editedTitle || !editedTitle.trim()) {
+		            alert('리뷰 제목을 입력해주세요.');
+		            return;
+		        }
+		        
+		        if (!editedContent || !editedContent.trim()) {
+		            alert('리뷰 내용을 입력해주세요.');
+		            return;
+		        }
+		        
+		        // 별점 유효성 검사
+		        if (isNaN(editedRating) || editedRating < 1 || editedRating > 5) {
+		            alert('유효한 별점을 선택해주세요.');
+		            return;
+		        }
+		        
+		        // AJAX로 전송
+		        $.ajax({
+		            type: "post",
+		            url: "updateReview",
+		            data: {
+		                reviewId: reviewId,
+		                reviewTitle: editedTitle,
+		                reviewContent: editedContent,
+		                reviewRating: editedRating,
+		                bookNumber: $('input[name="bookNumber"]').val()
+		            },
+		            success: function(response) {
+		                console.log('서버 응답:', response);
+		                
+		                if (response.success) {
+		                    // 성공 시 UI 업데이트
+		                    reviewCard.find('.review-title').html(editedTitle);
+		                    reviewCard.find('.review-content').html('<p>' + editedContent + '</p>');
+		                    
+		                    // 별점 업데이트
+		                    var ratingHtml = '';
+		                    for (var i = 1; i <= 5; i++) {
+		                        if (i <= editedRating) {
+		                            ratingHtml += '<i class="fas fa-star"></i>';
+		                        } else {
+		                            ratingHtml += '<i class="far fa-star"></i>';
+		                        }
+		                    }
+		                    reviewCard.find('.review-rating').html(ratingHtml);
+		                    
+		                    // 수정 모드 해제
+		                    reviewCard.removeClass('editing');
+		                    
+		                    // 성공 메시지 표시
+		                    showModal('success', '리뷰 수정 완료', '리뷰가 성공적으로 수정되었습니다.');
+		                } else {
+		                    showModal('error', '수정 실패', response.message || '리뷰 수정에 실패했습니다.');
+		                }
+		            },
+		            error: function(xhr, status, error) {
+		                console.error("AJAX 오류:", status, error);
+		                
+		                var errorMessage = '리뷰 수정 중 오류가 발생했습니다.';
+		                try {
+		                    var response = JSON.parse(xhr.responseText);
+		                    if (response.message) {
+		                        errorMessage = response.message;
+		                    }
+		                } catch (e) {
+		                    console.error('JSON 파싱 오류:', e);
+		                }
+		                
+		                showModal('error', '오류 발생', errorMessage);
+		            }
+		        });
+		    });
+		    
+		    // 별점 표시를 위한 CSS 추가
+		    var starRatingStyles = `
+		    .edit-rating {
+		        margin-bottom: 15px;
+		    }
+		    .edit-star {
+		        cursor: pointer;
+		        font-size: 20px;
+		        color: #ffc107;
+		        margin-right: 5px;
+		        transition: all 0.2s ease;
+		    }
+		    .edit-star:hover {
+		        transform: scale(1.2);
+		    }
+		    .edit-actions {
+		        display: flex;
+		        justify-content: flex-end;
+		        gap: 10px;
+		        margin-top: 15px;
+		    }
+		    .cancel-edit, .save-edit {
+		        padding: 6px 12px;
+		        font-size: 14px;
+		    }
+		    `;
+		    
+		    // 스타일 태그가 이미 있는지 확인
+		    if (!$('#starRatingStyles').length) {
+		        $('<style id="starRatingStyles">' + starRatingStyles + '</style>').appendTo('head');
+		    }
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		// 페이징처리
 		var actionForm = $("#actionForm");
 
-		// 페이지번호 처리
+		// 페이징처리 - AJAX로 변경하여 새로고침 방지
 		$(".paginate_button a").on("click", function (e) {
 		    e.preventDefault();
-		    console.log("click했음");
-		    console.log("@# href => " + $(this).attr("href"));
-
-		    // actionForm.find("input[name='pageNum']").val(this).attr("href");
-		    actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-
-		    // 버그처리(게시글 클릭 후 뒤로가기 누른 후 다른 페이지 클릭 할 때 content_view2가 작동되는 것을 해결)
-		    actionForm.attr("action", "book_detail").submit();
-		}); // end of paginate_button click
-
-		// 게시글 처리
-		$(".move_link").on("click", function (e) {
-		    e.preventDefault();
-		    console.log("move_link click");
-		    console.log("@# click => " + $(this).attr("href"));
-
-		    var targetBno = $(this).attr("href");
-
-		    // 버그처리(게시글 클릭 후 뒤로가기 누른 후 다른 게시글 클릭 할 때 &boardNo=번호 게속 누적되는 거 방지)
-		    var bno = actionForm.find("input[name='bookNumber']").val();
-		    if (bno != "") {
-		        actionForm.find("input[name='bookNumber']").remove();
-		    }
-
-		    // "content_view?boardNo=${dto.boardNo}"를 actionForm로 처리
-		    actionForm.append("<input type='hidden' name='bookNumber' value='" + targetBno + "'>");
-		    // actionForm.submit();
-		    // 컨트롤러에 content_view로 찾아감
-		    actionForm.attr("action", "book_detail").submit();
+		    console.log("페이지 클릭");
+		    
+		    // 페이지 번호 가져오기
+		    const pageNum = $(this).attr("href");
+		    
+		    // 현재 활성화된 탭을 세션 스토리지에 저장
+		    sessionStorage.setItem("activeTab", "reviews");
+		    
+		    // 페이지 번호 업데이트
+		    actionForm.find("input[name='pageNum']").val(pageNum);
+			// 현재 활성화된 탭을 세션 스토리지에 저장
+			sessionStorage.setItem("activeTab", "reviews");
+		    // AJAX 요청으로 리뷰 목록만 업데이트
+		    $.ajax({
+		        type: "get",
+		        url: "book_detail",
+		        data: actionForm.serialize(),
+		        success: function(response) {
+		            // 응답에서 리뷰 목록 부분만 추출
+		            const reviewsHtml = $(response).find('.reviews-list').html();
+		            const paginationHtml = $(response).find('.div_page').html();
+		            
+		            // 리뷰 목록과 페이지네이션 업데이트
+		            $('.reviews-list').html(reviewsHtml);
+		            $('.div_page').html(paginationHtml);
+		            
+		            // 페이지네이션 이벤트 다시 바인딩
+		            bindPaginationEvents();
+		            
+		            // 현재 페이지 버튼 활성화
+		            $('.paginate_button').removeClass('active');
+		            $(`.paginate_button a[href="${pageNum}"]`).parent().addClass('active');
+		        },
+		        error: function() {
+		            showModal('error', '오류 발생', '페이지 로드 중 오류가 발생했습니다.');
+		        }
+		    });
 		});
+
+		// 페이지네이션 이벤트 바인딩 함수 완전히 새로 작성
+		function bindPaginationEvents() {
+		    $(".paginate_button a").on("click", function (e) {
+		        e.preventDefault();
+		        console.log("페이지 클릭");
+		        
+		        // 페이지 번호 가져오기
+		        const pageNum = $(this).attr("href");
+		        console.log("클릭한 페이지 번호:", pageNum);
+		        
+		        // 현재 활성화된 탭을 세션 스토리지에 저장
+		        sessionStorage.setItem("activeTab", "reviews");
+		        
+		        // 페이지 번호 업데이트
+		        actionForm.find("input[name='pageNum']").val(pageNum);
+		        
+		        // AJAX 요청으로 리뷰 목록만 업데이트
+		        $.ajax({
+		            type: "get",
+		            url: "book_detail",
+		            data: actionForm.serialize(),
+		            success: function(response) {
+		                // 응답에서 리뷰 목록 부분만 추출
+		                const reviewsHtml = $(response).find('.reviews-list').html();
+		                const paginationHtml = $(response).find('.div_page').html();
+		                
+		                // 리뷰 목록과 페이지네이션 업데이트
+		                $('.reviews-list').html(reviewsHtml);
+		                $('.div_page').html(paginationHtml);
+		                
+		                // 페이지네이션 이벤트 다시 바인딩
+		                bindPaginationEvents();
+		                
+		                // 현재 페이지 버튼 활성화 - 직접 DOM 조작
+		                document.querySelectorAll('.paginate_button').forEach(button => {
+		                    button.classList.remove('active');
+		                    const link = button.querySelector('a');
+		                    if (link && link.getAttribute('href') === pageNum) {
+		                        button.classList.add('active');
+		                    }
+		                });
+		            },
+		            error: function() {
+		                showModal('error', '오류 발생', '페이지 로드 중 오류가 발생했습니다.');
+		            }
+		        });
+		    });
+		}
+
+		// 페이지 로드 시 페이지네이션 이벤트 바인딩 및 현재 페이지 활성화
+		$(document).ready(function() {
+		    bindPaginationEvents();
+		    
+		    // 현재 페이지 번호 가져오기
+		    const currentPage = actionForm.find("input[name='pageNum']").val();
+		    
+		    // 현재 페이지 버튼 활성화
+		    if (currentPage) {
+		        document.querySelectorAll('.paginate_button').forEach(button => {
+		            const link = button.querySelector('a');
+		            if (link && link.getAttribute('href') === currentPage) {
+		                button.classList.add('active');
+		            }
+		        });
+		    }
+		});
+
+		// 페이지 로드 시 페이지네이션 이벤트 바인딩
+		$(document).ready(function() {
+		    bindPaginationEvents();
+		});
+        
+        // 페이지 로드 시 탭 상태 복원
+        document.addEventListener('DOMContentLoaded', function() {
+            // 세션 스토리지에서 활성 탭 확인
+            const activeTab = sessionStorage.getItem("activeTab");
+            if (activeTab === "reviews") {
+                // 리뷰 탭 활성화
+                document.querySelectorAll('.tab-item').forEach(tab => {
+                    tab.classList.remove('active');
+                    if (tab.dataset.tab === 'reviews') {
+                        tab.classList.add('active');
+                    }
+                });
+                
+                // 리뷰 패널 표시
+                document.querySelectorAll('.tab-panel').forEach(panel => {
+                    panel.classList.remove('active');
+                    if (panel.id === 'reviews') {
+                        panel.classList.add('active');
+                    }
+                });
+                
+                // 세션 스토리지 초기화 (수동 탭 변경 시 문제 방지)
+                sessionStorage.removeItem("activeTab");
+            }
+        });
+        
         // 탭 기능
         document.querySelectorAll('.tab-item').forEach(tab => {
             tab.addEventListener('click', () => {
@@ -1179,26 +819,35 @@
                 // 탭 패널 변경
                 document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
                 document.getElementById(tab.dataset.tab).classList.add('active');
+                
+                // 탭 변경 시 세션 스토리지 초기화
+                sessionStorage.removeItem("activeTab");
             });
         });
 
-        // 관리자 드롭다운 메뉴
+        // 관리자 햄버거 메뉴 토글
         function toggleAdminMenu() {
-            document.getElementById('adminMenu').classList.toggle('show');
-        }
-
-        // 클릭 시 드롭다운 메뉴 닫기
-        window.addEventListener('click', function(event) {
-            if (!event.target.matches('.admin-dropdown-toggle') && !event.target.closest('.admin-dropdown-toggle')) {
-                const dropdowns = document.getElementsByClassName('admin-dropdown-menu');
-                for (let i = 0; i < dropdowns.length; i++) {
-                    const openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
+            const dropdown = document.getElementById('adminMenuDropdown');
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+            } else {
+                dropdown.style.display = 'block';
+                
+                // 외부 클릭 시 메뉴 닫기
+                document.addEventListener('click', closeMenuOnClickOutside);
             }
-        });
+        }
+        
+        // 외부 클릭 시 메뉴 닫기 함수
+        function closeMenuOnClickOutside(event) {
+            const dropdown = document.getElementById('adminMenuDropdown');
+            const button = document.querySelector('.admin-menu-button');
+            
+            if (!dropdown.contains(event.target) && !button.contains(event.target)) {
+                dropdown.style.display = 'none';
+                document.removeEventListener('click', closeMenuOnClickOutside);
+            }
+        }
 
         // 별점 선택 기능
         document.querySelectorAll('.rating-input i').forEach(star => {
@@ -1251,8 +900,7 @@
                 star.className = 'far fa-star';
             });
             document.querySelector('.form-title').textContent = '리뷰 작성하기';
-            document.querySelector('.form-actions button[type="submit"]').textContent = '리뷰 등록';
-            document.getElementById('reviewForm').action = "add_review";
+            document.querySelector('.form-actions button.primary-button').textContent = '리뷰 등록';
         }
 
 		// 리뷰 제출
@@ -1299,6 +947,8 @@
 		                
 		                // 1.5초 후 페이지 새로고침하여 리뷰 목록 갱신
 		                setTimeout(function() {
+		                    // 리뷰 탭 상태 유지를 위해 세션 스토리지에 저장
+		                    sessionStorage.setItem("activeTab", "reviews");
 		                    location.reload();
 		                }, 1500);
 		            } else {
@@ -1368,47 +1018,45 @@
                 }
             });
         }
-        
-        // 리뷰 수정 함수
-        function editReview(reviewId) {
-            // AJAX로 리뷰 정보 가져오기
-            $.ajax({
-                type: "get",
-                url: "get_review",
-                data: { reviewId: reviewId },
-                success: function(review) {
-                    // 리뷰 폼에 데이터 채우기
-                    document.getElementById('reviewForm').action = "update_review";
-                    document.getElementById('reviewId').value = review.reviewId;
-                    document.getElementById('reviewTitle').value = review.reviewTitle;
-                    document.getElementById('reviewContent').value = review.reviewContent;
-                    
-                    // 별점 설정
-                    const rating = review.reviewRating;
-                    document.getElementById('ratingInput').value = rating;
-                    
-                    // 별점 UI 업데이트
-                    document.querySelectorAll('.rating-input i').forEach((s, index) => {
-                        if (index < rating) {
-                            s.className = 'fas fa-star';
-                        } else {
-                            s.className = 'far fa-star';
-                        }
-                    });
-                    
-                    // 폼 제목 및 버튼 텍스트 변경
-                    document.querySelector('.form-title').textContent = '리뷰 수정하기';
-                    document.querySelector('.form-actions button[type="submit"]').textContent = '리뷰 수정';
-                    
-                    // 리뷰 폼으로 스크롤
-                    document.querySelector('.review-form').scrollIntoView({ behavior: 'smooth' });
-                },
-                error: function() {
-                    showModal('error', '오류 발생', '리뷰 정보를 가져오는 중 오류가 발생했습니다.');
-                }
-            });
-        }
 
+		// 별점 표시를 위한 CSS 추가
+		function addStarRatingStyles() {
+		    const style = `
+		    .edit-rating {
+		        margin-bottom: 15px;
+		    }
+		    .edit-star {
+		        cursor: pointer;
+		        font-size: 20px;
+		        color: #ffc107;
+		        margin-right: 5px;
+		        transition: all 0.2s ease;
+		    }
+		    .edit-star:hover {
+		        transform: scale(1.2);
+		    }
+		    .edit-actions {
+		        display: flex;
+		        justify-content: flex-end;
+		        gap: 10px;
+		        margin-top: 15px;
+		    }
+		    .cancel-edit, .save-edit {
+		        padding: 6px 12px;
+		        font-size: 14px;
+		    }
+		    `;
+		    
+		    // 스타일 태그가 이미 있는지 확인
+		    if (!$('#starRatingStyles').length) {
+		        $('<style id="starRatingStyles">' + style + '</style>').appendTo('head');
+		    }
+		}
+
+		// 페이지 로드 시 스타일 추가
+		$(document).ready(function() {
+		    addStarRatingStyles();
+		});
         // 리뷰 삭제 확인 모달 표시
         function confirmDeleteReview(reviewId) {
             // 삭제 확인 모달 표시
@@ -1422,13 +1070,15 @@
             
             $.ajax({
                 type: "post",
-                url: "delete_review",
+                url: "deleteReview",
                 data: { reviewId: reviewId },
                 success: function(response) {
                     if (response.success) {
                         showModal('success', '삭제 완료', '리뷰가 성공적으로 삭제되었습니다.');
                         // 페이지 새로고침 또는 리뷰 목록 갱신
                         setTimeout(() => {
+                            // 리뷰 탭 상태 유지를 위해 세션 스토리지에 저장
+                            sessionStorage.setItem("activeTab", "reviews");
                             location.reload();
                         }, 1500);
                     } else {

@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,116 +36,209 @@ import com.boot.service.BoardCommentServiceImpl;
 import com.boot.service.BookService;
 import com.boot.service.UtilService;
 
-
 @Controller
 public class BookController {
 
-    private final BoardCommentServiceImpl boardCommentServiceImpl;
+	private final BoardCommentServiceImpl boardCommentServiceImpl;
 
 	@Autowired
 	private BookService service;
 	@Autowired
 	private UtilService utilService;
 
-    BookController(BoardCommentServiceImpl boardCommentServiceImpl) {
-        this.boardCommentServiceImpl = boardCommentServiceImpl;
-    }
-	
-    
+	BookController(BoardCommentServiceImpl boardCommentServiceImpl) {
+		this.boardCommentServiceImpl = boardCommentServiceImpl;
+	}
 
-    
-//	@PostMapping("/checkReview")
-//	public ResponseEntity<Map<String, Object>> checkReview(@RequestParam HashMap<String, String> param){
-//		Map<String, Object> response = new HashMap<>();
-//	    // 이미 리뷰를 작성했는지 확인
-//	    if (service.checkReview(param) == 1) {
-//	        response.put("success", false);
-//	        response.put("message", "이미 이 도서에 대한 리뷰를 작성하셨습니다.");
-//	        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
-//	    }
-//	}
-    
-	@PostMapping("/insertReview")
-	public ResponseEntity<Map<String, Object>> insertReview(
-	        @RequestParam HashMap<String, String> param,
-	        HttpSession session) {
-	    
-	    Map<String, Object> response = new HashMap<>();
-	    
+	@GetMapping("/get_review")
+	@ResponseBody
+	public ResponseEntity<?> getReviewById(@RequestParam("reviewId") int reviewId) {
 	    try {
-	    	
-	    	System.out.println("전달된 파라미터: " + param);
+	        ReviewDTO review = service.getReviewById(reviewId);
+	        if (review == null) {
+	            Map<String, Object> response = new HashMap<>();
+	            response.put("success", false);
+	            response.put("message", "리뷰를 찾을 수 없습니다.");
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+	        }
+	        return ResponseEntity.ok(review);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        Map<String, Object> response = new HashMap<>();
+	        response.put("success", false);
+	        response.put("message", "리뷰 정보를 가져오는 중 오류가 발생했습니다.");
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
+	}
 
+	@PostMapping("/updateReview")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> updateReview(ReviewDTO reviewDTO, HttpSession session) {
+	    Map<String, Object> response = new HashMap<>();
+
+	    try {
 	        // 로그인 확인
 	        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-	        
-	        if (!param.containsKey("reviewRating") || param.get("reviewRating").trim().isEmpty()) {
+	        if (loginUser == null) {
 	            response.put("success", false);
-	            response.put("message", "평점을 선택해주세요.");
-	            return ResponseEntity.badRequest().body(response);
+	            response.put("message", "로그인이 필요합니다.");
+	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
 	        }
+
+	        // 사용자 번호 설정
+	        reviewDTO.setUserNumber(loginUser.getUserNumber());
 	        
-	        if (!param.containsKey("reviewTitle") || param.get("reviewTitle").trim().isEmpty()) {
+	        // 현재 날짜를 java.sql.Date로 설정
+	        long millis = System.currentTimeMillis();
+	        reviewDTO.setReviewModifiedDate(new java.sql.Date(millis));
+	        
+	        // 디버깅을 위한 로그 출력
+	        System.out.println("수정 요청 데이터: " + reviewDTO);
+	        
+	        // 리뷰 수정 서비스 호출
+	        int result = service.updateReview(reviewDTO);
+
+	        if (result == 1) {
+	            response.put("success", true);
+	            response.put("message", "리뷰가 성공적으로 수정되었습니다.");
+	            return ResponseEntity.ok(response);
+	        } else {
 	            response.put("success", false);
-	            response.put("message", "제목을 입력해주세요.");
-	            return ResponseEntity.badRequest().body(response);
+	            response.put("message", "리뷰 수정에 실패했습니다.");
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 	        }
-	        
-	        if (!param.containsKey("reviewContent") || param.get("reviewContent").trim().isEmpty()) {
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        response.put("success", false);
+	        response.put("message", "리뷰 수정 중 오류가 발생했습니다: " + e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
+	}
+
+	@PostMapping("/deleteReview")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> deleteReview(@RequestParam("reviewId") int reviewId, HttpSession session) {
+	    Map<String, Object> response = new HashMap<>();
+
+	    try {
+	        // 로그인 확인
+	        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+	        if (loginUser == null) {
 	            response.put("success", false);
-	            response.put("message", "내용을 입력해주세요.");
-	            return ResponseEntity.badRequest().body(response);
+	            response.put("message", "로그인이 필요합니다.");
+	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
 	        }
+
+	        // 관리자 권한 확인 (필요한 경우)
+	        // if (loginUser.getUserAdmin() != 1) {
+	        //     response.put("success", false);
+	        //     response.put("message", "권한이 없습니다.");
+	        //     return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+	        // }
+
+	        // ReviewDTO 객체 생성 및 설정
+	        ReviewDTO reviewDTO = new ReviewDTO();
+	        reviewDTO.setReviewId(reviewId);
+	        reviewDTO.setUserNumber(loginUser.getUserNumber());
 	        
-	        
-	        // 사용자 정보 추가
-	        param.put("userNumber", String.valueOf(loginUser.getUserNumber()));
-	        
-		    // 이미 리뷰를 작성했는지 확인
+	        // 리뷰 삭제 서비스 호출
+	        int result = service.deleteReview(reviewDTO);
+
+	        if (result > 0) {
+	            response.put("success", true);
+	            response.put("message", "리뷰가 성공적으로 삭제되었습니다.");
+	            return ResponseEntity.ok(response);
+	        } else {
+	            response.put("success", false);
+	            response.put("message", "리뷰 삭제에 실패했습니다.");
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        response.put("success", false);
+	        response.put("message", "리뷰 삭제 중 오류가 발생했습니다: " + e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
+	}
+
+	@PostMapping("/insertReview")
+	public ResponseEntity<Map<String, Object>> insertReview(@RequestParam HashMap<String, String> param,
+			HttpSession session) {
+
+		Map<String, Object> response = new HashMap<>();
+
+		try {
+
+			System.out.println("전달된 파라미터: " + param);
+
+			// 로그인 확인
+			UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+
+			if (!param.containsKey("reviewRating") || param.get("reviewRating").trim().isEmpty()) {
+				response.put("success", false);
+				response.put("message", "평점을 선택해주세요.");
+				return ResponseEntity.badRequest().body(response);
+			}
+
+			if (!param.containsKey("reviewTitle") || param.get("reviewTitle").trim().isEmpty()) {
+				response.put("success", false);
+				response.put("message", "제목을 입력해주세요.");
+				return ResponseEntity.badRequest().body(response);
+			}
+
+			if (!param.containsKey("reviewContent") || param.get("reviewContent").trim().isEmpty()) {
+				response.put("success", false);
+				response.put("message", "내용을 입력해주세요.");
+				return ResponseEntity.badRequest().body(response);
+			}
+
+			// 사용자 정보 추가
+			param.put("userNumber", String.valueOf(loginUser.getUserNumber()));
+
+			// 이미 리뷰를 작성했는지 확인
 //		    if (service.checkReview(param) == 1) {
 //		        response.put("success", false);
 //		        response.put("message", "이미 이 도서에 대한 리뷰를 작성하셨습니다.");
 //		        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
 //		    }
-	        // 리뷰 등록
-	        int result = service.insertReview(param);
-	        
-	        if (result > 0) {
-	            response.put("success", true);
-	            response.put("message", "리뷰가 성공적으로 등록되었습니다.");
-	            return ResponseEntity.ok(response);
-	        } else {
-	            response.put("success", false);
-	            response.put("message", "리뷰 등록에 실패했습니다.");
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-	        }
-	    } catch (Exception e) {
-	        response.put("success", false);
-	        response.put("message", "서버 오류가 발생했습니다: " + e.getMessage());
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-	    }
+			// 리뷰 등록
+			int result = service.insertReview(param);
+
+			if (result > 0) {
+				response.put("success", true);
+				response.put("message", "리뷰가 성공적으로 등록되었습니다.");
+				return ResponseEntity.ok(response);
+			} else {
+				response.put("success", false);
+				response.put("message", "리뷰 등록에 실패했습니다.");
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+			}
+		} catch (Exception e) {
+			response.put("success", false);
+			response.put("message", "서버 오류가 발생했습니다: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		}
 	}
 
-	
 	@RequestMapping("/book_insert")
 	public String insertBook(HttpServletRequest request, @RequestParam HashMap<String, String> param) {
 		service.insertBook(param);
 
 		return "admin_view";
 	}
-	
-	
-	@RequestMapping("/update_book")
-	   public String updateBookView(@RequestParam HashMap<String, String> param, BookDTO book, Model model, HttpServletRequest request) {
-	      UserDTO user = (UserDTO) request.getSession().getAttribute("loginUser");
 
-	      if (user == null || user.getUserAdmin() != 1) {
-	         return "main";
-	      }
-	      book = service.bookDetailInfo(param);
-	      model.addAttribute("book", book);
-	      return "book_update";
-	   }
+	@RequestMapping("/update_book")
+	public String updateBookView(@RequestParam HashMap<String, String> param, BookDTO book, Model model,
+			HttpServletRequest request) {
+		UserDTO user = (UserDTO) request.getSession().getAttribute("loginUser");
+
+		if (user == null || user.getUserAdmin() != 1) {
+			return "main";
+		}
+		book = service.bookDetailInfo(param);
+		model.addAttribute("book", book);
+		return "book_update";
+	}
 
 	@RequestMapping("/update_book_ok")
 	public String updateBook(@RequestParam HashMap<String, String> param) {
@@ -153,65 +247,67 @@ public class BookController {
 	}
 
 	@RequestMapping("/book_search_view")
-	public String searchBookView(
-	        @ModelAttribute("searchBookCriteriaDTO") SearchBookCriteriaDTO searchBookCriteriaDTO,
-	        @RequestParam(value = "majorCategory", required = false) String majorCategory,
-	        @RequestParam(value = "subCategory", required = false) String subCategory,
-	        Model model) {
-	    
-	    // amount가 0이면 기본값 설정
-	    if (searchBookCriteriaDTO.getAmount() <= 0) {
-	        searchBookCriteriaDTO.setAmount(10);
-	    }
-	    
-	    // 서비스 메서드 호출
-	    List<BookDTO> list = service.searchBookInfo(searchBookCriteriaDTO, majorCategory, subCategory);
-	    
-	    int total = service.getSearchBookTotalCount(searchBookCriteriaDTO, majorCategory, subCategory);
-	    
-	    model.addAttribute("bookList", list);
-	    model.addAttribute("total", total);
-	    model.addAttribute("pageMaker", new PageDTO(total, searchBookCriteriaDTO));
-	    
-	    return "book_search";
+	public String searchBookView(@ModelAttribute("searchBookCriteriaDTO") SearchBookCriteriaDTO searchBookCriteriaDTO,
+			@RequestParam(value = "majorCategory", required = false) String majorCategory,
+			@RequestParam(value = "subCategory", required = false) String subCategory, Model model) {
+
+		// amount가 0이면 기본값 설정
+		if (searchBookCriteriaDTO.getAmount() <= 0) {
+			searchBookCriteriaDTO.setAmount(10);
+		}
+
+		// 서비스 메서드 호출
+		List<BookDTO> list = service.searchBookInfo(searchBookCriteriaDTO, majorCategory, subCategory);
+
+		int total = service.getSearchBookTotalCount(searchBookCriteriaDTO, majorCategory, subCategory);
+
+		model.addAttribute("bookList", list);
+		model.addAttribute("total", total);
+		model.addAttribute("pageMaker", new PageDTO(total, searchBookCriteriaDTO));
+
+		return "book_search";
 	}
 
 	@RequestMapping("/book_detail")
-	public String bookDetail(NoticeCriteriaDTO noticeCriteriaDTO, @RequestParam HashMap<String, String> param, Model model) {
+	public String bookDetail(NoticeCriteriaDTO noticeCriteriaDTO, @RequestParam HashMap<String, String> param,
+			Model model) {
 		System.out.println("param => " + param);
 		BookDTO dto = service.bookDetailInfo(param);
-		
+
 		int total = service.getReviewCount(noticeCriteriaDTO, param);
-		
+
 		List<ReviewDTO> list = service.getReview(noticeCriteriaDTO, param);
-		
+
 		model.addAttribute("book", dto);
 		model.addAttribute("reviewList", list);
-	    model.addAttribute("total", total);
-	    model.addAttribute("pageMaker", new PageDTO(total, noticeCriteriaDTO));
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println("list[" + i + "] : " + list.get(i));
+		}
+		model.addAttribute("total", total);
+		model.addAttribute("pageMaker", new PageDTO(total, noticeCriteriaDTO));
 		return "book_detail";
 	}
 
 	@RequestMapping("/book_delete")
-	   public ResponseEntity<String> bookDelete(@RequestParam HashMap<String, String> param, HttpServletRequest request) {
-	      UserDTO user = (UserDTO) request.getSession().getAttribute("loginUser");
+	public ResponseEntity<String> bookDelete(@RequestParam HashMap<String, String> param, HttpServletRequest request) {
+		UserDTO user = (UserDTO) request.getSession().getAttribute("loginUser");
 
-	      if (user == null || user.getUserAdmin() != 1) {
-	         return ResponseEntity.status(HttpStatus.CONFLICT).body("noUser");
-	      }
+		if (user == null || user.getUserAdmin() != 1) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("noUser");
+		}
 
-	      param.put("userNumber", String.valueOf(user.getUserNumber()));
+		param.put("userNumber", String.valueOf(user.getUserNumber()));
 
-	      try {
-	         service.deleteBook(param);
-	         return ResponseEntity.ok("successDelete");
-	      } catch (Exception e) {
-	         e.printStackTrace();
-	         
-	         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("unexpectedServerError");
-	      }
-	   }
-	
+		try {
+			service.deleteBook(param);
+			return ResponseEntity.ok("successDelete");
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("unexpectedServerError");
+		}
+	}
+
 	@RequestMapping("/book_borrow")
 	public ResponseEntity<String> bookBorrow(@RequestParam HashMap<String, String> param, HttpServletRequest request) {
 		UserDTO user = (UserDTO) request.getSession().getAttribute("loginUser");
@@ -268,56 +364,56 @@ public class BookController {
 		model.addAttribute("return_successMSG", "도서 반납이 성공적으로 완료되었습니다!");
 		return "mypage";
 	}
-	
+
 	@RequestMapping("/user_book_recommend")
 	public String bookRecomm() {
 		return "user_book_recommend";
 	}
-	@RequestMapping("/user_book_borrowing")
-	public String bookBorrow(HttpServletRequest request, 
-	                         @RequestParam HashMap<String, String> param, 
-	                         Model model, 
-	                         UserBookBorrowingCriteriaDTO userBookBorrowingCriteriaDTO,
-	                         @RequestParam(required = false) String activeTab) {
-	    UserDTO dto = (UserDTO) request.getSession().getAttribute("loginUser");
 
-	    param.put("userNumber", String.valueOf(dto.getUserNumber()));
-	    
-	    // 대출 중인 도서 목록을 가져오기 위한 별도의 DTO 생성
-	    // 페이지네이션 없이 모든 대출 중인 도서를 가져오기 위함
-	    UserBookBorrowingCriteriaDTO borrowedCriteria = new UserBookBorrowingCriteriaDTO();
-	    borrowedCriteria.setPageNum(1);  // 항상 첫 페이지 (전체 데이터)
-	    borrowedCriteria.setAmount(100); // 충분히 큰 수로 설정하여 모든 대출 중인 도서를 가져옴
-	    
-	    // 대출 중인 도서는 항상 모두 가져옴 (페이지네이션 없이)
-	    ArrayList<BookRecordDTO> bookBorrowedList = service.bookBorrowed(borrowedCriteria, param);
-	    
-	    // 대출 기록은 페이지네이션 적용
-	    ArrayList<BookRecordDTO> bookBorrowList = service.bookRecord(userBookBorrowingCriteriaDTO, param);
-	    
-	    int userBorrowedBooks = utilService.getUserBorrowed(param);
-	    int userRecord = utilService.getUserRecord(param);
-	    int userOver = utilService.getUserOver(param);
-	    int userRecordCount = utilService.getBookRecordCount(param);
-	    
-	    model.addAttribute("bookBorrowedList", bookBorrowedList);
-	    model.addAttribute("bookBorrowList", bookBorrowList);
-	    model.addAttribute("userBorrowedBooks", userBorrowedBooks);
-	    model.addAttribute("userRecord", userRecord);
-	    model.addAttribute("userOver", userOver);
-	    model.addAttribute("userRecordCount", userRecordCount);
-	    model.addAttribute("currentPage", "user_book_borrowing"); // 헤더 식별용
-	    
-	    // 활성 탭 정보 모델에 추가 (없으면 기본값은 'borrowed')
-	    model.addAttribute("activeTab", activeTab != null ? activeTab : "borrowed");
-	    
-	    System.out.println("test : " + param.get("userNumber"));
-	    System.out.println("prarma => " + param);
-	    
-	    // 대출 기록에 대한 페이지네이션 정보만 설정
-	    int recordTotal = service.getRecordTotalCount(userBookBorrowingCriteriaDTO, Integer.parseInt(param.get("userNumber")));
-	    model.addAttribute("pageMaker", new PageDTO(recordTotal, userBookBorrowingCriteriaDTO));
-	    
-	    return "user_book_borrowing";
+	@RequestMapping("/user_book_borrowing")
+	public String bookBorrow(HttpServletRequest request, @RequestParam HashMap<String, String> param, Model model,
+			UserBookBorrowingCriteriaDTO userBookBorrowingCriteriaDTO,
+			@RequestParam(required = false) String activeTab) {
+		UserDTO dto = (UserDTO) request.getSession().getAttribute("loginUser");
+
+		param.put("userNumber", String.valueOf(dto.getUserNumber()));
+
+		// 대출 중인 도서 목록을 가져오기 위한 별도의 DTO 생성
+		// 페이지네이션 없이 모든 대출 중인 도서를 가져오기 위함
+		UserBookBorrowingCriteriaDTO borrowedCriteria = new UserBookBorrowingCriteriaDTO();
+		borrowedCriteria.setPageNum(1); // 항상 첫 페이지 (전체 데이터)
+		borrowedCriteria.setAmount(100); // 충분히 큰 수로 설정하여 모든 대출 중인 도서를 가져옴
+
+		// 대출 중인 도서는 항상 모두 가져옴 (페이지네이션 없이)
+		ArrayList<BookRecordDTO> bookBorrowedList = service.bookBorrowed(borrowedCriteria, param);
+
+		// 대출 기록은 페이지네이션 적용
+		ArrayList<BookRecordDTO> bookBorrowList = service.bookRecord(userBookBorrowingCriteriaDTO, param);
+
+		int userBorrowedBooks = utilService.getUserBorrowed(param);
+		int userRecord = utilService.getUserRecord(param);
+		int userOver = utilService.getUserOver(param);
+		int userRecordCount = utilService.getBookRecordCount(param);
+
+		model.addAttribute("bookBorrowedList", bookBorrowedList);
+		model.addAttribute("bookBorrowList", bookBorrowList);
+		model.addAttribute("userBorrowedBooks", userBorrowedBooks);
+		model.addAttribute("userRecord", userRecord);
+		model.addAttribute("userOver", userOver);
+		model.addAttribute("userRecordCount", userRecordCount);
+		model.addAttribute("currentPage", "user_book_borrowing"); // 헤더 식별용
+
+		// 활성 탭 정보 모델에 추가 (없으면 기본값은 'borrowed')
+		model.addAttribute("activeTab", activeTab != null ? activeTab : "borrowed");
+
+		System.out.println("test : " + param.get("userNumber"));
+		System.out.println("prarma => " + param);
+
+		// 대출 기록에 대한 페이지네이션 정보만 설정
+		int recordTotal = service.getRecordTotalCount(userBookBorrowingCriteriaDTO,
+				Integer.parseInt(param.get("userNumber")));
+		model.addAttribute("pageMaker", new PageDTO(recordTotal, userBookBorrowingCriteriaDTO));
+
+		return "user_book_borrowing";
 	}
 }

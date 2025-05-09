@@ -56,21 +56,20 @@ public interface BookDAO {
 	public int getRecordTotalCount(@Param("criteria") UserBookBorrowingCriteriaDTO criteria,
 			@Param("userNumber") int userNumber);
 
-
 	public int checkReview(HashMap<String, String> param);
-	
-	public int getReviewCount(
-			@Param("criteria") NoticeCriteriaDTO criteria,
+
+	public int getReviewCount(@Param("criteria") NoticeCriteriaDTO criteria,
 			@Param("param") HashMap<String, String> param);
-	
+
 	// 5개씩 정렬을 위해 NoticeCriteriaDTO 사용
-	public ArrayList<ReviewDTO> getReview(
-			@Param("criteria") NoticeCriteriaDTO criteria,
+	public ArrayList<ReviewDTO> getReview(@Param("criteria") NoticeCriteriaDTO criteria,
 			@Param("param") HashMap<String, String> param);
-	
+
 	public int insertReview(HashMap<String, String> param);
 
-	public void updateReview(HashMap<String, String> param);
+	public int updateReview(ReviewDTO reviewDTO);
 
-	public void deleteReview(HashMap<String, String> param);
+	public int deleteReview(ReviewDTO reviewDTO);
+
+	public ReviewDTO getReviewById(int reviewId);
 }

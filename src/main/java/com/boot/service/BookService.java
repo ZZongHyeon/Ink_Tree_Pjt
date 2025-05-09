@@ -60,7 +60,9 @@ public interface BookService {
 
 	public int insertReview(HashMap<String, String> param);
 
-	public void updateReview(HashMap<String, String> param);
+	public int updateReview(ReviewDTO reviewDTO);
 
-	public void deleteReview(HashMap<String, String> param);
+	public int deleteReview(ReviewDTO reviewDTO);
+	
+	public ReviewDTO getReviewById(int reviewId);
 }

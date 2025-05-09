@@ -134,15 +134,15 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public void updateReview(HashMap<String, String> param) {
+	public int updateReview(ReviewDTO reviewDTO) {
 		BookDAO dao = sqlSession.getMapper(BookDAO.class);
-		dao.updateReview(param);
+		return dao.updateReview(reviewDTO);
 	}
 
 	@Override
-	public void deleteReview(HashMap<String, String> param) {
+	public int deleteReview(ReviewDTO reviewDTO) {
 		BookDAO dao = sqlSession.getMapper(BookDAO.class);
-		dao.deleteReview(param);
+		return dao.deleteReview(reviewDTO);
 	}
 
 	@Override
@@ -162,5 +162,10 @@ public class BookServiceImpl implements BookService {
 	public int checkReview(HashMap<String, String> param) {
 		BookDAO dao = sqlSession.getMapper(BookDAO.class);
 		return dao.checkReview(param);
+	}
+	@Override
+	public ReviewDTO getReviewById(int reviewId) {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+		return dao.getReviewById(reviewId);
 	}
 }

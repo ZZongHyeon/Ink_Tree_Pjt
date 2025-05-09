@@ -265,7 +265,7 @@
             SELECT ROWNUM AS rn, r.*
             FROM (
                 SELECT 
-                    r.REVIEW_ID, 
+                    r.reviewid, 
                     r.BOOKNUMBER, 
                     r.USERNUMBER, 
                     r.REVIEWTITLE, 
@@ -294,7 +294,7 @@
 
 <insert id="insertReview">
     INSERT INTO BOOK_REVIEW (
-        REVIEW_ID,
+        reviewid,
         BOOKNUMBER,
         USERNUMBER,
         REVIEWTITLE,
@@ -324,7 +324,24 @@
     AND REVIEWSTATUS = 'ACTIVE'
 </select>
 	
-	
+<select id="getReviewById" resultType="com.boot.dto.ReviewDTO">
+    SELECT 
+        r.reviewid as reviewId,
+        r.usernumber as userNumber,
+        r.booknumber as bookNumber,
+        r.reviewtitle as reviewTitle,
+        r.reviewcontent as reviewContent,
+        r.reviewrating as reviewRating,
+        r.reviewdate as reviewDate,
+        u.username as userName
+    FROM 
+        book_review r
+    JOIN 
+        userinfo u ON r.usernumber = u.usernumber
+    WHERE 
+        r.reviewid = #{reviewId}
+</select>
+
 <!-- 리뷰 업데이트 -->
 <update id="updateReview" parameterType="com.boot.dto.ReviewDTO">
     UPDATE BOOK_REVIEW 
@@ -334,7 +351,7 @@
         REVIEWRATING = #{reviewRating},
         REVIEWMODIFIED_DATE = SYSDATE
     WHERE 
-        REVIEW_ID = #{reviewId}
+        reviewid = #{reviewId}
         AND USERNUMBER = #{userNumber}
         AND REVIEWSTATUS = 'ACTIVE'
 </update>
@@ -346,7 +363,7 @@
         REVIEWSTATUS = 'DELETED',
         REVIEWMODIFIED_DATE = SYSDATE
     WHERE 
-        REVIEW_ID = #{reviewId}
+        reviewid = #{reviewId}
         AND USERNUMBER = #{userNumber}
         AND REVIEWSTATUS = 'ACTIVE'
 </update>
