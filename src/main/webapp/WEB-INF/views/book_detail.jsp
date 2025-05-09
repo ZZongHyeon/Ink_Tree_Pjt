@@ -152,56 +152,64 @@
 
                         <div id="reviews" class="tab-panel" role="tabpanel">
                             <div class="reviews-section">
-                                <div class="review-stats">
-                                    <div class="average-rating">
-                                        <div class="rating-value">4.5</div>
-                                        <div class="rating-stars">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                        </div>
-                                        <div class="rating-count">총 24개 리뷰</div>
-                                    </div>
-                                    <div class="rating-distribution">
-                                        <div class="rating-bar">
-                                            <span class="rating-label">5</span>
-                                            <div class="rating-progress">
-                                                <div class="rating-progress-fill" style="width: 70%"></div>
-                                            </div>
-                                            <span class="rating-percent">70%</span>
-                                        </div>
-                                        <div class="rating-bar">
-                                            <span class="rating-label">4</span>
-                                            <div class="rating-progress">
-                                                <div class="rating-progress-fill" style="width: 20%"></div>
-                                            </div>
-                                            <span class="rating-percent">20%</span>
-                                        </div>
-                                        <div class="rating-bar">
-                                            <span class="rating-label">3</span>
-                                            <div class="rating-progress">
-                                                <div class="rating-progress-fill" style="width: 5%"></div>
-                                            </div>
-                                            <span class="rating-percent">5%</span>
-                                        </div>
-                                        <div class="rating-bar">
-                                            <span class="rating-label">2</span>
-                                            <div class="rating-progress">
-                                                <div class="rating-progress-fill" style="width: 3%"></div>
-                                            </div>
-                                            <span class="rating-percent">3%</span>
-                                        </div>
-                                        <div class="rating-bar">
-                                            <span class="rating-label">1</span>
-                                            <div class="rating-progress">
-                                                <div class="rating-progress-fill" style="width: 2%"></div>
-                                            </div>
-                                            <span class="rating-percent">2%</span>
-                                        </div>
-                                    </div>
-                                </div>
+								<div class="review-stats">
+								    <div class="average-rating">
+								        <div class="rating-value">${reviewStats.averageRating}</div>
+								        <div class="rating-stars">
+								            <c:forEach begin="1" end="5" var="i">
+								                <c:choose>
+								                    <c:when test="${i <= Math.floor(reviewStats.averageRating)}">
+								                        <i class="fas fa-star"></i>
+								                    </c:when>
+								                    <c:when test="${i == Math.ceil(reviewStats.averageRating) && reviewStats.averageRating % 1 != 0}">
+								                        <i class="fas fa-star-half-alt"></i>
+								                    </c:when>
+								                    <c:otherwise>
+								                        <i class="far fa-star"></i>
+								                    </c:otherwise>
+								                </c:choose>
+								            </c:forEach>
+								        </div>
+								        <div class="rating-count">총 ${reviewStats.totalReviews}개 리뷰</div>
+								    </div>
+								    <div class="rating-distribution">
+								        <div class="rating-bar">
+								            <span class="rating-label">5</span>
+								            <div class="rating-progress">
+								                <div class="rating-progress-fill" style="width: ${reviewStats.fiveStarPercentage}%"></div>
+								            </div>
+								            <span class="rating-percent">${reviewStats.fiveStarPercentage}%</span>
+								        </div>
+								        <div class="rating-bar">
+								            <span class="rating-label">4</span>
+								            <div class="rating-progress">
+								                <div class="rating-progress-fill" style="width: ${reviewStats.fourStarPercentage}%"></div>
+								            </div>
+								            <span class="rating-percent">${reviewStats.fourStarPercentage}%</span>
+								        </div>
+								        <div class="rating-bar">
+								            <span class="rating-label">3</span>
+								            <div class="rating-progress">
+								                <div class="rating-progress-fill" style="width: ${reviewStats.threeStarPercentage}%"></div>
+								            </div>
+								            <span class="rating-percent">${reviewStats.threeStarPercentage}%</span>
+								        </div>
+								        <div class="rating-bar">
+								            <span class="rating-label">2</span>
+								            <div class="rating-progress">
+								                <div class="rating-progress-fill" style="width: ${reviewStats.twoStarPercentage}%"></div>
+								            </div>
+								            <span class="rating-percent">${reviewStats.twoStarPercentage}%</span>
+								        </div>
+								        <div class="rating-bar">
+								            <span class="rating-label">1</span>
+								            <div class="rating-progress">
+								                <div class="rating-progress-fill" style="width: ${reviewStats.oneStarPercentage}%"></div>
+								            </div>
+								            <span class="rating-percent">${reviewStats.oneStarPercentage}%</span>
+								        </div>
+								    </div>
+								</div>
 
                                 <div class="review-form">
                                     <h3 class="form-title">리뷰 작성하기</h3>

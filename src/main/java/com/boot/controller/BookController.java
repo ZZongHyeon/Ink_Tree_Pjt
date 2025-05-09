@@ -29,6 +29,7 @@ import com.boot.dto.BookRecordDTO;
 import com.boot.dto.NoticeCriteriaDTO;
 import com.boot.dto.PageDTO;
 import com.boot.dto.ReviewDTO;
+import com.boot.dto.ReviewStatsDTO;
 import com.boot.dto.SearchBookCriteriaDTO;
 import com.boot.dto.UserBookBorrowingCriteriaDTO;
 import com.boot.dto.UserDTO;
@@ -270,22 +271,95 @@ public class BookController {
 
 	@RequestMapping("/book_detail")
 	public String bookDetail(NoticeCriteriaDTO noticeCriteriaDTO, @RequestParam HashMap<String, String> param,
-			Model model) {
-		System.out.println("param => " + param);
-		BookDTO dto = service.bookDetailInfo(param);
+	        Model model) {
+	    System.out.println("param => " + param);
+	    BookDTO dto = service.bookDetailInfo(param);
 
-		int total = service.getReviewCount(noticeCriteriaDTO, param);
+	    int total = service.getReviewCount(noticeCriteriaDTO, param);
 
-		List<ReviewDTO> list = service.getReview(noticeCriteriaDTO, param);
+	    List<ReviewDTO> list = service.getReview(noticeCriteriaDTO, param);
+	    
+	    // 리뷰 통계 정보 계산
+	    ReviewStatsDTO reviewStats = calculateReviewStats(Integer.parseInt(param.get("bookNumber")));
+	    model.addAttribute("reviewStats", reviewStats);
 
-		model.addAttribute("book", dto);
-		model.addAttribute("reviewList", list);
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println("list[" + i + "] : " + list.get(i));
-		}
-		model.addAttribute("total", total);
-		model.addAttribute("pageMaker", new PageDTO(total, noticeCriteriaDTO));
-		return "book_detail";
+	    model.addAttribute("book", dto);
+	    model.addAttribute("reviewList", list);
+	    for (int i = 0; i < list.size(); i++) {
+	        System.out.println("list[" + i + "] : " + list.get(i));
+	    }
+	    model.addAttribute("total", total);
+	    model.addAttribute("pageMaker", new PageDTO(total, noticeCriteriaDTO));
+	    return "book_detail";
+	}
+
+	// 리뷰 통계 계산 메서드
+	private ReviewStatsDTO calculateReviewStats(int bookNumber) {
+	    ReviewStatsDTO stats = new ReviewStatsDTO();
+	    
+	    // 모든 리뷰 가져오기 (페이징 없이)
+	    ArrayList<ReviewDTO> allReviews = service.getAllReviewsByBookNumber(bookNumber);
+	    
+	    // 전체 리뷰 수
+	    int totalReviews = allReviews.size();
+	    stats.setTotalReviews(totalReviews);
+	    
+	    // 리뷰가 없는 경우 기본값 설정
+	    if (totalReviews == 0) {
+	        stats.setAverageRating(0);
+	        stats.setFiveStarPercentage(0);
+	        stats.setFourStarPercentage(0);
+	        stats.setThreeStarPercentage(0);
+	        stats.setTwoStarPercentage(0);
+	        stats.setOneStarPercentage(0);
+	        stats.setFiveStarCount(0);
+	        stats.setFourStarCount(0);
+	        stats.setThreeStarCount(0);
+	        stats.setTwoStarCount(0);
+	        stats.setOneStarCount(0);
+	        return stats;
+	    }
+	    
+	    // 평점 합계 및 각 별점 개수 계산
+	    double ratingSum = 0;
+	    int fiveStarCount = 0;
+	    int fourStarCount = 0;
+	    int threeStarCount = 0;
+	    int twoStarCount = 0;
+	    int oneStarCount = 0;
+	    
+	    for (ReviewDTO review : allReviews) {
+	        int rating = review.getReviewRating();
+	        ratingSum += rating;
+	        
+	        switch (rating) {
+	            case 5: fiveStarCount++; break;
+	            case 4: fourStarCount++; break;
+	            case 3: threeStarCount++; break;
+	            case 2: twoStarCount++; break;
+	            case 1: oneStarCount++; break;
+	        }
+	    }
+	    
+	    // 평균 평점 계산 (소수점 첫째 자리까지 반올림)
+	    double averageRating = ratingSum / totalReviews;
+	    stats.setAverageRating(Math.round(averageRating * 10) / 10.0);
+	    
+	    // 각 별점 개수 설정
+	    stats.setFiveStarCount(fiveStarCount);
+	    stats.setFourStarCount(fourStarCount);
+	    stats.setThreeStarCount(threeStarCount);
+	    stats.setTwoStarCount(twoStarCount);
+	    stats.setOneStarCount(oneStarCount);
+	    
+	    // 각 별점 비율 계산 (%)
+	    stats.setFiveStarPercentage((int) Math.round((double) fiveStarCount / totalReviews * 100));
+	    stats.setFourStarPercentage((int) Math.round((double) fourStarCount / totalReviews * 100));
+	    stats.setThreeStarPercentage((int) Math.round((double) threeStarCount / totalReviews * 100));
+	    stats.setTwoStarPercentage((int) Math.round((double) twoStarCount / totalReviews * 100));
+	    stats.setOneStarPercentage((int) Math.round((double) oneStarCount / totalReviews * 100));
+	    
+	    return stats;
 	}
 
 	@RequestMapping("/book_delete")

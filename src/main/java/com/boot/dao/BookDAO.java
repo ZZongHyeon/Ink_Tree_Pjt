@@ -72,4 +72,7 @@ public interface BookDAO {
 	public int deleteReview(ReviewDTO reviewDTO);
 
 	public ReviewDTO getReviewById(int reviewId);
+
+	// 도서별 리뷰 통계 조회 (페이징 없이 모든 리뷰 가져오기)
+	public ArrayList<ReviewDTO> getAllReviewsByBookNumber(int bookNumber);
 }

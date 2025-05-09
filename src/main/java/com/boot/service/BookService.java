@@ -47,15 +47,12 @@ public interface BookService {
 	public int getRecordTotalCount(@Param("criteria") UserBookBorrowingCriteriaDTO criteria,
 			@Param("userNumber") int userNumber);
 
-	
 	public int checkReview(HashMap<String, String> param);
-	
-	
+
 	public ArrayList<ReviewDTO> getReview(@Param("criteria") NoticeCriteriaDTO criteria,
 			@Param("param") HashMap<String, String> param);
 
-	public int getReviewCount(
-			@Param("criteria") NoticeCriteriaDTO criteria,
+	public int getReviewCount(@Param("criteria") NoticeCriteriaDTO criteria,
 			@Param("param") HashMap<String, String> param);
 
 	public int insertReview(HashMap<String, String> param);
@@ -63,6 +60,9 @@ public interface BookService {
 	public int updateReview(ReviewDTO reviewDTO);
 
 	public int deleteReview(ReviewDTO reviewDTO);
-	
+
 	public ReviewDTO getReviewById(int reviewId);
+
+	// 도서별 리뷰 통계 조회 (페이징 없이 모든 리뷰 가져오기)
+	public ArrayList<ReviewDTO> getAllReviewsByBookNumber(int bookNumber);
 }

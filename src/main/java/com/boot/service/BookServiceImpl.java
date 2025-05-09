@@ -21,8 +21,6 @@ import com.boot.dto.SearchBookCriteriaDTO;
 import com.boot.dto.UserBookBorrowingCriteriaDTO;
 import com.boot.dto.UserDTO;
 
-
-
 @Service
 public class BookServiceImpl implements BookService {
 	@Autowired
@@ -55,18 +53,16 @@ public class BookServiceImpl implements BookService {
 		return list;
 	}
 
-	
 	@Override
 	public int getSearchBookTotalCount(SearchBookCriteriaDTO criteria, String majorCategory, String subCategory) {
 		BookDAO dao = sqlSession.getMapper(BookDAO.class);
-	    return dao.getSearchBookTotalCount(criteria, majorCategory, subCategory);
+		return dao.getSearchBookTotalCount(criteria, majorCategory, subCategory);
 	}
-	
-	
+
 	@Override
 	public ArrayList<BookDTO> searchBookInfo(SearchBookCriteriaDTO criteria, String majorCategory, String subCategory) {
 		BookDAO dao = sqlSession.getMapper(BookDAO.class);
-	    return dao.searchBookInfo(criteria, majorCategory, subCategory);
+		return dao.searchBookInfo(criteria, majorCategory, subCategory);
 	}
 
 	@Override
@@ -89,22 +85,18 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-    public ArrayList<BookRecordDTO> bookBorrowed(
-        UserBookBorrowingCriteriaDTO userBookBorrowingCriteriaDTO, 
-        HashMap<String, String> param
-    ) {
-        BookDAO dao = sqlSession.getMapper(BookDAO.class);
-        return dao.bookBorrowed(userBookBorrowingCriteriaDTO, param);
-    }
-    
-    @Override
-    public ArrayList<BookRecordDTO> bookRecord(
-        UserBookBorrowingCriteriaDTO userBookBorrowingCriteriaDTO, 
-        HashMap<String, String> param
-    ) {
-        BookDAO dao = sqlSession.getMapper(BookDAO.class);
-        return dao.bookRecord(userBookBorrowingCriteriaDTO, param);
-    }
+	public ArrayList<BookRecordDTO> bookBorrowed(UserBookBorrowingCriteriaDTO userBookBorrowingCriteriaDTO,
+			HashMap<String, String> param) {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+		return dao.bookBorrowed(userBookBorrowingCriteriaDTO, param);
+	}
+
+	@Override
+	public ArrayList<BookRecordDTO> bookRecord(UserBookBorrowingCriteriaDTO userBookBorrowingCriteriaDTO,
+			HashMap<String, String> param) {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+		return dao.bookRecord(userBookBorrowingCriteriaDTO, param);
+	}
 
 	@Override
 	public void deleteBook(HashMap<String, String> param) {
@@ -147,8 +139,8 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public ArrayList<ReviewDTO> getReview(NoticeCriteriaDTO criteria, HashMap<String, String> param) {
-        BookDAO dao = sqlSession.getMapper(BookDAO.class);
-        return dao.getReview(criteria, param);
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+		return dao.getReview(criteria, param);
 	}
 
 	@Override
@@ -163,9 +155,16 @@ public class BookServiceImpl implements BookService {
 		BookDAO dao = sqlSession.getMapper(BookDAO.class);
 		return dao.checkReview(param);
 	}
+
 	@Override
 	public ReviewDTO getReviewById(int reviewId) {
 		BookDAO dao = sqlSession.getMapper(BookDAO.class);
 		return dao.getReviewById(reviewId);
+	}
+
+	@Override
+	public ArrayList<ReviewDTO> getAllReviewsByBookNumber(int bookNumber) {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+		return dao.getAllReviewsByBookNumber(bookNumber);
 	}
 }

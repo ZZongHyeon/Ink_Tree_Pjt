@@ -367,6 +367,28 @@
         AND USERNUMBER = #{userNumber}
         AND REVIEWSTATUS = 'ACTIVE'
 </update>
-	
+	<!-- 도서별 모든 리뷰 목록 조회 (페이징 없이) -->
+<select id="getAllReviewsByBookNumber" parameterType="int" resultType="com.boot.dto.ReviewDTO">
+    SELECT 
+        r.reviewid, 
+        r.BOOKNUMBER, 
+        r.USERNUMBER, 
+        r.REVIEWTITLE, 
+        r.REVIEWCONTENT, 
+        r.REVIEWRATING, 
+        r.REVIEWDATE,
+        r.REVIEWMODIFIED_DATE as reviewModifiedDate,
+        r.REVIEWSTATUS,
+        u.USERNAME
+    FROM 
+        BOOK_REVIEW r
+    JOIN 
+        USERINFO u ON r.USERNUMBER = u.USERNUMBER
+    WHERE 
+        r.BOOKNUMBER = #{bookNumber}
+        AND r.REVIEWSTATUS = 'ACTIVE'
+    ORDER BY 
+        r.REVIEWDATE DESC
+</select>
 	
 </mapper>
