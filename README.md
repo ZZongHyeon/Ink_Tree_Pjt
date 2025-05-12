@@ -309,6 +309,111 @@ NOCACHE
 NOCYCLE;
 
 
+-- 거래게시판
+CREATE TABLE Trade_Post (
+    postID NUMBER PRIMARY KEY,
+    userNumber NUMBER NOT NULL,  -- userID에서 userNumber로 변경
+    title VARCHAR2(100) NOT NULL,
+    content CLOB NOT NULL,
+    price NUMBER NOT NULL,
+    status VARCHAR2(20) DEFAULT 'AVAILABLE', -- AVAILABLE, RESERVED, SOLD
+    location VARCHAR2(100),
+    viewCount NUMBER DEFAULT 0,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    BOOKMAJORCATEGORY VARCHAR2(100),
+    BOOKSUBCATEGORY VARCHAR2(100),
+    CONSTRAINT fk_tradePost_user FOREIGN KEY (userNumber) REFERENCES userinfo(userNumber)  -- 참조 컬럼 변경
+);
+
+-- 시퀀스 생성
+CREATE SEQUENCE seqPostID START WITH 1 INCREMENT BY 1;
+
+-- 채팅방
+CREATE TABLE Trade_ChatRoom (
+    roomID NUMBER PRIMARY KEY,
+    postID NUMBER NOT NULL,
+    sellerNumber NUMBER NOT NULL,  -- sellerID에서 sellerNumber로 변경
+    buyerNumber NUMBER NOT NULL,   -- buyerID에서 buyerNumber로 변경
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastMessageAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR2(20) DEFAULT 'ACTIVE', -- ACTIVE, INACTIVE, BLOCKED
+    CONSTRAINT fk_chatRoom_post FOREIGN KEY (postID) REFERENCES TradePost(postID),
+    CONSTRAINT fk_chatRoom_seller FOREIGN KEY (sellerNumber) REFERENCES userinfo(userNumber),  -- 참조 컬럼 변경
+    CONSTRAINT fk_chatRoom_buyer FOREIGN KEY (buyerNumber) REFERENCES userinfo(userNumber),    -- 참조 컬럼 변경
+    CONSTRAINT uq_chatRoom UNIQUE (postID, sellerNumber, buyerNumber)  -- 제약조건 컬럼명 변경
+);
+
+-- 시퀀스 생성
+CREATE SEQUENCE seqRoomID START WITH 1 INCREMENT BY 1;
+
+-- 채팅방 메세지
+CREATE TABLE Trade_ChatMessage (
+    messageID NUMBER PRIMARY KEY,
+    roomID NUMBER NOT NULL,
+    senderNumber NUMBER NOT NULL,  -- senderID에서 senderNumber로 변경
+    message CLOB NOT NULL,
+    readStatus VARCHAR2(10) DEFAULT 'UNREAD', -- READ, UNREAD
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_chatMessage_room FOREIGN KEY (roomID) REFERENCES ChatRoom(roomID),
+    CONSTRAINT fk_chatMessage_sender FOREIGN KEY (senderNumber) REFERENCES userinfo(userNumber)  -- 참조 컬럼 변경
+);
+
+-- 시퀀스 생성
+CREATE SEQUENCE seqMessageID START WITH 1 INCREMENT BY 1;
+
+-- 중고도서 관심
+CREATE TABLE Trade_Favorite (
+    favoriteID NUMBER PRIMARY KEY,
+    postID NUMBER NOT NULL,
+    userNumber NUMBER NOT NULL,  -- userID에서 userNumber로 변경
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_tradeFavorite_post FOREIGN KEY (postID) REFERENCES TradePost(postID),
+    CONSTRAINT fk_tradeFavorite_user FOREIGN KEY (userNumber) REFERENCES userinfo(userNumber),  -- 참조 컬럼 변경
+    CONSTRAINT uq_tradeFavorite UNIQUE (postID, userNumber)  -- 제약조건 컬럼명 변경
+);
+
+-- 시퀀스 생성
+CREATE SEQUENCE seqFavoriteID START WITH 1 INCREMENT BY 1;
+
+-- 거래내역
+CREATE TABLE Trade_record (
+    transactionID NUMBER PRIMARY KEY,
+    postID NUMBER NOT NULL,
+    sellerNumber NUMBER NOT NULL,  -- sellerID에서 sellerNumber로 변경
+    buyerNumber NUMBER NOT NULL,   -- buyerID에서 buyerNumber로 변경
+    price NUMBER NOT NULL,
+    status VARCHAR2(20) DEFAULT 'PENDING', -- PENDING, COMPLETED, CANCELED
+    completedAt TIMESTAMP,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_transaction_post FOREIGN KEY (postID) REFERENCES TradePost(postID),
+    CONSTRAINT fk_transaction_seller FOREIGN KEY (sellerNumber) REFERENCES userinfo(userNumber),  -- 참조 컬럼 변경
+    CONSTRAINT fk_transaction_buyer FOREIGN KEY (buyerNumber) REFERENCES userinfo(userNumber)     -- 참조 컬럼 변경
+);
+
+-- 시퀀스 생성
+CREATE SEQUENCE seqTransactionID START WITH 1 INCREMENT BY 1;
+
+-- 거래 후기
+CREATE TABLE Trade_Review (
+    reviewID NUMBER PRIMARY KEY,z
+    transactionID NUMBER NOT NULL,
+    reviewerNumber NUMBER NOT NULL,  -- reviewerID에서 reviewerNumber로 변경
+    revieweeNumber NUMBER NOT NULL,  -- revieweeID에서 revieweeNumber로 변경
+    rating NUMBER(2,1) NOT NULL,
+    content VARCHAR2(500),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_review_transaction FOREIGN KEY (transactionID) REFERENCES TradeTransaction(transactionID),
+    CONSTRAINT fk_review_reviewer FOREIGN KEY (reviewerNumber) REFERENCES userinfo(userNumber),  -- 참조 컬럼 변경
+    CONSTRAINT fk_review_reviewee FOREIGN KEY (revieweeNumber) REFERENCES userinfo(userNumber),  -- 참조 컬럼 변경
+    CONSTRAINT uq_tradeReview UNIQUE (transactionID, reviewerNumber)  -- 제약조건 컬럼명 변경
+);
+
+-- 시퀀스 생성
+CREATE SEQUENCE seqReviewID START WITH 1 INCREMENT BY 1;
+
+
+
 --------------------------------------------- 시퀀스 드래그로 개별 컴파일
 CREATE SEQUENCE  "BOOKMANAGER"."BORROWRECORD_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 NOCACHE  NOORDER  NOCYCLE
 
