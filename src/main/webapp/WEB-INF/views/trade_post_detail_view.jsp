@@ -141,27 +141,27 @@
                     <button class="action-btn delete-btn" onclick="confirmDelete(${post.postID})">
                         <i class="fas fa-trash"></i> 삭제하기
                     </button>
-
-                        <div class="status-change-container">
-                            <button class="action-btn status-btn" onclick="toggleStatusDropdown()">
-                                <i class="fas fa-tag"></i> 상태 변경
-                            </button>
-                            <div class="status-dropdown" id="statusDropdown">
-                                <div class="status-option ${post.status == 'AVAILABLE' ? 'active' : ''}" 
-                                     onclick="changeStatus(${post.postID}, 'AVAILABLE')">
-                                    판매중
-                                </div>
-                                <div class="status-option ${post.status == 'RESERVED' ? 'active' : ''}" 
-                                     onclick="changeStatus(${post.postID}, 'RESERVED')">
-                                    예약중
-                                </div>
-                                <div class="status-option ${post.status == 'SOLD' ? 'active' : ''}" 
-                                     onclick="changeStatus(${post.postID}, 'SOLD')">
-                                    판매완료
-                                </div>
-                            </div>
-                        </div>
-
+			            <c:if test="${loginUser != null && (loginUser.userNumber == post.userNumber)}">
+	                        <div class="status-change-container">
+	                            <button class="action-btn status-btn" onclick="toggleStatusDropdown()">
+	                                <i class="fas fa-tag"></i> 상태 변경
+	                            </button>
+	                            <div class="status-dropdown" id="statusDropdown">
+	                                <div class="status-option ${post.status == 'AVAILABLE' ? 'active' : ''}" 
+	                                     onclick="changeStatus(${post.postID}, 'AVAILABLE')">
+	                                    판매중
+	                                </div>
+	                                <div class="status-option ${post.status == 'RESERVED' ? 'active' : ''}" 
+	                                     onclick="changeStatus(${post.postID}, 'RESERVED')">
+	                                    예약중
+	                                </div>
+	                                <div class="status-option ${post.status == 'SOLD' ? 'active' : ''}" 
+	                                     onclick="changeStatus(${post.postID}, 'SOLD')">
+	                                    판매완료
+	                                </div>
+	                            </div>
+	                        </div>
+						</c:if>
                 </div>
             </c:if>
 
