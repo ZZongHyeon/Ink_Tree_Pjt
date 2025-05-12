@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,6 +46,52 @@ public class BoardController {
 
 	BoardController(BoardCommentServiceImpl boardCommentServiceImpl) {
 		this.boardCommentServiceImpl = boardCommentServiceImpl;
+	}
+	
+	@PostMapping("/bc_delete")
+	public ResponseEntity<Map<String, Object>> bc_delete(@RequestParam("commentNumber") int commentNumber) {
+	    Map<String, Object> response = new HashMap<>();
+	    
+	    try {
+	        HashMap<String, String> param = new HashMap<>();
+	        param.put("commentNumber", String.valueOf(commentNumber));
+	        
+	        // 댓글 상태를 'DELETED'로 변경하는 서비스 호출
+	        bcService.bcDelete(param);
+	        
+	        response.put("success", true);
+	        response.put("message", "댓글이 성공적으로 삭제되었습니다.");
+	        return ResponseEntity.ok(response);
+	    } catch (Exception e) {
+	        response.put("success", false);
+	        response.put("message", "댓글 삭제 중 오류가 발생했습니다: " + e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
+	}
+
+	@PostMapping("/bc_modify")
+	public ResponseEntity<Map<String, Object>> bc_modify(
+	        @RequestParam("commentNumber") int commentNumber,
+	        @RequestParam("commentContent") String commentContent) {
+	    
+	    Map<String, Object> response = new HashMap<>();
+	    
+	    try {
+	        HashMap<String, String> param = new HashMap<>();
+	        param.put("commentNumber", String.valueOf(commentNumber));
+	        param.put("commentContent", commentContent);
+	        
+	        // 댓글 수정 서비스 호출
+	        bcService.bcModify(param);
+	        
+	        response.put("success", true);
+	        response.put("message", "댓글이 성공적으로 수정되었습니다.");
+	        return ResponseEntity.ok(response);
+	    } catch (Exception e) {
+	        response.put("success", false);
+	        response.put("message", "댓글 수정 중 오류가 발생했습니다: " + e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
 	}
 
 //	@RequestMapping("/board_view")
@@ -197,4 +244,6 @@ public class BoardController {
 	    
 	    return service.boardHasLiked(param);
 	}
+	
+	
 }

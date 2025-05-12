@@ -88,4 +88,12 @@ public interface BookDAO {
 
 	// 리뷰별 도움됨 개수 조회
 	int getReviewHelpfulCount(int reviewId);
+
+	public ArrayList<BookDTO> Top5Recommend(HashMap<String, String> param);
+
+	public ArrayList<BookDTO> Top3Borrow();
+
+	public ArrayList<BookDTO> Top5Random(HashMap<String, String> param);
+
+	public String CategoryNum(HashMap<String, String> param);
 }

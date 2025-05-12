@@ -263,7 +263,7 @@ function fn_submit() {
 					<h2 class="section-title">
 						<i class="fas fa-thumbs-up"></i> 추천 도서
 					</h2>
-					<a href="/recommended_books" class="action-link"> 더보기
+					<a href="/user_book_recommend" class="action-link"> 더보기
 						<i class="fas fa-chevron-right"></i>
 					</a>
 				</div>

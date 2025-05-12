@@ -114,5 +114,6 @@
 		<select id="getCommentCountByBoardNumber" resultType="int" parameterType="int">
     SELECT COUNT(*) FROM board_comment 
     WHERE boardNumber = #{boardNumber}
+    AND commentSTATUS = 'ACTIVE'
 	</select>
 </mapper>

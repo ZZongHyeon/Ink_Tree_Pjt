@@ -75,6 +75,18 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript">
 		function fn_submit() {
+			
+			// 제목 길이 검증 추가
+			var titleInput = document.getElementById('boardTitle');
+			var titleLength = titleInput.value.length;
+			var maxTitleLength = 35;
+
+			if (titleLength > maxTitleLength) {
+			    // 템플릿 리터럴 대신 문자열 연결 사용
+			    alert("제목은 " + maxTitleLength + "자 이내로 입력해주세요. (현재: " + titleLength + "자)");
+			    titleInput.focus();
+			    return;
+			}
 			const content = quill.root.innerHTML;
 			const plainText = quill.getText().trim();
 

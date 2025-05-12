@@ -1,3 +1,27 @@
+:root {
+	--primary-color: #4361ee;
+	--primary-light: #d8e1ff;
+	--primary-lighter: #edf0ff;
+	--primary-dark: #3a56d4;
+	--secondary-color: #4895ef;
+	--accent-color: #f72585;
+	--success-color: #4cc9a0;
+	--danger-color: #f72585;
+	--warning-color: #fca311;
+	--info-color: #4895ef;
+	--gray-100: #f8f9fa;
+	--gray-200: #e9ecef;
+	--gray-300: #dee2e6;
+	--gray-400: #ced4da;
+	--gray-500: #adb5bd;
+	--gray-600: #6c757d;
+	--gray-700: #495057;
+	--gray-800: #343a40;
+	--gray-900: #212529;
+	--border-radius: 12px;
+	--box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+	--transition: all 0.3s ease;
+}
 * {
 	box-sizing: border-box;
 	font-family: 'Noto Sans KR', sans-serif;
@@ -98,6 +122,7 @@ body {
 .book-carousel {
 	display: flex;
 	justify-content: flex-start; /* 왼쪽부터 정렬 */
+	/*justify-content: center; !* 가운데부터 정렬 *!*/
 	gap: 20px;
 	overflow-x: auto;/*스크롤 바*/
 	padding: 10px 0;
@@ -190,7 +215,7 @@ body {
 }
 
 
-}
+
 /* 책 제목 */
 .book-title {
 	font-weight: bold;
@@ -286,4 +311,69 @@ body {
 	.book-carousel .book-card, .book-grid .book-card {
 		flex: 0 0 100%;
 	}
+}
+
+/* 빈 상태 스타일 */
+.empty-state {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;  /* 전체 너비 사용 */
+	text-align: center;
+	padding: 2rem;
+}
+
+
+.empty-icon {
+	font-size: 4rem;
+	color: var(--gray-300);
+	margin-bottom: 1.5rem;
+	animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+	0% {
+		transform: translateY(0px);
+	}
+	50% {
+		transform: translateY(-10px);
+	}
+	100% {
+		transform: translateY(0px);
+	}
+}
+
+.empty-message {
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: var(--gray-700);
+	margin-bottom: 1.5rem;
+}
+
+.btn-outline {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	background-color: white;
+	color: var(--primary-color);
+	border: 2px solid var(--primary-color);
+	border-radius: 8px;
+	padding: 0.8rem 1.5rem;
+	font-size: 1rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+	background-color: var(--primary-color);
+	color: white;
+	transform: translateY(-3px);
+	box-shadow: 0 6px 15px rgba(67, 97, 238, 0.3);
+}
+
+.btn-outline:active {
+	transform: translateY(0);
+	box-shadow: 0 2px 5px rgba(67, 97, 238, 0.3);
 }

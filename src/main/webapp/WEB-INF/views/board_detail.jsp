@@ -4,6 +4,7 @@
 			<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 				<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 				<!DOCTYPE html >
+				
 				  <html>
 
 									<head>
@@ -122,7 +123,7 @@
 														<% } else { %>
 															<div class="comment-form login-required">
 																<p>
-																	댓글을 작성하려면 <a href="/loginView">로그인</a>이 필요합니다.
+																	댓글을 작성하려면 <a href="/loginForm">로그인</a>이 필요합니다.
 																</p>
 															</div>
 															<% } %>
@@ -161,13 +162,27 @@
 																												${formattedDate}
 																											</c:otherwise>
 																										</c:choose>
+																										
 																									</c:if>
 																								</span>
+																								<c:if test="${(loginUser.userNumber == comment.userNumber) || (loginUser.userAdmin == 1)}">
+																								    <div class="comment-actions">
+																								        <button type="button" class="comment-action-button edit-button" 
+																								                onclick="showEditCommentForm(${comment.commentNumber}, '${fn:replace(comment.commentContent, "'", "\\'")}')">
+																								            <i class="fas fa-edit"></i> 수정
+																								        </button>
+																								        <button type="button" class="comment-action-button delete-button" 
+																								                onclick="confirmDeleteComment(${comment.commentNumber}, false)">
+																								            <i class="fas fa-trash"></i> 삭제
+																								        </button>
+																								    </div>
+																								</c:if>
 																							</div>
 																						</div>
 																						<div class="comment-content">
 																							${comment.commentContent}
 																						</div>
+
 																					</div>
 																				</div>
 
@@ -245,6 +260,18 @@
 																															</c:choose>
 																														</c:if>
 																													</span>
+																													<c:if test="${(loginUser.userNumber == reply.userNumber) || (loginUser.userAdmin == 1)}">
+																													    <div class="comment-actions">
+																													        <button type="button" class="comment-action-button edit-button" 
+																													                onclick="showEditCommentForm(${reply.commentNumber}, '${fn:replace(reply.commentContent, "'", "\\'")}')">
+																													            <i class="fas fa-edit"></i> 수정
+																													        </button>
+																													        <button type="button" class="comment-action-button delete-button" 
+																													                onclick="confirmDeleteComment(${reply.commentNumber}, true)">
+																													            <i class="fas fa-trash"></i> 삭제
+																													        </button>
+																													    </div>
+																													</c:if>
 																												</div>
 																											</div>
 																											<div class="comment-content">
@@ -535,6 +562,271 @@
 											    window.location.href = url;
 											}
 											
+											
+											
+											// 전역 변수로 현재 수정 중인 댓글 번호와 내용 저장
+											var currentEditingComment = null;
+											var originalCommentContent = null;
+
+											// 댓글 수정 폼 표시
+											function showEditCommentForm(commentNumber, commentContent) {
+											  console.log("수정 시작: 댓글 번호 =", commentNumber);
+											  
+											  // 현재 수정 중인 댓글 정보 저장
+											  currentEditingComment = commentNumber;
+											  originalCommentContent = commentContent;
+											  
+											  // 댓글 내용 요소 찾기
+											  var commentElement = document.getElementById("comment-" + commentNumber);
+											  if (!commentElement) {
+											    console.error("댓글 요소를 찾을 수 없습니다: comment-" + commentNumber);
+											    alert("댓글 요소를 찾을 수 없습니다.");
+											    return;
+											  }
+											  
+											  var contentElement = commentElement.querySelector(".comment-content");
+											  if (!contentElement) {
+											    console.error("댓글 내용 요소를 찾을 수 없습니다");
+											    alert("댓글 내용 요소를 찾을 수 없습니다.");
+											    return;
+											  }
+											  
+											  // 원래 HTML 내용 저장
+											  var originalHtml = contentElement.innerHTML;
+											  
+											  // HTML 태그 제거하여 순수 텍스트 추출
+											  var tempDiv = document.createElement("div");
+											  tempDiv.innerHTML = commentContent;
+											  var plainText = tempDiv.textContent || tempDiv.innerText || "";
+											  
+											  console.log("원본 텍스트:", plainText);
+											  
+											  // 수정 폼 HTML
+											  var formHtml = '<div class="edit-form-container">' +
+											    '<textarea id="edit-textarea-' + commentNumber + '" class="edit-comment-textarea">' + plainText + '</textarea>' +
+											    '<div class="edit-comment-actions">' +
+											    '<button type="button" class="cancel-edit-button" onclick="cancelEdit(' + commentNumber + ', \'' + escape(originalHtml) + '\')">취소</button>' +
+											    '<button type="button" class="save-edit-button" onclick="saveEdit(' + commentNumber + ')"><i class="fas fa-check"></i> 저장</button>' +
+											    '</div></div>';
+											  
+											  // 내용 교체
+											  contentElement.innerHTML = formHtml;
+											  
+											  // 텍스트 영역에 포커스
+											  var textarea = document.getElementById("edit-textarea-" + commentNumber);
+											  if (textarea) {
+											    console.log("텍스트 영역 찾음:", textarea.id);
+											    textarea.focus();
+											    textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
+											  } else {
+											    console.error("텍스트 영역을 찾을 수 없습니다: edit-textarea-" + commentNumber);
+											  }
+											}
+
+											// 수정 취소
+											function cancelEdit(commentNumber, originalHtml) {
+											  console.log("수정 취소: 댓글 번호 =", commentNumber);
+											  
+											  var commentElement = document.getElementById("comment-" + commentNumber);
+											  if (!commentElement) {
+											    console.error("댓글 요소를 찾을 수 없습니다: comment-" + commentNumber);
+											    window.location.reload();
+											    return;
+											  }
+											  
+											  var contentElement = commentElement.querySelector(".comment-content");
+											  if (!contentElement) {
+											    console.error("댓글 내용 요소를 찾을 수 없습니다");
+											    window.location.reload();
+											    return;
+											  }
+											  
+											  // 원래 내용으로 복원
+											  contentElement.innerHTML = unescape(originalHtml);
+											  
+											  // 전역 변수 초기화
+											  currentEditingComment = null;
+											  originalCommentContent = null;
+											}
+
+											// 수정 내용 저장
+											function saveEdit(commentNumber) {
+											  console.log("수정 저장: 댓글 번호 =", commentNumber);
+											  
+											  var textarea = document.getElementById("edit-textarea-" + commentNumber);
+											  if (!textarea) {
+											    console.error("텍스트 영역을 찾을 수 없습니다: edit-textarea-" + commentNumber);
+											    alert("텍스트 영역을 찾을 수 없습니다. 페이지를 새로고침합니다.");
+											    window.location.reload();
+											    return;
+											  }
+											  
+											  var editedContent = textarea.value;
+											  console.log("수정된 내용:", editedContent);
+											  
+											  // 빈 내용 체크
+											  if (!editedContent.trim()) {
+											    alert("댓글 내용을 입력해주세요.");
+											    textarea.focus();
+											    return;
+											  }
+											  
+											  // AJAX 요청으로 댓글 수정
+											  $.ajax({
+											    type: "post",
+											    url: "/bc_modify",
+											    data: {
+											      commentNumber: commentNumber,
+											      commentContent: editedContent
+											    },
+											    success: function(response) {
+											      console.log("수정 성공:", response);
+											      alert("댓글이 수정되었습니다.");
+											      
+											      // 페이지 새로고침 (조회수 증가 방지)
+											      var currentUrl = window.location.href;
+											      var url = new URL(currentUrl);
+											      url.searchParams.set("skipViewCount", "true");
+											      window.location.href = url.toString();
+											    },
+											    error: function(xhr, status, error) {
+											      console.error("수정 오류:", error);
+											      alert("댓글 수정 중 오류가 발생했습니다.");
+											      window.location.reload();
+											    }
+											  });
+											}
+
+											// 댓글 삭제 확인
+											function confirmDeleteComment(commentNumber, isReply) {
+											  console.log("삭제 확인: 댓글 번호 =", commentNumber, "대댓글 여부 =", isReply);
+											  
+											  var messageText = isReply ? "이 답글을 삭제하시겠습니까?" : "이 댓글을 삭제하시겠습니까?";
+											  var confirmText = isReply ? "답글" : "댓글";
+											  
+											  if (confirm(messageText + "\n삭제된 " + confirmText + "은 복구할 수 없습니다.")) {
+											    deleteComment(commentNumber);
+											  }
+											}
+
+											// 댓글 삭제 실행
+											function deleteComment(commentNumber) {
+											  console.log("삭제 실행: 댓글 번호 =", commentNumber);
+											  
+											  $.ajax({
+											    type: "post",
+											    url: "/bc_delete",
+											    data: {
+											      commentNumber: commentNumber
+											    },
+											    success: function(response) {
+											      console.log("삭제 성공:", response);
+											      alert("댓글이 삭제되었습니다.");
+											      
+											      // 페이지 새로고침 (조회수 증가 방지)
+											      var currentUrl = window.location.href;
+											      var url = new URL(currentUrl);
+											      url.searchParams.set("skipViewCount", "true");
+											      window.location.href = url.toString();
+											    },
+											    error: function(xhr, status, error) {
+											      console.error("삭제 오류:", error);
+											      alert("댓글 삭제 중 오류가 발생했습니다.");
+											      window.location.reload();
+											    }
+											  });
+											}
+
+											// 스타일 추가
+											document.addEventListener("DOMContentLoaded", function() {
+											  var style = document.createElement("style");
+											  style.textContent = `
+											    /* 댓글 수정/삭제 버튼 스타일 */
+											    .comment-actions {
+											      display: flex;
+											      gap: 8px;
+											      margin-left: 10px;
+											    }
+											    
+											    .comment-action-button {
+											      background: none;
+											      border: none;
+											      font-size: 12px;
+											      color: #666;
+											      cursor: pointer;
+											      padding: 2px 6px;
+											      border-radius: 4px;
+											      transition: all 0.2s ease;
+											    }
+											    
+											    .comment-action-button:hover {
+											      background-color: #f0f0f0;
+											      color: #333;
+											    }
+											    
+											    .comment-action-button.edit-button:hover {
+											      color: #2c73d2;
+											    }
+											    
+											    .comment-action-button.delete-button:hover {
+											      color: #e74c3c;
+											    }
+											    
+											    /* 댓글 수정 폼 스타일 */
+											    .edit-form-container {
+											      width: 100%;
+											    }
+											    
+											    .edit-comment-textarea {
+											      width: 100%;
+											      min-height: 80px;
+											      padding: 8px;
+											      border: 1px solid #ddd;
+											      border-radius: 4px;
+											      resize: vertical;
+											      font-family: inherit;
+											      font-size: 14px;
+											      margin-bottom: 8px;
+											    }
+											    
+											    .edit-comment-actions {
+											      display: flex;
+											      justify-content: flex-end;
+											      gap: 8px;
+											    }
+											    
+											    .cancel-edit-button,
+											    .save-edit-button {
+											      padding: 6px 12px;
+											      border: none;
+											      border-radius: 4px;
+											      font-size: 13px;
+											      cursor: pointer;
+											      transition: all 0.2s ease;
+											    }
+											    
+											    .cancel-edit-button {
+											      background-color: #f1f1f1;
+											      color: #333;
+											    }
+											    
+											    .save-edit-button {
+											      background-color: #4a6ee0;
+											      color: white;
+											    }
+											    
+											    .cancel-edit-button:hover {
+											      background-color: #e0e0e0;
+											    }
+											    
+											    .save-edit-button:hover {
+											      background-color: #3a5dc0;
+											    }
+											  `;
+											  document.head.appendChild(style);
+											  
+											  console.log("댓글 수정/삭제 기능 초기화 완료");
+											});
 										</script>
 									</body>
 

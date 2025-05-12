@@ -217,4 +217,31 @@ public class BookServiceImpl implements BookService {
 		BookDAO dao = sqlSession.getMapper(BookDAO.class);
 		return dao.getReviewHelpfulCount(reviewId);
 	}
+	
+	@Override
+	public ArrayList<BookDTO> Top5Recommend(HashMap<String, String> param) {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+		ArrayList<BookDTO> list = dao.Top5Recommend(param);
+		return list;
+	}
+	@Override
+	public ArrayList<BookDTO> Top3Borrow() {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+		ArrayList<BookDTO> list = dao.Top3Borrow();
+		return list;
+	}
+
+	@Override
+	public ArrayList<BookDTO> Top5Random(HashMap<String, String> param) {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+		ArrayList<BookDTO> list = dao.Top5Random(param);
+		return list;
+	}
+
+	@Override
+	public String CategoryNum(HashMap<String, String> param) {
+		BookDAO dao = sqlSession.getMapper(BookDAO.class);
+		String categoryNum = dao.CategoryNum(param);
+		return categoryNum;
+	}
 }

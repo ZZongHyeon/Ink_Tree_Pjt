@@ -43,50 +43,22 @@
 			</div>
 
 			<div class="book-carousel">
-				<%--                 <c:forEach items="${list}" var="book" varStatus="status"> --%>
+				<c:forEach items="${top3Borrow}" var="book" varStatus="status">
 				<div class="book-card">
 					<div class="book-cover">
 						<img src="/resources/images/book1.png" alt="책1"
 							style="width: 100%; height: 75%; object-fit: contain;">
 						<div class="book-info">
 							<div class="info-row">
-								<div class="book-title" style="font-size: 20px; color: black; font-weight: bold;">제목 : 머리부터 천천히</div>
-								<div class="book-author">저자 : 정재윤</div>
+								<div class="book-title" style="font-size: 20px; color: black; font-weight: bold;">제목 : ${book.bookTitle}</div>
+								<div class="book-author">저자 : ${book.bookWrite}</div>
 							</div>
-							<div class="book-category">장르 : 호러</div>
-							<div class="book-date">출판일 : BC-500</div>
+							<div class="book-category">장르 : ${book.bookMajorCategory}</div>
+							<div class="book-date">출판일 : ${book.bookDate}</div>
 						</div>
 					</div>
 				</div>
-				<div class="book-card">
-					<div class="book-cover">
-						<img src="/resources/images/book2.png" alt="책2"
-							style="width: 100%; height: 75%; object-fit: contain;">
-						<div class="book-info">
-							<div class="info-row">
-								<div class="book-title" style="font-size: 20px; color: black; font-weight: bold;">제목 : 첫 숨</div>
-								<div class="book-author">저자 : 이병훈</div>
-							</div>
-							<div class="book-category">장르 : 사극</div>
-							<div class="book-date">출판일 : 1592-09-21</div>
-						</div>
-					</div>
-				</div>
-				<div class="book-card">
-					<div class="book-cover">
-						<img src="/resources/images/book3.png" alt="책3"
-							style="width: 100%; height: 75%; object-fit: contain;">
-						<div class="book-info">
-							<div class="info-row">
-								<div class="book-title" style="font-size: 20px; color: black; font-weight: bold;">제목 : 애니</div>
-								<div class="book-author">저자 : 정종현</div>
-							</div>
-							<div class="book-category">장르 : 로맨스</div>
-							<div class="book-date">출판일 : 2353-05-07</div>
-						</div>
-					</div>
-				</div>
-				<%--                 </c:forEach> --%>
+				 </c:forEach>
 			</div>
 		</form>
 		<!-- 주 카테고리 추천 폼 -->
@@ -100,43 +72,42 @@
 					카테고리 기반 추천 도서입니다.</p>
 			</div>
 
-			<div class="book-grid">
-				<%--                 <c:forEach items="${majorCategoryBooks}" var="book"> --%>
-				<div class="book-card">
-					<div class="book-cover">
-						<img src="/resources/images/book4.png" alt="책4"
-							style="width: 100%; height: 101%; object-fit: cover;">
+			<div class="book-carousel">
+				<c:if test="${empty Top5Random}">
+					<div class="empty-state">
+						<div class="empty-icon">
+							<i class="fas fa-book"></i>
+						</div>
+						<div class="empty-message">대출 기록이 없습니다</div>
+						<a href="book_search_view" class="btn-outline">
+							<i class="fas fa-search"></i> 도서 검색하기
+						</a>
 					</div>
-				</div>
-				<div class="book-card">
-					<div class="book-cover">
-						<img src="/resources/images/book5.png" alt="책5"
-							style="width: 100%; height: 101%; object-fit: cover;">
-					</div>
-				</div>
-				<div class="book-card">
-					<div class="book-cover">
-						<img src="/resources/images/book6.png" alt="책6"
-							style="width: 100%; height: 101%; object-fit: cover;">
-					</div>
-				</div>
-				<div class="book-card">
-					<div class="book-cover">
-						<img src="/resources/images/book7.png" alt="책7"
-							style="width: 100%; height: 101%; object-fit: cover;">
-					</div>
-				</div>
-				<div class="book-card">
-					<div class="book-cover">
-						<img src="/resources/images/book8.png" alt="책8"
-							style="width: 100%; height: 101%; object-fit: cover;">
-					</div>
-				</div>
-				<%--                 </c:forEach> --%>
+				</c:if>
+				<c:if test="${not empty Top5Random}">
+				                 <c:forEach items="${Top5Recommend}" var="book">
+									 <div class="book-card">
+										 <div class="book-cover">
+											 <img src="/resources/images/book1.png" alt="책1"
+												  style="width: 100%; height: 75%; object-fit: contain;">
+											 <div class="book-info">
+												 <div class="info-row">
+													 <div class="book-title" style="font-size: 20px; color: black; font-weight: bold;">제목 : ${book.bookTitle}</div>
+													 <div class="book-author">저자 : ${book.bookWrite}</div>
+												 </div>
+												 <div class="book-category">장르 : ${book.bookSubCategory}</div>
+												 <div class="book-date">출판일 : ${book.bookDate}</div>
+											 </div>
+										 </div>
+									 </div>
+				</c:forEach>
+
+				</c:if>
 			</div>
 		</form>
 
 		<!-- 서브 카테고리 추천 폼 -->
+		<c:if test="${not empty Top5Random}">
 		<form class="category-form">
 			<div class="form-header">
 				<h2 class="form-title">
@@ -147,41 +118,30 @@
 					책리스트 입니다.</p>
 			</div>
 
-			<div class="book-grid">
-				<%-- 				<c:forEach items="${subCategoryBooks}" var="book"> --%>
-				<div class="book-card">
-					<div class="book-cover">
-						<img src="/resources/images/book9.png" alt="책9"
-							style="width: 100%; height: 101%; object-fit: cover;">
+			<div class="book-carousel">
+
+				<c:if test="${not empty Top5Random}">
+				<c:forEach items="${Top5Random}" var="book">
+					<div class="book-card">
+						<div class="book-cover">
+							<img src="/resources/images/book1.png" alt="책1"
+								 style="width: 100%; height: 75%; object-fit: contain;">
+							<div class="book-info">
+								<div class="info-row">
+									<div class="book-title" style="font-size: 20px; color: black; font-weight: bold;">제목 : ${book.bookTitle}</div>
+									<div class="book-author">저자 : ${book.bookWrite}</div>
+								</div>
+								<div class="book-category">장르 : ${book.bookMajorCategory}</div>
+								<div class="book-date">출판일 : ${book.bookDate}</div>
+							</div>
+						</div>
 					</div>
-				</div>
-				<div class="book-card">
-					<div class="book-cover">
-						<img src="/resources/images/book10.png" alt="책10"
-							style="width: 100%; height: 101%; object-fit: cover;">
-					</div>
-				</div>
-				<div class="book-card">
-					<div class="book-cover">
-						<img src="/resources/images/book11.png" alt="책11"
-							style="width: 100%; height: 101%; object-fit: cover;">
-					</div>
-				</div>
-				<div class="book-card">
-					<div class="book-cover">
-						<img src="/resources/images/book12.png" alt="책12"
-							style="width: 100%; height: 101%; object-fit: cover;">
-					</div>
-				</div>
-				<div class="book-card">
-					<div class="book-cover">
-						<img src="/resources/images/book13.png" alt="책13"
-							style="width: 100%; height: 101%; object-fit: cover;">
-					</div>
-				</div>
-				<%-- 				</c:forEach> --%>
+				</c:forEach>
+
+				</c:if>
 			</div>
 		</form>
+		</c:if>
 	</div>
 </body>
 </html>

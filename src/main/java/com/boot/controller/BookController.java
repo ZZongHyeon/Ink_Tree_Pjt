@@ -440,7 +440,58 @@ public class BookController {
 	}
 
 	@RequestMapping("/user_book_recommend")
-	public String bookRecomm() {
+	public String bookRecomm(HttpServletRequest request,
+							 @RequestParam HashMap<String, String> param,
+							 Model model) {
+
+		// 추천 도서 목록을 가져오기 위한 사용자 번호 (예: 1)
+		UserDTO dto = (UserDTO) request.getSession().getAttribute("loginUser");
+		param.put("userNumber", String.valueOf(dto.getUserNumber()));
+		int majorCategoryNumber = Integer.parseInt(service.CategoryNum(param));
+
+		int rn = 0;
+		ArrayList<BookDTO> top3Borrow = service.Top3Borrow();
+		ArrayList<BookDTO> Top5Recommend = null;
+		ArrayList<BookDTO> Top5Random = null;
+		if(majorCategoryNumber == 0) {
+			Top5Recommend = null;
+			Top5Random = null;
+			param.put("majorCategoryNumber", String.valueOf(majorCategoryNumber));
+			param.put("rn", String.valueOf(rn));
+		}
+		if(majorCategoryNumber == 1) {
+			rn = 3;
+			param.put("majorCategoryNumber", String.valueOf(majorCategoryNumber));
+			param.put("rn", String.valueOf(rn));
+		}
+		if(majorCategoryNumber == 2) {
+			rn = 2;
+			param.put("majorCategoryNumber", String.valueOf(majorCategoryNumber));
+			param.put("rn", String.valueOf(rn));
+		}
+		if(majorCategoryNumber >= 3) {
+			rn = 1;
+			param.put("majorCategoryNumber", String.valueOf(majorCategoryNumber));
+			param.put("rn", String.valueOf(rn));
+		}
+
+			Top5Recommend = service.Top5Recommend(param);
+			Top5Random = service.Top5Random(param);
+
+
+		System.out.println("majorCategoryNumber : " + majorCategoryNumber);
+
+		// 전체 리스트 내용 출력
+		System.out.println("Top3 대출 도서: " + top3Borrow);
+		System.out.println("Top5 추천 도서: " + Top5Recommend); // 소분류
+		System.out.println("Top5 랜덤 도서: " + Top5Random); // 대분류
+
+
+
+		model.addAttribute("top3Borrow", top3Borrow);
+		model.addAttribute("Top5Recommend", Top5Recommend);
+		model.addAttribute("Top5Random", Top5Random);
+
 		return "user_book_recommend";
 	}
 
