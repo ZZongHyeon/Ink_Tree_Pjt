@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>잉크트리 - 지하철역 주변 아파트 시세</title>
+    <title>잉크트리</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,16 +50,11 @@
                     <i class="nav-icon fa-solid fa-clipboard-list"></i>
                     <span>게시판</span>
                 </a>
-				<%
-				if (user != null) {
-				%>
-				<a href="user_book_borrowing"
-					class="nav-link ${currentPage == 'user_book_borrowing' ? 'active' : ''}">
-					<i class="nav-icon fa-solid fa-book-open-reader"></i> <span>대출기록</span>
-				</a>
-				<%
-				}
-				%>
+                <a href="/trade_post_view" class="nav-link ${currentPage == 'trade_post_view' ? 'active' : ''}">
+                    <i class="nav-icon fa-solid fa-cart-shopping"></i>
+                    <span>거래게시판</span>
+                </a>
+
             </nav>
 
             <div class="user-menu">
@@ -138,6 +133,24 @@
 								    <div class="dropdown-item-content">
 								        <div class="dropdown-item-title">북마크</div>
 								        <div class="dropdown-item-description">내가 찜한 도서 목록</div>
+								    </div>
+								</a>
+								<a href="/trade_post_favorite_view" class="dropdown-item">
+								    <div class="dropdown-icon-wrapper">
+								        <i class="dropdown-icon fa-solid fa-store"></i>
+								    </div>
+								    <div class="dropdown-item-content">
+								        <div class="dropdown-item-title">중고도서 북마크</div>
+								        <div class="dropdown-item-description">거래게시판을 통해 찜한 도서 목록</div>
+								    </div>
+								</a>
+								<a href="/user_book_borrowing" class="dropdown-item">
+								    <div class="dropdown-icon-wrapper">
+								        <i class="dropdown-icon fa-solid fa-book-open-reader"></i>
+								    </div>
+								    <div class="dropdown-item-content">
+								        <div class="dropdown-item-title">대출기록</div>
+								        <div class="dropdown-item-description">반납 & 대출 기록</div>
 								    </div>
 								</a>
                             </div>

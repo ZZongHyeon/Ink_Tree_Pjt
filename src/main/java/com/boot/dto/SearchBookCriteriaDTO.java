@@ -9,7 +9,10 @@ public class SearchBookCriteriaDTO {
     private int amount; // 페이지당 글 갯수
     private String type;
     private String keyword;
-
+    private String bookMajorCategory;
+    private String bookSubCategory;
+    private String status;
+    private String sort;
     public SearchBookCriteriaDTO() {
         this(1, 1, 8);
     }

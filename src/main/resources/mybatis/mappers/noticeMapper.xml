@@ -72,4 +72,13 @@
 		1
 		WHERE noticeNum = #{noticeNum}
 	</update>
+	<select id="getAllCategoryCounts" resultType="java.util.HashMap">
+    SELECT 
+        COUNT(*) "total",
+        SUM(CASE WHEN NOTICECATEGORY = 'important' THEN 1 ELSE 0 END) "important",
+        SUM(CASE WHEN NOTICECATEGORY = 'event' THEN 1 ELSE 0 END) "event",
+        SUM(CASE WHEN NOTICECATEGORY = 'info' THEN 1 ELSE 0 END) "info",
+        SUM(CASE WHEN NOTICECATEGORY = 'update' THEN 1 ELSE 0 END) "update"
+    FROM notice
+</select>
 </mapper>

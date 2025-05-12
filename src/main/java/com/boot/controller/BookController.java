@@ -526,7 +526,6 @@ public class BookController {
 		model.addAttribute("userRecord", userRecord);
 		model.addAttribute("userOver", userOver);
 		model.addAttribute("userRecordCount", userRecordCount);
-		model.addAttribute("currentPage", "user_book_borrowing"); // 헤더 식별용
 
 		// 활성 탭 정보 모델에 추가 (없으면 기본값은 'borrowed')
 		model.addAttribute("activeTab", activeTab != null ? activeTab : "borrowed");

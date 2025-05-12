@@ -2,6 +2,7 @@ package com.boot.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.boot.dto.CriteriaDTO;
 import com.boot.dto.NoticeCriteriaDTO;
@@ -19,4 +20,6 @@ public interface AdminService {
 	public void NoticeDelete(HashMap<String, String> param);
 
 	public int getTotalCount(NoticeCriteriaDTO noticeCriteriaDTO);
+
+	public Map<String, Integer> getAllCategoryCounts();
 }

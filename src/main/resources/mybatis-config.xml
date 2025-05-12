@@ -11,5 +11,6 @@
 		<mapper resource="mybatis/mappers/noticeMapper.xml"/>
 		<mapper resource="mybatis/mappers/bookMapper.xml"/>
 		<mapper resource="mybatis/mappers/utilMapper.xml"/>
+		<mapper resource="mybatis/mappers/TradePostMapper.xml"/>
 	</mappers>
 </configuration>

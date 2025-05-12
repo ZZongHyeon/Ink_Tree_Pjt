@@ -21,10 +21,10 @@
 					<jsp:include page="header.jsp" />
 
 					<div class="container">
-						<div class="page-header">
-							<h1 class="page-title">공지사항</h1>
-							<p class="page-description">잉크트리의 중요 소식과 업데이트 정보를 확인하세요.</p>
-						</div>
+<!--						<div class="page-header">-->
+<!--							<h1 class="page-title">공지사항</h1>-->
+<!--							<p class="page-description">잉크트리의 중요 소식과 업데이트 정보를 확인하세요.</p>-->
+<!--						</div>-->
 
 						<div class="notice-stats">
 							<div class="stat-card">

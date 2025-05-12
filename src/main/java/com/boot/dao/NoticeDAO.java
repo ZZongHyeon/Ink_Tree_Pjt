@@ -2,6 +2,7 @@ package com.boot.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.boot.dto.CriteriaDTO;
 import com.boot.dto.NoticeCriteriaDTO;
@@ -21,4 +22,6 @@ public interface NoticeDAO {
 	public void NoticeHit(HashMap<String, String> param);
 
 	public int getTotalCount(NoticeCriteriaDTO noticeCriteriaDTO);
+
+	public Map<String, Integer> getAllCategoryCounts();
 }

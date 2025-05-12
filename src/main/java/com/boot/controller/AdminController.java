@@ -2,6 +2,7 @@ package com.boot.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,49 +40,34 @@ public class AdminController {
 
 	@RequestMapping("/admin_notice")
 	public String adminNoti(Model model, NoticeCriteriaDTO noticeCriteriaDTO) {
-		ArrayList<NoticeDTO> list = admin_service.NoticeView(noticeCriteriaDTO);
-		for (NoticeDTO dto : list) {
-			String content = dto.getNoticeContent();
-			if (content != null && content.length() > 20) {
-				dto.setNoticeContent(content.substring(0, 20) + "...");
-			}
-		}
-		model.addAttribute("noticeList", list);
-		model.addAttribute("currentPage", "admin_notice"); // 헤더 식별용
+	    // 페이지네이션된 공지사항 목록 가져오기
+	    ArrayList<NoticeDTO> list = admin_service.NoticeView(noticeCriteriaDTO);
+	    
+	    // 내용 길이 제한 (기존 코드 유지)
+	    for (NoticeDTO dto : list) {
+	        String content = dto.getNoticeContent();
+	        if (content != null && content.length() > 20) {
+	            dto.setNoticeContent(content.substring(0, 20) + "...");
+	        }
+	    }
+	    
+	    model.addAttribute("noticeList", list);
+	    model.addAttribute("currentPage", "admin_notice"); // 헤더 식별용
 
-		int countImportant = 0;
-		int countEvent = 0;
-		int countInfo = 0;
-		int countUpdate = 0;
-		for (NoticeDTO dto : list) {
-			switch (dto.getNoticeCategory()) {
-			case "important":
-				countImportant++;
-				break;
-			case "event":
-				countEvent++;
-				break;
-			case "info":
-				countInfo++;
-				break;
-			case "update":
-				countUpdate++;
-				break;
-			}
-		}
-		int countAll = countImportant + countEvent + countUpdate;
-		model.addAttribute("countAll", countAll);
-		model.addAttribute("countImportant", countImportant);
-		model.addAttribute("countEvent", countEvent);
-		model.addAttribute("countInfo", countInfo);
-		model.addAttribute("countUpdate", countUpdate);
-		
-	    // 페이징 처리
+	    // 모든 카테고리 카운트를 한 번에 가져오기
+	    Map<String, Integer> categoryCounts = admin_service.getAllCategoryCounts();
+	    
+	    model.addAttribute("countAll", categoryCounts.get("total"));
+	    model.addAttribute("countImportant", categoryCounts.get("important"));
+	    model.addAttribute("countEvent", categoryCounts.get("event"));
+	    model.addAttribute("countInfo", categoryCounts.get("info"));
+	    model.addAttribute("countUpdate", categoryCounts.get("update"));
+	    
+	    // 페이징 처리 (기존 코드 유지)
 	    int total = admin_service.getTotalCount(noticeCriteriaDTO);
 	    model.addAttribute("pageMaker", new PageDTO(total, noticeCriteriaDTO));
 	    
-	    
-		return "admin_notice";
+	    return "admin_notice";
 	}
 
 	@RequestMapping("/admin_notice_write")
