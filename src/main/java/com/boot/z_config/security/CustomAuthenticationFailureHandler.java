@@ -1,4 +1,4 @@
-package com.boot.z_util.security;
+package com.boot.z_config.security;
 
 import java.io.IOException;
 

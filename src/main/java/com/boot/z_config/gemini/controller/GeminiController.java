@@ -1,4 +1,4 @@
-package com.boot.z_util.geminiController;
+package com.boot.z_config.gemini.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.boot.z_util.geminiService.GeminiService;
+import com.boot.z_config.gemini.service.GeminiService;
 
 import java.util.Map;
 

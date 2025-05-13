@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.book.dao.WishlistDAO">
+    
+    <!-- 이미 위시리스트에 있는지 확인 (boolean 반환) -->
+    <select id="isAlreadyInWishlist" resultType="boolean">
+        SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END
+        FROM BOOK_WISHLIST 
+        WHERE userNumber = #{userNumber} AND bookNumber = #{bookNumber}
+    </select>
+    
+    <!-- 위시리스트에 추가 -->
+    <insert id="addToWishlist">
+        INSERT INTO BOOK_WISHLIST (userNumber, bookNumber, addedDate) 
+        VALUES (#{userNumber}, #{bookNumber}, SYSDATE)
+    </insert>
+    
+    <!-- 위시리스트에서 삭제 -->
+    <delete id="removeFromWishlist">
+        DELETE FROM BOOK_WISHLIST 
+        WHERE userNumber = #{userNumber} AND bookNumber = #{bookNumber}
+    </delete>
+    
+    <!-- 위시리스트 조회 -->
+    <select id="getWishlist" resultType="com.boot.book.dto.BookDTO">
+        SELECT * FROM (
+            SELECT b.bookNumber, b.bookTitle, b.bookWrite, b.bookPub, b.bookMajorCategory,
+                   ROW_NUMBER() OVER (ORDER BY w.addedDate DESC) as rn
+            FROM BOOKINFO b
+            JOIN BOOK_WISHLIST w ON b.bookNumber = w.bookNumber
+            WHERE w.userNumber = #{param.userNumber}
+        )
+        WHERE rn BETWEEN #{criteria.startRow} + 1 AND #{criteria.startRow} + #{criteria.amount}
+    </select>
+    
+    <!-- 위시리스트 개수 조회 -->
+    <select id="getWishlistCount" resultType="int">
+        SELECT COUNT(*) 
+        FROM BOOK_WISHLIST 
+        WHERE userNumber = #{param.userNumber}
+    </select>
+    
+</mapper>

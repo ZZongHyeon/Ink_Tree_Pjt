@@ -1,4 +1,4 @@
-package com.boot.z_util.geminiService;
+package com.boot.z_config.gemini.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
