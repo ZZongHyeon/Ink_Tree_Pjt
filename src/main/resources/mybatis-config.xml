@@ -10,7 +10,9 @@
 		<mapper resource="mybatis/mappers/userMapper.xml"/>
 		<mapper resource="mybatis/mappers/noticeMapper.xml"/>
 		<mapper resource="mybatis/mappers/bookMapper.xml"/>
-		<mapper resource="mybatis/mappers/bookWishlist.xml"/>
+		<mapper resource="mybatis/mappers/bookReviewMapper.xml"/>
+		<mapper resource="mybatis/mappers/bookRecommendMapper.xml"/>
+		<mapper resource="mybatis/mappers/bookWishlistMapper.xml"/>
 		<mapper resource="mybatis/mappers/utilMapper.xml"/>
 		<mapper resource="mybatis/mappers/TradePostMapper.xml"/>
 		<mapper resource="mybatis/mappers/TradeFavoriteMapper.xml"/>
