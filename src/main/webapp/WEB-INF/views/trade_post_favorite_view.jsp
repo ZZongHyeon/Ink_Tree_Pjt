@@ -1,5 +1,5 @@
 <%@page import="com.boot.dto.UserDTO" %>
-<%@page import="com.boot.trade.dto.TradePostDTO" %>
+<%@page import="com.boot.trade.dto.TradeFavoriteDTO" %>
 <%@page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -12,383 +12,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관심 목록 - 잉크트리</title>
+    <title>관심목록 - 잉크트리</title>
+    <link rel="stylesheet" type="text/css" href="/resources/css/trade_post_favorite_view.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="/resources/css/trade_post_view.css">
-    <style>
-        /* 기본 스타일 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* 관심 목록 컨테이너 */
-        .favorite-container {
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            padding: 30px;
-            margin-bottom: 30px;
-        }
-
-        /* 헤더 섹션 */
-        .favorite-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .favorite-title {
-            font-size: 24px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            color: #333;
-        }
-
-        .favorite-title i {
-            margin-right: 10px;
-            color: #e53e3e;
-        }
-
-        .favorite-count {
-            background-color: #fee2e2;
-            color: #e53e3e;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 500;
-            margin-left: 10px;
-        }
-
-        .favorite-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        /* 필터 및 정렬 옵션 */
-        .filter-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-
-
-        /* 관심 목록 그리드 */
-        .favorite-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .favorite-item {
-            border: 1px solid #eee;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.2s, box-shadow 0.2s;
-            position: relative;
-            background-color: white;
-        }
-
-        .favorite-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .favorite-item.sold {
-            opacity: 0.7;
-        }
-
-        .favorite-item.reserved {
-            border: 2px solid #f59e0b;
-        }
-
-        .favorite-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .favorite-image {
-            height: 180px;
-            background-color: #f1f5f9;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .favorite-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s;
-        }
-
-        .favorite-item:hover .favorite-image img {
-            transform: scale(1.05);
-        }
-
-        .status-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 18px;
-            z-index: 1;
-        }
-
-        .status-overlay.sold {
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-        }
-
-        .status-overlay.reserved {
-            background-color: rgba(245, 158, 11, 0.7);
-            color: white;
-        }
-
-        .favorite-info {
-            padding: 15px;
-        }
-
-        .favorite-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            line-height: 1.4;
-            height: 45px;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-
-        .favorite-price {
-            font-weight: 700;
-            color: #e53e3e;
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .favorite-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .favorite-location {
-            display: flex;
-            align-items: center;
-        }
-
-        .favorite-location i {
-            margin-right: 5px;
-            color: #e53e3e;
-        }
-
-        .favorite-time {
-            color: #777;
-        }
-
-        .favorite-seller {
-            font-size: 13px;
-            color: #666;
-            display: flex;
-            align-items: center;
-        }
-
-        .favorite-seller i {
-            margin-right: 5px;
-            color: #4a5568;
-        }
-
-        /* 관심 해제 버튼 */
-        .unfavorite-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 32px;
-            height: 32px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 2;
-            border: none;
-            transition: all 0.2s;
-        }
-
-        .unfavorite-btn i {
-            color: #e53e3e;
-            font-size: 16px;
-        }
-
-        .unfavorite-btn:hover {
-            background-color: #e53e3e;
-        }
-
-        .unfavorite-btn:hover i {
-            color: white;
-        }
-
-        /* 빈 상태 메시지 */
-        .empty-favorites {
-            text-align: center;
-            padding: 50px 0;
-            color: #777;
-        }
-
-        .empty-favorites i {
-            font-size: 48px;
-            color: #cbd5e0;
-            margin-bottom: 15px;
-        }
-
-        .empty-favorites h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #4a5568;
-        }
-
-        .empty-favorites p {
-            margin-bottom: 20px;
-        }
-
-        .browse-btn {
-            display: inline-block;
-            background-color: #3182ce;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.2s;
-        }
-
-        .browse-btn:hover {
-            background-color: #2c5282;
-        }
-
-        /* 페이지네이션 */
-        .div_page {
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        .div_page ul {
-            display: inline-flex;
-            list-style: none;
-            padding: 0;
-        }
-
-        .div_page li {
-            margin: 0 5px;
-        }
-
-        .div_page li a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            text-decoration: none;
-            color: #4a5568;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .div_page li a:hover {
-            background-color: #e2e8f0;
-        }
-
-        .div_page li.active a {
-            background-color: #3182ce;
-            color: white;
-        }
-
-        .div_page li.paginate_button a {
-            font-size: 14px;
-        }
-
-        /* 반응형 스타일 */
-        @media (max-width: 768px) {
-            .favorite-container {
-                padding: 20px 15px;
-            }
-            
-            .favorite-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-            
-            .favorite-actions {
-                width: 100%;
-            }
-            
-            .filter-options, .sort-options {
-                justify-content: flex-start;
-                width: 100%;
-                overflow-x: auto;
-                padding-bottom: 5px;
-            }
-            
-            .favorite-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-            
-            .favorite-image {
-                height: 150px;
-            }
-        }
-    </style>
+    <script src="/resources/js/trade_post_favorite_view.js"></script>
 </head>
 
 <body>
     <jsp:include page="header.jsp" />
 
     <div class="container">
-        <div class="favorite-container">
-            <!-- 헤더 섹션 -->
-            <div class="favorite-header">
-                <h1 class="favorite-title">
-                    <i class="fas fa-heart"></i> 관심 목록
-                    <span class="favorite-count">${fn:length(favoriteList)}</span>
-                </h1>
+        <div class="wishlist-container">
+            <div class="wishlist-header">
+                <h1 class="wishlist-title"><i class="fas fa-heart"></i> 관심목록</h1>
+                <div class="wishlist-actions">
+                    <button class="back-button" onclick="location.href='/trade_post_view'">
+                        <i class="fas fa-shopping-cart"></i> 거래 게시판으로
+                    </button>
+                </div>
             </div>
 
-            <!-- 필터 옵션 -->
+            <div class="search-section">
+                <form id="searchForm" method="get" action="/trade_post_favorite_view">
+                    <!-- 검색 입력 필드 (가로로 길게) -->
+                    <div class="search-input-wrapper">
+                        <input type="text" class="search-input" id="keyword" name="keyword" 
+                               value="${pageMaker.searchBookCriteriaDTO.keyword}" 
+                               placeholder="제목으로 검색">
+                        <button type="submit" class="search-button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- 필터 라벨 행 -->
+                    <div class="filter-labels-row">
+                        <div class="filter-label">대분류</div>
+                        <div class="filter-label">중분류</div>
+                    </div>
+                    
+                    <!-- 필터 선택 행 -->
+                    <div class="filters-row">
+                        <!-- 대분류 -->
+                        <select class="filter-select" id="bookMajorCategory" name="bookMajorCategory">
+                            <option value="">전체</option>
+                            <option value="000-총류" ${param.bookMajorCategory == '000-총류' ? 'selected' : ''}>000 - 총류</option>
+                            <option value="100-철학" ${param.bookMajorCategory == '100-철학' ? 'selected' : ''}>100 - 철학</option>
+                            <option value="200-종교" ${param.bookMajorCategory == '200-종교' ? 'selected' : ''}>200 - 종교</option>
+                            <option value="300-사회학" ${param.bookMajorCategory == '300-사회학' ? 'selected' : ''}>300 - 사회학</option>
+                            <option value="400-자연과학" ${param.bookMajorCategory == '400-자연과학' ? 'selected' : ''}>400 - 자연과학</option>
+                            <option value="500-기술과학" ${param.bookMajorCategory == '500-기술과학' ? 'selected' : ''}>500 - 기술과학</option>
+                            <option value="600-예술" ${param.bookMajorCategory == '600-예술' ? 'selected' : ''}>600 - 예술</option>
+                            <option value="700-언어" ${param.bookMajorCategory == '700-언어' ? 'selected' : ''}>700 - 언어</option>
+                            <option value="800-문학" ${param.bookMajorCategory == '800-문학' ? 'selected' : ''}>800 - 문학</option>
+                            <option value="900-역사" ${param.bookMajorCategory == '900-역사' ? 'selected' : ''}>900 - 역사</option>
+                        </select>
+                        
+                        <!-- 중분류 -->
+                        <select class="filter-select" id="bookSubCategory" name="bookSubCategory">
+                            <option value="">전체</option>
+                            <!-- 대분류에 따라 동적으로 변경됩니다 -->
+                        </select>
+                    </div>
+                    
+                    <!-- 히든 필드 -->
+                    <input type="hidden" name="pageNum" value="1">
+                    <input type="hidden" name="amount" value="${pageMaker.searchBookCriteriaDTO.amount}">
+                    <input type="hidden" name="status" value="${param.status}">
+                    <input type="hidden" name="sort" value="${param.sort}">
+                </form>
+            </div>
+
             <div class="filter-options">
                 <div class="filter-option ${param.status == 'all' || param.status == null ? 'active' : ''}" onclick="changeFilter('all')">전체</div>
                 <div class="filter-option ${param.status == 'available' ? 'active' : ''}" onclick="changeFilter('available')">판매중</div>
@@ -396,134 +90,260 @@
                 <div class="filter-option ${param.status == 'sold' ? 'active' : ''}" onclick="changeFilter('sold')">판매완료</div>
             </div>
 
-            <!-- 정렬 옵션 -->
             <div class="sort-options">
                 <div class="sort-option ${param.sort == 'latest' || param.sort == null ? 'active' : ''}" onclick="changeSort('latest')">최신순</div>
                 <div class="sort-option ${param.sort == 'lowPrice' ? 'active' : ''}" onclick="changeSort('lowPrice')">낮은가격순</div>
                 <div class="sort-option ${param.sort == 'highPrice' ? 'active' : ''}" onclick="changeSort('highPrice')">높은가격순</div>
+                <div class="sort-option ${param.sort == 'views' ? 'active' : ''}" onclick="changeSort('views')">조회순</div>
             </div>
+			
+			<div class="wishlist-grid">
+			    <c:if test="${not empty favoriteItems}">
+			        <c:forEach items="${favoriteItems}" var="item" varStatus="status">
+			            <div class="wishlist-item ${item.status == 'SOLD' ? 'sold' : item.status == 'RESERVED' ? 'reserved' : ''}">
+			                <!-- 링크 시작 - 각 조건에서 전체 콘텐츠를 포함하도록 수정 -->
+			                <c:choose>
+			                    <c:when test="${empty param.status && empty param.sort}">
+			                        <a href="trade_post_detail_view?postID=${item.postId}&pageNum=${pageMaker.searchBookCriteriaDTO.pageNum}&amount=${pageMaker.searchBookCriteriaDTO.amount}&status=all&sort=latest" class="wishlist-link">
+			                            <!-- 이미지 및 정보 컨테이너 -->
+			                            <div class="wishlist-image">
+			                                <!-- 기본 이미지 추가 -->
+			                                <div class="no-image">
+			                                    <i class="fas fa-book"></i>
+			                                </div>
+			                                <c:if test="${item.status == 'SOLD'}">
+			                                    <div class="status-overlay sold">판매완료</div>
+			                                </c:if>
+			                                <c:if test="${item.status == 'RESERVED'}">
+			                                    <div class="status-overlay reserved">예약중</div>
+			                                </c:if>
+			                            </div>
+			                            <div class="wishlist-info">
+			                                <h3 class="wishlist-title">${item.title}</h3>
+			                                <div class="book-categories">
+			                                    <span class="book-category">${item.bookMajorCategory}</span>
+			                                    <c:if test="${not empty item.bookSubCategory}">
+			                                        <span class="book-category">${item.bookSubCategory}</span>
+			                                    </c:if>
+			                                </div>
+			                                <div class="wishlist-price"><fmt:formatNumber value="${item.price}" pattern="#,###" />원</div>
+			                                <div class="wishlist-meta">
+			                                    <span class="wishlist-location"><i class="fas fa-map-marker-alt"></i> ${item.location}</span>
+			                                    <span class="wishlist-time">
+			                                        <fmt:formatDate value="${item.postCreatedAt}" pattern="yyyy-MM-dd" />
+			                                    </span>
+			                                </div>
+			                                <div class="wishlist-seller">
+			                                    <i class="fas fa-user"></i> ${item.userName}
+			                                </div>
+			                            </div>
+			                        </a>
+			                    </c:when>
+			                    <c:when test="${empty param.status}">
+			                        <a href="trade_post_detail_view?postID=${item.postId}&pageNum=${pageMaker.searchBookCriteriaDTO.pageNum}&amount=${pageMaker.searchBookCriteriaDTO.amount}&status=all&sort=${param.sort}" class="wishlist-link">
+			                            <!-- 이미지 및 정보 컨테이너 -->
+			                            <div class="wishlist-image">
+			                                <!-- 기본 이미지 추가 -->
+			                                <div class="no-image">
+			                                    <i class="fas fa-book"></i>
+			                                </div>
+			                                <c:if test="${item.status == 'SOLD'}">
+			                                    <div class="status-overlay sold">판매완료</div>
+			                                </c:if>
+			                                <c:if test="${item.status == 'RESERVED'}">
+			                                    <div class="status-overlay reserved">예약중</div>
+			                                </c:if>
+			                            </div>
+			                            <div class="wishlist-info">
+			                                <h3 class="wishlist-title">${item.title}</h3>
+			                                <div class="book-categories">
+			                                    <span class="book-category">${item.bookMajorCategory}</span>
+			                                    <c:if test="${not empty item.bookSubCategory}">
+			                                        <span class="book-category">${item.bookSubCategory}</span>
+			                                    </c:if>
+			                                </div>
+			                                <div class="wishlist-price"><fmt:formatNumber value="${item.price}" pattern="#,###" />원</div>
+			                                <div class="wishlist-meta">
+			                                    <span class="wishlist-location"><i class="fas fa-map-marker-alt"></i> ${item.location}</span>
+			                                    <span class="wishlist-time">
+			                                        <fmt:formatDate value="${item.postCreatedAt}" pattern="yyyy-MM-dd" />
+			                                    </span>
+			                                </div>
+			                                <div class="wishlist-seller">
+			                                    <i class="fas fa-user"></i> ${item.userName}
+			                                </div>
+			                            </div>
+			                        </a>
+			                    </c:when>
+			                    <c:when test="${empty param.sort}">
+			                        <a href="trade_post_detail_view?postID=${item.postId}&pageNum=${pageMaker.searchBookCriteriaDTO.pageNum}&amount=${pageMaker.searchBookCriteriaDTO.amount}&status=${param.status}&sort=latest" class="wishlist-link">
+			                            <!-- 이미지 및 정보 컨테이너 -->
+			                            <div class="wishlist-image">
+			                                <!-- 기본 이미지 추가 -->
+			                                <div class="no-image">
+			                                    <i class="fas fa-book"></i>
+			                                </div>
+			                                <c:if test="${item.status == 'SOLD'}">
+			                                    <div class="status-overlay sold">판매완료</div>
+			                                </c:if>
+			                                <c:if test="${item.status == 'RESERVED'}">
+			                                    <div class="status-overlay reserved">예약중</div>
+			                                </c:if>
+			                            </div>
+			                            <div class="wishlist-info">
+			                                <h3 class="wishlist-title">${item.title}</h3>
+			                                <div class="book-categories">
+			                                    <span class="book-category">${item.bookMajorCategory}</span>
+			                                    <c:if test="${not empty item.bookSubCategory}">
+			                                        <span class="book-category">${item.bookSubCategory}</span>
+			                                    </c:if>
+			                                </div>
+			                                <div class="wishlist-price"><fmt:formatNumber value="${item.price}" pattern="#,###" />원</div>
+			                                <div class="wishlist-meta">
+			                                    <span class="wishlist-location"><i class="fas fa-map-marker-alt"></i> ${item.location}</span>
+			                                    <span class="wishlist-time">
+			                                        <fmt:formatDate value="${item.postCreatedAt}" pattern="yyyy-MM-dd" />
+			                                    </span>
+			                                </div>
+			                                <div class="wishlist-seller">
+			                                    <i class="fas fa-user"></i> ${item.userName}
+			                                </div>
+			                            </div>
+			                        </a>
+			                    </c:when>
+			                    <c:otherwise>
+			                        <a href="trade_post_detail_view?postID=${item.postId}&pageNum=${pageMaker.searchBookCriteriaDTO.pageNum}&amount=${pageMaker.searchBookCriteriaDTO.amount}&status=${param.status}&sort=${param.sort}" class="wishlist-link">
+			                            <!-- 이미지 및 정보 컨테이너 -->
+			                            <div class="wishlist-image">
+			                                <!-- 기본 이미지 추가 -->
+			                                <div class="no-image">
+			                                    <i class="fas fa-book"></i>
+			                                </div>
+			                                <c:if test="${item.status == 'SOLD'}">
+			                                    <div class="status-overlay sold">판매완료</div>
+			                                </c:if>
+			                                <c:if test="${item.status == 'RESERVED'}">
+			                                    <div class="status-overlay reserved">예약중</div>
+			                                </c:if>
+			                            </div>
+			                            <div class="wishlist-info">
+			                                <h3 class="wishlist-title">${item.title}</h3>
+			                                <div class="book-categories">
+			                                    <span class="book-category">${item.bookMajorCategory}</span>
+			                                    <c:if test="${not empty item.bookSubCategory}">
+			                                        <span class="book-category">${item.bookSubCategory}</span>
+			                                    </c:if>
+			                                </div>
+			                                <div class="wishlist-price"><fmt:formatNumber value="${item.price}" pattern="#,###" />원</div>
+			                                <div class="wishlist-meta">
+			                                    <span class="wishlist-location"><i class="fas fa-map-marker-alt"></i> ${item.location}</span>
+			                                    <span class="wishlist-time">
+			                                        <fmt:formatDate value="${item.postCreatedAt}" pattern="yyyy-MM-dd" />
+			                                    </span>
+			                                </div>
+			                                <div class="wishlist-seller">
+			                                    <i class="fas fa-user"></i> ${item.userName}
+			                                </div>
+			                            </div>
+			                        </a>
+			                    </c:otherwise>
+			                </c:choose>
+			                
+			                <button class="remove-wishlist-btn" onclick="removeFromWishlist(${item.postId})">
+			                    <i class="fas fa-heart-broken"></i> 관심목록 삭제
+			                </button>
+			            </div>
+			        </c:forEach>
+			    </c:if>
+			    <c:if test="${empty favoriteItems}">
+			        <div class="empty-message">관심목록에 추가된 상품이 없습니다.</div>
+			    </c:if>
+			</div>
 
-            <!-- 관심 목록 그리드 -->
-            <div class="favorite-grid">
-                <c:if test="${empty favoriteList}">
-                    <div class="empty-favorites">
-                        <i class="fas fa-heart-broken"></i>
-                        <h3>관심 목록이 비어있습니다</h3>
-                        <p>마음에 드는 상품을 찾아 하트 아이콘을 클릭해보세요!</p>
-                        <a href="trade_post_view" class="browse-btn">상품 둘러보기</a>
-                    </div>
-                </c:if>
+			<div class="div_page">
+			    <ul>
+			        <c:if test="${pageMaker.prev}">
+			            <li class="paginate_button">
+			                <a href="${pageMaker.startPage - 1}">
+			                    <i class="fas fa-caret-left"></i>
+			                </a>
+			            </li>
+			        </c:if>
 
-                <c:forEach items="${favoriteList}" var="post" varStatus="status">
-                    <div class="favorite-item ${post.status == 'SOLD' ? 'sold' : post.status == 'RESERVED' ? 'reserved' : ''}">
-                        <button class="unfavorite-btn" onclick="removeFavorite(${post.postID}, event)">
-                            <i class="fas fa-heart"></i>
-                        </button>
-                        <a href="trade_post_detail_view?postID=${post.postID}&pageNum=${pageMaker.searchBookCriteriaDTO.pageNum}&amount=${pageMaker.searchBookCriteriaDTO.amount}&status=${empty param.status ? 'all' : param.status}&sort=${empty param.sort ? 'latest' : param.sort}" class="favorite-link">
-                            <div class="favorite-image">
-                                <c:if test="${post.status == 'SOLD'}">
-                                    <div class="status-overlay sold">판매완료</div>
-                                </c:if>
-                                <c:if test="${post.status == 'RESERVED'}">
-                                    <div class="status-overlay reserved">예약중</div>
-                                </c:if>
-                                <!-- 이미지가 있으면 표시, 없으면 기본 이미지 -->
-                                <c:choose>
-                                    <c:when test="${not empty post.imageUrl}">
-                                        <img src="${post.imageUrl}" alt="${post.title}">
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background-color:#f1f5f9;">
-                                            <i class="fas fa-book" style="font-size:40px; color:#cbd5e0;"></i>
-                                        </div>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                            <div class="favorite-info">
-                                <h3 class="favorite-title">${post.title}</h3>
-                                <div class="favorite-price"><fmt:formatNumber value="${post.price}" pattern="#,###" />원</div>
-                                <div class="favorite-meta">
-                                    <span class="favorite-location"><i class="fas fa-map-marker-alt"></i> ${post.location}</span>
-                                    <span class="favorite-time">
-                                        <c:set var="dateStr" value="${post.createdAt}" />
-                                        <c:if test="${not empty dateStr}">
-                                            <c:choose>
-                                                <c:when test="${fn:length(dateStr) > 10}">
-                                                    ${fn:substring(dateStr, 0, 10)}
-                                                </c:when>
-                                                <c:otherwise>
-                                                    ${dateStr}
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </c:if>
-                                    </span>
-                                </div>
-                                <div class="favorite-seller">
-                                    <i class="fas fa-user"></i> ${post.userName}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </c:forEach>
-            </div>
+			        <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+			            <li class="paginate_button ${pageMaker.searchBookCriteriaDTO.pageNum==num ? 'active' : ''}">
+			                <a href="${num}">
+			                    ${num}
+			                </a>
+			            </li>
+			        </c:forEach>
 
-            <!-- 페이지네이션 -->
-            <c:if test="${not empty favoriteList}">
-                <div class="div_page">
-                    <ul>
-                        <c:if test="${pageMaker.prev}">
-                            <li class="paginate_button">
-                                <a href="${pageMaker.startPage - 1}">
-                                    <i class="fas fa-caret-left"></i>
-                                </a>
-                            </li>
-                        </c:if>
-
-                        <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-                            <li class="paginate_button ${pageMaker.searchBookCriteriaDTO.pageNum==num ? 'active' : ''}">
-                                <a href="${num}">
-                                    ${num}
-                                </a>
-                            </li>
-                        </c:forEach>
-
-                        <c:if test="${pageMaker.next}">
-                            <li class="paginate_button">
-                                <a href="${pageMaker.endPage+1}">
-                                    <i class="fas fa-caret-right"></i>
-                                </a>
-                            </li>
-                        </c:if>
-                    </ul>
-                </div>
-            </c:if>
-            
-            <!-- 페이징 처리를 위한 폼 -->
+			        <c:if test="${pageMaker.next}">
+			            <li class="paginate_button">
+			                <a href="${pageMaker.endPage+1}">
+			                    <i class="fas fa-caret-right"></i>
+			                </a>
+			            </li>
+			        </c:if>
+			    </ul>
+			</div>
             <form id="actionForm" action="trade_post_favorite_view" method="get">
                 <input type="hidden" name="pageNum" value="${pageMaker.searchBookCriteriaDTO.pageNum}">
                 <input type="hidden" name="amount" value="${pageMaker.searchBookCriteriaDTO.amount}">
                 <input type="hidden" name="status" value="${param.status}">
                 <input type="hidden" name="sort" value="${param.sort}">
+                <c:if test="${not empty pageMaker.searchBookCriteriaDTO.keyword}">
+                    <input type="hidden" name="keyword" value="${pageMaker.searchBookCriteriaDTO.keyword}">
+                </c:if>
+                <c:if test="${not empty param.bookMajorCategory}">
+                    <input type="hidden" name="bookMajorCategory" value="${param.bookMajorCategory}">
+                </c:if>
+                <c:if test="${not empty param.bookSubCategory}">
+                    <input type="hidden" name="bookSubCategory" value="${param.bookSubCategory}">
+                </c:if>
             </form>
         </div>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            // 페이징 처리
-            var actionForm = $("#actionForm");
+    <!-- 알림 모달 -->
+    <div id="alertModal" class="modal">
+        <div class="modal-content">
+            <div id="modalIcon" class="modal-icon success">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 id="modalTitle" class="modal-title">알림</h3>
+            <p id="modalMessage" class="modal-message"></p>
+            <div class="modal-actions">
+                <button id="modalButton" class="action-button primary-button" onclick="closeModal()">확인</button>
+            </div>
+        </div>
+    </div>
 
-            // 페이지번호 처리
-            $(".paginate_button a").on("click", function(e) {
-                e.preventDefault();
-                actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-                actionForm.submit();
-            });
+    <script>
+        // 페이징처리
+        var actionForm = $("#actionForm");
+
+        // 페이지번호 처리
+        $(".paginate_button a").on("click", function (e) {
+            e.preventDefault();
+            console.log("click했음");
+            console.log("@# href => " + $(this).attr("href"));
+
+            actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+            actionForm.submit();
+        });
+
+        // 검색처리
+        var searchForm = $("#searchForm");
+
+        $("#searchForm button").on("click", function (e) {
+            e.preventDefault();
+            searchForm.find("input[name='pageNum']").val("1"); // 검색 시 1페이지로 이동
+            searchForm.submit();
         });
 
         // 필터 변경
         function changeFilter(status) {
-            var actionForm = $("#actionForm");
             actionForm.find("input[name='status']").val(status);
             actionForm.find("input[name='pageNum']").val("1");
             actionForm.submit();
@@ -531,61 +351,118 @@
 
         // 정렬 변경
         function changeSort(sort) {
-            var actionForm = $("#actionForm");
             actionForm.find("input[name='sort']").val(sort);
             actionForm.find("input[name='pageNum']").val("1");
             actionForm.submit();
         }
-
-        // 관심 상품 제거
-        function removeFavorite(postID, event) {
-            event.preventDefault();
-            event.stopPropagation();
+        
+		// 관심목록에서 삭제
+		function removeFromWishlist(postId) {
+		    if (confirm("정말로 관심목록에서 삭제하시겠습니까?")) {
+		        $.ajax({
+		            type: "POST",
+		            url: "/remove_favorite",  // 서버 엔드포인트 확인
+		            contentType: "application/json",
+		            data: JSON.stringify({
+		                postId: postId
+		            }),
+		            success: function(response) {
+		                if (response.success) {
+		                    showModal('success', '삭제 완료', response.message);
+		                    // 1.5초 후 페이지 새로고침
+		                    setTimeout(function() {
+		                        location.reload();
+		                    }, 1500);
+		                } else {
+		                    showModal('error', '삭제 실패', response.message);
+		                }
+		            },
+		            error: function(xhr) {
+		                showModal('error', '오류 발생', '서버 통신 중 오류가 발생했습니다.');
+		            }
+		        });
+		    }
+		}
+        
+        // 모달 표시
+        function showModal(type, title, message) {
+            const modal = document.getElementById('alertModal');
+            const icon = document.getElementById('modalIcon');
+            const iconElement = icon.querySelector('i');
             
-            if (confirm("관심 목록에서 삭제하시겠습니까?")) {
-                $.ajax({
-                    type: "post",
-                    url: "trade_post_like_toggle",
-                    data: { 
-                        postID: postID
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            // 해당 아이템 애니메이션과 함께 제거
-                            const item = $(event.target).closest('.favorite-item');
-                            item.fadeOut(300, function() {
-                                item.remove();
-                                
-                                // 관심 목록 카운트 업데이트
-                                const currentCount = parseInt($('.favorite-count').text());
-                                $('.favorite-count').text(currentCount - 1);
-                                
-                                // 모든 아이템이 제거되었는지 확인
-                                if ($('.favorite-item').length === 0) {
-                                    $('.favorite-grid').html(`
-                                        <div class="empty-favorites">
-                                            <i class="fas fa-heart-broken"></i>
-                                            <h3>관심 목록이 비어있습니다</h3>
-                                            <p>마음에 드는 상품을 찾아 하트 아이콘을 클릭해보세요!</p>
-                                            <a href="trade_post_view" class="browse-btn">상품 둘러보기</a>
-                                        </div>
-                                    `);
-                                    
-                                    // 페이지네이션 제거
-                                    $('.div_page').remove();
-                                }
-                            });
-                        } else {
-                            alert("관심 상품 해제에 실패했습니다: " + response.message);
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        alert("관심 상품 해제 중 오류가 발생했습니다.");
-                        console.error("Error:", error);
-                    }
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            
+            if (type === 'success') {
+                icon.className = 'modal-icon success';
+                iconElement.className = 'fas fa-check-circle';
+            } else {
+                icon.className = 'modal-icon error';
+                iconElement.className = 'fas fa-exclamation-circle';
+            }
+            
+            modal.classList.add('show');
+        }
+
+        // 모달 닫기
+        function closeModal() {
+            document.getElementById('alertModal').classList.remove('show');
+        }
+        
+        // 대분류에 따른 소분류 옵션 변경
+        $(document).ready(function() {
+            // 대분류에 따른 소분류 옵션 변경
+            $('#bookMajorCategory').on('change', function() {
+                const bookMajorCategory = $(this).val();
+                const bookSubCategorySelect = $('#bookSubCategory');
+                
+                // 기존 옵션 제거
+                bookSubCategorySelect.html('<option value="">전체</option>');
+                
+                // 대분류에 따른 소분류 옵션 추가
+                if (bookMajorCategory === '000-총류') {
+                    addSubCategories(['010-도서관, 서지학', '020-문헌정보학', '030-백과사전', '040-강연, 수필, 연설문집', '050-일반학회, 단체, 박물관', '060-일반전집', '070-신문, 언론, 저널리즘', '080-일반전집, 총서', '090-향토자료']);
+                } else if (bookMajorCategory === '100-철학') {
+                    addSubCategories(['110-형이상학', '120-인식론, 인과론, 인간학', '130-세계', '140-경학', '150-동양철학, 사상', '160-서양철학', '170-논리학', '180-윤리학', '190-윤리, 도덕교육']);
+                } else if (bookMajorCategory === '200-종교') {
+                    addSubCategories(['210-비교종교', '220-불교', '230-기독교', '240-도교', '250-천도교', '260-신도', '270-힌두교, 브라만교', '280-회교(이슬람교)', '290-기타 제종교']);
+                } else if (bookMajorCategory === '300-사회학') {
+                    addSubCategories(['310-통계학', '320-경제학', '330-사회학, 사회문제', '340-정치학', '350-행정학', '360-법학', '370-교육학', '380-풍속, 민속학', '390-국방, 군사학']);
+                } else if (bookMajorCategory === '400-자연과학') {
+                    addSubCategories(['410-수학', '420-물리학', '430-화학', '440-천문학', '450-지학', '460-생명과학', '470-식물학', '480-동물학', '490-기타 자연과학']);
+                } else if (bookMajorCategory === '500-기술과학') {
+                    addSubCategories(['510-의학', '520-일반공학, 공학일반', '530-기계공학', '540-전기, 전자공학', '550-건축공학', '560-화학공학', '570-제조업', '580-생활과학', '590-기타 기술과학']);
+                } else if (bookMajorCategory === '600-예술') {
+                    addSubCategories(['610-건축', '620-조각, 조형예술', '630-회화', '640-서예', '650-사진, 인쇄', '660-음악', '670-공연예술, 매체예술', '680-오락, 스포츠', '690-기타 예술']);
+                } else if (bookMajorCategory === '700-언어') {
+                    addSubCategories(['710-한국어', '720-중국어', '730-일본어', '740-영어', '750-독일어', '760-프랑스어', '770-스페인어', '780-기타 언어']);
+                } else if (bookMajorCategory === '800-문학') {
+                    addSubCategories(['810-한국문학', '820-중국문학', '830-일본문학', '840-영어문학', '850-독일문학', '860-프랑스문학', '870-스페인문학', '880-기타 문학']);
+                } else if (bookMajorCategory === '900-역사') {
+                    addSubCategories(['910-한국사', '920-동양사', '930-서양사', '940-역사이론', '950-지리학', '960-지도, 여행', '970-문화사', '980-민속사', '990-기타 역사']);
+                }
+            });
+            
+            // 소분류 옵션 추가 함수
+            function addSubCategories(categories) {
+                const bookSubCategorySelect = $('#bookSubCategory');
+                categories.forEach(category => {
+                    const option = $('<option></option>').val(category).text(category);
+                    bookSubCategorySelect.append(option);
                 });
             }
-        }
+            
+            // 페이지 로드 시 대분류에 따른 소분류 설정
+            if ($('#bookMajorCategory').val()) {
+                $('#bookMajorCategory').trigger('change');
+                
+                // URL에서 선택된 소분류가 있으면 선택 상태로 만들기
+                const selectedbookSubCategory = '${param.bookSubCategory}';
+                if (selectedbookSubCategory) {
+                    $('#bookSubCategory').val(selectedbookSubCategory);
+                }
+            }
+        });
     </script>
 </body>
 

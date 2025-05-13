@@ -93,7 +93,7 @@
                             <label for="location" class="form-label">거래 희망 장소</label>
 							<input type="text" id="location" name="location" class="form-control"
 							       placeholder="예: 서울특별시 강남구, 2호선 홍대입구역" 
-							       value="<%= user.getUserAddress() != null ? user.getUserAddress() : "" %>" required>
+							       value="${addr}" required>
                         </div>
                     </div>
                     

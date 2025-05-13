@@ -51,7 +51,18 @@ public class TradePostController {
     }
 
     @RequestMapping("/trade_post_write")
-    public String tradePostWriteView() {
+    public String tradePostWriteView(Model model, HttpSession session) {
+    	UserDTO user = (UserDTO) session.getAttribute("loginUser");
+    	String userAddress = user.getUserAddress();
+//    	String[] strArr = userAddress.split("구");
+//    	
+//    	System.out.println("userAddress : " + userAddress);
+//    	System.out.println("strArr[0] : " + strArr[0]);
+//    	System.out.println("strArr[1] : " + strArr[1]);
+//    	System.out.println("indexOf : " + userAddress.indexOf("구"));
+//    	System.out.println("subString - indexOf : " + userAddress.substring(0, userAddress.indexOf("구")+1));
+    	
+    	model.addAttribute("addr", userAddress.substring(0, userAddress.indexOf("구")+1));
         return "trade_post_write";
     }
     @RequestMapping("/trade_post_write_ok")
@@ -142,12 +153,6 @@ public class TradePostController {
         return "trade_post_detail_view";
     }
 
-    
-    @RequestMapping("/trade_post_favorite_view")
-    public String tradePostFavoriteView(@RequestParam HashMap<String, String> param, Model model) {
-
-        return "trade_post_favorite_view";
-    }
     
     
     @RequestMapping("/trade_post_favorite")

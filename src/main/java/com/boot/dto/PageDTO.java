@@ -1,5 +1,6 @@
 package com.boot.dto;
 
+
 import lombok.Data;
 
 @Data
@@ -129,6 +130,7 @@ public class PageDTO {
 	   // ex> 10페이지 < 30페이지
 	   this.next = this.endPage < realEnd;
    }
+   
    
    
 }
