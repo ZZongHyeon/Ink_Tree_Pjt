@@ -383,7 +383,7 @@ body {
 .wishlist-price {
   font-size: 18px;
   font-weight: 700;
-  color: var(--primary-color);
+  color: red;
   margin-bottom: 10px;
 }
 
@@ -820,7 +820,28 @@ body {
   margin-bottom: 0.75rem;
   flex-wrap: wrap;
 }
-
+.action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border-radius: var(--border-radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  outline: none;
+  text-decoration: none;
+}
+.danger-button {
+  background-color: var(--danger-color);
+  color: white;
+}
+.danger-button:hover {
+  background-color: #e05252;
+}
 .book-category {
   background-color: var(--primary-lighter);
   color: var(--primary);

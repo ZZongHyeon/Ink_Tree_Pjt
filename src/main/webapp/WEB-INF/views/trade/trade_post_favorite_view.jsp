@@ -318,7 +318,19 @@
             </div>
         </div>
     </div>
-
+	<div id="confirmModal" class="modal">
+	    <div class="modal-content">
+	        <div class="modal-icon error">
+	            <i class="fas fa-exclamation-triangle"></i>
+	        </div>
+	        <h3 class="modal-title">삭제 확인</h3>
+	        <p class="modal-message">정말로 이 상품을 관심목록에서 삭제하시겠습니까?</p>
+	        <div class="modal-actions">
+	            <button class="action-button secondary-button" onclick="closeConfirmModal()">취소</button>
+	            <button class="action-button danger-button" id="confirmDeleteBtn">삭제</button>
+	        </div>
+	    </div>
+	</div>
     <script>
         // 페이징처리
         var actionForm = $("#actionForm");
@@ -356,8 +368,56 @@
             actionForm.submit();
         }
         
+		// 전역 변수로 삭제할 상품 ID 저장
+		    let postIdToDelete = null;
+		    
+		    // 삭제 확인 모달 표시
+		    function removeFromWishlist(postId) {
+		        // 삭제할 상품 ID 저장
+		        postIdToDelete = postId;
+		        
+		        // 삭제 확인 버튼에 이벤트 리스너 추가
+		        document.getElementById('confirmDeleteBtn').onclick = function() {
+		            executeRemoveFromWishlist(postIdToDelete);
+		            closeConfirmModal();
+		        };
+		        
+		        // 모달 표시
+		        document.getElementById('confirmModal').classList.add('show');
+		    }
+		    
+		    // 삭제 확인 모달 닫기
+		    function closeConfirmModal() {
+		        document.getElementById('confirmModal').classList.remove('show');
+		    }
+		    
+		    // 실제 삭제 실행 함수
+		    function executeRemoveFromWishlist(postId) {
+		        $.ajax({
+		            type: "POST",
+		            url: "/remove_favorite",
+		            contentType: "application/json",
+		            data: JSON.stringify({
+		                postId: postId
+		            }),
+		            success: function(response) {
+		                if (response.success) {
+		                    showModal('success', '삭제 완료', response.message);
+		                    // 1.5초 후 페이지 새로고침
+		                    setTimeout(function() {
+		                        location.reload();
+		                    }, 1500);
+		                } else {
+		                    showModal('error', '삭제 실패', response.message);
+		                }
+		            },
+		            error: function(xhr) {
+		                showModal('error', '오류 발생', '서버 통신 중 오류가 발생했습니다.');
+		            }
+		        });
+		    }
 		// 관심목록에서 삭제
-		function removeFromWishlist(postId) {
+		/*function removeFromWishlist(postId) {
 		    if (confirm("정말로 관심목록에서 삭제하시겠습니까?")) {
 		        $.ajax({
 		            type: "POST",
@@ -382,7 +442,7 @@
 		            }
 		        });
 		    }
-		}
+		}*/
         
         // 모달 표시
         function showModal(type, title, message) {

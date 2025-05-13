@@ -112,54 +112,62 @@ public class WishlistController {
 		}
 	}
 
-	@GetMapping("/wishlist")
-	public String wishlistList(@RequestParam(defaultValue = "1") int page, HttpSession session, Model model) {
-		UserDTO user = (UserDTO) session.getAttribute("loginUser");
-		if (user == null)
-			return "redirect:/loginView";
+	@GetMapping("/book_wishlist")
+	public String wishlistList(
+	        @RequestParam(defaultValue = "1") int page,
+	        @RequestParam(required = false) String keyword,
+	        @RequestParam(required = false) String bookMajorCategory,
+	        @RequestParam(required = false) String bookSubCategory,
+	        HttpSession session, Model model) {
+	    
+	    UserDTO user = (UserDTO) session.getAttribute("loginUser");
+	    if (user == null)
+	        return "redirect:/loginView";
 
-		WishlistCriteriaDTO criteria = new WishlistCriteriaDTO();
-		criteria.setPage(page);
+	    WishlistCriteriaDTO criteria = new WishlistCriteriaDTO();
+	    criteria.setPage(page);
+	    criteria.setKeyword(keyword);
+	    criteria.setBookMajorCategory(bookMajorCategory);
+	    criteria.setBookSubCategory(bookSubCategory);
 
-		HashMap<String, Object> param = new HashMap<>();
-		param.put("userNumber", user.getUserNumber());
+	    HashMap<String, Object> param = new HashMap<>();
+	    param.put("userNumber", user.getUserNumber());
+	    param.put("keyword", keyword);
+	    param.put("bookMajorCategory", bookMajorCategory);
+	    param.put("bookSubCategory", bookSubCategory);
 
-		try {
-			List<BookDTO> wishlist = wishlistDAO.getWishlist(criteria, param);
-			int total = wishlistDAO.getWishlistCount(param);
+	    try {
+	        List<BookDTO> wishlist = wishlistDAO.getWishlist(criteria, param);
+	        int total = wishlistDAO.getWishlistCount(param);
+	        
+	        System.out.println("위시리스트 디버그 정보 ===================");
+	        System.out.println("유저 번호: " + user.getUserNumber());
+	        System.out.println("검색어: " + keyword);
+	        System.out.println("대분류: " + bookMajorCategory);
+	        System.out.println("중분류: " + bookSubCategory);
+	        System.out.println("위시리스트 개수: " + (wishlist != null ? wishlist.size() : "null"));
+	        System.out.println("전체 개수: " + total);
+	        System.out.println("======================================");
 
-			System.out.println("위시리스트 디버그 정보 ===================");
-			System.out.println("유저 번호: " + user.getUserNumber());
-			System.out.println("위시리스트 개수: " + (wishlist != null ? wishlist.size() : "null"));
-			System.out.println("전체 개수: " + total);
-			System.out.println("======================================");
+	        // 모델에 데이터 추가
+	        model.addAttribute("wishlist", wishlist);
+	        model.addAttribute("pageMaker", new PageDTO(total, criteria));
 
-			PageDTO pageMaker = new PageDTO(total, criteria);
+	        // 데이터가 비어있는지 확인
+	        if (wishlist == null || wishlist.isEmpty()) {
+	            System.out.println("위시리스트가 비어있습니다.");
+	        }
 
-			// 로그 추가
-//        System.out.println("모델에 데이터 추가:");
-//        System.out.println("  wishlist: " + (wishlist != null ? "있음 (" + wishlist.size() + "개)" : "null"));
-//        System.out.println("  pageMaker: " + (pageMaker != null ? "있음" : "null"));
+	        return "book/book_wishlist";
+	    } catch (Exception e) {
+	        System.err.println("위시리스트 조회 중 오류 발생: " + e.getMessage());
+	        e.printStackTrace();
 
-			// 모델에 데이터 추가
-			model.addAttribute("wishlist", wishlist);
-			model.addAttribute("pageMaker", pageMaker);
-
-			// 데이터가 비어있는지 확인
-			if (wishlist == null || wishlist.isEmpty()) {
-				System.out.println("위시리스트가 비어있습니다.");
-			}
-
-			return "book/book_wishlist";
-		} catch (Exception e) {
-			System.err.println("위시리스트 조회 중 오류 발생: " + e.getMessage());
-			e.printStackTrace();
-
-			// 에러 페이지로 리다이렉트하거나 기본 빈 리스트 표시
-			model.addAttribute("wishlist", new java.util.ArrayList<BookDTO>());
-			model.addAttribute("errorMsg", "위시리스트를 불러오는 중 오류가 발생했습니다.");
-			return "book/book_wishlist";
-		}
+	        // 에러 페이지로 리다이렉트하거나 기본 빈 리스트 표시
+	        model.addAttribute("wishlist", new java.util.ArrayList<BookDTO>());
+	        model.addAttribute("errorMsg", "위시리스트를 불러오는 중 오류가 발생했습니다.");
+	        return "book/book_wishlist";
+	    }
 	}
 
 }
