@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.boot.dto.CriteriaDTO;
-import com.boot.dto.PageDTO;
-import com.boot.dto.SearchBookCriteriaDTO;
-import com.boot.dto.UserDTO;
+import com.boot.z_page.PageDTO;
+import com.boot.z_page.criteria.CriteriaDTO;
+import com.boot.z_page.criteria.SearchBookCriteriaDTO;
 import com.boot.trade.dto.TradePostDTO;
 import com.boot.trade.service.TradePostService;
+import com.boot.user.dto.UserDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,7 +47,7 @@ public class TradePostController {
         int total = service.getTotalCount(criteriaDTO);
         model.addAttribute("pageMaker", new PageDTO(total, criteriaDTO));
         
-        return "trade_post_view";
+        return "trade/trade_post_view";
     }
 
     @RequestMapping("/trade_post_write")
@@ -63,12 +63,12 @@ public class TradePostController {
 //    	System.out.println("subString - indexOf : " + userAddress.substring(0, userAddress.indexOf("구")+1));
     	
     	model.addAttribute("addr", userAddress.substring(0, userAddress.indexOf("구")+1));
-        return "trade_post_write";
+        return "trade/trade_post_write";
     }
     @RequestMapping("/trade_post_write_ok")
     public String tradePostWrite(@RequestParam HashMap<String, String> param) {
     	service.tradePostWrite(param);
-    	return "redirect:/trade_post_view";
+    	return "redirect:trade/trade_post_view";
     }
 
     @PostMapping("/trade_post_delete")
@@ -111,7 +111,7 @@ public class TradePostController {
     public String tradePostUpdateForm(@RequestParam HashMap<String, String> param, Model model) {
         TradePostDTO dto = service.tradePostDetailView(param);
         model.addAttribute("post", dto);
-        return "trade_post_update";
+        return "trade/trade_post_update";
     }
 
     @RequestMapping("/trade_post_detail_view")
@@ -150,7 +150,7 @@ public class TradePostController {
         }
         model.addAttribute("isLiked", isLiked);
         
-        return "trade_post_detail_view";
+        return "trade/trade_post_detail_view";
     }
 
     

@@ -1,4 +1,4 @@
-<%@page import="com.boot.dto.UserDTO"%>
+<%@page import="com.boot.user.dto.UserDTO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
@@ -126,7 +126,7 @@
 <!--                                        <div class="dropdown-item-description">최근 검색한 아파트 및 지역</div>-->
 <!--                                    </div>-->
 <!--                                </a>-->
-								<a href="/search_history" class="dropdown-item">
+								<a href="/wishlist" class="dropdown-item">
 								    <div class="dropdown-icon-wrapper">
 								        <i class="dropdown-icon fa-solid fa-heart"></i>
 								    </div>

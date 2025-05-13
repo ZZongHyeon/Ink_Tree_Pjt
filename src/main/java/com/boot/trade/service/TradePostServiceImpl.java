@@ -8,8 +8,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.boot.dto.CriteriaDTO;
-import com.boot.dto.SearchBookCriteriaDTO;
+import com.boot.z_page.criteria.CriteriaDTO;
+import com.boot.z_page.criteria.SearchBookCriteriaDTO;
 import com.boot.trade.dao.TradePostDAO;
 import com.boot.trade.dto.TradePostDTO;
 

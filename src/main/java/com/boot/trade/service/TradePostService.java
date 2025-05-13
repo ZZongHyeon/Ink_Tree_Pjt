@@ -3,8 +3,8 @@ package com.boot.trade.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.boot.dto.CriteriaDTO;
-import com.boot.dto.SearchBookCriteriaDTO;
+import com.boot.z_page.criteria.CriteriaDTO;
+import com.boot.z_page.criteria.SearchBookCriteriaDTO;
 import com.boot.trade.dto.TradePostDTO;
 
 public interface TradePostService {

@@ -2,7 +2,7 @@ package com.boot.trade.dao;
 
 import java.util.List;
 
-import com.boot.dto.SearchBookCriteriaDTO;
+import com.boot.z_page.criteria.SearchBookCriteriaDTO;
 import com.boot.trade.dto.TradeFavoriteDTO;
 
 import lombok.Data;

@@ -288,6 +288,7 @@ body {
 	background-color: var(--danger-color);
 	color: white;
 	transform: translateY(-2px);
+/*	텍스트변경 추가*/
 }
 
 .status-borrowed:hover::before {

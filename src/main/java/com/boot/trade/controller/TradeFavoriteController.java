@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.boot.dto.PageDTO;
-import com.boot.dto.SearchBookCriteriaDTO;
-import com.boot.dto.UserDTO;
-import com.boot.service.BoardCommentServiceImpl;
+import com.boot.board.service.BoardCommentServiceImpl;
+import com.boot.z_page.PageDTO;
+import com.boot.z_page.criteria.SearchBookCriteriaDTO;
 import com.boot.trade.dto.TradeFavoriteDTO;
 import com.boot.trade.service.TradeFavoriteService;
+import com.boot.user.dto.UserDTO;
 
 @Controller
 public class TradeFavoriteController {
@@ -64,7 +64,7 @@ public class TradeFavoriteController {
 		model.addAttribute("favoriteItems", favoriteItems);
 		model.addAttribute("totalItems", total);
 
-		return "trade_post_favorite_view";
+		return "trade/trade_post_favorite_view";
 	}
 
 	// 관심목록 추가 (AJAX)
