@@ -332,7 +332,7 @@ function fn_submit() {
 					class="fas fa-sign-in-alt"></i> 로그인 하러 가기
 				</a>
 				<p style="margin-top: 20px;">
-					계정이 없으신가요? <a href="joinView">회원가입</a>
+					계정이 없으신가요? <a href="joinForm">회원가입</a>
 				</p>
 			</div>
 			<%

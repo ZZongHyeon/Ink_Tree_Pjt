@@ -12,6 +12,8 @@ public interface UserService {
 
 	public UserDTO checkId(HashMap<String, String> param);
 
+	public boolean checkEmail(String email);
+
 	public UserDTO getUserInfo(HashMap<String, String> param);
 
 	public int updateUserInfo(HashMap<String, String> param);

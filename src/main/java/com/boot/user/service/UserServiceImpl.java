@@ -48,6 +48,12 @@ public class UserServiceImpl implements UserService {
 		UserDTO dto = dao.checkId(param);
 		return dto;
 	}
+	@Override
+	public boolean checkEmail(String email) {
+		UserDAO dao = sqlSession.getMapper(UserDAO.class);
+		int count = dao.checkEmail(email);
+	    return count > 0;
+	}
 
 	@Override
 	public UserDTO getUserInfo(HashMap<String, String> param) {
