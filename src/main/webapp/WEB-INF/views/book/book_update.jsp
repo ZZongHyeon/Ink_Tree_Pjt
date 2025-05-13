@@ -116,7 +116,7 @@
 		<!-- 6행 주 카테고리, 하위 카테고리 -->
 		<div class="form-group category-row">
 			<label> 카테고리(대분류) <select id="majorCategory"
-				name="bookMajorCategory" required onchange="updateSubCategories()">
+				name="bookMajorCategory" required>
 					<option value="000-총류"
 						${param.majorCategory == '000' ? 'selected' : ''}>000 -
 						총류</option>

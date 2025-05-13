@@ -404,9 +404,10 @@
 		                if (response.success) {
 		                    showModal('success', '삭제 완료', response.message);
 		                    // 1.5초 후 페이지 새로고침
-		                    setTimeout(function() {
+		                    /*setTimeout(function() {
 		                        location.reload();
-		                    }, 1500);
+		                    }, 1500);*/
+		                        location.reload();
 		                } else {
 		                    showModal('error', '삭제 실패', response.message);
 		                }

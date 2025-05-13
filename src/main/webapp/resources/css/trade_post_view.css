@@ -409,7 +409,8 @@ body {
 .trade-price {
   font-size: 18px;
   font-weight: 700;
-  color: var(--primary-color);
+/*  color: var(--primary-color);*/
+  color: black;
   margin-bottom: 10px;
 }
 

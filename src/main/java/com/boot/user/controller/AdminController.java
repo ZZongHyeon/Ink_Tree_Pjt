@@ -15,6 +15,8 @@ import com.boot.board.dto.NoticeDTO;
 import com.boot.board.service.BoardService;
 import com.boot.z_page.PageDTO;
 import com.boot.z_page.criteria.NoticeCriteriaDTO;
+import com.boot.user.dto.AdminActivityLogDTO;
+import com.boot.user.service.AdminActivityLogService;
 import com.boot.user.service.AdminService;
 import com.boot.z_util.otherMVC.service.UtilService;
 
@@ -26,15 +28,30 @@ public class AdminController {
 	private AdminService admin_service;
 	@Autowired
 	private BoardService board_service;
+	@Autowired
+	private AdminActivityLogService activityLogService;
 
 	@RequestMapping("/admin_view")
 	public String adminView(Model model) {
+		// 기본 정보 로딩
 		model.addAttribute("totalBooks", service.getTotalBooks());
 		model.addAttribute("totalUsers", service.getTotalUsers());
 		model.addAttribute("borrowedBooks", service.getBorrowedBooks());
 		model.addAttribute("overdueBooks", service.getOverdueBooks());
+		
+		// 최근 활동 로그 가져오기 (5개)
+		try {
+			ArrayList<AdminActivityLogDTO> recentActivities = activityLogService.getRecentActivities(5);
+			model.addAttribute("recentActivities", recentActivities);
+		} catch (Exception e) {
+			e.printStackTrace();
+			// 오류 발생 시 빈 리스트 전달하여 페이지는 정상 로드되도록 함
+			model.addAttribute("recentActivities", new ArrayList<AdminActivityLogDTO>());
+		}
+		
 		return "admin/admin_view";
 	}
+
 
 	@RequestMapping("/admin_notice")
 	public String adminNoti(Model model, NoticeCriteriaDTO noticeCriteriaDTO) {
@@ -83,7 +100,7 @@ public class AdminController {
 	@RequestMapping("/admin_delete")
 	public String adminNotiDelete(@RequestParam HashMap<String, String> param) {
 		admin_service.NoticeDelete(param);
-		return "redirect:admin/admin_notice";
+		return "redirect:admin_notice";
 
 	}
 
@@ -98,7 +115,7 @@ public class AdminController {
 	public String adminNotiUpdateOk(@RequestParam HashMap<String, String> param) {
 		admin_service.NoticeModify(param);
 
-		return "redirect:admin/admin_notice";
+		return "redirect:admin_notice";
 	}
 
 	@RequestMapping("/admin_notice_detail")

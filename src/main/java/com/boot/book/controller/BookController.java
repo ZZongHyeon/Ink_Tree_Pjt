@@ -59,7 +59,7 @@ public class BookController {
 	public String insertBook(HttpServletRequest request, @RequestParam HashMap<String, String> param) {
 		service.insertBook(param);
 
-		return "admin_view";
+		return "admin/admin_view";
 	}
 
 	@RequestMapping("/update_book")
@@ -71,12 +71,14 @@ public class BookController {
 			return "main";
 		}
 		book = service.bookDetailInfo(param);
+		System.out.println("book : " + book);
 		model.addAttribute("book", book);
 		return "book/book_update";
 	}
 
 	@RequestMapping("/update_book_ok")
 	public String updateBook(@RequestParam HashMap<String, String> param) {
+		System.out.println("param : " + param);
 		service.updateBook(param);
 		return "main";
 	}

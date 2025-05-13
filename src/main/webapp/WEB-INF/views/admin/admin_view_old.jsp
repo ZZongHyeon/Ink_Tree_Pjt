@@ -1,7 +1,5 @@
 <%@page import="com.boot.board.dto.BoardDTO" %>
    <%@page import="com.boot.user.dto.UserDTO" %>
-      <%@page import="com.boot.user.dto.AdminActivityLogDTO" %>
-      <%@page import="java.util.ArrayList" %>
       <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
          <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -22,7 +20,7 @@
             <body>
                <% UserDTO user=(UserDTO) session.getAttribute("loginUser"); BoardDTO board=(BoardDTO)
                   request.getAttribute("board"); %>
-                  <jsp:include page="../header.jsp" />
+    <jsp:include page="../header.jsp" />
                   <div class="container">
                      <!-- Sidebar -->
                      <aside class="sidebar">
@@ -179,7 +177,7 @@
                         <div class="quick-actions">
                            <div class="action-card">
                               <div class="action-icon">
-                                 <i class="ri-book-open-line"></i>
+                                 <i class="ri-file-add-line"></i>
                               </div>
                               <h3>도서 등록</h3>
                               <p>새로운 도서를 시스템에 등록합니다.</p>
@@ -222,105 +220,60 @@
                            </div>
 
                            <ul class="activity-list">
-                              <% if(request.getAttribute("recentActivities") != null) {
-                                 ArrayList<AdminActivityLogDTO> recentActivities = (ArrayList<AdminActivityLogDTO>)request.getAttribute("recentActivities");
-                                 if(recentActivities != null && !recentActivities.isEmpty()) {
-                                    for(AdminActivityLogDTO activity : recentActivities) { 
-                                       if(activity != null) {
-                                          String iconClass = "";
-                                          
-                                          // 활동 유형에 따른 아이콘 설정
-                                          if(activity.getActivityType() != null) {
-                                             switch(activity.getActivityType()) {
-                                                case "book_add": iconClass = "ri-book-open-line"; break;
-                                                case "user_add": iconClass = "ri-user-add-line"; break;
-                                                case "book_borrow": iconClass = "ri-bookmark-line"; break;
-                                                case "notice_add": iconClass = "ri-notification-line"; break;
-                                                case "book_return": iconClass = "ri-book-read-line"; break;
-                                                case "notice_delete": iconClass = "ri-delete-bin-line"; break;
-                                                case "book_delete": iconClass = "ri-delete-bin-line"; break;
-                                                case "book_modify": iconClass = "ri-edit-line"; break;
-                                                case "user_modify": iconClass = "ri-user-settings-line"; break;
-                                                case "notice_modify": iconClass = "ri-edit-line"; break;
-                                                default: iconClass = "ri-information-line";
-                                             }
-                                          } else {
-                                             iconClass = "ri-information-line";
-                                          }
-                                          
-                                          // 로그 시간 형식 처리
-                                          java.time.LocalDateTime logDate = activity.getLogDate();
-                                          String displayTime = "";
-                                          
-                                          if(logDate != null) {
-                                             java.time.LocalDateTime now = java.time.LocalDateTime.now();
-                                             java.time.LocalDate today = now.toLocalDate();
-                                             java.time.LocalDate yesterday = today.minusDays(1);
-                                             java.time.LocalDate logDay = logDate.toLocalDate();
-                                             
-                                             if(logDay.equals(today)) {
-                                                displayTime = "오늘 " + String.format("%02d:%02d", logDate.getHour(), logDate.getMinute());
-                                             } else if(logDay.equals(yesterday)) {
-                                                displayTime = "어제 " + String.format("%02d:%02d", logDate.getHour(), logDate.getMinute());
-                                             } else {
-                                                displayTime = logDate.getMonthValue() + "월 " + logDate.getDayOfMonth() + "일 " + 
-                                                              String.format("%02d:%02d", logDate.getHour(), logDate.getMinute());
-                                             }
-                                          } else {
-                                             displayTime = "날짜 정보 없음";
-                                          }
-                                 %>
-                                    <li class="activity-item">
-                                       <div class="activity-icon">
-                                          <i class="<%= iconClass %>"></i>
-                                       </div>
-                                       <div class="activity-details">
-                                          <h4><%= activity.getActorType() != null && activity.getActorType().equals("admin") ? "관리자" : "회원" %> <%= activity.getActivityType() != null ? (
-                                                   activity.getActivityType().equals("book_add") ? "도서 등록" : 
-                                                   activity.getActivityType().equals("user_add") ? "회원 가입" : 
-                                                   activity.getActivityType().equals("book_borrow") ? "도서 대출" : 
-                                                   activity.getActivityType().equals("notice_add") ? "공지사항 등록" : 
-                                                   activity.getActivityType().equals("book_return") ? "도서 반납" : 
-                                                   activity.getActivityType().equals("notice_delete") ? "공지사항 삭제" : 
-                                                   activity.getActivityType().equals("book_delete") ? "도서 삭제" : 
-                                                   activity.getActivityType().equals("book_modify") ? "도서 수정" : 
-                                                   activity.getActivityType().equals("user_modify") ? "회원 정보 수정" : 
-                                                   activity.getActivityType().equals("notice_modify") ? "공지사항 수정" : 
-                                                   "기타 활동"
-                                                ) : "기타 활동" %></h4>
-                                          <p><%= activity.getDescription() != null ? activity.getDescription() : "" %></p>
-                                          <span class="activity-time"><%= displayTime %></span>
-                                       </div>
-                                    </li>
-                                 <% 
-                                       }
-                                    }
-                                 } else {
-                                 %>
-                                    <li class="activity-item">
-                                       <div class="activity-icon">
-                                          <i class="ri-information-line"></i>
-                                       </div>
-                                       <div class="activity-details">
-                                          <h4>표시할 활동 로그가 없습니다</h4>
-                                          <p>시스템 활동이 기록되면 여기에 표시됩니다.</p>
-                                       </div>
-                                    </li>
-                                 <% 
-                                 }
-                              } else { 
-                                 %>
-                                    <li class="activity-item">
-                                       <div class="activity-icon">
-                                          <i class="ri-information-line"></i>
-                                       </div>
-                                       <div class="activity-details">
-                                          <h4>표시할 활동 로그가 없습니다</h4>
-                                          <p>시스템 활동이 기록되면 여기에 표시됩니다.</p>
-                                       </div>
-                                    </li>
-                                 <% 
-                              } %>
+                              <li class="activity-item">
+                                 <div class="activity-icon">
+                                    <i class="ri-book-add-line"></i>
+                                 </div>
+                                 <div class="activity-details">
+                                    <h4>새 도서 등록</h4>
+                                    <p>"클린 코드" 도서가 등록되었습니다.</p>
+                                    <span class="activity-time">오늘 14:25</span>
+                                 </div>
+                              </li>
+
+                              <li class="activity-item">
+                                 <div class="activity-icon">
+                                    <i class="ri-user-add-line"></i>
+                                 </div>
+                                 <div class="activity-details">
+                                    <h4>새 회원 가입</h4>
+                                    <p>김철수 회원이 가입했습니다.</p>
+                                    <span class="activity-time">오늘 11:30</span>
+                                 </div>
+                              </li>
+
+                              <li class="activity-item">
+                                 <div class="activity-icon">
+                                    <i class="ri-bookmark-line"></i>
+                                 </div>
+                                 <div class="activity-details">
+                                    <h4>도서 대출</h4>
+                                    <p>이영희 회원이 "자바의 정석" 도서를 대출했습니다.</p>
+                                    <span class="activity-time">오늘 10:15</span>
+                                 </div>
+                              </li>
+
+                              <li class="activity-item">
+                                 <div class="activity-icon">
+                                    <i class="ri-notification-line"></i>
+                                 </div>
+                                 <div class="activity-details">
+                                    <h4>공지사항 등록</h4>
+                                    <p>"도서관 휴관 안내" 공지사항이 등록되었습니다.</p>
+                                    <span class="activity-time">어제 16:40</span>
+                                 </div>
+                              </li>
+
+                              <li class="activity-item">
+                                 <div class="activity-icon">
+                                    <i class="ri-book-read-line"></i>
+                                 </div>
+                                 <div class="activity-details">
+                                    <h4>도서 반납</h4>
+                                    <p>박지민 회원이 "데이터베이스 개론" 도서를 반납했습니다.</p>
+                                    <span class="activity-time">어제 15:20</span>
+                                 </div>
+                              </li>
                            </ul>
                         </div>
 

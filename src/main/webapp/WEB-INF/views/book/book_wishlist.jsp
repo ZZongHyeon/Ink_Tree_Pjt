@@ -226,9 +226,10 @@
                     if (response === "Success") {
                         showModal('success', '삭제 완료', '도서가 관심목록에서 삭제되었습니다.');
                         // 1.5초 후 페이지 새로고침
-                        setTimeout(function() {
+                        /*setTimeout(function() {
                             location.reload();
-                        }, 1500);
+                        }, 1500);*/
+                            location.reload();
                     } else if (response === "not_exists") {
                         showModal('error', '삭제 실패', '이미 위시리스트에서 삭제되었습니다.');
                     } else if (response === "Not_login") {

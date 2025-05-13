@@ -16,5 +16,6 @@
 		<mapper resource="mybatis/mappers/utilMapper.xml"/>
 		<mapper resource="mybatis/mappers/TradePostMapper.xml"/>
 		<mapper resource="mybatis/mappers/TradeFavoriteMapper.xml"/>
+		<mapper resource="mybatis/mappers/adminActivityLogMapper.xml"/>
 	</mappers>
 </configuration>

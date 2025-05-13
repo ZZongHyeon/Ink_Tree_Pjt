@@ -153,7 +153,7 @@ public class BoardController {
 		rttr.addAttribute("boardNumber", param.get("boardNumber"));
 	    rttr.addAttribute("pageNum", param.get("pageNum"));
 	    rttr.addAttribute("amount", param.get("amount"));
-	    return "redirect:board/board_detail_view";
+	    return "redirect:board_detail_view";
 	}
 
 	@RequestMapping("/board_update")
@@ -225,7 +225,7 @@ public class BoardController {
 		}
 		bcService.bcWrite(param);
 
-		return "redirect:board/board_detail_view?boardNumber=" + boardNumber + "&skipViewCount=true";
+		return "redirect:board_detail_view?boardNumber=" + boardNumber + "&skipViewCount=true";
 	}
 	
 	

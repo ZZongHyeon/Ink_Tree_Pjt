@@ -383,7 +383,8 @@ body {
 .wishlist-price {
   font-size: 18px;
   font-weight: 700;
-  color: red;
+/*  color: red;*/
+  color: black;
   margin-bottom: 10px;
 }
 

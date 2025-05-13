@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 import com.boot.user.dao.UserDAO;
 import com.boot.user.dto.UserDTO;
 
-
-
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
@@ -20,6 +18,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+
+	@Autowired
+	private AdminActivityLogService activityLogService;
 
 	@Override
 	public int userJoin(HashMap<String, String> param) {
@@ -32,6 +33,17 @@ public class UserServiceImpl implements UserService {
 		param.put("userPw", encodedPassword);
 
 		re = dao.userJoin(param);
+
+		// 회원가입 성공 시 활동 로그 추가
+		if (re == 1) {
+			String userName = param.get("userName");
+			String userId = param.get("userId");
+			String description = userName + "(" + userId + ") 회원이 가입했습니다.";
+
+			activityLogService.createActivityLog("user_add", "user", 0, // 새 회원은 userNumber가 없으므로 0으로 설정
+					userName, userId, description);
+		}
+
 		return re;
 	}
 
@@ -48,12 +60,6 @@ public class UserServiceImpl implements UserService {
 		UserDTO dto = dao.checkId(param);
 		return dto;
 	}
-	@Override
-	public boolean checkEmail(String email) {
-		UserDAO dao = sqlSession.getMapper(UserDAO.class);
-		int count = dao.checkEmail(email);
-	    return count > 0;
-	}
 
 	@Override
 	public UserDTO getUserInfo(HashMap<String, String> param) {
@@ -66,6 +72,33 @@ public class UserServiceImpl implements UserService {
 	public int updateUserInfo(HashMap<String, String> param) {
 		UserDAO dao = sqlSession.getMapper(UserDAO.class);
 		int re = dao.updateUserInfo(param);
+
+		// 사용자 정보 수정 시 활동 로그 추가
+		if (re == 1) {
+			String userName = param.get("userName");
+			String userId = param.get("userId");
+			String userNumber = param.get("userNumber");
+
+			if (userNumber == null || userNumber.isEmpty()) {
+				// userNumber가 없을 경우 userId로 회원 정보 조회
+				UserDTO userDTO = dao.findByUserId(userId);
+				if (userDTO != null) {
+					userNumber = String.valueOf(userDTO.getUserNumber());
+				}
+			}
+
+			int userNumberInt = 0;
+			try {
+				userNumberInt = Integer.parseInt(userNumber);
+			} catch (NumberFormatException e) {
+				// 변환 실패 시 기본값 0
+			}
+
+			String description = userName + "(" + userId + ") 회원의 정보가 수정되었습니다.";
+
+			activityLogService.createActivityLog("user_modify", "user", userNumberInt, userName, userId, description);
+		}
+
 		return re;
 	}
 
@@ -85,7 +118,28 @@ public class UserServiceImpl implements UserService {
 			param.put("encodedPassword", encodedPassword);
 		}
 
-		return dao.updateUserPwInfo(param);
+		int re = dao.updateUserPwInfo(param);
+
+		// 비밀번호 변경 시 활동 로그 추가
+		if (re == 1) {
+			String userNumber = param.get("userNumber");
+
+			// 회원 정보 조회
+			HashMap<String, String> userParam = new HashMap<>();
+			userParam.put("userNumber", userNumber);
+			UserDTO userDTO = dao.getUserInfo(userParam);
+
+			if (userDTO != null) {
+				String userName = userDTO.getUserName();
+				String userId = userDTO.getUserId();
+				String description = userName + "(" + userId + ") 회원의 비밀번호가 변경되었습니다.";
+
+				activityLogService.createActivityLog("user_modify", "user", Integer.parseInt(userNumber), userName,
+						userId, description);
+			}
+		}
+
+		return re;
 	}
 
 	@Override
@@ -114,6 +168,13 @@ public class UserServiceImpl implements UserService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	@Override
+	public boolean checkEmail(String email) {
+		UserDAO dao = sqlSession.getMapper(UserDAO.class);
+		int count = dao.checkEmail(email);
+		return count > 0;
 	}
 
 }
