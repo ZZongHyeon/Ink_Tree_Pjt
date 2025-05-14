@@ -100,9 +100,9 @@
 				        <button class="like-button ${isLiked ? 'active' : ''}" onclick="toggleLike(${post.postID})">
 				            <i class="fas fa-heart"></i> 관심등록
 				        </button>
-				        <a href="trade_chat?postID=${post.postID}&sellerNumber=${post.userNumber}" class="chat-btn">
-				            <i class="fas fa-comment"></i> 채팅하기
-				        </a>
+						<a href="trade_chat?postID=${post.postID}&sellerNumber=${post.userNumber}&buyerNumber=${loginUser.userNumber}" class="chat-btn">
+						    <i class="fas fa-comment"></i> 채팅하기
+						</a>
 				    </div>
 				</c:if>
             </div>

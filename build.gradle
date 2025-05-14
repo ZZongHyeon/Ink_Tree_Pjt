@@ -26,6 +26,19 @@ repositories {
 
 dependencies {
 
+
+
+    // 웹소켓 의존성
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    
+    // SockJS 클라이언트
+    implementation 'org.webjars:sockjs-client:1.5.1'
+    
+    // STOMP 웹소켓
+    implementation 'org.webjars:stomp-websocket:2.3.4'
+    
+    
+    
 	implementation 'org.springframework.boot:spring-boot-starter-security' // 스프링시큐리티
 	implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.1' // 이메일인증관련
 	

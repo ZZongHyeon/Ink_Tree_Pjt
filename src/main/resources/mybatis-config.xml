@@ -17,5 +17,7 @@
 		<mapper resource="mybatis/mappers/TradePostMapper.xml"/>
 		<mapper resource="mybatis/mappers/TradeFavoriteMapper.xml"/>
 		<mapper resource="mybatis/mappers/adminActivityLogMapper.xml"/>
+		<mapper resource="mybatis/mappers/ChatRoomMapper.xml"/>
+		<mapper resource="mybatis/mappers/ChatMessageMapper.xml"/>
 	</mappers>
 </configuration>

@@ -38,4 +38,7 @@ public interface TradePostService {
 
 	// 게시글의 채팅 수 조회
 	int getChatCountByPostID(int postID);
+	
+	// 채팅용
+    TradePostDTO getTradePostById(int postID);
 }
