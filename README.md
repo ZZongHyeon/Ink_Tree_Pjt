@@ -1,5 +1,6 @@
 
 [쿼리문.txt](https://github.com/user-attachments/files/20207278/default.txt)
+[application.txt](https://github.com/user-attachments/files/20207307/application.txt)
 
   <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> 
   <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white"> 
@@ -86,37 +87,6 @@
 | 📢 공지사항 | 공지사항 작성 & 수정 & 삭제
 | 📚 도서 대출 시스템 | 도서 대출 & 반납 & 삭제 & 반납/대출기록
 | 💾 데이터베이스 | DB트리거 작성
-
-
-<details><summary><b>application.properties</b></summary>
-
-<pre>spring.application.name=Metro_House_Pjt
-server.port=8485
-
-#Spring MVC
-spring.mvc.view.prefix=/WEB-INF/views/
-spring.mvc.view.suffix=.jsp
-
-#Database config
-spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
-spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
-spring.datasource.username=bookmanager
-spring.datasource.password=1234
-
-#mybatis config
-mybatis.config-location=classpath:mybatis-config.xml
-
-#kakao.api.key=${KAKAO_API_KEY}
-kakao.api.key=카카오 api 등록해주세요.
-
-#naver email
-smtp_id=네이버 아이디 등록해주세요.
-smtp_pw=네이버 비밀번호 등록해주세요.
-  
-# gemini api
-apiKey =
-
-</pre></details>
 
 ## ERD
 ![제목 없음](https://github.com/user-attachments/assets/6fcc184a-7832-47de-9f53-7db4e7636054)
