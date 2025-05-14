@@ -26,7 +26,7 @@
 <!--                <a href="trade_post_detail_view?postID=${post.postID}" class="back-link">-->
 <!--                    <i class="fas fa-arrow-left"></i> 게시글로 돌아가기-->
 <!--                </a>-->
-                <a href="chat_list" class="back-link">
+                <a href="chat_list" class="back-list">
                     <i class="fas fa-arrow-left"></i> 목록
                 </a>
                 <div class="chat-title">
@@ -42,20 +42,25 @@
             </div>
             
             <!-- 게시글 정보 -->
-            <div class="post-info-bar">
-                <div class="post-thumbnail">
-                    <!-- 게시글 썸네일 이미지 -->
-                </div>
-                <div class="post-details">
 					<a href="trade_post_detail_view?postID=${post.postID}&pageNum=1&amount=8&status=&sort=" class="back-link">
-                    <div class="post-title">${post.title}</div>
-                    <div class="post-price"><fmt:formatNumber value="${post.price}" pattern="#,###" />원</div>
-                    <div class="post-status ${post.status == 'AVAILABLE' ? 'available' : post.status == 'RESERVED' ? 'reserved' : 'sold'}">
-                        ${post.status == 'AVAILABLE' ? '판매중' : post.status == 'RESERVED' ? '예약중' : '판매완료'}
-                    </div>
+<!--			            <div class="post-info-bar">-->
+			                <div class="post-thumbnail">
+			                    <!-- 게시글 썸네일 이미지 -->
+			                </div>
+			                <div class="post-details">
+			                    <div class="post-title">${post.title}</div>
+									<div class="price-status-row">
+									    <div class="post-price">
+									        <fmt:formatNumber value="${post.price}" pattern="#,###" />원
+									    </div>
+									    <div class="post-status 
+									        ${post.status == 'AVAILABLE' ? 'available' : post.status == 'RESERVED' ? 'reserved' : 'sold'}">
+									        ${post.status == 'AVAILABLE' ? '판매중' : post.status == 'RESERVED' ? '예약중' : '판매완료'}
+									    </div>
+									</div>							
+			                </div>
+<!--			            </div>-->
 					</a>
-                </div>
-            </div>
             
             <!-- 채팅 메시지 영역 -->
             <div class="chat-messages" id="chatMessages">

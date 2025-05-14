@@ -38,7 +38,7 @@ public class ChatServiceImpl implements ChatService {
         try {
             System.out.println("countTotalUnreadMessagesByUser 호출: userNumber=" + userNumber);
             int count = chatMessageDAO.countTotalUnreadMessagesByUser(userNumber);
-            System.out.println("조회된 읽지 않은 메시지 수: " + count);
+//            System.out.println("조회된 읽지 않은 메시지 수: " + count);
             return count;
         } catch (Exception e) {
             System.err.println("countTotalUnreadMessagesByUser 오류: " + e.getMessage());
@@ -53,9 +53,9 @@ public class ChatServiceImpl implements ChatService {
      */
     public int countUnreadMessagesExcludeActiveRoom(Long userNumber, Long activeRoomId) {
         try {
-            System.out.println("countUnreadMessagesExcludeActiveRoom 호출: userNumber=" + userNumber + ", activeRoomId=" + activeRoomId);
+//            System.out.println("countUnreadMessagesExcludeActiveRoom 호출: userNumber=" + userNumber + ", activeRoomId=" + activeRoomId);
             int count = chatMessageDAO.countUnreadMessagesExcludeActiveRoom(userNumber, activeRoomId);
-            System.out.println("조회된 읽지 않은 메시지 수: " + count);
+//            System.out.println("조회된 읽지 않은 메시지 수: " + count);
             return count;
         } catch (Exception e) {
             System.err.println("countUnreadMessagesExcludeActiveRoom 오류: " + e.getMessage());

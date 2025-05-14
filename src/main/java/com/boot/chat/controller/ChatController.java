@@ -49,14 +49,14 @@ public class ChatController {
         // 로그인 확인
         UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
         if (loginUser == null) {
-            return "redirect:/user/login";
+            return "redirect:/";
         }
         
-        System.out.println("===== 채팅 페이지 요청 =====");
-        System.out.println("postId: " + postId);
-        System.out.println("sellerNumber: " + sellerNumber);
-        System.out.println("buyerNumber: " + buyerNumber);
-        System.out.println("loginUser.userNumber: " + loginUser.getUserNumber());
+//        System.out.println("===== 채팅 페이지 요청 =====");
+//        System.out.println("postId: " + postId);
+//        System.out.println("sellerNumber: " + sellerNumber);
+//        System.out.println("buyerNumber: " + buyerNumber);
+//        System.out.println("loginUser.userNumber: " + loginUser.getUserNumber());
         
         // buyerNumber가 없으면 현재 로그인한 사용자의 번호를 사용
         if (buyerNumber == null) {
@@ -141,7 +141,7 @@ public class ChatController {
     public String chatListPage(HttpSession session, Model model) {
         UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
         if (loginUser == null) {
-            return "redirect:/user/login";
+            return "redirect:/";
         }
         
         // 사용자의 채팅방 목록 조회
@@ -180,8 +180,8 @@ public class ChatController {
             Long activeRoomId = (Long) session.getAttribute("activeRoomId");
             
             // 디버깅 로그 추가
-            System.out.println("사용자 번호: " + userNumber);
-            System.out.println("활성 채팅방 ID: " + activeRoomId);
+//            System.out.println("사용자 번호: " + userNumber);
+//            System.out.println("활성 채팅방 ID: " + activeRoomId);
             
             // 읽지 않은 메시지 수 조회
             int unreadCount;
@@ -191,14 +191,14 @@ public class ChatController {
                 } else {
                     unreadCount = chatService.countTotalUnreadMessagesByUser(userNumber);
                 }
-                System.out.println("DB에서 조회한 읽지 않은 메시지 수: " + unreadCount);
+//                System.out.println("DB에서 조회한 읽지 않은 메시지 수: " + unreadCount);
             } catch (Exception e) {
                 System.err.println("메시지 수 조회 중 오류: " + e.getMessage());
                 e.printStackTrace();
                 unreadCount = 0;
             }
             
-            System.out.println("unreadCount" + unreadCount);
+//            System.out.println("unreadCount" + unreadCount);
 //            // 테스트를 위해 임시로 1 이상의 값 설정 (실제 환경에서는 주석 처리)
 //            unreadCount = Math.max(1, unreadCount);
 //            System.out.println("최종 반환할 읽지 않은 메시지 수: " + unreadCount);
@@ -276,7 +276,7 @@ public class ChatController {
         try {
             // 세션에 활성 채팅방 ID 저장
             session.setAttribute("activeRoomId", roomId);
-            System.out.println("활성 채팅방 설정: " + roomId);
+//            System.out.println("활성 채팅방 설정: " + roomId);
             return ResponseEntity.ok(Map.of("success", true));
         } catch (Exception e) {
             e.printStackTrace();
