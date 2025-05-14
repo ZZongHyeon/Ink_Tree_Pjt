@@ -1,4 +1,5 @@
-[쿼리문추가.txt](https://github.com/user-attachments/files/20197607/default.txt)# 쿼리문입니다
+
+[쿼리문.txt](https://github.com/user-attachments/files/20207278/default.txt)
 
   <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> 
   <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white"> 
