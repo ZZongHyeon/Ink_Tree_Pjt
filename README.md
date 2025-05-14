@@ -77,7 +77,8 @@
 | 📝 게시글 관리 | 게시글 작성 & 수정 & 삭제
 
 
-### 🔧 정재윤 (Backend)
+### 🔧 정재윤 (Backend)[Uploading 쿼리문추가.txt…]()
+
 
 | 담당 업무 | 세부 내용
 |-----|-----
@@ -116,6 +117,7 @@ apiKey =
 
 </pre></details>
 
+[Uploading 쿼리문추가.txt…]()
 
 
 ## ERD
@@ -412,11 +414,59 @@ CREATE TABLE Trade_Review (
 -- 시퀀스 생성
 CREATE SEQUENCE seqReviewID START WITH 1 INCREMENT BY 1;
 
+-- 위시리스트
+-- 북마크 테이블
+CREATE TABLE BOOK_WISHLIST (
+  userNumber  NUMBER,
+  bookNumber  NUMBER,
+  addedDate   DATE DEFAULT SYSDATE,
+  PRIMARY KEY (userNumber, bookNumber),
+  FOREIGN KEY (userNumber) REFERENCES USERINFO(userNumber) ON DELETE CASCADE,
+  FOREIGN KEY (bookNumber) REFERENCES BOOKINFO(bookNumber) ON DELETE CASCADE
+);
+    
+
+-- activity_log 테이블 생성
+CREATE TABLE ACTIVITY_LOG (
+    log_id NUMBER PRIMARY KEY,
+    activity_type VARCHAR2(50) NOT NULL, -- 활동 유형 (book_add, user_add, book_borrow, notice_add, book_return, notice_delete, book_delete)
+    actor_type VARCHAR2(20) NOT NULL, -- 수행자 유형 (admin or user)
+    actor_id NUMBER NOT NULL, -- 수행자 ID
+    actor_name VARCHAR2(100) NOT NULL, -- 수행자 이름
+    target_name VARCHAR2(255), -- 대상 이름 (책 제목, 회원 이름 등)
+    description VARCHAR2(500) NOT NULL, -- 활동 설명
+    log_date TIMESTAMP DEFAULT SYSTIMESTAMP NOT NULL -- 로그 생성 시간
+);
+
+-- activity_log 테이블 시퀀스 생성
+CREATE SEQUENCE activity_log_seq
+    START WITH 1
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+
+
+-- 인덱스 생성
+CREATE INDEX idx_activity_type ON ACTIVITY_LOG(activity_type);
+CREATE INDEX idx_actor_type ON ACTIVITY_LOG(actor_type);
+CREATE INDEX idx_log_date ON ACTIVITY_LOG(log_date);
+
 
 
 --------------------------------------------- 시퀀스 드래그로 개별 컴파일
 CREATE SEQUENCE  "BOOKMANAGER"."BORROWRECORD_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 NOCACHE  NOORDER  NOCYCLE
 
+
+--------------------------------------------- 트리거 드래그로 개별 컴파일
+CREATE OR REPLACE TRIGGER activity_log_bi
+BEFORE INSERT ON ACTIVITY_LOG
+FOR EACH ROW
+BEGIN
+    SELECT activity_log_seq.NEXTVAL
+    INTO :new.log_id
+    FROM dual;
+END;
 
 --------------------------------------------- 트리거 드래그로 개별 컴파일
 create or replace TRIGGER after_book_record_insert
