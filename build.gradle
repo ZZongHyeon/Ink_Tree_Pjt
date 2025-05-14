@@ -26,7 +26,8 @@ repositories {
 
 dependencies {
 
-
+// 소셜로그인
+implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
     // 웹소켓 의존성
     implementation 'org.springframework.boot:spring-boot-starter-websocket'

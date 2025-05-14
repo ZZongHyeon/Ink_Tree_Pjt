@@ -19,5 +19,6 @@
 		<mapper resource="mybatis/mappers/adminActivityLogMapper.xml"/>
 		<mapper resource="mybatis/mappers/ChatRoomMapper.xml"/>
 		<mapper resource="mybatis/mappers/ChatMessageMapper.xml"/>
+		<mapper resource="mybatis/mappers/socialUserMapper.xml"/>
 	</mappers>
 </configuration>

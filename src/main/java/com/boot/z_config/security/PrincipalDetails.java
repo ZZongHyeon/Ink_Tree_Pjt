@@ -1,23 +1,43 @@
 package com.boot.z_config.security;
 
-import java.util.ArrayList;
-import java.util.Collection;
 
+import com.boot.user.dto.UserDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import com.boot.user.dto.UserDTO;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
 
-public class PrincipalDetails implements UserDetails {
+public class PrincipalDetails implements UserDetails, OAuth2User
+{
 
 	private static final long serialVersionUID = 1L;
 
 	private UserDTO user;
-
+	private Map<String, Object> attributes;
 	public PrincipalDetails(UserDTO user) {
 		this.user = user;
 	}
+
+	public PrincipalDetails(UserDTO user, Map<String, Object> attributes)
+	{
+		this.user = user;
+		this.attributes = attributes;
+	}
+	@Override
+	public Map<String, Object> getAttributes() {
+		return attributes; //
+	}
+
+	@Override
+	public String getName() {
+		return user.getUserId(); // 고유 ID로
+	}
+
+
 
 	// 사용자의 권한 반환
 	@Override
