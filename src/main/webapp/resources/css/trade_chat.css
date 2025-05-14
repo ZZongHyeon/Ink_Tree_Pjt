@@ -94,10 +94,12 @@ body {
     transition: var(--transition-fast);
     padding: 0.5rem 0.75rem;
     border-radius: var(--border-radius);
+	background-color: rgba(255, 255, 255, 0.15);
 }
 
 .back-link:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+/*    background-color: rgba(255, 255, 255, 0.15);*/
+    background-color: var(--info);
 }
 
 .back-link:active {
@@ -112,7 +114,7 @@ body {
     font-size: 1.1rem;
     font-weight: 600;
     flex-grow: 1;
-    text-align: center;
+    text-align: right;
 }
 
 /* Post Info Bar */

@@ -10,8 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/resources/css/header.css">
-
+	<link rel="stylesheet" type="text/css" href="/resources/css/header.css">
     <script>
         window.addEventListener("unload", function() {
             navigator.sendBeacon("/disconnect");
@@ -51,21 +50,7 @@
                     <i class="nav-icon fa-solid fa-cart-shopping"></i>
                     <span>거래게시판</span>
                 </a>
-<!--                <a href="/chat_list" class="nav-link ${currentPage == 'chat_list' ? 'active' : ''}">-->
-<!--                    <div style="position: relative; display: inline-block;">-->
-<!--                        <i class="nav-icon fa-solid fa-comments"></i>-->
-<!--                        <span id="chatNotification" class="chat-notification">0</span>-->
-<!--                    </div>-->
-<!--                    <span>채팅</span>-->
-<!--                </a>-->
-				<a href="/chat_list" class="nav-link ${currentPage == 'chat_list' ? 'active' : ''}">
-				    <div style="position: relative; display: inline-block;">
-				        <i class="nav-icon fa-solid fa-comments"></i>
-				        <!-- 초기값 0 제거, 클래스만 유지 -->
-				        <span id="chatNotification" class="chat-notification"></span>
-				    </div>
-				    <span>채팅</span>
-				</a>
+                <!-- 상단 채팅 메뉴 제거 - 하단 오른쪽 버튼으로 통합 -->
             </nav>
 
             <div class="user-menu">
@@ -189,10 +174,24 @@
     <%
     if (user != null) {
     %>
+    <!-- 채팅 버튼 (알림 표시 포함) -->
     <button class="chatbot-btn" id="chatbot-button">
         <i class="fas fa-comment-dots"></i>
+        <span id="chatNotification" class="chat-notification"></span>
     </button>
-    <div class="chatbot-container">
+    
+    <!-- 채팅 선택 메뉴 -->
+    <div class="chat-menu" id="chat-menu">
+        <a href="javascript:void(0)" class="chat-menu-item" id="ai-chat-option">
+            <i class="fas fa-robot"></i> AI 채팅
+        </a>
+        <a href="/chat_list" class="chat-menu-item">
+            <i class="fas fa-comments"></i> 일반 채팅<span id="chatMenuNotification" class="chat-menu-notification"></span>
+        </a>
+    </div>
+    
+    <!-- AI 챗봇 컨테이너 -->
+    <div class="chatbot-container" id="ai-chatbot-container">
         <div class="chatbot-header">
             <h3>AI 채팅 상담</h3>
             <button class="close-btn"><i class="fas fa-times"></i></button>
@@ -213,81 +212,88 @@
     %>
 
     <script>
-		// 알림 확인 함수 수정
-		    function checkChatNotifications() {
-		        <% if (user != null) { %>
-		        console.log('알림 확인 함수 실행 중...');
-		        
-		        // 직접 XMLHttpRequest 사용
-		        var xhr = new XMLHttpRequest();
-		        xhr.open('GET', '/check_new_messages?t=' + new Date().getTime(), true); // 캐시 방지를 위한 타임스탬프 추가
-		        xhr.setRequestHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-		        xhr.setRequestHeader('Pragma', 'no-cache');
-		        xhr.setRequestHeader('Expires', '0');
-		        
-		        xhr.onload = function() {
-		            if (xhr.status >= 200 && xhr.status < 300) {
-		                try {
-		                    var data = JSON.parse(xhr.responseText);
-		                    console.log('받은 데이터:', data);
-		                    
-		                    var chatNotification = document.getElementById('chatNotification');
-		                    if (!chatNotification) {
-		                        console.error('chatNotification 요소를 찾을 수 없습니다');
-		                        return;
-		                    }
-		                    
-		                    if (data && data.success && data.unreadCount > 0) {
-		                        // 알림 배지 표시
-		                        chatNotification.textContent = data.unreadCount;
-		                        chatNotification.style.display = 'flex';
-		                        chatNotification.classList.add('has-new');
-		                        console.log('알림 표시: ' + data.unreadCount + '개의 읽지 않은 메시지');
-		                        
-		                        // 스타일 확인을 위한 로그
-		                        console.log('알림 배지 스타일:', 
-		                            'display=' + chatNotification.style.display, 
-		                            'visibility=' + getComputedStyle(chatNotification).visibility,
-		                            'opacity=' + getComputedStyle(chatNotification).opacity);
-		                    } else {
-		                        chatNotification.style.display = 'none';
-		                        chatNotification.classList.remove('has-new');
-		                        console.log('읽지 않은 메시지 없음 또는 데이터 오류:', data);
-		                    }
-		                } catch (e) {
-		                    console.error('JSON 파싱 오류:', e, '원본 텍스트:', xhr.responseText);
-		                }
-		            } else {
-		                console.error('서버 응답 오류:', xhr.status, xhr.statusText);
-		            }
-		        };
-		        
-		        xhr.onerror = function() {
-		            console.error('네트워크 오류 발생');
-		        };
-		        
-		        xhr.send();
-		        <% } %>
-		    }
+        // 알림 확인 함수
+        function checkChatNotifications() {
+            <% if (user != null) { %>
+            console.log('알림 확인 함수 실행 중...');
+            
+            // 직접 XMLHttpRequest 사용
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/check_new_messages?t=' + new Date().getTime(), true); // 캐시 방지를 위한 타임스탬프 추가
+            xhr.setRequestHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+            xhr.setRequestHeader('Pragma', 'no-cache');
+            xhr.setRequestHeader('Expires', '0');
+            
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    try {
+                        var data = JSON.parse(xhr.responseText);
+                        console.log('받은 데이터:', data);
+                        
+                        var chatNotification = document.getElementById('chatNotification');
+						var chatMenuNotification = document.getElementById('chatMenuNotification');
+						
+                        if (!chatNotification) {
+                            console.error('chatNotification 요소를 찾을 수 없습니다');
+                            return;
+                        }
+                        
+                        if (data && data.success && data.unreadCount > 0) {
+                            // 알림 배지 표시
+                            chatNotification.textContent = data.unreadCount;
+                            chatNotification.style.display = 'flex';
+                            chatNotification.classList.add('has-new');
+                            chatMenuNotification.textContent = data.unreadCount;
+                            chatMenuNotification.style.display = 'flex';
+                            chatMenuNotification.classList.add('has-new');
+                            console.log('알림 표시: ' + data.unreadCount + '개의 읽지 않은 메시지');
+                        } else {
+                            chatNotification.style.display = 'none';
+                            chatNotification.classList.remove('has-new');
+                            chatMenuNotification.style.display = 'none';
+                            chatMenuNotification.classList.remove('has-new');
+                            console.log('읽지 않은 메시지 없음 또는 데이터 오류:', data);
+                        }
+                    } catch (e) {
+                        console.error('JSON 파싱 오류:', e, '원본 텍스트:', xhr.responseText);
+                    }
+                } else {
+                    console.error('서버 응답 오류:', xhr.status, xhr.statusText);
+                }
+            };
+            
+            xhr.onerror = function() {
+                console.error('네트워크 오류 발생');
+            };
+            
+            xhr.send();
+            <% } %>
+        }
 
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM 로드됨');
-			// 알림 배지 초기화
-			var chatNotification = document.getElementById('chatNotification');
-			if (chatNotification) {
-			    // 초기 상태 명시적 설정
-			    chatNotification.style.display = 'none';
-			    console.log('알림 배지 초기화 완료');
-			}
+            
+            // 알림 배지 초기화
+            var chatNotification = document.getElementById('chatNotification');
+            if (chatNotification) {
+                // 초기 상태 명시적 설정
+                chatNotification.style.display = 'none';
+                console.log('알림 배지 초기화 완료');
+            }
+            var chatMenuNotification = document.getElementById('chatMenuNotification');
+            if (chatMenuNotification) {
+                // 초기 상태 명시적 설정
+                chatMenuNotification.style.display = 'none';
+                console.log('알림 배지 초기화 완료');
+            }
 
-			// 즉시 알림 확인 실행
-			setTimeout(checkChatNotifications, 1000);
+            // 즉시 알림 확인 실행
+            setTimeout(checkChatNotifications, 1000);
 
-			// 주기적으로 알림 확인 (3초마다)
-			setInterval(checkChatNotifications, 3000);
+            // 주기적으로 알림 확인 (3초마다)
+            setInterval(checkChatNotifications, 3000);
             
-            
-            
+            // 사용자 드롭다운 메뉴
             const dropdownToggle = document.getElementById('dropdownToggle');
             const userDropdown = document.getElementById('userDropdown');
 
@@ -298,7 +304,7 @@
                     userDropdown.classList.toggle('active');
                 });
 
-                // Close dropdown when clicking outside
+                // 외부 클릭 시 드롭다운 닫기
                 document.addEventListener('click', function(e) {
                     if (userDropdown && !userDropdown.contains(e.target)) {
                         userDropdown.classList.remove('active');
@@ -306,7 +312,7 @@
                 });
             }
 
-            // Header scroll effect
+            // 헤더 스크롤 효과
             const header = document.querySelector('.top-header');
             window.addEventListener('scroll', function() {
                 if (window.scrollY > 10) {
@@ -316,33 +322,49 @@
                 }
             });
 
-            // Check initial scroll position
+            // 초기 스크롤 위치 확인
             if (window.scrollY > 10) {
                 header.classList.add('scrolled');
             }
             
-            // 챗봇 기능
+            // 채팅 관련 요소
             const chatButton = document.getElementById('chatbot-button');
-            const chatContainer = document.querySelector('.chatbot-container');
+            const chatMenu = document.getElementById('chat-menu');
+            const aiChatOption = document.getElementById('ai-chat-option');
+            const aiChatbotContainer = document.getElementById('ai-chatbot-container');
             const closeButton = document.querySelector('.close-btn');
             const sendButton = document.querySelector('.send-btn');
             const messageInput = document.querySelector('.chatbot-input input');
             const messagesContainer = document.querySelector('.chatbot-messages');
 
-            if (chatButton && chatContainer) {
-                // 채팅창 토글 기능
-                chatButton.addEventListener('click', () => {
-                    chatContainer.classList.toggle('active');
+            if (chatButton) {
+                // 채팅 버튼 클릭 시 메뉴 표시
+                chatButton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    chatMenu.classList.toggle('active');
+                    // AI 챗봇이 열려있으면 닫기
+                    if (aiChatbotContainer.classList.contains('active')) {
+                        aiChatbotContainer.classList.remove('active');
+                    }
                 });
-
-                // X 버튼으로 닫기
-                if (closeButton) {
-                    closeButton.addEventListener('click', () => {
-                        chatContainer.classList.remove('active');
+                
+                // AI 채팅 옵션 클릭
+                if (aiChatOption) {
+                    aiChatOption.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        chatMenu.classList.remove('active');
+                        aiChatbotContainer.classList.add('active');
                     });
                 }
 
-                // 메시지 전송
+                // X 버튼으로 AI 챗봇 닫기
+                if (closeButton) {
+                    closeButton.addEventListener('click', function() {
+                        aiChatbotContainer.classList.remove('active');
+                    });
+                }
+
+                // 메시지 전송 함수
                 function sendMessage() {
                     const message = messageInput.value.trim();
                     if (message) {
@@ -392,7 +414,7 @@
 
                 // Enter 키 입력 이벤트
                 if (messageInput) {
-                    messageInput.addEventListener('keypress', (e) => {
+                    messageInput.addEventListener('keypress', function(e) {
                         if (e.key === 'Enter') {
                             e.preventDefault();
                             sendMessage();
@@ -400,10 +422,13 @@
                     });
                 }
 
-                // 채팅창 외부 클릭 시 닫기
-                document.addEventListener('click', (e) => {
-                    if (chatContainer && !chatContainer.contains(e.target) && !chatButton.contains(e.target)) {
-                        chatContainer.classList.remove('active');
+                // 외부 클릭 시 메뉴와 챗봇 닫기
+                document.addEventListener('click', function(e) {
+                    if (!chatButton.contains(e.target) && 
+                        !chatMenu.contains(e.target) && 
+                        !aiChatbotContainer.contains(e.target)) {
+                        chatMenu.classList.remove('active');
+                        aiChatbotContainer.classList.remove('active');
                     }
                 });
             }
