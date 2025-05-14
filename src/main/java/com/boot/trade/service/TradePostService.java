@@ -40,5 +40,5 @@ public interface TradePostService {
 	int getChatCountByPostID(int postID);
 	
 	// 채팅용
-    TradePostDTO getTradePostById(int postID);
+    TradePostDTO getTradePostById(Long postID);
 }

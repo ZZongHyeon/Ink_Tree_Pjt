@@ -95,8 +95,10 @@ body {
 }
 
 .post-status.available {
-    background-color: #ebf8ff;
-    color: #3182ce;
+/*    background-color: #ebf8ff;*/
+/*    color: #3182ce;*/
+background-color: rgba(16, 185, 129, 0.1);
+color: var(--success);
 }
 
 .post-status.reserved {

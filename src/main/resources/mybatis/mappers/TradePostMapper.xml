@@ -218,7 +218,7 @@
 
 
     <!-- 게시글 ID로 게시글 조회 -->
-    <select id="getTradePostById" parameterType="int" resultType="com.boot.trade.dto.TradePostDTO">
+    <select id="getTradePostById" parameterType="Long" resultType="com.boot.trade.dto.TradePostDTO">
         SELECT 
             p.POSTID as postID,
             p.USERNUMBER as userNumber,

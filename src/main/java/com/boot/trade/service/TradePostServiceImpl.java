@@ -106,7 +106,7 @@ public class TradePostServiceImpl implements TradePostService {
 	}
 
 	@Override
-	public TradePostDTO getTradePostById(int postID) {
+	public TradePostDTO getTradePostById(Long postID) {
 		TradePostDAO dao = sqlSession.getMapper(TradePostDAO.class);
 		return dao.getTradePostById(postID);
 	}
