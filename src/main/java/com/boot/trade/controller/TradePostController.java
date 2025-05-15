@@ -68,7 +68,7 @@ public class TradePostController {
     @RequestMapping("/trade_post_write_ok")
     public String tradePostWrite(@RequestParam HashMap<String, String> param) {
     	service.tradePostWrite(param);
-    	return "redirect:trade/trade_post_view";
+    	return "redirect:trade_post_view";
     }
 
     @PostMapping("/trade_post_delete")
