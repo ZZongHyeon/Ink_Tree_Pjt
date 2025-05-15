@@ -39,7 +39,7 @@
 
 ### ⚙️ 백엔드 (Backend)
 
-- Spring Framework: 컨트롤러, 서비스 계층의 구현을 위해 사용, 표준 MVC 패턴 기반으로 구조화
+- Spring Framework: 컨트롤러, 서비스 계층의 구현을 위해 사용, 표준 MVC 패턴 기반으로 구조화(스프링부트로 변환)
 - Spring Boot: 스프링 기반 애플리케이션 개발 간소화 및 자동 구성 제공
 - Spring Security: 인증 및 권한 부여를 위한 보안 프레임워크
 - MyBatis: SQL과 서버 객체간 매핑담당 도구, 시퀀스와 연계가 용이
@@ -62,11 +62,17 @@
 - GitHub: 코드 버전 관리 및 팀 협업
 - Notion: 문서화 및 팀 커뮤니케이션
 - Jira: 이슈 관리 및 구체적인 일정 계획 수립을 위한 협업 도구
-- Apache Tomcat: 웹앱 서버 구동, 테스트
+- Apache Tomcat: 웹앱 서버 구동, 테스트 (스프링부트 내장 톰캣 사용)
 
 
-## ERD
+## ERD (1차)
 ![제목 없음](https://github.com/user-attachments/assets/6fcc184a-7832-47de-9f53-7db4e7636054)
+
+## ERD (2차) 테이블 10개 추가
+![image (1)](https://github.com/user-attachments/assets/e3b13c2f-8d36-4fc9-bf83-83a45a06ce74)
+
+## ERD 전체
+![image](https://github.com/user-attachments/assets/d85e13ae-4f98-4baf-982a-6cfd1c324215)
 
 ## 🔑회원가입 - 도로명 api
 https://github.com/user-attachments/assets/1e1b3202-5e98-482b-ba6a-8f2281aadce5
