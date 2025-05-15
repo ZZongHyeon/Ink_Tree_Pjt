@@ -8,87 +8,62 @@
   <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white"> 
   <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> 
 
-# 📦 개발 환경 구조 요약
+### 📚 프로젝트명
+
+> 프로젝트에 대한 간략한 설명을 여기에 작성하세요.
+
+
+
+## 📦 개발 환경 구조 요약
 
 | 구분 | 내용
 |-----|-----
-| **개발 언어** | Java (JDK 8 이상), JavaScript
-| **프레임워크** | Spring Boot + MyBatis
-| **DB** | Oracle 11g 이상
-| **빌드 도구** | Gradle
-| **내장 WAS** | Spring Boot 내장 Tomcat
-| **형상관리** | Git / GitHub
-| **협업 도구** | Jira, Notion
+| 개발 언어 | Java (JDK 8 이상), JavaScript
+| 프레임워크 | Spring Boot + MyBatis
+| DB | Oracle 11g 이상
+| 빌드 도구 | Gradle
+| 내장 WAS | Spring Boot 내장 Tomcat
+| 형상관리 | Git / GitHub
+| 협업 도구 | Jira, Notion
 
-# 기술 스택 (Tech Stack)
+
+## 🛠️ 기술 스택 (Tech Stack)
 
 ### 🌐 프론트엔드 (Frontend)
 
-| 기술 | 설명
-|-----|-----
-| JSP | 서버 측에서 HTML을 생성하는 렌더링 기술<br>동적인 웹 페이지 구현에 사용
-| js/jQuery | 클라이언트 측에 필요한 동작처리, 동적 콘텐츠 로딩
-| MyBatis | SQL Mapper 프레임워크로 프론트와 DB간의 효율적인 데이터 매핑 활용
+- JSP: 서버 측에서 HTML을 생성하는 렌더링 기술, 동적인 웹 페이지 구현에 사용
+- JavaScript/jQuery: 클라이언트 측에 필요한 동작처리, 동적 콘텐츠 로딩
+- Bootstrap: 반응형 웹 디자인을 위한 프론트엔드 프레임워크
+- MyBatis: SQL Mapper 프레임워크로 프론트와 DB간의 효율적인 데이터 매핑 활용
 
 
 ### ⚙️ 백엔드 (Backend)
 
-| 기술 | 설명
-|-----|-----
-| Spring Framework | 컨트롤러, 서비스 계층의 구현을 위해 사용<br>표준 MVC 패턴 기반으로 구조화
-| MyBatis | SQL과 서버 객체간 매핑담당 도구자, 시퀀스와 연계가 용름
-| Oracle | 대규모 데이터 관리를 위한 관계형 데이터베이스 사용
+- Spring Framework: 컨트롤러, 서비스 계층의 구현을 위해 사용, 표준 MVC 패턴 기반으로 구조화
+- Spring Boot: 스프링 기반 애플리케이션 개발 간소화 및 자동 구성 제공
+- Spring Security: 인증 및 권한 부여를 위한 보안 프레임워크
+- MyBatis: SQL과 서버 객체간 매핑담당 도구, 시퀀스와 연계가 용이
+- Oracle: 대규모 데이터 관리를 위한 관계형 데이터베이스 사용
+
+
+### 🔌 API 연동
+
+- Naver API
+- Kakao API
+- Google API
+- Gemini API
 
 
 ### 🛠️ 개발 도구 (Development Tools)
 
-| 도구 | 사용 목적
-|-----|-----
-| Visual Studio Code | JS, CSS, 프론트 등 코드 작성용 에디터
-| Eclipse | Java 백엔드 및 Spring 기반 프로젝트 구현
-| Jira | 이슈 관리 및 구체적인 일정 계획 수립을 위한 협업 도구
-| GitHub | 코드 버전 관리 및 팀 협업
-| Apache Tomcat | 웹앱 서버 구동, 테스트
+- IntelliJ IDEA / Eclipse: Java 백엔드 및 Spring 기반 프로젝트 구현
+- Visual Studio Code: JS, CSS, 프론트 등 코드 작성용 에디터
+- Postman: API 테스트 및 개발
+- GitHub: 코드 버전 관리 및 팀 협업
+- Notion: 문서화 및 팀 커뮤니케이션
+- Jira: 이슈 관리 및 구체적인 일정 계획 수립을 위한 협업 도구
+- Apache Tomcat: 웹앱 서버 구동, 테스트
 
-
-# 👥 업무 분장 (Team Roles)
-
-### 👨‍💻 정종현 (FullStack)
-
-| 담당 업무 | 세부 내용
-|-----|-----
-| 🏗️ 전체 구조 설계 | 전체 form 작성
-| 🔐 회원 관리 | 회원가입 & 로그인
-| 📋 게시판 | 게시판 CRUD 구현
-| 💬 소통 기능 | 댓글 & 대댓글 & 추천
-| 📚 도서 관리 | 도서 등록 & 상세정보 & 검색 & 대출중인 도서
-
-
-### 🎨 김형섭 (Frontend)
-
-| 담당 업무 | 세부 내용
-|-----|-----
-| 📚 도서 기능 | 도서 추천 & 수정 & 등록
-| 👤 사용자 정보 | 개인 정보 수정
-
-
-### ⚙️ 이병훈 (Backend)
-
-| 담당 업무 | 세부 내용
-|-----|-----
-| 📚 도서 관리 | 도서 수정
-| 👤 사용자 정보 | 개인 정보 수정
-| 📝 게시글 관리 | 게시글 작성 & 수정 & 삭제
-
-
-### 🔧 정재윤 (Backend)
-
-
-| 담당 업무 | 세부 내용
-|-----|-----
-| 📢 공지사항 | 공지사항 작성 & 수정 & 삭제
-| 📚 도서 대출 시스템 | 도서 대출 & 반납 & 삭제 & 반납/대출기록
-| 💾 데이터베이스 | DB트리거 작성
 
 ## ERD
 ![제목 없음](https://github.com/user-attachments/assets/6fcc184a-7832-47de-9f53-7db4e7636054)
