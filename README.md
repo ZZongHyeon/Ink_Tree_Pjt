@@ -8,12 +8,6 @@
   <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white"> 
   <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> 
 
-### 📚 프로젝트명
-
-> 프로젝트에 대한 간략한 설명을 여기에 작성하세요.
-
-
-
 ## 📦 개발 환경 구조 요약
 
 | 구분 | 내용
