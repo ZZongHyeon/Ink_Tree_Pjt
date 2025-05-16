@@ -20,5 +20,6 @@
 		<mapper resource="mybatis/mappers/ChatRoomMapper.xml"/>
 		<mapper resource="mybatis/mappers/ChatMessageMapper.xml"/>
 		<mapper resource="mybatis/mappers/socialUserMapper.xml"/>
+		<mapper resource="mybatis/mappers/NotificationMapper.xml"/>
 	</mappers>
 </configuration>

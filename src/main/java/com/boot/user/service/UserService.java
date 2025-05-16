@@ -2,6 +2,7 @@ package com.boot.user.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.boot.user.dto.UserDTO;
 
@@ -21,4 +22,7 @@ public interface UserService {
 	public int updateUserPwInfo(HashMap<String, String> param);
 
 	public boolean verifyPassword(HashMap<String, String> param);
+
+	public List<UserDTO> findAllUserNumber();
+
 }

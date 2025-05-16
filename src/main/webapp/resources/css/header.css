@@ -1112,3 +1112,366 @@ body {
     bottom: 70px;
   }
 }
+
+/* 알림 아이콘 스타일 */
+.notification-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  cursor: pointer;
+  color: #555;
+  transition: all 0.2s ease;
+  border-radius: 50%;
+}
+
+.notification-icon:hover {
+  background-color: #f0f0f0;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background-color: #ff5555;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* 알림 드롭다운 스타일 */
+.notification-dropdown {
+  position: relative;
+}
+
+.notification-menu {
+  display: none;
+  position: absolute;
+  top: 45px;
+  right: 0;
+  width: 320px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  overflow: hidden;
+  border: 1px solid #e5e5e5;
+}
+
+.notification-dropdown.active .notification-menu {
+  display: block;
+}
+
+.notification-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.notification-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.notification-list {
+  max-height: 350px;
+  overflow-y: auto;
+  padding: 8px;
+  background-color: #f5f5f5;
+}
+
+.notification-item {
+  display: flex;
+  padding: 14px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.notification-item:last-child {
+  margin-bottom: 0;
+}
+
+.notification-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+}
+
+/* 읽지 않은 알림 스타일 */
+.notification-item.unread {
+  background-color: #ffffff;
+  border-left: 4px solid #2979ff;
+}
+
+.notification-item.unread:hover {
+  background-color: #f0f7ff;
+}
+
+/* 읽은 알림 스타일 */
+.notification-item.read {
+  background-color: #f0f0f0;
+  border-left: 4px solid #cccccc;
+  opacity: 0.8;
+}
+
+.notification-item.read:hover {
+  background-color: #e8e8e8;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-title {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #333;
+  line-height: 1.3;
+}
+
+/* 읽은 알림 제목 스타일 */
+.notification-item.read .notification-title {
+  font-weight: 500;
+  color: #666;
+}
+
+.notification-message {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+/* 읽은 알림 메시지 스타일 */
+.notification-item.read .notification-message {
+  color: #888;
+}
+
+.notification-time {
+  font-size: 11px;
+  color: #999;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.notification-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  margin-right: 12px;
+  border-radius: 50%;
+  background-color: #e6f0ff;
+  color: #2979ff;
+  font-size: 15px;
+}
+
+/* 알림 타입별 아이콘 배경색 구분 */
+.notification-item[data-type="BOOK_RETURN"] .notification-icon-wrapper {
+  background-color: #ffefef;
+  color: #ff5555;
+}
+
+.notification-item[data-type="BOOK_BORROW"] .notification-icon-wrapper {
+  background-color: #e6fff0;
+  color: #4caf50;
+}
+
+.notification-item[data-type="NOTICE"] .notification-icon-wrapper {
+  background-color: #fff9e6;
+  color: #ff9800;
+}
+
+.notification-item[data-type="COMMENT"] .notification-icon-wrapper {
+  background-color: #e6f4ff;
+  color: #2196f3;
+}
+
+/* 읽은 알림 아이콘 스타일 */
+.notification-item.read .notification-icon-wrapper {
+  background-color: #f0f0f0;
+  color: #999;
+}
+
+.notification-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px;
+  background-color: #ffffff;
+  border-top: 1px solid #e5e5e5;
+}
+
+.mark-all-read {
+  background-color: #f0f0f0;
+  color: #555;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.mark-all-read i {
+  margin-right: 5px;
+}
+
+.mark-all-read:hover {
+  background-color: #e0e0e0;
+}
+
+.see-all {
+  color: #2979ff;
+  background-color: #f0f7ff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.see-all i {
+  margin-left: 5px;
+}
+
+.see-all:hover {
+  background-color: #e6f0ff;
+}
+
+.no-notifications {
+  padding: 24px;
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  margin: 10px;
+}
+
+/* 스크롤바 스타일 */
+.notification-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.notification-list::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+.notification-list::-webkit-scrollbar-thumb {
+  background-color: #cccccc;
+  border-radius: 3px;
+}
+
+.notification-list::-webkit-scrollbar-thumb:hover {
+  background-color: #aaaaaa;
+}
+
+/* 모든 링크에 대한 밑줄 제거 */
+.notification-menu a {
+  text-decoration: none;
+}
+.notification-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #fff;
+  border-left: 4px solid #3498db;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  padding: 15px;
+  border-radius: 4px;
+  z-index: 9999;
+  max-width: 350px;
+  /* 애니메이션 시간 조정 - 페이드아웃 시작 시간을 15초로 연장 */
+  animation: slideIn 0.5s ease-out, fadeOut 0.5s ease-in 15s forwards;
+  transform: translateX(400px);
+}
+
+@keyframes slideIn {
+  to { transform: translateX(0); }
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; }
+}
+
+.notification-toast .toast-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.notification-toast .toast-title {
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}
+
+.notification-toast .toast-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #777;
+  font-size: 16px;
+}
+
+.notification-toast .toast-message {
+  color: #555;
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.notification-toast .toast-time {
+  color: #999;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.notification-toast .toast-icon {
+  margin-right: 10px;
+}
+
+.notification-toast-content {
+  display: flex;
+}
+
+/* 알림 메뉴 항목이 비어있을 때 스타일링 */
+.notification-item.empty {
+  background-color: #f8f8f8;
+  border-left: none;
+  text-align: center;
+  padding: 15px;
+  color: #aaa;
+}

@@ -80,6 +80,8 @@
 			var titleLength = titleInput.value.length;
 			var maxTitleLength = 35;
 
+
+
 			if (titleLength > maxTitleLength) {
 			    // 템플릿 리터럴 대신 문자열 연결 사용
 			    alert("제목은 " + maxTitleLength + "자 이내로 입력해주세요. (현재: " + titleLength + "자)");
@@ -134,6 +136,37 @@
 				} ], [ 'link', 'image' ], [ 'clean' ] ]
 			}
 		});
+	</script>
+	<script>
+		function admin_notification_test() {
+			fetch('/notifications', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					userNumber: 1,
+					message: '댓글 등록 테스트 알림 - ' + new Date().toLocaleTimeString(),
+					title: '댓글 테스트 알림',
+					type: 'comment',
+					url: '/book_detail?bookNumber='+1,
+					sent: false,
+					read: false,
+					toAll: false
+				})
+			})
+					.then(function(response) {
+						return response.json();
+					})
+					.then(function(data) {
+						console.log('알림 전송 성공:', data);
+						// 알림 성공 시 별도의 팝업 띄우지 않음 (자동으로 알림이 표시됨)
+					})
+					.catch(function(error) {
+						console.error('알림 전송 실패:', error);
+
+					});
+		}
 	</script>
 
 </body>

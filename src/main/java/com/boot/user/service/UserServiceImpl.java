@@ -2,6 +2,7 @@ package com.boot.user.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -175,6 +176,13 @@ public class UserServiceImpl implements UserService {
 		UserDAO dao = sqlSession.getMapper(UserDAO.class);
 		int count = dao.checkEmail(email);
 		return count > 0;
+	}
+
+	@Override
+	public List<UserDTO> findAllUserNumber() {
+		UserDAO dao = sqlSession.getMapper(UserDAO.class);
+		List<UserDTO> users = dao.findAllUserNumber();
+		return users;
 	}
 
 }

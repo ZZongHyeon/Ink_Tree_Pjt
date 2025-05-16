@@ -254,10 +254,16 @@
         });
         
         // 가격 입력 시 천 단위 콤마 표시
-        $("#price").on("input", function() {
-            // 숫자만 입력 가능하도록
-            this.value = this.value.replace(/[^0-9]/g, '');
-        });
+		$("#price").on("input", function() {
+		    // 숫자만 입력 가능하도록
+		    this.value = this.value.replace(/[^0-9]/g, '');
+		    
+		    // 10자리 이상 입력 방지
+		    if (this.value.length >= 10) {
+		        alert("가격은 999,999,999원 이하로 입력해주세요.");
+		        this.value = this.value.substring(0, 9);
+		    }
+		});
 
 		function fn_submit() {
 			// 제목 길이 검증

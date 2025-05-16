@@ -53,6 +53,7 @@
                    tp.status, tp.location, tp.viewCount, tp.createdAt
             FROM Trade_Post tp
             JOIN userinfo u ON tp.userNumber = u.userNumber
+            WHERE tp.status != 'DELETED'
             <include refid="criteriaDTO"></include>
             
             <!-- 정렬 조건 -->
@@ -77,6 +78,7 @@
 <select id="getTotalCount" resultType="int">
     SELECT COUNT(*) FROM Trade_Post tp
     JOIN userinfo u ON tp.userNumber = u.userNumber
+    WHERE tp.status != 'DELETED'
     <include refid="criteriaDTO"></include>
 </select>
 
@@ -118,10 +120,13 @@
     </update>
     
     <!-- 거래 게시글 삭제 -->
-    <delete id="tradePostDelete">
-        DELETE FROM Trade_Post 
-        WHERE postID = #{postID}
-    </delete>
+    <update id="tradePostDelete">
+<!--        DELETE FROM Trade_Post -->
+<!--        WHERE postID = #{postID}-->
+		update trade_post
+		set status='DELETED'
+		WHERE postID = #{postID}
+    </update>
     
     <!-- 조회수 증가 -->
     <update id="tradePostHit">

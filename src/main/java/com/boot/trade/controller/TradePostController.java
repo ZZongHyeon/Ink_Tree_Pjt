@@ -31,7 +31,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TradePostController {
 
-    @Autowired
+    private static final String NULL = null;
+	@Autowired
     private TradePostService service;
 
     @RequestMapping("/trade_post_view")
@@ -53,7 +54,10 @@ public class TradePostController {
     @RequestMapping("/trade_post_write")
     public String tradePostWriteView(Model model, HttpSession session) {
     	UserDTO user = (UserDTO) session.getAttribute("loginUser");
-    	String userAddress = user.getUserAddress();
+    	String userAddress = "";
+    	if(user.getUserAddress() != NULL) {
+    		userAddress = user.getUserAddress();
+    	}
 //    	String[] strArr = userAddress.split("구");
 //    	
 //    	System.out.println("userAddress : " + userAddress);
@@ -67,8 +71,8 @@ public class TradePostController {
     }
     @RequestMapping("/trade_post_write_ok")
     public String tradePostWrite(@RequestParam HashMap<String, String> param) {
-    	service.tradePostWrite(param);
-    	return "redirect:trade_post_view";
+        service.tradePostWrite(param);
+        return "redirect:trade_post_view";
     }
 
     @PostMapping("/trade_post_delete")
