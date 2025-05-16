@@ -63,16 +63,27 @@
 					</a>
             
             <!-- 채팅 메시지 영역 -->
-            <div class="chat-messages" id="chatMessages">
-                <c:forEach items="${messages}" var="msg">
-                    <div class="message ${msg.senderNumber == loginUser.userNumber ? 'my-message' : 'other-message'}" data-message-id="${msg.messageId}">
-                        <div class="message-content">${msg.message}</div>
-						<div class="message-time">
-						    ${msg.createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))}
-						</div>
-                    </div>
-                </c:forEach>
-            </div>
+			<div class="chat-messages" id="chatMessages">
+			    <c:set var="prevDate" value="" />
+			    <c:forEach items="${messages}" var="msg">
+			        <c:set var="messageDate" value="${msg.createdAt.format(DateTimeFormatter.ofPattern('yyyy-MM-dd'))}" />
+			        
+			        <%-- 날짜가 바뀌면 날짜 구분선 추가 --%>
+			        <c:if test="${messageDate ne prevDate}">
+			            <div class="date-divider">${messageDate}</div>
+			            <c:set var="prevDate" value="${messageDate}" />
+			        </c:if>
+			        
+			        <div class="message ${msg.senderNumber == loginUser.userNumber ? 'my-message' : 'other-message'}" 
+			             data-message-id="${msg.messageId}" 
+			             data-message-date="${messageDate}">
+			            <div class="message-content">${msg.message}</div>
+			            <div class="message-time">
+			                ${msg.createdAt.format(DateTimeFormatter.ofPattern("HH:mm"))}
+			            </div>
+			        </div>
+			    </c:forEach>
+			</div>
             
             <!-- 메시지 입력 영역 -->
             <div class="chat-input-container">
@@ -292,7 +303,7 @@
 		}
 
 		// 날짜 포맷팅 함수
-		function formatDateTime(date) {
+		/*function formatDateTime(date) {
 		    const year = date.getFullYear();
 		    const month = String(date.getMonth() + 1).padStart(2, '0');
 		    const day = String(date.getDate()).padStart(2, '0');
@@ -300,9 +311,23 @@
 		    const minutes = String(date.getMinutes()).padStart(2, '0');
 		    
 		    return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes;
+		}*/
+		function formatDate(date) {
+		    const year = date.getFullYear();
+		    const month = String(date.getMonth() + 1).padStart(2, '0');
+		    const day = String(date.getDate()).padStart(2, '0');
+		    
+		    return year + '-' + month + '-' + day;
+		}
+		// 시간 포맷팅 함수 - 시간만 반환 (HH:MM)
+		function formatTime(date) {
+		    const hours = String(date.getHours()).padStart(2, '0');
+		    const minutes = String(date.getMinutes()).padStart(2, '0');
+		    
+		    return hours + ':' + minutes;
 		}
 
-		// 메시지 표시
+		// 메시지 표시 함수 수정
 		function displayMessage(messageData) {
 		    // 메시지 ID가 없는 경우 처리
 		    if (!messageData.messageId) {
@@ -322,11 +347,22 @@
 		    // 메시지 표시
 		    const messageClass = messageData.senderNumber == currentUserNumber ? 'my-message' : 'other-message';
 		    const messageTime = messageData.createdAt ? new Date(messageData.createdAt) : new Date();
+		    const messageDate = formatDate(messageTime);
 		    
+		    // 날짜 구분선이 필요한지 확인
+		    const needDateDivider = checkIfNeedDateDivider(messageDate);
+		    
+		    // 날짜 구분선이 필요하면 추가
+		    if (needDateDivider) {
+		        const dateDividerHtml = '<div class="date-divider">' + messageDate + '</div>';
+		        $('#chatMessages').append(dateDividerHtml);
+		    }
+		    
+		    // 메시지 HTML 생성
 		    const messageHtml = 
-		        '<div class="message ' + messageClass + '" data-message-id="' + messageData.messageId + '">' +
+		        '<div class="message ' + messageClass + '" data-message-id="' + messageData.messageId + '" data-message-date="' + messageDate + '">' +
 		        '<div class="message-content">' + messageData.message + '</div>' +
-		        '<div class="message-time">' + formatDateTime(messageTime) + '</div>' +
+		        '<div class="message-time">' + formatTime(messageTime) + '</div>' +
 		        '</div>';
 		    
 		    $('#chatMessages').append(messageHtml);
@@ -337,7 +373,21 @@
 		        markMessageAsRead(messageData.messageId);
 		    }
 		}
-
+		
+		// 날짜 구분선이 필요한지 확인하는 함수
+		function checkIfNeedDateDivider(messageDate) {
+		    // 첫 번째 메시지인 경우
+		    if ($('.message').length === 0) {
+		        return true;
+		    }
+		    
+		    // 마지막 메시지의 날짜 가져오기
+		    const lastMessageDate = $('.message').last().data('message-date');
+		    
+		    // 날짜가 다르면 구분선 필요
+		    return lastMessageDate !== messageDate;
+		}
+		
 		// 메시지가 이미 표시되었는지 확인
 		function isMessageDisplayed(messageId) {
 		    return $('.message[data-message-id="' + messageId + '"]').length > 0;
@@ -424,12 +474,25 @@
 		                    response.messages.forEach(function(msg) {
 		                        // 이미 표시된 메시지는 건너뛰기
 		                        if (!isMessageDisplayed(msg.messageId)) {
+		                            // 메시지 시간 및 날짜 처리
+		                            const messageTime = new Date(msg.createdAt);
+		                            const messageDate = formatDate(messageTime);
+		                            
+		                            // 날짜 구분선이 필요한지 확인
+		                            const needDateDivider = checkIfNeedDateDivider(messageDate);
+		                            
+		                            // 날짜 구분선이 필요하면 추가
+		                            if (needDateDivider) {
+		                                const dateDividerHtml = '<div class="date-divider">' + messageDate + '</div>';
+		                                $('#chatMessages').append(dateDividerHtml);
+		                            }
+		                            
 		                            // 메시지 클래스 결정
 		                            const messageClass = msg.senderNumber == currentUserNumber ? 'my-message' : 'other-message';
 		                            const messageHtml = 
-		                                '<div class="message ' + messageClass + '" data-message-id="' + msg.messageId + '">' +
+		                                '<div class="message ' + messageClass + '" data-message-id="' + msg.messageId + '" data-message-date="' + messageDate + '">' +
 		                                '<div class="message-content">' + msg.message + '</div>' +
-		                                '<div class="message-time">' + formatDateTime(new Date(msg.createdAt)) + '</div>' +
+		                                '<div class="message-time">' + formatTime(messageTime) + '</div>' +
 		                                '</div>';
 		                            $('#chatMessages').append(messageHtml);
 		                            

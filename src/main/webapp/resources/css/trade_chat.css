@@ -526,7 +526,37 @@ body {
         overflow: hidden;
     }
 }
+/* 날짜 구분선 스타일 */
+.date-divider {
+    text-align: center;
+    margin: 1rem 0;
+    position: relative;
+    color: var(--gray-500);
+    font-size: 0.8rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.date-divider::before,
+.date-divider::after {
+    content: "";
+    flex-grow: 1;
+    height: 1px;
+    background-color: var(--gray-300);
+    margin: 0 10px;
+}
+
+/* 메시지 그룹 간격 조정 */
+.message + .message {
+    margin-top: 0.5rem;
+}
+
+/* 날짜가 바뀌는 첫 메시지는 위 여백 추가 */
+.date-divider + .message {
+    margin-top: 1rem;
+}
 /* Add this script to your JSP file to enable auto-resizing of the textarea */
 /* 
 <script>
