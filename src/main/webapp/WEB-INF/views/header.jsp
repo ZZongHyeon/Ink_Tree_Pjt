@@ -86,17 +86,7 @@
                 <%
                 if (user != null) {
                 %>
-<%--                <button id="testAlarmBtn" style="--%>
-<%--    background-color: #3498db;--%>
-<%--    color: white;--%>
-<%--    border: none;--%>
-<%--    border-radius: 4px;--%>
-<%--    padding: 5px 10px;--%>
-<%--    margin-right: 10px;--%>
-<%--    cursor: pointer;--%>
-<%--    font-size: 13px;">--%>
-<%--                    알림 테스트--%>
-<%--                </button>--%>
+
                 <!-- 알림 드롭다운 추가 -->
                 <div class="notification-dropdown" id="notificationDropdown">
                     <div class="notification-icon" id="notificationToggle">
@@ -557,7 +547,7 @@
     const processedNotifications = new Set();
 
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('페이지 로드: 기존 알림 ID 저장');
+<!--        console.log('페이지 로드: 기존 알림 ID 저장');-->
 
         // 서버에서 가져온 초기 알림 ID를 기록
         const notificationItems = document.querySelectorAll('.notification-item');
@@ -950,42 +940,7 @@
         });
     }
 </script>
-<%--<script>--%>
-<%--    (function() {--%>
-<%--        const testBtn = document.getElementById('testAlarmBtn');--%>
-<%--        if (testBtn) {--%>
-<%--            testBtn.addEventListener('click', function() {--%>
-<%--                fetch('/notifications', {--%>
-<%--                    method: 'POST',--%>
-<%--                    headers: {--%>
-<%--                        'Content-Type': 'application/json'--%>
-<%--                    },--%>
-<%--                    body: JSON.stringify({--%>
-<%--                        //userNumber: 1,--%>
-<%--                        message: '테스트 알림 - ' + new Date().toLocaleTimeString(),--%>
-<%--                        title: '테스트 알림',--%>
-<%--                        type: 'INFO',--%>
-<%--                        url: '/mypage',--%>
-<%--                        sent: false,--%>
-<%--                        read: false,--%>
-<%--                        toAll: true--%>
-<%--                    })--%>
-<%--                })--%>
-<%--                    .then(function(response) {--%>
-<%--                        return response.json();--%>
-<%--                    })--%>
-<%--                    .then(function(data) {--%>
-<%--                        console.log('알림 전송 성공:', data);--%>
-<%--                        // 알림 성공 시 별도의 팝업 띄우지 않음 (자동으로 알림이 표시됨)--%>
-<%--                    })--%>
-<%--                    .catch(function(error) {--%>
-<%--                        console.error('알림 전송 실패:', error);--%>
-<%--                        alert('알림 전송에 실패했습니다.');--%>
-<%--                    });--%>
-<%--            });--%>
-<%--        }--%>
-<%--    })();--%>
-<%--</script>--%>
+
 
 </body>
 </html>

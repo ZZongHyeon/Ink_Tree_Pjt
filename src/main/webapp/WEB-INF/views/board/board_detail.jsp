@@ -10,7 +10,7 @@
 									<head>
 										<meta charset="UTF-8">
 										<meta name="viewport" content="width=device-width, initial-scale=1.0">
-										<title>${board.boardTitle} - 메트로하우스</title>
+										<title>메트로하우스</title>
 										<link rel="stylesheet" type="text/css" href="/resources/css/board_detail.css">
 										<link rel="stylesheet"
 											href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -33,11 +33,13 @@
 															</a>
 														</div>
 														<h1 class="board-title">${board.boardTitle}</h1>
+														<input type="hidden" id="boardTitle" value="${board.boardTitle}">
 														<div class="board-meta">
 															<div class="author-info">
 																<div class="author-avatar">${fn:substring(board.userName, 0, 1)}</div>
 																<div class="author-details">
 																	<div class="author-name">${board.userName}</div>
+																	<input type="hidden" id="writeUserNumber" value="${board.userNumber}">
 																	<div class="post-date">
 																		<c:set var="dateStr" value="${board.boardWriteDate}" />
 																		<c:if test="${not empty dateStr}">
@@ -106,10 +108,12 @@
 													<% if (user !=null) { %>
 														<div class="comment-form">
 															<form id="commentForm" onsubmit="return submitComment(this);">
-																<input type="hidden" name="boardNumber" value="${board.boardNumber}">
+																<input type="hidden" name="boardNumber" value="${board.boardNumber}" id="boardNumber">
 																<input type="hidden" name="userNumber"
-																	value="<%=user.getUserNumber()%>"> <input type="hidden"
-																	name="userName" value="<%=user.getUserName()%>">
+																	value="<%=user.getUserNumber()%>" >
+																	<input type="hidden"
+																	name="userName" value="<%=user.getUserName()%>" id="commentWriteUserName">
+																	<input type="hidden" id="commentWriteUserNumber" value="<%=user.getUserNumber()%>">
 																<input type="hidden" name="commentSubNumber" value="0"> <input
 																	type="hidden" name="commentSubStepNumber" value="0">
 																<textarea name="commentContent" class="comment-textarea"
@@ -148,7 +152,7 @@
 																					<div class="comment-content-wrapper">
 																						<div class="comment-meta">
 																							<div class="comment-author">${comment.userName}
-																								<!-- 작성일자를 이름 바로 옆으로 이동 -->
+																								<input type="hidden" id="commentUserNumber-${comment.commentNumber}" value="${comment.userNumber}">
 																								<span class="comment-date">
 																									<c:set var="dateStr" value="${comment.commentWriteDate}" />
 																									<c:if test="${not empty dateStr}">
@@ -230,13 +234,16 @@
 																					</div>
 																					<% } %>
 
-																						<!-- 대댓글 표시 (commentSubStepNumber 순서대로 정렬) -->
+																						
 																						<c:forEach items="${commentList}" var="reply">
 																							<c:if test="${reply.commentSubNumber == comment.commentNumber}">
 																								<div class="reply-item" id="comment-${reply.commentNumber}">
 																									<div class="reply-indicator">
 																										<i class="fas fa-reply fa-flip-horizontal"></i>
 																									</div>
+																									
+																									<input type="hidden" id="replyCommentUserNumber" value="${reply.userNumber}">
+																								
 																									<div class="comment-header">
 																										<div class="comment-author-avatar reply-avatar">
 																											${fn:substring(reply.userName, 0, 1)}
@@ -244,7 +251,9 @@
 																										<div class="comment-content-wrapper">
 																											<div class="comment-meta">
 																												<div class="comment-author">${reply.userName}
-																													<!-- 작성일자를 이름 바로 옆으로 이동 -->
+																													<input type="hidden" id="replyUserNumber-${reply.commentNumber}" value="${reply.userNumber}">
+																													<input type="hidden" id="replyUserName-${reply.commentNumber}" value="${reply.userName}">
+																													
 																													<span class="comment-date">
 																														<c:set var="dateStr" value="${reply.commentWriteDate}" />
 																														<c:if test="${not empty dateStr}">
@@ -415,6 +424,7 @@
 											            const url = new URL(currentUrl);
 											            url.searchParams.set('skipViewCount', 'true');
 											            window.location.href = url.toString();
+														commentNotification();
 											        },
 											        error: function() {
 											            alert("댓글 등록 중 오류가 발생했습니다.");
@@ -425,6 +435,48 @@
 											    return false;
 											}
 											
+											function commentNotification() {
+												// 게시글 쓴사람 번호
+												const writeUserNumber = document.getElementById('writeUserNumber').value;
+												// 댓글 쓴사람 이름
+												const commentWriteUserName = document.getElementById('commentWriteUserName').value;
+												// 댓글 쓴사람 번호
+												const commentWriteUserNumber = document.getElementById('commentWriteUserNumber').value;
+												const boardNumber = document.getElementById('boardNumber').value;
+												const boardTitle = document.getElementById('boardTitle').value;
+												
+												if(writeUserNumber != commentWriteUserNumber) {
+											    fetch('/notifications', {
+											        method: 'POST',
+											        headers: {
+											            'Content-Type': 'application/json'
+											        },
+											        body: JSON.stringify({
+											            userNumber: writeUserNumber,
+											            message: commentWriteUserName + '님이 나의 게시글['+boardTitle+']에 댓글을 남겼습니다.',
+											            title: '댓글 알림',
+											            type: 'COMMENT',
+											            url: '/board_detail_view?boardNumber='+boardNumber,
+											            sent: false,
+											            read: false,
+											            toAll: false // 전체
+											        })
+											    })
+											        .then(function(response) {
+											            return response.json();
+											        })
+											        .then(function(data) {
+											            console.log('알림 전송 성공:', data);
+											            // 알림 성공 시 별도의 팝업 띄우지 않음 (자동으로 알림이 표시됨)
+											        })
+											        .catch(function(error) {
+											            console.error('알림 전송 실패:', error);
+
+											        });
+													}else {
+														console.log("같은 사용자")
+													}
+											}
 											// 대댓글 작성 AJAX 처리
 											function submitReply(form, commentNumber) {
 											    // 폼 데이터 가져오기
@@ -442,6 +494,24 @@
 											        return false;
 											    }
 											    
+												
+												// 댓글 작성자 번호 가져오기 (댓글 요소에서 직접 가져옴)
+												const commentElement = document.getElementById('comment-' + commentNumber);
+												// 수정된 부분: ID 선택자를 올바르게 변경
+												const commentUserNumberElement = commentElement.querySelector('#commentUserNumber-' + commentNumber);
+												const commentUserNumber = commentUserNumberElement ? commentUserNumberElement.value : null;
+
+												// 현재 로그인한 사용자 번호 (답글 작성자)
+												const replyUserNumber = replyData.userNumber;
+
+												// 현재 로그인한 사용자 이름 (답글 작성자)
+												const replyCommentWriteUserName = replyData.userName;
+
+												// 게시글 번호
+												const boardNumber = replyData.boardNumber;
+												
+												console.log("댓글 작성자 번호: " + commentUserNumber);
+												console.log("답글 작성자 번호: " + replyUserNumber);
 											    // AJAX 요청
 											    $.ajax({
 											        type: "post",
@@ -451,11 +521,16 @@
 											            // 답글 폼 숨기기
 											            hideReplyForm(commentNumber);
 											            
-											            // 조회수 증가 방지를 위해 skipViewCount=true 파라미터 추가하여 새로고침
-											            const currentUrl = window.location.href;
-											            const url = new URL(currentUrl);
-											            url.searchParams.set('skipViewCount', 'true');
-											            window.location.href = url.toString();
+														// 알림 전송 (직접 값을 전달)
+														if (commentUserNumber && replyUserNumber) {
+														    replyCommentNotification(commentUserNumber, replyUserNumber, replyCommentWriteUserName, boardNumber);
+														}
+
+														// 페이지 새로고침
+														const currentUrl = window.location.href;
+														const url = new URL(currentUrl);
+														url.searchParams.set('skipViewCount', 'true');
+														window.location.href = url.toString();
 											        },
 											        error: function() {
 											            alert("답글 등록 중 오류가 발생했습니다.");
@@ -465,7 +540,41 @@
 											    // 폼 기본 제출 동작 방지
 											    return false;
 											}
-
+											function replyCommentNotification(commentUserNumber, replyUserNumber, replyCommentWriteUserName, boardNumber) {
+											    console.log("댓글 작성자 번호: " + commentUserNumber);
+											    console.log("답글 작성자 번호: " + replyUserNumber);
+											    
+											    if (commentUserNumber !== replyUserNumber) {
+											        fetch('/notifications', {
+											            method: 'POST',
+											            headers: {
+											                'Content-Type': 'application/json'
+											            },
+											            body: JSON.stringify({
+											                userNumber: commentUserNumber,
+											                message: replyCommentWriteUserName + '님이 나의 댓글에 답글을 남겼습니다.',
+											                title: '대댓글 알림',
+											                type: 'COMMENT',
+											                url: '/board_detail_view?boardNumber='+boardNumber,
+											                sent: false,
+											                read: false,
+											                toAll: false
+											            })
+											        })
+											        .then(function(response) {
+											            return response.json();
+											        })
+											        .then(function(data) {
+											            console.log('알림 전송 성공:', data);
+											        })
+											        .catch(function(error) {
+											            console.error('알림 전송 실패:', error);
+											        });
+											    } else {
+											        console.log("같은 사용자이므로 알림을 보내지 않습니다.");
+											    }
+											}
+												
 											// 대댓글 폼 표시 (replyToUsername: 답글 대상 사용자, currentStep: 현재 대댓글 단계)
 											function showReplyForm(commentNumber, replyToUsername, currentStep) {
 												// 모든 대댓글 폼 숨기기

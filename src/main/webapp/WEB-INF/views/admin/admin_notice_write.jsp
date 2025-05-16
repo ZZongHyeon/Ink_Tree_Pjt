@@ -132,6 +132,7 @@
 
 <script>
     function admin_notification_test() {
+		const titleValue = document.getElementById('title').value;
         fetch('/notifications', {
             method: 'POST',
             headers: {
@@ -139,13 +140,13 @@
             },
             body: JSON.stringify({
                 //userNumber: 1,
-                message: '공지사항 등록 테스트 알림 - ' + new Date().toLocaleTimeString(),
-                title: '공지사항 테스트 알림',
+                message: '공지사항 ' + titleValue + '이 등록되었습니다.',
+                title: '공지사항',
                 type: 'NOTICE',
                 url: '/admin_notice',
                 sent: false,
                 read: false,
-                toAll: true
+                toAll: true // 전체
             })
         })
             .then(function(response) {
