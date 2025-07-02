@@ -83,19 +83,17 @@
 	            <i class="fas fa-list"></i> 목록으로
 	        </a>
 	        
-	        <% 
-	        UserDTO user = (UserDTO) session.getAttribute("loginUser");
-	        if (user != null && user.getUserAdmin() == 1) { 
-	        %>
-	        <div class="admin-actions">
-	            <a href="/admin_update?noticeNum=${notice.noticeNum}" class="action-btn edit-btn">
-	                <i class="fas fa-edit"></i> 수정하기
-	            </a>
-	            <a href="#" onclick="confirmDelete(${notice.noticeNum}); return false;" class="action-btn delete-btn">
-	                <i class="fas fa-trash"></i> 삭제하기
-	            </a>
-	        </div>
-	        <% } %>
+			<c:if test="${requestScope.user != null and requestScope.user.userAdmin == 1}">
+			    <div class="admin-actions">
+			        <a href="/admin_update?noticeNum=${notice.noticeNum}" class="action-btn edit-btn">
+			            <i class="fas fa-edit"></i> 수정하기
+			        </a>
+			        <a href="#" onclick="confirmDelete(${notice.noticeNum}); return false;" class="action-btn delete-btn">
+			            <i class="fas fa-trash"></i> 삭제하기
+			        </a>
+			    </div>
+			</c:if>
+
 	    </div>
 	    
 	    <div class="notice-navigation">

@@ -7,6 +7,8 @@
 <%@page import="java.time.format.DateTimeFormatter" %>
 <%@page import="java.time.LocalDateTime" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -51,6 +53,8 @@
     LocalDateTime today = LocalDateTime.now();
 
 %>
+<c:set var="currentPage" value="${requestScope['javax.servlet.forward.request_uri']}" />
+
     <header class="top-header">
         <div class="header-container">
             <div class="logo-section">
@@ -63,19 +67,19 @@
             </div>
 
             <nav class="nav-links" id="navLinks">
-                <a href="/" class="nav-link ${currentPage == 'main' ? 'active' : ''}">
-                    <i class="nav-icon fa-solid fa-house"></i>
-                    <span>메인</span>
-                </a>
-                <a href="/admin_notice" class="nav-link ${currentPage == 'admin_notice' ? 'active' : ''}">
+				<a href="/" class="nav-link ${currentPage == '/' ? 'active' : ''}">
+				    <i class="nav-icon fa-solid fa-house"></i>
+				    <span>메인</span>
+				</a>
+                <a href="/admin_notice" class="nav-link ${currentPage == '/admin_notice' ? 'active' : ''}">
                     <i class="nav-icon fa-solid fa-bullhorn"></i>
                     <span>공지사항</span>
                 </a>
-                <a href="/board_view" class="nav-link ${currentPage == 'board_view' ? 'active' : ''}">
+                <a href="/board_view" class="nav-link ${currentPage == '/board_view' ? 'active' : ''}">
                     <i class="nav-icon fa-solid fa-clipboard-list"></i>
                     <span>게시판</span>
                 </a>
-                <a href="/trade_post_view" class="nav-link ${currentPage == 'trade_post_view' ? 'active' : ''}">
+                <a href="/trade_post_view" class="nav-link ${currentPage == '/trade_post_view' ? 'active' : ''}">
                     <i class="nav-icon fa-solid fa-cart-shopping"></i>
                     <span>거래게시판</span>
                 </a>
@@ -83,9 +87,8 @@
             </nav>
 
             <div class="user-menu">
-                <%
-                if (user != null) {
-                %>
+				<c:choose>
+				    <c:when test="${user != null}">
 
                 <!-- 알림 드롭다운 추가 -->
                 <div class="notification-dropdown" id="notificationDropdown">
@@ -146,34 +149,31 @@
                             <button class="mark-all-read" id="markAllAsRead">
                                 <i class="fa-solid fa-check-double"></i> 모두 읽음
                             </button>
-                            <%--                        <a href="/notifications" class="see-all">--%>
-                            <%--                            더 많은 알림 <i class="fa-solid fa-chevron-right"></i>--%>
-                            <%--                        </a>--%>
                         </div>
                     </div>
                 </div>
 
                 <div class="user-dropdown" id="userDropdown">
-                    <button class="dropdown-toggle" id="dropdownToggle">
-                        <div class="user-avatar">
-                            <%=user.getUserName().substring(0, 1)%>
-                        </div>
-                        <span class="user-name"><%=user.getUserName()%> 님</span>
-                        <span class="toggle-icon"><i class="fa-solid fa-chevron-down"></i></span>
-                    </button>
+					<button class="dropdown-toggle" id="dropdownToggle">
+					    <div class="user-avatar">
+					        ${fn:substring(user.userName, 0, 1)}
+					    </div>
+					    <span class="user-name">${user.userName} 님</span>
+					    <span class="toggle-icon"><i class="fa-solid fa-chevron-down"></i></span>
+					</button>
                     <div class="dropdown-menu">
-                        <div class="dropdown-header">
-                            <div class="dropdown-header-bg"></div>
-                            <div class="dropdown-header-content">
-                                <div class="user-avatar large">
-                                    <%=user.getUserName().substring(0, 1)%>
-                                </div>
-                                <div class="header-info">
-                                    <div class="header-name"><%=user.getUserName()%> 님</div>
-                                    <div class="header-email"><%=user.getUserEmail()%></div>
-                                </div>
-                            </div>
-                        </div>
+						<div class="dropdown-header">
+						    <div class="dropdown-header-bg"></div>
+						    <div class="dropdown-header-content">
+						        <div class="user-avatar large">
+						            ${fn:substring(user.userName, 0, 1)}
+						        </div>
+						        <div class="header-info">
+						            <div class="header-name">${user.userName} 님</div>
+						            <div class="header-email">${user.userEmail}</div>
+						        </div>
+						    </div>
+						</div>
 
                         <div class="dropdown-menu-container">
                             <div class="dropdown-section">
@@ -220,9 +220,7 @@
 								</a>
                             </div>
 
-                            <%
-                                if (user.getUserAdmin() == 1) {
-                            %>
+                                <c:if test="${user.userAdmin == 1}">
                             <div class="dropdown-section">
                                 <div class="dropdown-section-title">관리자</div>
                                 <a href="admin_view" class="dropdown-item admin-item">
@@ -235,9 +233,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <%
-                                }
-                            %>
+                                </c:if>
                         </div>
 
                         <div class="dropdown-footer">
@@ -249,9 +245,8 @@
                         </div>
                     </div>
                 </div>
-                <%
-                } else {
-                %>
+				</c:when>
+				<c:otherwise>
                 <div class="auth-buttons">
                     <a href="/loginForm" class="auth-link login-link">
                         <i class="fa-solid fa-right-to-bracket"></i> 로그인
@@ -260,16 +255,13 @@
                         <i class="fa-solid fa-user-plus"></i> 회원가입
                     </a>
                 </div>
-                <%
-                    }
-                %>
+				    </c:otherwise>
+				</c:choose>
             </div>
         </div>
     </header>
 
-    <%
-    if (user != null) {
-    %>
+	<c:if test="${user != null}">
     <!-- 채팅 버튼 (알림 표시 포함) -->
     <button class="chatbot-btn" id="chatbot-button">
         <i class="fas fa-comment-dots"></i>
@@ -285,6 +277,47 @@
             <i class="fas fa-comments"></i> 일반 채팅<span id="chatMenuNotification" class="chat-menu-notification"></span>
         </a>
     </div>
+	
+	<!-- 토큰 만료 시간 관리 컴포넌트 -->
+	<c:if test="${user != null}">
+	<div class="token-expiry-manager" id="tokenExpiryManager">
+	    <div class="token-card">
+	        <div class="token-header">
+	            <div class="token-title">
+	                <i class="fas fa-clock"></i> 세션 만료 시간
+	            </div>
+	            <div class="token-actions">
+	                <button id="extendTokenBtn" class="token-extend-btn">
+	                    <i class="fas fa-sync-alt"></i> 연장하기
+	                </button>
+	                <button id="toggleTokenBtn" class="token-toggle-btn">
+	                    <i class="fas fa-chevron-up"></i>
+	                </button>
+	            </div>
+	        </div>
+	        
+	        <div class="token-body" id="tokenBody">
+	            <div class="token-info">
+	                <span>남은 시간</span>
+	                <span id="remainingTime">--:--</span>
+	            </div>
+	            
+	            <div class="progress-container">
+	                <div id="progressBar" class="progress-bar"></div>
+	            </div>
+	            
+	            <div class="token-expiry">
+	                <span>* 시간이 만료되면 자동으로 로그아웃됩니다.</span>
+	            </div>
+	        </div>
+	    </div>
+	    
+	    <!-- 접힌 상태일 때 표시될 미니 타이머 -->
+	    <div class="token-mini" id="tokenMini">
+	        <i class="fas fa-clock"></i> <span id="miniRemainingTime">--:--</span>
+	    </div>
+	</div>
+	</c:if>
     
     <!-- AI 챗봇 컨테이너 -->
     <div class="chatbot-container" id="ai-chatbot-container">
@@ -303,10 +336,9 @@
         </div>
     </div>
     
-    <%
-    }
-    %>
+	</c:if>
 
+	<script src="/resources/js/token_manager.js"></script>
     <script>
         // 알림 확인 함수
         function checkChatNotifications() {

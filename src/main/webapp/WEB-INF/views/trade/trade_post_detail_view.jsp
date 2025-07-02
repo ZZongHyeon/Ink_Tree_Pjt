@@ -95,12 +95,12 @@
                     </div>
                 </div>
 				
-				<c:if test="${loginUser != null && loginUser.userNumber != post.userNumber}">
+				<c:if test="${user != null && user.userNumber != post.userNumber}">
 				    <div class="action-buttons">
 				        <button class="like-button ${isLiked ? 'active' : ''}" onclick="toggleLike(${post.postID})">
 				            <i class="fas fa-heart"></i> 관심등록
 				        </button>
-						<a href="trade_chat?postID=${post.postID}&sellerNumber=${post.userNumber}&buyerNumber=${loginUser.userNumber}" class="chat-btn">
+						<a href="trade_chat?postID=${post.postID}&sellerNumber=${post.userNumber}&buyerNumber=${user.userNumber}" class="chat-btn">
 						    <i class="fas fa-comment"></i> 채팅하기
 						</a>
 				    </div>
@@ -114,12 +114,12 @@
 
             <!-- 관심, 조회수, 채팅수 정보 -->
             <div class="post-stats">
-                <c:if test="${loginUser != null && loginUser.userNumber != post.userNumber}">
+                <c:if test="${user != null && user.userNumber != post.userNumber}">
                     <button class="like-btn ${isLiked ? 'active' : ''}" onclick="toggleLike(${post.postID})">
                         <i class="fas fa-heart"></i> 관심 ${likeCount}
                     </button>
                 </c:if>
-                <c:if test="${loginUser == null || loginUser.userNumber == post.userNumber}">
+                <c:if test="${user == null || user.userNumber == post.userNumber}">
                     <div class="stat-item">
                         <i class="fas fa-heart"></i> 관심 ${likeCount}
                     </div>
@@ -133,7 +133,7 @@
             </div>
 
             <!-- 작성자 또는 관리자만 볼 수 있는 버튼 -->
-            <c:if test="${loginUser != null && (loginUser.userNumber == post.userNumber || loginUser.userAdmin == 1)}">
+            <c:if test="${user != null && (user.userNumber == post.userNumber || user.userAdmin == 1)}">
                 <div class="post-actions">
                     <button class="action-btn edit-btn" onclick="location.href='trade_post_update?postID=${post.postID}'">
                         <i class="fas fa-edit"></i> 수정하기
@@ -141,7 +141,7 @@
                     <button class="action-btn delete-btn" onclick="confirmDelete(${post.postID})">
                         <i class="fas fa-trash"></i> 삭제하기
                     </button>
-			            <c:if test="${loginUser != null && (loginUser.userNumber == post.userNumber)}">
+			            <c:if test="${user != null && (user.userNumber == post.userNumber)}">
 	                        <div class="status-change-container">
 	                            <button class="action-btn status-btn" onclick="toggleStatusDropdown()">
 	                                <i class="fas fa-tag"></i> 상태 변경

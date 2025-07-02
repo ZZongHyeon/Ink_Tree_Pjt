@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import com.boot.board.service.BoardService;
 import com.boot.z_page.CommentPageDTO;
 import com.boot.z_page.PageDTO;
 import com.boot.z_page.criteria.CriteriaDTO;
+import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.dto.UserDTO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -192,8 +194,9 @@ public class BoardController {
 	}
 
 	@RequestMapping("/boardLikes")
-	public ResponseEntity<String> boardLikes(@RequestParam HashMap<String, String> param, HttpSession session) {
-	    UserDTO user = (UserDTO) session.getAttribute("loginUser");
+	public ResponseEntity<String> boardLikes(@RequestParam HashMap<String, String> param, HttpServletRequest request) {
+//	    UserDTO user = (UserDTO) session.getAttribute("loginUser");
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 	    if (user == null) {
 	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인필요");
 	    }

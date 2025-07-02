@@ -36,6 +36,7 @@ import com.boot.z_page.PageDTO;
 import com.boot.z_page.criteria.NoticeCriteriaDTO;
 import com.boot.z_page.criteria.SearchBookCriteriaDTO;
 import com.boot.z_page.criteria.UserBookBorrowingCriteriaDTO;
+import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.dto.UserDTO;
 import com.boot.z_util.otherMVC.service.UtilService;
 
@@ -65,7 +66,7 @@ public class BookController {
 	@RequestMapping("/update_book")
 	public String updateBookView(@RequestParam HashMap<String, String> param, BookDTO book, Model model,
 			HttpServletRequest request) {
-		UserDTO user = (UserDTO) request.getSession().getAttribute("loginUser");
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 
 		if (user == null || user.getUserAdmin() != 1) {
 			return "main";
@@ -107,8 +108,7 @@ public class BookController {
 
 	@RequestMapping("/book_delete")
 	public ResponseEntity<String> bookDelete(@RequestParam HashMap<String, String> param, HttpServletRequest request) {
-		UserDTO user = (UserDTO) request.getSession().getAttribute("loginUser");
-
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 		if (user == null || user.getUserAdmin() != 1) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("noUser");
 		}
@@ -127,7 +127,7 @@ public class BookController {
 
 	@RequestMapping("/book_borrow")
 	public ResponseEntity<String> bookBorrow(@RequestParam HashMap<String, String> param, HttpServletRequest request) {
-		UserDTO user = (UserDTO) request.getSession().getAttribute("loginUser");
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 
 		if (user == null) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("noUser");
@@ -157,7 +157,7 @@ public class BookController {
 
 	@RequestMapping("/book_return")
 	public String bookReturn(@RequestParam HashMap<String, String> param, HttpServletRequest request, Model model) {
-		UserDTO user = (UserDTO) request.getSession().getAttribute("loginUser");
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 		if (user == null) {
 			return "redirect:main"; // 로그인 안 되어 있으면 메인으로 이동
 		}
@@ -185,9 +185,8 @@ public class BookController {
 	@RequestMapping("/user_book_recommend")
 	public String bookRecomm(HttpServletRequest request, @RequestParam HashMap<String, String> param, Model model) {
 
-		// 추천 도서 목록을 가져오기 위한 사용자 번호 (예: 1)
-		UserDTO dto = (UserDTO) request.getSession().getAttribute("loginUser");
-		param.put("userNumber", String.valueOf(dto.getUserNumber()));
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
+		param.put("userNumber", String.valueOf(user.getUserNumber()));
 		int majorCategoryNumber = Integer.parseInt(bookRecommendService.CategoryNum(param));
 
 		int rn = 0;
@@ -237,7 +236,7 @@ public class BookController {
 	public String bookBorrow(HttpServletRequest request, @RequestParam HashMap<String, String> param, Model model,
 			UserBookBorrowingCriteriaDTO userBookBorrowingCriteriaDTO,
 			@RequestParam(required = false) String activeTab) {
-		UserDTO dto = (UserDTO) request.getSession().getAttribute("loginUser");
+		BasicUserDTO dto = (BasicUserDTO) request.getAttribute("user");
 
 		param.put("userNumber", String.valueOf(dto.getUserNumber()));
 
@@ -265,11 +264,10 @@ public class BookController {
 		model.addAttribute("userOver", userOver);
 		model.addAttribute("userRecordCount", userRecordCount);
 
+		System.out.println("userBorrowedBooks => " + bookBorrowedList);
+		
 		// 활성 탭 정보 모델에 추가 (없으면 기본값은 'borrowed')
 		model.addAttribute("activeTab", activeTab != null ? activeTab : "borrowed");
-
-		System.out.println("test : " + param.get("userNumber"));
-		System.out.println("prarma => " + param);
 
 		// 대출 기록에 대한 페이지네이션 정보만 설정
 		int recordTotal = service.getRecordTotalCount(userBookBorrowingCriteriaDTO,

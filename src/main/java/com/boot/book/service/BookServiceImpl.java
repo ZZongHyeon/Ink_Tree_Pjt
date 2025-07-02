@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -18,6 +19,7 @@ import com.boot.book.dto.ReviewHelpfulDTO;
 import com.boot.z_page.criteria.NoticeCriteriaDTO;
 import com.boot.z_page.criteria.SearchBookCriteriaDTO;
 import com.boot.z_page.criteria.UserBookBorrowingCriteriaDTO;
+import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.dto.UserDTO;
 import com.boot.user.service.AdminActivityLogService;
 
@@ -26,16 +28,16 @@ public class BookServiceImpl implements BookService {
 	@Autowired
 	private SqlSession sqlSession;
 	@Autowired
-	private HttpSession session;
+	private HttpServletRequest request;
 	@Autowired
 	private AdminActivityLogService adminActivityLogService;
 
 	@Override
 	public void insertBook(HashMap<String, String> param) {
 		BookDAO dao = sqlSession.getMapper(BookDAO.class);
-		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 
-		if (loginUser.getUserAdmin() == 1) {
+		if (user.getUserAdmin() == 1) {
 			dao.insertBook(param);
 			
 			// 활동 로그 추가
@@ -44,8 +46,8 @@ public class BookServiceImpl implements BookService {
 			adminActivityLogService.createActivityLog(
 				"book_add", 
 				"admin", 
-				loginUser.getUserNumber(), 
-				loginUser.getUserName(), 
+				user.getUserNumber(), 
+				user.getUserName(), 
 				bookTitle, 
 				description
 			);
@@ -57,9 +59,9 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void updateBook(HashMap<String, String> param) {
 		BookDAO dao = sqlSession.getMapper(BookDAO.class);
-		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 
-		if (loginUser.getUserAdmin() == 1) {
+		if (user.getUserAdmin() == 1) {
 			dao.updateBook(param);
 			
 			// 활동 로그 추가
@@ -68,8 +70,8 @@ public class BookServiceImpl implements BookService {
 			adminActivityLogService.createActivityLog(
 				"book_modify", 
 				"admin", 
-				loginUser.getUserNumber(), 
-				loginUser.getUserName(), 
+				user.getUserNumber(), 
+				user.getUserName(), 
 				bookTitle, 
 				description
 			);
@@ -110,7 +112,7 @@ public class BookServiceImpl implements BookService {
 		dao.bookBorrow(param);
 
 		// 활동 로그 추가
-		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 		
 		// 도서 정보 가져오기
 		String bookNumber = param.get("bookNumber");
@@ -120,15 +122,15 @@ public class BookServiceImpl implements BookService {
 		
 		if (book != null) {
 			String bookTitle = book.getBookTitle();
-			String userName = loginUser.getUserName();
+			String userName = user.getUserName();
 			String description = userName + " 회원이 \"" + bookTitle + "\" 도서를 대출했습니다.";
 			
-			String actorType = loginUser.getUserAdmin() == 1 ? "admin" : "user";
+			String actorType = user.getUserAdmin() == 1 ? "admin" : "user";
 			adminActivityLogService.createActivityLog(
 				"book_borrow", 
 				actorType, 
-				loginUser.getUserNumber(), 
-				loginUser.getUserName(), 
+				user.getUserNumber(), 
+				user.getUserName(), 
 				bookTitle, 
 				description
 			);
@@ -142,7 +144,7 @@ public class BookServiceImpl implements BookService {
 		dao.bookReturn(param);
 
 		// 활동 로그 추가
-		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 		
 		// 도서 정보 가져오기
 		String bookNumber = param.get("bookNumber");
@@ -152,15 +154,15 @@ public class BookServiceImpl implements BookService {
 		
 		if (book != null) {
 			String bookTitle = book.getBookTitle();
-			String userName = loginUser.getUserName();
+			String userName = user.getUserName();
 			String description = userName + " 회원이 \"" + bookTitle + "\" 도서를 반납했습니다.";
 			
-			String actorType = loginUser.getUserAdmin() == 1 ? "admin" : "user";
+			String actorType = user.getUserAdmin() == 1 ? "admin" : "user";
 			adminActivityLogService.createActivityLog(
 				"book_return", 
 				actorType, 
-				loginUser.getUserNumber(), 
-				loginUser.getUserName(), 
+				user.getUserNumber(), 
+				user.getUserName(), 
 				bookTitle, 
 				description
 			);
@@ -184,7 +186,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void deleteBook(HashMap<String, String> param) {
 		BookDAO dao = sqlSession.getMapper(BookDAO.class);
-		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 		
 		// 도서 정보 가져오기
 		String bookNumber = param.get("bookNumber");
@@ -202,8 +204,8 @@ public class BookServiceImpl implements BookService {
 			adminActivityLogService.createActivityLog(
 				"book_delete", 
 				"admin", 
-				loginUser.getUserNumber(), 
-				loginUser.getUserName(), 
+				user.getUserNumber(), 
+				user.getUserName(), 
 				bookTitle, 
 				description
 			);

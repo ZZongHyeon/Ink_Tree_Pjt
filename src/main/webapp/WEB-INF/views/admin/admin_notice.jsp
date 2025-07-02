@@ -71,12 +71,11 @@
 
 						<div class="notice-controls">
 
-							<% UserDTO user=(UserDTO) session.getAttribute("loginUser"); if (user !=null &&
-								user.getUserAdmin()==1) { %>
-								<a href="admin_notice_write" class="write-btn">
-									<i class="fas fa-pen"></i> 공지사항 작성
-								</a>
-								<% } %>
+							<c:if test="${requestScope.user != null and requestScope.user.userAdmin == 1}">
+							    <a href="admin_notice_write" class="write-btn">
+							        <i class="fas fa-pen"></i> 공지사항 작성
+							    </a>
+							</c:if>
 						</div>
 
 						<c:choose>

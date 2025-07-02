@@ -3,6 +3,7 @@ package com.boot.book.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.boot.book.dto.BookDTO;
 import com.boot.book.service.WishlistServiceImpl;
 import com.boot.z_page.PageDTO;
 import com.boot.z_page.criteria.WishlistCriteriaDTO;
+import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.dto.UserDTO;
 
 @Controller
@@ -31,23 +33,15 @@ public class WishlistController {
 	private WishlistDAO wishlistDAO;
 
 	@PostMapping(value = "/add_wishlist", produces = "text/plain;charset=UTF-8")
-	public @ResponseBody String addToWishlist(@RequestParam("bookNumber") int bookNumber, HttpSession session) {
+	public @ResponseBody String addToWishlist(@RequestParam("bookNumber") int bookNumber, HttpServletRequest request) {
 		System.out.println("=== 위시리스트 추가 요청 받음 ===");
 		System.out.println("bookNumber: " + bookNumber);
 
-		Object object = session.getAttribute("loginUser");
-		System.out.println("세션 ID: " + session.getId());
-		System.out.println("세션 사용자 존재 여부: " + (object != null ? "존재함" : "존재하지 않음"));
-
-		if (object == null) {
-			return "Not_login";
-		}
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 
 		try {
-			int userNumber = ((UserDTO) object).getUserNumber();
-			System.out.println("userNumber: " + userNumber);
 
-			String result = wishlistService.addWishlist(userNumber, bookNumber);
+			String result = wishlistService.addWishlist(user.getUserNumber(), bookNumber);
 			System.out.println("추가 결과: " + result);
 			return result;
 		} catch (Exception e) {
@@ -58,23 +52,14 @@ public class WishlistController {
 	}
 
 	@PostMapping(value = "/remove_wishlist", produces = "text/plain;charset=UTF-8")
-	public @ResponseBody String removeFromWishlist(@RequestParam("bookNumber") int bookNumber, HttpSession session) {
+	public @ResponseBody String removeFromWishlist(@RequestParam("bookNumber") int bookNumber, HttpServletRequest request) {
 		System.out.println("=== 위시리스트 삭제 요청 받음 ===");
 		System.out.println("bookNumber: " + bookNumber);
 
-		Object object = session.getAttribute("loginUser");
-		System.out.println("세션 ID: " + session.getId());
-		System.out.println("세션 사용자 존재 여부: " + (object != null ? "존재함" : "존재하지 않음"));
-
-		if (object == null) {
-			return "Not_login";
-		}
-
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 		try {
-			int userNumber = ((UserDTO) object).getUserNumber();
-			System.out.println("userNumber: " + userNumber);
 
-			String result = wishlistService.removeWishlist(userNumber, bookNumber);
+			String result = wishlistService.removeWishlist(user.getUserNumber(), bookNumber);
 			System.out.println("삭제 결과: " + result);
 			return result;
 		} catch (Exception e) {
@@ -85,23 +70,13 @@ public class WishlistController {
 	}
 
 	@PostMapping(value = "/check_wishlist", produces = "text/plain;charset=UTF-8")
-	public @ResponseBody String checkWishlist(@RequestParam("bookNumber") int bookNumber, HttpSession session) {
+	public @ResponseBody String checkWishlist(@RequestParam("bookNumber") int bookNumber, HttpServletRequest request) {
 		System.out.println("=== 위시리스트 상태 확인 요청 받음 ===");
 		System.out.println("bookNumber: " + bookNumber);
 
-		Object object = session.getAttribute("loginUser");
-		System.out.println("세션 ID: " + session.getId());
-		System.out.println("세션 사용자 존재 여부: " + (object != null ? "존재함" : "존재하지 않음"));
-
-		if (object == null) {
-			return "Not_login";
-		}
-
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 		try {
-			int userNumber = ((UserDTO) object).getUserNumber();
-			System.out.println("userNumber: " + userNumber);
-
-			boolean isInWishlist = wishlistDAO.isAlreadyInWishlist(userNumber, bookNumber);
+			boolean isInWishlist = wishlistDAO.isAlreadyInWishlist(user.getUserNumber(), bookNumber);
 			System.out.println("위시리스트 상태 확인 결과: " + isInWishlist);
 
 			return isInWishlist ? "in_wishlist" : "not_in_wishlist";
@@ -118,11 +93,11 @@ public class WishlistController {
 	        @RequestParam(required = false) String keyword,
 	        @RequestParam(required = false) String bookMajorCategory,
 	        @RequestParam(required = false) String bookSubCategory,
-	        HttpSession session, Model model) {
+	        HttpServletRequest request, Model model) {
 	    
-	    UserDTO user = (UserDTO) session.getAttribute("loginUser");
+	    BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 	    if (user == null)
-	        return "redirect:/loginView";
+	        return "redirect:/";
 
 	    WishlistCriteriaDTO criteria = new WishlistCriteriaDTO();
 	    criteria.setPage(page);

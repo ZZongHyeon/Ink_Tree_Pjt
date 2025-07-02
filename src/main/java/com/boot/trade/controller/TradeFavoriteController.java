@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import com.boot.z_page.PageDTO;
 import com.boot.z_page.criteria.SearchBookCriteriaDTO;
 import com.boot.trade.dto.TradeFavoriteDTO;
 import com.boot.trade.service.TradeFavoriteService;
+import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.dto.UserDTO;
 
 @Controller
@@ -37,9 +39,9 @@ public class TradeFavoriteController {
 
 	// 관심목록 페이지 조회
 	@GetMapping("/trade_post_favorite_view")
-	public String FavoriteView(SearchBookCriteriaDTO criteriaDTO, Model model, HttpSession session) {
+	public String FavoriteView(SearchBookCriteriaDTO criteriaDTO, Model model, HttpServletRequest request) {
 		// 로그인 체크
-		UserDTO user = (UserDTO) session.getAttribute("loginUser");
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 
 		// 상태 필터 기본값 설정
 		if (criteriaDTO.getStatus() == null || criteriaDTO.getStatus().isEmpty()) {
@@ -71,11 +73,11 @@ public class TradeFavoriteController {
 	@PostMapping("/add_Favorite")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> addFavorite(@RequestBody TradeFavoriteDTO FavoriteDTO,
-			HttpSession session) {
+			HttpServletRequest request) {
 		Map<String, Object> response = new HashMap<>();
 
 		// 로그인 체크
-		UserDTO user = (UserDTO) session.getAttribute("loginUser");
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 		if (user == null) {
 			response.put("success", false);
 			response.put("message", "로그인이 필요한 서비스입니다.");
@@ -110,11 +112,11 @@ public class TradeFavoriteController {
 	@PostMapping("/remove_favorite")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> removeFavorite(@RequestBody TradeFavoriteDTO FavoriteDTO,
-			HttpSession session) {
+			HttpServletRequest request) {
 		Map<String, Object> response = new HashMap<>();
 
 		// 로그인 체크
-		UserDTO user = (UserDTO) session.getAttribute("loginUser");
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 		if (user == null) {
 			response.put("success", false);
 			response.put("message", "로그인이 필요한 서비스입니다.");

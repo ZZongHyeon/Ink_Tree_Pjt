@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import com.boot.book.dto.ReviewDTO;
 import com.boot.book.dto.ReviewStatsDTO;
 import com.boot.book.service.BookReviewService;
 import com.boot.book.service.BookService;
+import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.dto.UserDTO;
 import com.boot.z_page.PageDTO;
 import com.boot.z_page.criteria.NoticeCriteriaDTO;
@@ -214,8 +216,11 @@ public class BookReviewController {
 
 	@RequestMapping("/book_detail")
 	public String bookDetail(NoticeCriteriaDTO noticeCriteriaDTO, @RequestParam HashMap<String, String> param,
-			Model model) {
+			Model model, HttpServletRequest request) {
 		System.out.println("param => " + param);
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
+		model.addAttribute("user", user);
+		
 		BookDTO dto = bookService.bookDetailInfo(param);
 
 		int total = service.getReviewCount(noticeCriteriaDTO, param);

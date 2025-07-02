@@ -48,11 +48,8 @@ function fn_submit() {
 <body>
 	<jsp:include page="header.jsp" />
 	<div class="container">
-		<%
-		UserDTO user = (UserDTO) session.getAttribute("loginUser");
-		if (user != null) {
-		%>
-
+		<c:choose>
+		    <c:when test="${not empty user}">
 		<div class="slider-container">
 			<div class="image-slider">
 				<div class="slide">
@@ -75,10 +72,7 @@ function fn_submit() {
 
 		<div class="welcome-banner">
 			<div class="welcome-text">
-				<h1>
-					안녕하세요,
-					<%=user.getUserName()%>님!
-				</h1>
+<h1>안녕하세요, <span>${user.userName}</span>님!</h1>
 				<p>잉크 트리 도서관리 시스템에 오신 것을 환영합니다.</p>
 			</div>
 			<div class="date-display">
@@ -319,9 +313,8 @@ function fn_submit() {
 				</div>
 			</div>
 
-			<%
-			} else {
-			%>
+			</c:when>
+			    <c:otherwise>
 			<div class="login-section">
 				<h2>잉크트리에 오신 것을 환영합니다</h2>
 				<p>
@@ -335,9 +328,8 @@ function fn_submit() {
 					계정이 없으신가요? <a href="joinForm">회원가입</a>
 				</p>
 			</div>
-			<%
-			}
-			%>
+			</c:otherwise>
+			</c:choose>
 		</div>
 
 

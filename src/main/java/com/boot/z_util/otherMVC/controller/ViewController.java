@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.boot.book.service.BookService;
+import com.boot.user.dto.BasicUserDTO;
 import com.boot.z_util.ConnectionTracker;
 import com.boot.z_util.otherMVC.service.UtilService;
 
@@ -25,13 +27,19 @@ public class ViewController {
 	private BookService bookSerivce;
 
 	@RequestMapping("/")
-	public String getMainBookInfo(Model model) {
+	public String getMainBookInfo(Model model, HttpServletRequest request, HttpServletResponse response) {
 		model.addAttribute("totalBooks", utilService.getTotalBooks());
 		model.addAttribute("totalUsers", utilService.getTotalUsers());
 		model.addAttribute("borrowedBooks", utilService.getBorrowedBooks());
 		model.addAttribute("overdueBooks", utilService.getOverdueBooks());
 		model.addAttribute("bookList", bookSerivce.mainBookInfo());
 		model.addAttribute("currentPage", "main"); // 헤더 식별용
+		
+		// 사용자 정보가 필요한 경우 request(토큰)에서 가져옴
+		
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
+		model.addAttribute("user", user);
+
 		return "main";
 	}
 

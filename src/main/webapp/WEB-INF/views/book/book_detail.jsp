@@ -36,29 +36,26 @@
         <div class="book-detail fade-in">
             <!-- 좌측 사이드바 -->
             <div class="book-sidebar">
-                <%
-                UserDTO user = (UserDTO) session.getAttribute("loginUser");
-                BookDTO book = (BookDTO) request.getAttribute("book");
-                %>
-                
-                <div class="book-title-container">
-                    <h2 class="book-title">${book.bookTitle}</h2>
-                    <% if (user != null && user.getUserAdmin() == 1) { %>
-                    <div class="admin-menu-container">
-                        <button type="button" class="admin-menu-button" onclick="toggleAdminMenu()" aria-label="관리자 메뉴">
-                            <i class="fa-solid fa-gear"></i>
-                        </button>
-                        <div class="admin-menu-dropdown" id="adminMenuDropdown">
-                            <a href="/update_book?bookNumber=${book.bookNumber}" class="admin-menu-item">
-                                <i class="fas fa-edit"></i> 도서 정보 수정
-                            </a>
-                            <button type="button" class="admin-menu-item danger" onclick="confirmDelete(${book.bookNumber})">
-                                <i class="fas fa-trash"></i> 도서 삭제
-                            </button>
-                        </div>
-                    </div>
-                    <% } %>
-                </div>
+				<div class="book-title-container">
+				    <h2 class="book-title">${book.bookTitle}</h2>
+
+				    <c:if test="${not empty requestScope.user and requestScope.user.userAdmin == 1}">
+				        <div class="admin-menu-container">
+				            <button type="button" class="admin-menu-button" onclick="toggleAdminMenu()" aria-label="관리자 메뉴">
+				                <i class="fa-solid fa-gear"></i>
+				            </button>
+				            <div class="admin-menu-dropdown" id="adminMenuDropdown">
+				                <a href="/update_book?bookNumber=${book.bookNumber}" class="admin-menu-item">
+				                    <i class="fas fa-edit"></i> 도서 정보 수정
+				                </a>
+				                <button type="button" class="admin-menu-item danger" onclick="confirmDelete(${book.bookNumber})">
+				                    <i class="fas fa-trash"></i> 도서 삭제
+				                </button>
+				            </div>
+				        </div>
+				    </c:if>
+				</div>
+
                 
                 <p class="book-author">${book.bookWrite}</p>
                 
@@ -261,7 +258,7 @@
 															   title="도움됨"></i>
 											                <span class="helpful-count">${review.helpfulCount}</span>
 											            </span>
-											            <c:if test="${loginUser.userNumber == review.userNumber || loginUser.userAdmin == 1}">
+											            <c:if test="${user.userNumber == review.userNumber || user.userAdmin == 1}">
 											                <i class="fas fa-edit review-action-icon edit" 
 											                   title="수정"></i>
 											                <i class="fas fa-trash-alt review-action-icon delete" 
@@ -413,7 +410,7 @@
     <input type="hidden" id="deleteReviewId" value="">
 
     <script>
-
+		const isLoggedIn = ${requestScope.user != null ? 'true' : 'false'};
 		// 리뷰 수정 관련 JavaScript 코드 - 별 아이콘 유지 버전
 		$(document).ready(function() {
 		    // 리뷰 수정 버튼 클릭 이벤트
@@ -788,10 +785,10 @@
 		// 도움됨 버튼 기능 개선
 		function markHelpful(reviewId, element) {
 		    // 로그인 확인
-		    <% if (user == null) { %>
-		        showModal('error', '로그인 필요', '도움됨 기능은 로그인 후 이용 가능합니다.');
-		        return;
-		    <% } %>
+			if (!isLoggedIn) {
+			    showModal('error', '로그인 필요', '도움됨 기능은 로그인 후 이용 가능합니다.');
+			    return;
+			}
 		    
 		    // 이미 활성화된 경우 취소, 아니면 활성화
 		    const isActive = $(element).hasClass('active');
@@ -840,8 +837,7 @@
 
 		// 로컬 스토리지에 도움됨 상태 저장 (선택적)
 		function saveHelpfulState(reviewId, isHelpful) {
-		    <% if (user != null) { %>
-		    const userNumber = <%= user.getUserNumber() %>;
+		    const userNumber = ${user.userNumber};
 		    const storageKey = `helpful_${userNumber}`;
 		    
 		    // 기존 데이터 가져오기
@@ -852,13 +848,11 @@
 		    
 		    // 로컬 스토리지에 저장
 		    localStorage.setItem(storageKey, JSON.stringify(helpfulData));
-		    <% } %>
 		}
 
 		// 로컬 스토리지에서 도움됨 상태 복원 (선택적)
 		function restoreHelpfulState() {
-		    <% if (user != null) { %>
-		    const userNumber = <%= user.getUserNumber() %>;
+		    const userNumber = ${user.userNumber};
 		    const storageKey = `helpful_${userNumber}`;
 		    
 		    // 저장된 데이터 가져오기
@@ -880,7 +874,6 @@
 		            likeButton.removeClass('far').addClass('fas');
 		        }
 		    });
-		    <% } %>
 		}
 
 		// 페이지 로드 시 이벤트 바인딩 및 초기화
@@ -1246,11 +1239,10 @@
 		// 위시리스트에 추가
 		        function addToWishlist(bookNumber) {
 		            // 로그인 확인
-		            <% if (user == null) { %>
-		                showModal('error', '로그인 필요', '위시리스트 기능은 로그인 후 이용 가능합니다.');
-		                return;
-		            <% } %>
-		            
+					if (!isLoggedIn) {
+					    showModal('error', '로그인 필요', '위시리스트 기능은 로그인 후 이용 가능합니다.');
+					    return;
+					}
 		            console.log("위시리스트 추가 요청 - bookNumber: " + bookNumber);
 		            
 		           $.ajax({

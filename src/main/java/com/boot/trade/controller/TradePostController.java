@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import com.boot.z_page.criteria.CriteriaDTO;
 import com.boot.z_page.criteria.SearchBookCriteriaDTO;
 import com.boot.trade.dto.TradePostDTO;
 import com.boot.trade.service.TradePostService;
+import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.dto.UserDTO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -52,8 +54,8 @@ public class TradePostController {
     }
 
     @RequestMapping("/trade_post_write")
-    public String tradePostWriteView(Model model, HttpSession session) {
-    	UserDTO user = (UserDTO) session.getAttribute("loginUser");
+    public String tradePostWriteView(Model model, HttpServletRequest request) {
+    	BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
     	String userAddress = "";
     	if(user.getUserAddress() != NULL) {
     		userAddress = user.getUserAddress();
@@ -77,11 +79,11 @@ public class TradePostController {
 
     @PostMapping("/trade_post_delete")
     @ResponseBody
-    public Map<String, Object> tradePostDeleteAjax(@RequestParam HashMap<String, String> param, HttpSession session) {
+    public Map<String, Object> tradePostDeleteAjax(@RequestParam HashMap<String, String> param, HttpServletRequest request) {
         Map<String, Object> response = new HashMap<>();
         
         try {
-            UserDTO user = (UserDTO) session.getAttribute("loginUser");
+        	BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
             TradePostDTO post = service.tradePostDetailView(param);
             
             // 권한 체크 (작성자 또는 관리자만 삭제 가능)
@@ -121,7 +123,7 @@ public class TradePostController {
     @RequestMapping("/trade_post_detail_view")
     public String tradePostDetail(@RequestParam HashMap<String, String> param, Model model,
             @RequestParam(value = "skipViewCount", required = false) Boolean skipViewCount,
-            HttpSession session) {
+            HttpServletRequest request) {
         
         if (skipViewCount == null || !skipViewCount) {
             // 조회수 증가 로직
@@ -144,7 +146,7 @@ public class TradePostController {
         model.addAttribute("chatCount", chatCount);
         
      // 현재 사용자가 좋아요 했는지 확인
-        UserDTO user = (UserDTO) session.getAttribute("loginUser"); // session에서 가져오기
+        BasicUserDTO user = (BasicUserDTO) request.getAttribute("user"); 
         boolean isLiked = false;
         if (user != null) {
             HashMap<String, String> likeParam = new HashMap<>();
@@ -160,10 +162,10 @@ public class TradePostController {
     
     
     @RequestMapping("/trade_post_favorite")
-    public ResponseEntity<Map<String, Object>> tradePostFavorite(@RequestParam HashMap<String, String> param, HttpSession session) {
+    public ResponseEntity<Map<String, Object>> tradePostFavorite(@RequestParam HashMap<String, String> param, HttpServletRequest request) {
         Map<String, Object> response = new HashMap<>();
         
-        UserDTO user = (UserDTO) session.getAttribute("loginUser");
+        BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
         if (user == null) {
             response.put("success", false);
             response.put("message", "로그인이 필요합니다.");
@@ -200,11 +202,11 @@ public class TradePostController {
     @RequestMapping("/update_trade_status")
     public ResponseEntity<Map<String, Object>> updateTradeStatus(
             @RequestParam HashMap<String, String> param, 
-            HttpSession session) {
+            HttpServletRequest request) {
         
         Map<String, Object> response = new HashMap<>();
         
-        UserDTO user = (UserDTO) session.getAttribute("loginUser");
+        BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
         if (user == null) {
             response.put("success", false);
             response.put("message", "로그인이 필요합니다.");

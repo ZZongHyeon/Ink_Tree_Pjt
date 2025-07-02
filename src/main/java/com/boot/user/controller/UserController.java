@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.dto.UserDTO;
 import com.boot.user.service.UserService;
 import com.boot.z_util.otherMVC.service.UtilService;
@@ -86,10 +87,48 @@ public class UserController {
 	}
 
 	@RequestMapping("/mypage")
-	public String mypage(HttpServletRequest request, @RequestParam HashMap<String, String> param, Model model) {
-		UserDTO dto = (UserDTO) request.getSession().getAttribute("loginUser");
-
-		param.put("userNumber", String.valueOf(dto.getUserNumber()));
+	public String myPage(HttpServletRequest request, Model model) {
+	    // request에서 사용자 정보 추출 (SafeUserDTO 또는 UserDTO)
+	    Object userObj = request.getAttribute("user");
+	    
+	    System.out.println("test : "+ userObj);
+	    // 사용자 정보가 없으면 로그인 페이지로 리다이렉트
+	    if (userObj == null) {
+	        return "redirect:/loginForm";
+	    }
+	    
+	    // 사용자 ID 추출
+	    String userId = null;
+	    if (userObj instanceof BasicUserDTO) {
+	        userId = ((BasicUserDTO) userObj).getUserId();
+	    } else if (userObj instanceof UserDTO) {
+	        userId = ((UserDTO) userObj).getUserId();
+	    } else {
+	        return "redirect:/loginForm";
+	    }
+	    
+	    // 사용자 ID로 데이터베이스에서 전체 사용자 정보 조회
+	    HashMap<String, String> param = new HashMap<>();
+	    param.put("userId", userId);
+	    UserDTO user = service.getUserInfo(param);
+	    
+	    if (user == null) {
+	        return "redirect:/loginForm";
+	    }
+	    
+	    // 사용자 정보를 모델에 추가
+	    model.addAttribute("user", user);
+	    
+	    // 사용자 통계 정보 조회
+//	    int userFavoriteCount = service.getUserFavoriteCount(user.getUserNumber());
+//	    int userViewCount = service.getUserViewCount(user.getUserNumber());
+//	    int userSearchCount = service.getUserSearchCount(user.getUserNumber());
+	    
+//	    model.addAttribute("userFavoriteCount", userFavoriteCount);
+//	    model.addAttribute("userViewCount", userViewCount);
+//	    model.addAttribute("userSearchCount", userSearchCount);
+	    
+		param.put("userNumber", String.valueOf(((BasicUserDTO) userObj).getUserNumber()));
 		int userRecord = utilService.getUserRecord(param);
 		int userOver = utilService.getUserOver(param);
 		int userBorrowedBooks = utilService.getUserBorrowed(param);
@@ -98,13 +137,8 @@ public class UserController {
 		model.addAttribute("userRecord", userRecord);
 		model.addAttribute("userOver", userOver);
 		model.addAttribute("userBorrowedBooks", userBorrowedBooks);
-//	    model.addAttribute("userRecordCount", userRecordCount);
-		return "user/mypage";
-	}
-
-	@RequestMapping("/user_update_view")
-	public String updateUserInfo(UserDTO user) {
-		return "user_update";
+		
+	    return "user/mypage";
 	}
 
 //	@RequestMapping("/userUpdate")

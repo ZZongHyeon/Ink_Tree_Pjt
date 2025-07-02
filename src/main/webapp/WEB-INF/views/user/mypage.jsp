@@ -53,7 +53,6 @@
 	<jsp:include page="../header.jsp" />
 
 	<%
-	UserDTO user = (UserDTO) session.getAttribute("loginUser");
 	Object userBorrowedBooksObj = request.getAttribute("userBorrowedBooks"); // 유저 현재 빌린 수
 	Object userBeforReturnCountObj = request.getAttribute("userRecord"); // 빌리자마자 올라가는 borrow 수
 	Object userRecordCountObj = request.getAttribute("userRecordCount"); // 반납하면 올라가는 borrow 수
@@ -95,11 +94,11 @@
 		<div class="mypage-content">
 			<div class="profile-sidebar">
 				<div class="profile-header">
-					<div class="profile-avatar"><%=user.getUserName().substring(0, 1)%></div>
-					<div class="profile-name"><%=user.getUserName()%>
+					<div class="profile-avatar">${fn:substring(user.userName, 0, 1)}</div>
+					<div class="profile-name">${user.userName}
 						님
 					</div>
-					<div class="profile-id"><%=user.getUserId()%></div>
+					<div class="profile-id">${user.userId}</div>
 				</div>
 
 				<div class="profile-menu">
@@ -151,44 +150,45 @@
 					</div>
 
 					<div class="info-grid">
-						<div class="info-item">
-							<div class="info-label">이름</div>
-							<div class="info-value"><%=user.getUserName()%></div>
-						</div>
+					    <div class="info-item">
+					        <div class="info-label">이름</div>
+					        <div class="info-value">${user.userName}</div>
+					    </div>
 
-						<div class="info-item">
-							<div class="info-label">아이디</div>
-							<div class="info-value"><%=user.getUserId()%></div>
-						</div>
+					    <div class="info-item">
+					        <div class="info-label">아이디</div>
+					        <div class="info-value">${user.userId}</div>
+					    </div>
 
-						<div class="info-item">
-							<div class="info-label">이메일</div>
-							<div class="info-value"><%=user.getUserEmail()%></div>
-						</div>
+					    <div class="info-item">
+					        <div class="info-label">이메일</div>
+					        <div class="info-value">${user.userEmail}</div>
+					    </div>
 
-						<div class="info-item">
-							<div class="info-label">전화번호</div>
-							<div class="info-value"><%=user.getUserTel()%></div>
-						</div>
+					    <div class="info-item">
+					        <div class="info-label">전화번호</div>
+					        <div class="info-value">${user.userTel}</div>
+					    </div>
 
-						<div class="info-item">
-							<div class="info-label">생년월일</div>
-							<div class="info-value"><%=user.getUserBirth()%></div>
-						</div>
+					    <div class="info-item">
+					        <div class="info-label">생년월일</div>
+					        <div class="info-value">${user.userBirth}</div>
+					    </div>
 
-						<div class="info-item">
-							<div class="info-label">가입일</div>
-							<div class="info-value"><%=user.getUserRegdate()%></div>
-						</div>
+					    <div class="info-item">
+					        <div class="info-label">가입일</div>
+					        <div class="info-value">${user.userRegdate}</div>
+					    </div>
 					</div>
 
-					<div class="info-item" style="grid-column: span 2;">
-						<div class="info-label">주소</div>
-						<div class="info-value">
-							<%=user.getUserZipCode()%>
-							<%=user.getUserAddress()%>
-							<%=user.getUserDetailAddress()%>
-						</div>
+					<div class="info-item">
+					    <div class="info-label">주소</div>
+					    <div class="info-value">
+					        ${user.userZipCode} ${user.userAddress}
+					        <c:if test="${not empty userDetailAddress}">
+					            ${userDetailAddress}
+					        </c:if>
+					    </div>
 					</div>
 				</div>
 
@@ -307,8 +307,8 @@
 					</div>
 					
 					<form id="updateUserForm" method="post" action="userUpdate">
-					    <input type="hidden" name="userNumber" value="<%=user.getUserNumber()%>">
-					    <input type="hidden" name="userId" value="<%=user.getUserId()%>">
+					    <input type="hidden" name="userNumber" value="${user.userName}">
+					    <input type="hidden" name="userId" value="${user.userId}">
 						
 						<!-- 비밀번호 확인 섹션 추가 -->
 						<div class="password-verification" style="margin-bottom: 30px; padding: 20px; background-color: var(--primary-lighter); border-radius: var(--border-radius); border: 1px solid var(--primary-light);">
@@ -327,33 +327,33 @@
 						<div class="info-grid">
 							<div class="info-item">
 								<div class="info-label">이름</div>
-								<input type="text" name="userName" class="form-input" value="<%=user.getUserName()%>" required>
+								<input type="text" name="userName" class="form-input" value="${user.userName}" required>
 							</div>
 							
 							<div class="info-item">
 								<div class="info-label">아이디</div>
-								<div class="info-value"><%=user.getUserId()%></div>
+								<div class="info-value">${user.userId}</div>
 							</div>
 							
 							<div class="info-item">
 								<div class="info-label">이메일</div>
-								<input type="email" name="userEmail" class="form-input" value="<%=user.getUserEmail()%>" required>
+								<input type="email" name="userEmail" class="form-input" value="${user.userEmail}" required>
 							</div>
 							
 							<div class="info-item">
 								<div class="info-label">전화번호</div>
-								<input type="tel" name="userTel" class="form-input" value="<%=user.getUserTel()%>" 
+								<input type="tel" name="userTel" class="form-input" value="${user.userTel}" 
 									pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="010-0000-0000" required>
 							</div>
 							
 							<div class="info-item">
 								<div class="info-label">생년월일</div>
-								<input type="date" name="userBirth" class="form-input" value="<%=user.getUserBirth()%>" required>
+								<input type="date" name="userBirth" class="form-input" value="${user.userBirth}" required>
 							</div>
 							
 							<div class="info-item">
 								<div class="info-label">가입일</div>
-								<div class="info-value"><%=user.getUserRegdate()%></div>
+								<div class="info-value">${user.userRegdate}</div>
 							</div>
 						</div>
 						
@@ -362,7 +362,7 @@
 								<div class="info-label">우편번호</div>
 								<div style="display: flex; gap: 10px;">
 									<input type="text" name="userZipCode" id="userZipCode" class="form-input" 
-										value="<%=user.getUserZipCode()%>" style="flex: 1;" readonly>
+										value="${user.userZipCode}" style="flex: 1;" readonly>
 									<button type="button" onclick="execDaumPostcode()" class="btn btn-outline" style="white-space: nowrap;">
 										<i class="fas fa-search"></i> 주소 찾기
 									</button>
@@ -372,13 +372,13 @@
 							<div class="info-item" style="grid-column: span 2;">
 								<div class="info-label">주소</div>
 								<input type="text" name="userAddress" id="userAddress" class="form-input" 
-									value="<%=user.getUserAddress()%>" readonly>
+									value="${user.userAddress}" readonly>
 							</div>
 							
 							<div class="info-item" style="grid-column: span 2;">
 								<div class="info-label">상세주소</div>
 								<input type="text" name="userDetailAddress" id="userDetailAddress" class="form-input" 
-									value="<%=user.getUserDetailAddress()%>">
+									value="${user.userDetailAddress}">
 							</div>
 						</div>
 						
@@ -395,7 +395,7 @@
 						<h2 class="section-title">비밀번호 변경</h2>
 					</div>
 					<form id="passwordChangeForm" onsubmit="return false;">
-					    <input type="hidden" name="userNumber" value="<%=user.getUserNumber()%>">
+					    <input type="hidden" name="userNumber" value="${user.userNumber}">
 					    <div class="info-grid" style="grid-template-columns: 1fr;">
 					        <div class="info-item">
 					            <div class="info-label">현재 비밀번호</div>

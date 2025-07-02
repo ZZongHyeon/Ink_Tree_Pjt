@@ -31,9 +31,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
         
-//        log.info("로그인 성공: {}", authentication.getName());
-        
-        // 필요한 시점에 UserService 가져오기
         UserService userService = applicationContext.getBean(UserService.class);
         
         // 사용자 정보 조회

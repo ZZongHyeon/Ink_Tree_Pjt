@@ -105,32 +105,32 @@
 														<span class="comment-count">${allCount}</span>
 													</h2>
 
-													<% if (user !=null) { %>
-														<div class="comment-form">
-															<form id="commentForm" onsubmit="return submitComment(this);">
-																<input type="hidden" name="boardNumber" value="${board.boardNumber}" id="boardNumber">
-																<input type="hidden" name="userNumber"
-																	value="<%=user.getUserNumber()%>" >
-																	<input type="hidden"
-																	name="userName" value="<%=user.getUserName()%>" id="commentWriteUserName">
-																	<input type="hidden" id="commentWriteUserNumber" value="<%=user.getUserNumber()%>">
-																<input type="hidden" name="commentSubNumber" value="0"> <input
-																	type="hidden" name="commentSubStepNumber" value="0">
-																<textarea name="commentContent" class="comment-textarea"
-																	placeholder="댓글을 작성해주세요"></textarea>
-																<button type="submit" class="comment-submit">
-																	<i class="fas fa-paper-plane"></i> 댓글 작성
-																</button>
-																<div style="clear: both;"></div>
-															</form>
-														</div>
-														<% } else { %>
-															<div class="comment-form login-required">
-																<p>
-																	댓글을 작성하려면 <a href="/loginForm">로그인</a>이 필요합니다.
-																</p>
-															</div>
-															<% } %>
+													<c:choose>
+													    <c:when test="${user != null}">
+													        <div class="comment-form">
+													            <form id="commentForm" onsubmit="return submitComment(this);">
+													                <input type="hidden" name="boardNumber" value="${board.boardNumber}" id="boardNumber">
+													                <input type="hidden" name="userNumber" value="${user.userNumber}">
+													                <input type="hidden" name="userName" value="${user.userName}" id="commentWriteUserName">
+													                <input type="hidden" id="commentWriteUserNumber" value="${user.userNumber}">
+													                <input type="hidden" name="commentSubNumber" value="0">
+													                <input type="hidden" name="commentSubStepNumber" value="0">
+													                <textarea name="commentContent" class="comment-textarea" placeholder="댓글을 작성해주세요"></textarea>
+													                <button type="submit" class="comment-submit">
+													                    <i class="fas fa-paper-plane"></i> 댓글 작성
+													                </button>
+													                <div style="clear: both;"></div>
+													            </form>
+													        </div>
+													    </c:when>
+													    <c:otherwise>
+													        <div class="comment-form login-required">
+													            <p>
+													                댓글을 작성하려면 <a href="/loginForm">로그인</a>이 필요합니다.
+													            </p>
+													        </div>
+													    </c:otherwise>
+													</c:choose>
 
 																<div class="comment-list">
 																	<c:if test="${empty commentList}">
