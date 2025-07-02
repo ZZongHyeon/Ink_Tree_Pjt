@@ -43,11 +43,28 @@
 
 	<!-- 게시글 작성 -->
 	<insert id="boardWrite">
-		insert into board(boardNumber, userNumber, userName,
-		boardTitle, boardContent)
-		values ((SELECT NVL(MAX(boardNumber), 0) + 1
-		FROM board), #{userNumber}, #{userName}, #{boardTitle},
-		#{boardContent})
+  INSERT INTO board (
+    boardNumber,
+    userNumber,
+    userName,
+    boardTitle,
+    boardContent,
+    boardWriteDate,
+    boardHit,
+    boardViews,
+    boardLikes
+  )
+  VALUES (
+    BOARD_SEQ.NEXTVAL,
+    #{userNumber},
+    #{userName},
+    #{boardTitle},
+    #{boardContent},
+    SYSDATE,
+    0,
+    0,
+    0
+  )
 	</insert>
 
 	<!-- 게시글 디테일 -->

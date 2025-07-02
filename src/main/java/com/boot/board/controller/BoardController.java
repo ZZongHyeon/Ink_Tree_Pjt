@@ -179,6 +179,7 @@ public class BoardController {
 	    
 	    BoardDTO dto = service.boardDetailView(param);
 	    ArrayList<BoardCommentDTO> commentList = bcService.bcView(param, criteriaDTO);
+	    System.out.println("test : " + commentList);
 	    int total = bcService.getTotalCount(param);
 	    int allTotal = bcService.getAllCount(param);
 
