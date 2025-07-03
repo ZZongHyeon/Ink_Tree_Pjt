@@ -21,15 +21,6 @@
 </head>
 <body>
     <jsp:include page="../header.jsp" />
-
-	<%
-	UserDTO user = (UserDTO) session.getAttribute("loginUser");
-	if (user == null) {
-		response.sendRedirect("loginView");
-		return;
-	}
-	%>
-
 	<div class="container">
 		<div class="board-container">
 			<div class="board-form">
@@ -39,10 +30,8 @@
 				</div>
 
 				<form id="frm" enctype="multipart/form-data">
-					<input type="hidden" name="userNumber"
-						value="<%=user.getUserNumber()%>"> 
-					<input type="hidden"
-						name="userName" value="<%=user.getUserName()%>">
+					<input type="hidden" name="userNumber" value="${user.userNumber}"> 
+					<input type="hidden" name="userName" value="${user.userName}">
 					<input type="hidden" name="content" id="content">
 
 					<div class="form-group">

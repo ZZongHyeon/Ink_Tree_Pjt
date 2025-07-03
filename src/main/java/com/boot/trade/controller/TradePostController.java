@@ -56,6 +56,7 @@ public class TradePostController {
     @RequestMapping("/trade_post_write")
     public String tradePostWriteView(Model model, HttpServletRequest request) {
     	BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
+    	model.addAttribute("user", user);
     	String userAddress = "";
     	if(user.getUserAddress() != NULL) {
     		userAddress = user.getUserAddress();

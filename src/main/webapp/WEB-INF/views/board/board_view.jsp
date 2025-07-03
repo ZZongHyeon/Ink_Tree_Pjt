@@ -24,18 +24,20 @@
 
                             <body>
     <jsp:include page="../header.jsp" />
-
+	
+	
                                 <div class="container">
                                     <div class="board-container">
                                         <div class="board-header">
                                             <h1 class="board-title"><i class="fas fa-comments"></i> 커뮤니티 게시판</h1>
                                             <div class="board-actions">
-                                                <% UserDTO user=(UserDTO) session.getAttribute("loginUser"); if (user
-                                                    !=null) { %>
+                                                
+												<c:if test="${user != null}">
+												
                                                     <button class="write-button" onclick="location.href='/board_write'">
                                                         <i class="fas fa-pen"></i> 글쓰기
                                                     </button>
-                                                    <% } %>
+													</c:if>                                                
                                             </div>
                                         </div>
 

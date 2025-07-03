@@ -55,8 +55,6 @@ public class GeminiServiceImpl implements GeminiService {
 		String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key="
 				+ apiKey;
 		question = question + "(책에 관해서만 답변, 책의 제목만 추천해주면 됨, 이모지나 특수문자는 표기하지 않음, 대답은 짧게 1문장으로 요약)";
-//		question = question + "(책에 관해서만 답변, 이모지나 특수문자는 표기하지 않음, 대답은 가능한 짧게 1문장으로 요약)";
-//        question = "(책이 아닌 질문에는 '책과 관련된 질문을 해주세요.'라고 답변, 이모지나 특수문자 표기X, 대답은 무조건 짧게 한 문장으로 요약)"+question;
 		String requestBody = """
 				{
 				  "contents": [{

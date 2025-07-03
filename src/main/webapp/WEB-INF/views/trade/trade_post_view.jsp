@@ -27,11 +27,11 @@
             <div class="trade-header">
                 <h1 class="trade-title"><i class="fas fa-exchange-alt"></i> 거래 게시판</h1>
                 <div class="trade-actions">
-                    <% UserDTO user=(UserDTO) session.getAttribute("loginUser"); if (user !=null) { %>
+                    <c:if test="${not empty user}">
                         <button class="write-button" onclick="location.href='/trade_post_write'">
                             <i class="fas fa-pen"></i> 판매글 작성
                         </button>
-                    <% } %>
+                    </c:if>
                 </div>
             </div>
 

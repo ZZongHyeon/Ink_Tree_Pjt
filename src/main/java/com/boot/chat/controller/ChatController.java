@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import com.boot.chat.dto.ChatRoomResponse;
 import com.boot.chat.service.ChatService;
 import com.boot.trade.dto.TradePostDTO;
 import com.boot.trade.service.TradePostService;
+import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.dto.UserDTO;
 
 @Controller
@@ -44,27 +46,21 @@ public class ChatController {
     public String tradeChat(@RequestParam("postID") Long postId,
                            @RequestParam("sellerNumber") Long sellerNumber,
                            @RequestParam(value = "buyerNumber", required = false) Long buyerNumber,
-                           Model model, HttpSession session) {
+                           Model model, HttpServletRequest request ) {
         
         // 로그인 확인
-        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-        if (loginUser == null) {
+        BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
+        if (user == null) {
             return "redirect:/";
         }
         
-//        System.out.println("===== 채팅 페이지 요청 =====");
-//        System.out.println("postId: " + postId);
-//        System.out.println("sellerNumber: " + sellerNumber);
-//        System.out.println("buyerNumber: " + buyerNumber);
-//        System.out.println("loginUser.userNumber: " + loginUser.getUserNumber());
-        
         // buyerNumber가 없으면 현재 로그인한 사용자의 번호를 사용
         if (buyerNumber == null) {
-            buyerNumber = (long) loginUser.getUserNumber();
+            buyerNumber = (long) user.getUserNumber();
         }
         
         // 로그인 사용자가 판매자인 경우 처리
-        if (loginUser.getUserNumber() == sellerNumber && buyerNumber == sellerNumber) {
+        if (user.getUserNumber() == sellerNumber && buyerNumber == sellerNumber) {
             // 오류 메시지 표시
             model.addAttribute("errorMessage", "자신에게 채팅을 보낼 수 없습니다.");
             return "error/error_page";
@@ -91,12 +87,12 @@ public class ChatController {
             List<ChatMessageResponse> messages = chatService.getChatMessagesByRoom(chatRoom.getRoomId());
             
             // 메시지 읽음 상태 업데이트
-            chatService.updateMessageReadStatus(chatRoom.getRoomId(), (long) loginUser.getUserNumber());
+            chatService.updateMessageReadStatus(chatRoom.getRoomId(), (long) user.getUserNumber());
             
             model.addAttribute("chatRoom", chatRoom);
             model.addAttribute("messages", messages);
             model.addAttribute("post", post);
-            model.addAttribute("loginUser", loginUser);
+            model.addAttribute("user", user);
             
             return "trade/trade_chat";
         } catch (Exception e) {
@@ -111,17 +107,14 @@ public class ChatController {
     @ResponseBody
     public ResponseEntity<?> sendMessage(@RequestParam("roomId") Long roomId,
                                         @RequestParam("content") String content,
-                                        HttpSession session) {
-        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-        if (loginUser == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("success", false, "message", "로그인이 필요합니다."));
-        }
-        
+                                        HttpServletRequest requestS) {
+    	BasicUserDTO user = (BasicUserDTO) requestS.getAttribute("user");
+
         try {
             // 메시지 저장
             ChatMessageRequest request = new ChatMessageRequest();
             request.setRoomId(roomId);
-            request.setSenderNumber((long) loginUser.getUserNumber());
+            request.setSenderNumber((long) user.getUserNumber());
             request.setMessage(content);
             
             ChatMessageResponse response = chatService.saveAndSendMessage(request);
@@ -138,14 +131,14 @@ public class ChatController {
      * 채팅 목록 페이지로 이동
      */
     @GetMapping("/chat_list")
-    public String chatListPage(HttpSession session, Model model) {
-        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-        if (loginUser == null) {
+    public String chatListPage(HttpServletRequest request, Model model) {
+    	BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
+        if (user == null) {
             return "redirect:/";
         }
         
         // 사용자의 채팅방 목록 조회
-        List<ChatRoomResponse> chatRooms = chatService.getChatRoomsByUser((long) loginUser.getUserNumber());
+        List<ChatRoomResponse> chatRooms = chatService.getChatRoomsByUser((long) user.getUserNumber());
         
         System.out.println("채팅방 목록 조회 결과: " + chatRooms.size() + "개");
         for (ChatRoomResponse room : chatRooms) {
@@ -153,7 +146,7 @@ public class ChatController {
         }
         
         model.addAttribute("chatRooms", chatRooms);
-        model.addAttribute("loginUser", loginUser);
+        model.addAttribute("user", user);
         
         return "trade/trade_chat_list";
     }
@@ -162,19 +155,19 @@ public class ChatController {
 
     @GetMapping("/check_new_messages")
     @ResponseBody
-    public ResponseEntity<?> checkNewMessages(HttpSession session) {
+    public ResponseEntity<?> checkNewMessages(HttpServletRequest request, HttpSession session) {
         Map<String, Object> response = new HashMap<>();
         
         try {
             // 로그인 사용자 정보 가져오기
-            UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-            if (loginUser == null) {
+        	BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
+            if (user == null) {
                 response.put("success", false);
                 response.put("message", "로그인이 필요합니다.");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
             
-            Long userNumber = (long) loginUser.getUserNumber();
+            Long userNumber = (long) user.getUserNumber();
             
             // 세션에서 활성 채팅방 ID 가져오기
             Long activeRoomId = (Long) session.getAttribute("activeRoomId");
@@ -228,10 +221,10 @@ public class ChatController {
     public Map<String, Object> getNewMessages(
             @RequestParam("roomId") Long roomId,
             @RequestParam(value = "lastMessageId", defaultValue = "0") Long lastMessageId,
-            HttpSession session) {
+            HttpServletRequest request) {
         
-        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-        if (loginUser == null) {
+    	BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
+        if (user == null) {
             return Map.of("success", false, "message", "로그인이 필요합니다.");
         }
         
@@ -239,7 +232,7 @@ public class ChatController {
         List<ChatMessageResponse> messages = chatService.getChatMessagesByRoom(roomId);
         
         // 메시지 읽음 상태 업데이트
-        chatService.updateMessageReadStatus(roomId, (long) loginUser.getUserNumber());
+        chatService.updateMessageReadStatus(roomId, (long) user.getUserNumber());
         
         return Map.of("success", true, "messages", messages);
     }

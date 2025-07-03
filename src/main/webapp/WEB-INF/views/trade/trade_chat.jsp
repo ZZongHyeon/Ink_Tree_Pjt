@@ -31,7 +31,7 @@
                 </a>
                 <div class="chat-title">
                     <c:choose>
-                        <c:when test="${loginUser.userNumber == chatRoom.buyerNumber}">
+                        <c:when test="${user.userNumber == chatRoom.buyerNumber}">
                             판매자와의 대화
                         </c:when>
                         <c:otherwise>
@@ -68,13 +68,13 @@
 			    <c:forEach items="${messages}" var="msg">
 			        <c:set var="messageDate" value="${msg.createdAt.format(DateTimeFormatter.ofPattern('yyyy-MM-dd'))}" />
 			        
-			        <%-- 날짜가 바뀌면 날짜 구분선 추가 --%>
+			        
 			        <c:if test="${messageDate ne prevDate}">
 			            <div class="date-divider">${messageDate}</div>
 			            <c:set var="prevDate" value="${messageDate}" />
 			        </c:if>
 			        
-			        <div class="message ${msg.senderNumber == loginUser.userNumber ? 'my-message' : 'other-message'}" 
+			        <div class="message ${msg.senderNumber == user.userNumber ? 'my-message' : 'other-message'}" 
 			             data-message-id="${msg.messageId}" 
 			             data-message-date="${messageDate}">
 			            <div class="message-content">${msg.message}</div>
@@ -98,7 +98,7 @@
     <script>
 		// 현재 채팅방 ID와 사용자 번호 설정
 		var currentRoomId = ${chatRoom.roomId};
-		var currentUserNumber = ${loginUser.userNumber}; // 현재 로그인한 사용자 번호
+		var currentUserNumber = ${user.userNumber}; // 현재 로그인한 사용자 번호
 		var stompClient = null;
 
 		// 페이지 로드 시 실행
