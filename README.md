@@ -69,18 +69,34 @@
 
 <details>
 <summary>📊 ERD 구조 설명 보기</summary>
-- USERINFO: 사용자 기본 정보
-- BOOKINFO: 도서 정보
-- BOOK_BORROW / BOOK_RECORD: 대출 및 반납 기록
-- BOOK_REVIEW / BOOK_WISHLIST: 도서리뷰 및 관심목록
-- BOARD / BOARD_COMMENT / BOARD_LIKES: 커뮤니티 기능
-- NOTICE: 공지사항
-- TRADE_POST: 중고 거래 게시판
-- TRADE_FAVORITE: 중고 거래 게시글 관심목록
-- TRADE_RECORD: 중고 거래 기록
-- TRADE_CHATROOM / TRADE_CHATMESSAGE: 실시간 1:1 채팅
-- NOTIFICATIONS: 알림 시스템
-- USER_SESSIONS: 유저 세션 관리
+● 사용자 관리
+  ○ USERINFO: 사용자 기본 정보  
+  ○ USER_SESSIONS: 유저 세션 관리
+
+● 도서 관리
+  ○ BOOKINFO: 도서 정보  
+  ○ BOOK_BORROW / BOOK_RECORD: 도서 대출 및 반납 기록  
+  ○ BOOK_REVIEW / BOOK_WISHLIST: 도서 리뷰 및 관심 도서 목록
+
+● 커뮤니티 기능
+  ○ BOARD: 게시판  
+  ○ BOARD_COMMENT: 댓글  
+  ○ BOARD_LIKES: 게시글 추천
+
+● 공지사항
+  ○ NOTICE: 운영자 공지사항 관리
+
+● 중고 도서 거래
+  ○ TRADE_POST: 중고 도서 게시글  
+  ○ TRADE_FAVORITE: 관심 등록 기능  
+  ○ TRADE_RECORD: 거래 완료 기록  
+
+● 실시간 채팅
+  ○ TRADE_CHATROOM: 채팅방  
+  ○ TRADE_CHATMESSAGE: 채팅 메시지
+
+● 사용자 알림
+  ○ NOTIFICATIONS: 이벤트 및 메시지 알림 시스템
 
 ERD 이미지는 아래와 같습니다.
 ## 전체 ERD
