@@ -50,25 +50,25 @@
 <table>
 <thead>
 <tr>
-<th align="center">기술</th>
-<th align="center">설명</th>
+<th width="30%">기술</th>
+<th width="70%">설명</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center"><strong>JSP</strong></td>
+<td><img src="https://img.shields.io/badge/JSP-007396?style=flat&logo=java&logoColor=white" alt="JSP"> <strong>JSP</strong></td>
 <td>서버 사이드 렌더링 기반 동적 HTML 생성</td>
 </tr>
 <tr>
-<td align="center"><strong>JavaScript / jQuery</strong></td>
+<td><img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black" alt="JavaScript"> <img src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jquery&logoColor=white" alt="jQuery"> <strong>JavaScript / jQuery</strong></td>
 <td>클라이언트 상호작용 구현 및 Ajax 요청 처리</td>
 </tr>
 <tr>
-<td align="center"><strong>Bootstrap</strong></td>
+<td><img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white" alt="Bootstrap"> <strong>Bootstrap</strong></td>
 <td>반응형 UI 디자인 구현</td>
 </tr>
 <tr>
-<td align="center"><strong>MyBatis</strong></td>
+<td><img src="https://img.shields.io/badge/MyBatis-000000?style=flat&logo=mybatis&logoColor=white" alt="MyBatis"> <strong>MyBatis</strong></td>
 <td>View와 DB 간의 데이터 매핑 처리 (JSP ↔ DAO)</td>
 </tr>
 </tbody>
@@ -79,37 +79,37 @@
 <table>
 <thead>
 <tr>
-<th align="center">기술</th>
-<th align="center">설명</th>
+<th width="30%">기술</th>
+<th width="70%">설명</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center"><strong>Spring Boot</strong></td>
+<td><img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat&logo=spring-boot&logoColor=white" alt="Spring Boot"> <strong>Spring Boot</strong></td>
 <td>RESTful API 구현, 설정 자동화, 내장 톰캣 기반 서버 환경</td>
 </tr>
 <tr>
-<td align="center"><strong>Spring MVC</strong></td>
+<td><img src="https://img.shields.io/badge/Spring_MVC-6DB33F?style=flat&logo=spring&logoColor=white" alt="Spring MVC"> <strong>Spring MVC</strong></td>
 <td>계층화된 컨트롤러-서비스 구조로 웹 애플리케이션 구현</td>
 </tr>
 <tr>
-<td align="center"><strong>MyBatis</strong></td>
+<td><img src="https://img.shields.io/badge/MyBatis-000000?style=flat&logo=mybatis&logoColor=white" alt="MyBatis"> <strong>MyBatis</strong></td>
 <td>SQL 중심 ORM, DB 연동 및 동적 쿼리 처리</td>
 </tr>
 <tr>
-<td align="center"><strong>Oracle</strong></td>
+<td><img src="https://img.shields.io/badge/Oracle-F80000?style=flat&logo=oracle&logoColor=white" alt="Oracle"> <strong>Oracle</strong></td>
 <td>게시글/댓글/좋아요/거래 데이터 관리용 RDBMS</td>
 </tr>
 <tr>
-<td align="center"><strong>Spring Security</strong></td>
+<td><img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=flat&logo=spring-security&logoColor=white" alt="Spring Security"> <strong>Spring Security</strong></td>
 <td>사용자 인증/인가 및 세션 관리 구현</td>
 </tr>
 <tr>
-<td align="center"><strong>JWT</strong></td>
+<td><img src="https://img.shields.io/badge/JWT-000000?style=flat&logo=json-web-tokens&logoColor=white" alt="JWT"> <strong>JWT</strong></td>
 <td>토큰 기반 인증 구조, 무상태 인증 처리 방식 적용</td>
 </tr>
 <tr>
-<td align="center"><strong>WebSocket</strong></td>
+<td><img src="https://img.shields.io/badge/WebSocket-010101?style=flat&logo=socket.io&logoColor=white" alt="WebSocket"> <strong>WebSocket</strong></td>
 <td>1:1 실시간 채팅 서비스</td>
 </tr>
 </tbody>
