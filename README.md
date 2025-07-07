@@ -291,10 +291,12 @@
 </table>
   
 ## 📌 전체 ERD
+
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_전체.png?raw=true)
 
+
 <div align="center">
-<a href="#trade-section-top-erd>
+<a href="#trade-section-top-erd">
 <img src="https://img.shields.io/badge/🔼위로 이동-4A90E2?style=for-the-badge&logoColor=white" alt="맨 위로">
 </a>
 </div>
@@ -302,6 +304,7 @@
 
 ## 🧩 1차 ERD
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_1차.png?raw=true)
+
 
 <div align="center">
 <a href="#trade-section-top-erd>
@@ -312,6 +315,7 @@
 
 ## 🧩 2차 ERD
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_2차.png?raw=true)
+
 
 <div align="center">
 <a href="#trade-section-top-erd>
