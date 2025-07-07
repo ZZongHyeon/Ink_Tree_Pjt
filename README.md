@@ -1,6 +1,3 @@
-
-[application.txt](https://github.com/user-attachments/files/20207307/application.txt)
-
 ## 📦 개발 환경 구성
 
 | 항목 | 상세 내용 |
