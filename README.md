@@ -1,6 +1,3 @@
-
-[application.txt](https://github.com/user-attachments/files/20207307/application.txt)
-
 ## 📦 개발 환경 구성
 
 | 항목 | 상세 내용 |
@@ -70,6 +67,8 @@
 - **JSP 기반 다이내믹 페이지 구성**
 - **REST API 설계 및 통신 구조 최적화**
 
+
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD - 1차.png?raw=true)
 
 
 
