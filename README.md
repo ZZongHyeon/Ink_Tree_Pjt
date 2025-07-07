@@ -70,7 +70,6 @@
 <details>
 <summary>ERD</summary>
   <br>
-<h1>🔹 주요 테이블 분류</h1>
 <ul>
   <li><b>사용자 관리</b>
     <ul>
