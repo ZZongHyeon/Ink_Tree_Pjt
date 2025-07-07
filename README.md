@@ -134,15 +134,14 @@
 </details>
 
 <details>
-<summary>로그인 & 회원가입</summary>
+<summary>🖥️로그인 & 회원가입</summary>
 </details>
 
 <details>
-<summary>로그인 & 회원가입</summary>
+<summary>🖥️로그인 & 회원가입</summary>
   
   ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/1로그인화면.png?raw=true)
 
-  구현기능설명 - 로그인
 1. 일반 로그인
 비회원은 회원가입을 통해 로그인을 할 수 있습니다.
 로그인시 JWT토큰을 발급받고 사용자는 해당 서비스를 이용 할 수 있습니다.
@@ -152,5 +151,34 @@
 
   ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/2_1회원가입.png?raw=true)
   ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/2_2이메일인증.png?raw=true)
+
+1. 이메일 인증
+네이버 SMTP를 활용하여 이메일 인증 시스템을 구현했습니다.
+이메일 중복 여부를 확인한 후 숫자를 포함한 8자리 무작위 인증번호를 생성해 해당 주소로 전송합니다.
+인증번호 전송 후 사용자가 이메일을 수정하면 최종 입력된 이메일로 가입되는 현상이 발생하여 인증번호 전송과 동시에 이메일 입력 필드와 전송 버튼을 비활성화하여 입력값 변경을 막는 방식으로 수정하였습니다.
+2. 정보 입력
+모든 input태그는 해당 패턴에 맞도록 예외처리를 하였습니다.
+카카오 API를 활용하여 사용자가 주소를 입력하면 우편번호와 도로명이 자동으로 삽입되도록 구현하였습니다.
 </details>
 
+<details>
+<summary>🖥️메인화면</summary>
+
+    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/3_1메인.png?raw=true)
+
+1. 토큰
+로그인시 사용자의 토큰 만료시간과 해당 토큰의 만료값을 초기화시켜 다시 30분의 시간을 가지도록 구현하였습니다.
+UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 위해 축소 및 일정 width이하가 되면 숨김처리 되도록 구현하였습니다.
+2. 검색
+텍스트입력기반 검색을 통하여 사용자가 원하는 도서 제목, 저자, 출판사 등으로 검색하여 도서를 검색 할 수 있습니다.
+실제 도서에서도 분류별로 나뉘기에 대분류, 중분류로 나누어 사용자 경험을 향상시켰습니다.
+
+    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/3_2메인.png?raw=true)
+
+1. 추천 도서
+	도서 대여 횟수를 기준으로 인기 도서 4원을 추천 도서 영역에 노출합니다.
+	향후 더미데이터를 활용해 사용자 대여 이력을 기반으로 카테고리별 맞춤 추천 기능으로 확장할 예정입니다.
+2. 일반 채팅 & AI채팅
+	WebSocket 기반 일반 채팅 기능을 구현하였으며 Gemini API 기반 AI 챗봇은 프롬프트 제한을 통해
+	도서 관련 질문에만 응답하도록 구성했습니다.
+</details>
