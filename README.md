@@ -139,6 +139,7 @@
 
 <details>
 <summary>로그인 & 회원가입</summary>
+  
   ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/1로그인화면.png?raw=true)
 
   구현기능설명 - 로그인
