@@ -68,7 +68,10 @@
 - **REST API 설계 및 통신 구조 최적화**
 
 
-![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD - 1차.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD1차.png?raw=true)
+
+
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_2차.png?raw=true)
 
 
 
