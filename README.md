@@ -196,6 +196,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 	도서 관련 질문에만 응답하도록 구성했습니다.
 
 ### 🔝 [이 섹션 맨 위로 이동](#trade-section-top2)
+---
 </details>
 
 <a name="trade-section-top3"></a>
