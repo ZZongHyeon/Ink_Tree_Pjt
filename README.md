@@ -85,13 +85,3 @@
 ---
 
 
-## ERD (1차)
-![제목 없음](https://github.com/user-attachments/assets/6fcc184a-7832-47de-9f53-7db4e7636054)
-
-## ERD (2차) 테이블 10개 추가
-![image (1)](https://github.com/user-attachments/assets/e3b13c2f-8d36-4fc9-bf83-83a45a06ce74)
-
-## ERD 전체
-![image](https://github.com/user-attachments/assets/d85e13ae-4f98-4baf-982a-6cfd1c324215)
-
-
