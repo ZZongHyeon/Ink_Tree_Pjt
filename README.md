@@ -164,7 +164,7 @@
 <details>
 <summary>🖥️메인화면</summary>
 
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/3_1메인.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/3_1메인.png?raw=true)
 
 1. 토큰
 로그인시 사용자의 토큰 만료시간과 해당 토큰의 만료값을 초기화시켜 다시 30분의 시간을 가지도록 구현하였습니다.
