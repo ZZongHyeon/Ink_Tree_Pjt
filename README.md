@@ -175,7 +175,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 
 ---
 
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/3_2메인.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/3_2메인.png?raw=true)
 
 1. 추천 도서
 	도서 대여 횟수를 기준으로 인기 도서 4원을 추천 도서 영역에 노출합니다.
@@ -188,7 +188,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 <details>
 <summary>도서 검색</summary>
 	
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/3_3도서검색.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/3_3도서검색.png?raw=true)
 
 메인 도서검색과 연결되며 사용자는 도서명, 저자명, 출판사 등 다양한 기준으로 도서를 효율적으로 검색할 수 있습니다.
 검색 결과는 페이지당 8권씩 출력하여 시스템의 응답 속도를 최적화하고, 사용자에게 쾌적한 탐색 환경을 제공합니다.
