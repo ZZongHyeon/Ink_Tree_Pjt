@@ -298,7 +298,7 @@
 <img src="https://img.shields.io/badge/🔝_이_섹션_맨_위로_이동-4A90E2?style=for-the-badge&logoColor=white" alt="맨 위로">
 </a>
 </div>
-</details>
+
 
 ## 🧩 1차 ERD
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_1차.png?raw=true)
@@ -308,7 +308,7 @@
 <img src="https://img.shields.io/badge/🔝_이_섹션_맨_위로_이동-4A90E2?style=for-the-badge&logoColor=white" alt="맨 위로">
 </a>
 </div>
-</details>
+
 
 ## 🧩 2차 ERD
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_2차.png?raw=true)
