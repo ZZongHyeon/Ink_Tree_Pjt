@@ -10,22 +10,22 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>🔧 Backend</strong></td>
+<td><strong>🔧 백엔드</strong></td>
 <td><img src="https://img.shields.io/badge/Java-ED8B00?style=flat&logo=java&logoColor=white" alt="Java"> <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat&logo=spring-boot&logoColor=white" alt="Spring Boot"></td>
 <td>Java (JDK 8+), Spring Boot (Spring MVC, Spring Security 포함)</td>
 </tr>
 <tr>
-<td><strong>🗄️ Database</strong></td>
+<td><strong>🗄️ 데이터베이스</strong></td>
 <td><img src="https://img.shields.io/badge/Oracle-F80000?style=flat&logo=oracle&logoColor=white" alt="Oracle"> <img src="https://img.shields.io/badge/MyBatis-000000?style=flat&logo=mybatis&logoColor=white" alt="MyBatis"></td>
 <td>Oracle 11g 이상, MyBatis ORM</td>
 </tr>
 <tr>
-<td><strong>🏗️ Build & Deploy</strong></td>
+<td><strong>🏗️ 빌드 & WAS</strong></td>
 <td><img src="https://img.shields.io/badge/Gradle-02303A?style=flat&logo=gradle&logoColor=white" alt="Gradle"> <img src="https://img.shields.io/badge/Apache_Tomcat-F8DC75?style=flat&logo=apache-tomcat&logoColor=black" alt="Tomcat"></td>
 <td>Gradle, Spring Boot Embedded Tomcat</td>
 </tr>
 <tr>
-<td><strong>🔄 DevOps</strong></td>
+<td><strong>🔄 협상관리</strong></td>
 <td><img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white" alt="Git"> <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" alt="GitHub"></td>
 <td>Git, GitHub Actions CI/CD</td>
 </tr>
@@ -35,9 +35,9 @@
 <td>Jira (이슈 관리), Notion (문서화)</td>
 </tr>
 <tr>
-<td><strong>🧪 Testing</strong></td>
-<td><img src="https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=postman&logoColor=white" alt="Postman"> <img src="https://img.shields.io/badge/JUnit-25A162?style=flat&logo=junit5&logoColor=white" alt="JUnit"></td>
-<td>Postman (API 테스트), JUnit (단위 테스트)</td>
+<td><strong>🧪 테스트</strong></td>
+<td><img src="https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=postman&logoColor=white" alt="Postman">
+<td>Postman (API 테스트)</td>
 </tr>
 </tbody>
 </table>
@@ -45,7 +45,7 @@
 
 ## 🛠️ 기술 스택 (Tech Stack)
 
-### 🌐 Frontend
+### 🌐 프론트엔드
 
 <table>
 <thead>
@@ -74,7 +74,7 @@
 </tbody>
 </table>
 
-### ⚙️ Backend
+### ⚙️ 백엔드
 
 <table>
 <thead>
