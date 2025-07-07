@@ -89,11 +89,11 @@
 <td>RESTful API 구현, 설정 자동화, 내장 톰캣 기반 서버 환경</td>
 </tr>
 <tr>
-<td><img src="https://img.shields.io/badge/Spring_MVC-6DB33F?style=flat&logo=spring&logoColor=white" alt="Spring MVC">/td>
+<td><img src="https://img.shields.io/badge/Spring_MVC-6DB33F?style=flat&logo=spring&logoColor=white" alt="Spring MVC"></td>
 <td>계층화된 컨트롤러-서비스 구조로 웹 애플리케이션 구현</td>
 </tr>
 <tr>
-<td><img src="https://img.shields.io/badge/MyBatis-000000?style=flat&logo=mybatis&logoColor=white" alt="MyBatis">/td>
+<td><img src="https://img.shields.io/badge/MyBatis-000000?style=flat&logo=mybatis&logoColor=white" alt="MyBatis"></td>
 <td>SQL 중심 ORM, DB 연동 및 동적 쿼리 처리</td>
 </tr>
 <tr>
@@ -216,59 +216,83 @@
 <a name="trade-section-top-erd"></a>
 <details>
 <summary>ERD</summary>
-  <br>
+
+## 🗄️ 데이터베이스 구조 (Database Schema)
+
+<table>
+<thead>
+<tr>
+<th width="25%">카테고리</th>
+<th width="75%">테이블 구성</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="https://img.shields.io/badge/👤_사용자_관리-4A90E2?style=flat&logoColor=white" alt="사용자 관리"></td>
+<td>
 <ul>
-  <li><b>사용자 관리</b>
-    <ul>
-      <li>USERINFO: 사용자 기본 정보</li>
-      <li>USER_SESSIONS: 유저 세션 관리</li>
-    </ul>
-  </li>
-<br>
-  <li><b>도서 관리</b>
-    <ul>
-      <li>BOOKINFO: 도서 정보</li>
-      <li>BOOK_BORROW / BOOK_RECORD: 도서 대출 및 반납 기록</li>
-      <li>BOOK_REVIEW / BOOK_WISHLIST: 도서 리뷰 및 관심 도서 목록</li>
-    </ul>
-  </li>
-<br>
-  <li><b>커뮤니티 기능</b>
-    <ul>
-      <li>BOARD: 게시판</li>
-      <li>BOARD_COMMENT: 댓글</li>
-      <li>BOARD_LIKES: 게시글 추천</li>
-    </ul>
-  </li>
-<br>
-  <li><b>공지사항</b>
-    <ul>
-      <li>NOTICE: 운영자 공지사항 관리</li>
-    </ul>
-  </li>
-<br>
-  <li><b>중고 도서 거래</b>
-    <ul>
-      <li>TRADE_POST: 중고 도서 게시글</li>
-      <li>TRADE_FAVORITE: 관심 등록 기능</li>
-      <li>TRADE_RECORD: 거래 완료 기록</li>
-    </ul>
-  </li>
-<br>
-  <li><b>실시간 채팅</b>
-    <ul>
-      <li>TRADE_CHATROOM: 채팅방</li>
-      <li>TRADE_CHATMESSAGE: 채팅 메시지</li>
-    </ul>
-  </li>
-<br>
-  <li><b>사용자 알림</b>
-    <ul>
-      <li>NOTIFICATIONS: 이벤트 및 메시지 알림 시스템</li>
-    </ul>
-  </li>
+<li><code>USERINFO</code> - 사용자 기본 정보</li>
+<li><code>USER_SESSIONS</code> - 유저 세션 관리</li>
 </ul>
-<br>
+</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/📚_도서_관리-7ED321?style=flat&logoColor=white" alt="도서 관리"></td>
+<td>
+<ul>
+<li><code>BOOKINFO</code> - 도서 정보</li>
+<li><code>BOOK_BORROW</code> / <code>BOOK_RECORD</code> - 도서 대출 및 반납 기록</li>
+<li><code>BOOK_REVIEW</code> / <code>BOOK_WISHLIST</code> - 도서 리뷰 및 관심 도서 목록</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/💬_커뮤니티_기능-F5A623?style=flat&logoColor=white" alt="커뮤니티 기능"></td>
+<td>
+<ul>
+<li><code>BOARD</code> - 게시판</li>
+<li><code>BOARD_COMMENT</code> - 댓글</li>
+<li><code>BOARD_LIKES</code> - 게시글 추천</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/📢_공지사항-D0021B?style=flat&logoColor=white" alt="공지사항"></td>
+<td>
+<ul>
+<li><code>NOTICE</code> - 운영자 공지사항 관리</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/💰_중고_도서_거래-9013FE?style=flat&logoColor=white" alt="중고 도서 거래"></td>
+<td>
+<ul>
+<li><code>TRADE_POST</code> - 중고 도서 게시글</li>
+<li><code>TRADE_FAVORITE</code> - 관심 등록 기능</li>
+<li><code>TRADE_RECORD</code> - 거래 완료 기록</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/💭_실시간_채팅-50E3C2?style=flat&logoColor=white" alt="실시간 채팅"></td>
+<td>
+<ul>
+<li><code>TRADE_CHATROOM</code> - 채팅방</li>
+<li><code>TRADE_CHATMESSAGE</code> - 채팅 메시지</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/🔔_사용자_알림-BD10E0?style=flat&logoColor=white" alt="사용자 알림"></td>
+<td>
+<ul>
+<li><code>NOTIFICATIONS</code> - 이벤트 및 메시지 알림 시스템</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
   
 ## 📌 전체 ERD
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_전체.png?raw=true)
