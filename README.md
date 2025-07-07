@@ -293,17 +293,31 @@
 ## 📌 전체 ERD
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_전체.png?raw=true)
 
-### 🔝 [이 섹션 맨 위로 이동](#trade-section-top-erd)
+<div align="center">
+<a href="#trade-section-top-erd>
+<img src="https://img.shields.io/badge/🔝_이_섹션_맨_위로_이동-4A90E2?style=for-the-badge&logoColor=white" alt="맨 위로">
+</a>
+</div>
+</details>
 
 ## 🧩 1차 ERD
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_1차.png?raw=true)
 
-### 🔝 [이 섹션 맨 위로 이동](#trade-section-top-erd)
+<div align="center">
+<a href="#trade-section-top-erd>
+<img src="https://img.shields.io/badge/🔝_이_섹션_맨_위로_이동-4A90E2?style=for-the-badge&logoColor=white" alt="맨 위로">
+</a>
+</div>
+</details>
 
 ## 🧩 2차 ERD
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_2차.png?raw=true)
 
-### 🔝 [이 섹션 맨 위로 이동](#trade-section-top-erd)
+<div align="center">
+<a href="#trade-section-top-erd>
+<img src="https://img.shields.io/badge/🔝_이_섹션_맨_위로_이동-4A90E2?style=for-the-badge&logoColor=white" alt="맨 위로">
+</a>
+</div>
 </details>
 
 ## 🖥 주요 화면 및 기능 상세
@@ -345,6 +359,8 @@
 </a>
 </div>
 
+---
+
 </details>
 
 <a name="trade-section-top2"></a>
@@ -380,6 +396,8 @@
 </a>
 </div>
 
+---
+
 </details>
 
 <a name="trade-section-top3"></a>
@@ -401,6 +419,8 @@
 <img src="https://img.shields.io/badge/🔝_이_섹션_맨_위로_이동-4A90E2?style=for-the-badge&logoColor=white" alt="맨 위로">
 </a>
 </div>
+
+---
 
 </details>
 
@@ -429,6 +449,8 @@
 <img src="https://img.shields.io/badge/🔝_이_섹션_맨_위로_이동-4A90E2?style=for-the-badge&logoColor=white" alt="맨 위로">
 </a>
 </div>
+
+---
 
 </details>
 
@@ -460,7 +482,7 @@
 
 #### 🔍 검색 기능
 - **다양한 검색 조건**을 적용할 수 있도록 제목, 본문 내용, 작성자 기준의 검색 기능을 구현하였습니다
-- 이로 인해 사용자는 키워드 기반으로 빠르고 정확하게 원하는 게시글을 탐색할 수 있습니다
+- 사용자는 키워드 기반으로 빠르고 정확하게 원하는 게시글을 탐색할 수 있습니다
 
 <div align="center">
 <img src="https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/4_3게시글.png?raw=true" alt="게시글 상세" width="60%">
@@ -479,6 +501,8 @@
 <img src="https://img.shields.io/badge/🔝_이_섹션_맨_위로_이동-4A90E2?style=for-the-badge&logoColor=white" alt="맨 위로">
 </a>
 </div>
+
+---
 
 </details>
 
@@ -515,6 +539,8 @@
 </a>
 </div>
 
+---
+
 </details>
 
 <a name="trade-section-top7"></a>
@@ -542,6 +568,8 @@
 </a>
 </div>
 
+---
+
 </details>
 
 <a name="trade-section-top8"></a>
@@ -567,6 +595,8 @@
 <img src="https://img.shields.io/badge/🔝_이_섹션_맨_위로_이동-4A90E2?style=for-the-badge&logoColor=white" alt="맨 위로">
 </a>
 </div>
+
+---
 
 </details>
 
@@ -598,6 +628,8 @@
 <img src="https://img.shields.io/badge/🔝_이_섹션_맨_위로_이동-4A90E2?style=for-the-badge&logoColor=white" alt="맨 위로">
 </a>
 </div>
+
+---
 
 </details>
 
@@ -638,5 +670,7 @@
 <img src="https://img.shields.io/badge/🔝_이_섹션_맨_위로_이동-4A90E2?style=for-the-badge&logoColor=white" alt="맨 위로">
 </a>
 </div>
+
+---
 
 </details>
