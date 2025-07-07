@@ -279,7 +279,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 </details>
 
 <details>
-<summary>기타 관리자 기능/summary>
+<summary>기타 관리자 기능</summary>
     ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/7_1관리자.png?raw=true)
     ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/7_2활동로그.png?raw=true)
     ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/7_3도서등록.png?raw=true)
@@ -292,7 +292,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 </details>
 
 <details>
-<summary>1:1채팅 & 챗봇/summary>
+<summary>1:1채팅 & 챗봇</summary>
     ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_1채팅.png?raw=true)
 	
 해당 버튼을 누르면 해당 판매자와의 채팅이 열리게 됩니다.
