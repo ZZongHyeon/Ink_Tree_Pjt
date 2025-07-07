@@ -198,7 +198,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 <details>
 <summary>도서 상세 정보</summary>
 
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/3_4도서디테일.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/3_4도서디테일.png?raw=true)
 
 1. 페이지 진입 시 해당 도서의 기본 정보와 상세 소개가 최우선으로 노출됩니다.
 2. 사용자는 도서에 대해 대출 신청 또는 관심 도서 등록(위시리스트 추가) 기능을 바로 이용할 수 있습니다.
@@ -212,7 +212,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 <details>
 <summary>공지사항 & 일반 게시판</summary>
 
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/4_1공지.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/4_1공지.png?raw=true)
 
 1. 공지사항 기능은 사이트 운영에 필요한 주요 정보 전달 수단으로 운영 정책에 따라 관리자 계정으로만 작성이 가능하도록 권한을 제한하였습니다.
 2. 권한 제어는 데이터 무결성과 운영 신뢰성을 유지하는데 목적이 있으며 게시글 생성 시 로그인 계정의 역할을 기반으로 접근을 제어하도록 구현하였습니다.
@@ -221,7 +221,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 
 ---
 
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/4_2게시판.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/4_2게시판.png?raw=true)
 
 1. 게시판은 커뮤니티 기능의 중심이 되는 구성 요소로 데이터가 많아질수록 성능과 사용 편의성에 영향을 주기 때문에 페이지당 10개씩 불러오는 페이징 처리를 적용하여 초기 로딩 속도와 데이터 접근 효율성을 개선하였습니다.
 2. 게시글 목록에서는 추천 수와 댓글 수를 사전 노출 하여 사용자가 리스트를 탐색하면서도 활발한 게시글, 인기 게시글을 직관적으로 파악할 수 있도록 UI/UX를 강화하였습니다.
@@ -230,7 +230,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 
 ---
 
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/4_2게시글.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/4_2게시글.png?raw=true)
 
 1. 게시글 상세 기능에서는 사용자의 반응을 유도하고 콘텐츠의 신뢰도를 높이기 위해 추천 기능을 도입하였습니다.
 2. 사용자는 특정 게시글에 공감하거나 유익하다고 판단될 경우 추천 버튼을 통해 피드백을 줄 수 있으며 이는 커뮤니티 내에서 콘텐츠 품질을 자연스럽게 평가할 수 있는 간접적인 장치로 작용합니다.
@@ -242,7 +242,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 <details>
 <summary>거래 게시판</summary>
 
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/4_4거래게시판.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/4_4거래게시판.png?raw=true)
 
 1. 거래게시판에서는 사용자의 편의를 고려하여 다양한 조건 기반의 검색 및 정렬 기능을 구현하였습니다.
 2. 사용자는 카테고리 또는 게시글 제목을 기준으로 도서를 검색할 수 있으며, 게시글의 상태를 판매중, 예약중, 판매완료로 나누어 상태별 필터링이 가능하도록 설계하였습니다.
@@ -250,7 +250,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 
 ---
 
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/4_5거래게시글.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/4_5거래게시글.png?raw=true)
 
 1. 거래 게시글 상세 페이지에서는 사용자가 상품에 대해 더욱 직관적으로 판단하고 소통할 수 있도록 다양한 기능을 제공합니다. 사용자는 해당 게시글에 대해 관심 등록, 1:1 채팅 요청, 게시글 수정 및 삭제( 관리자 및 작성자 권한)를 할 수 있으며 이 모든 기능은 권한 검증을 기반으로 처리됩니다.
 2. 또한 단일 게시글 정보 외에도 해당 판매자가 현재 등록한 다른 판매중인 게시글 목록, 해당 게시글의 조회수, 누적 관심 수, 열린 채팅 수 등의 데이터가 함께 노출되도록 구성하여 구매자는 판매자의 신뢰도와 활동 내역을 종합적으로 확인할 수 있습니다. 
@@ -259,8 +259,9 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 
 <details>
 <summary>관심목록</summary>
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/5_1일반도서관심.png?raw=true)
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/5_2거래도서관심.png?raw=true)
+	
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/5_1일반도서관심.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/5_2거래도서관심.png?raw=true)
     
 1. 사용자가 거래 게시글에 관심 등록을 하면 해당 게시글은 별도의 관심 목록 페이지에 자동으로 저장됩니다.
 2. 관심 목록에서는 등록된 게시글들을 한눈에 확인할 수 있으며 제목 또는 카테고리 기반 검색, 판매 상태(판매중, 예약중, 판매완료)필터, 정렬옵션(최신순, 낮은 가격순, 높은 가격순, 조회순) 등 다양한 조건을 통해 원하는 상품을 쉽게 탐색할 수 있도록 구현하였습니다.
@@ -269,8 +270,9 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 
 <details>
 <summary>도서대출기록</summary>
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/6_1기록1.png?raw=true)
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/6_2기록.png?raw=true)
+	
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/6_1기록1.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/6_2기록.png?raw=true)
     
 1. 도서 대출 내역 페이지는 사용자가 자신의 전체 도서 이용 이력과 현재 상태를 종합적으로 확인할 수 있도록 구성되어 있습니다.
 2. 페이지 내에서는 현재 대출 중인 도서, 연체 도서, 총 대출 완료 이력을 구분하여 표시하였으며 현재 대출 중인 도서는 해당 페이지에서 즉시 반납 처리가 가능하도록 기능을 구현하였습니다.
@@ -280,9 +282,10 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 
 <details>
 <summary>기타 관리자 기능</summary>
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/7_1관리자.png?raw=true)
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/7_2활동로그.png?raw=true)
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/7_3도서등록.png?raw=true)
+    
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/7_1관리자.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/7_2활동로그.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/7_3도서등록.png?raw=true)
 
 1. 관리자 페이지 내에서 도서 등록 및 공지사항 등록 등 주요 기능에 신속하게 접근할 수 있도록 설계하였습니다.
 2. 사용자는 대출 및 반납 기록을 간편하게 조회하고 관리할 수 있습니다.
@@ -293,20 +296,21 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 
 <details>
 <summary>1:1채팅 & 챗봇</summary>
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_1채팅.png?raw=true)
+   
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_1채팅.png?raw=true)
 	
 해당 버튼을 누르면 해당 판매자와의 채팅이 열리게 됩니다.
 	
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_2채팅.png?raw=true)
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_3채팅.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_2채팅.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_3채팅.png?raw=true)
 
 메시지를 받은 판매자는 알림이 뜨고 메시지를 보낼 수 있게 됩니다.
 
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_4채팅.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_4채팅.png?raw=true)
 
 ---
 
-    ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/9_1챗봇.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/9_1챗봇.png?raw=true)
 
 1. Google Gemini API를 활용하여 도서 관련 질의에만 응답하는 AI 챗봇을 구현하였습니다.
 2. 챗봇은 사용자의 질문을 분석한 후 도서 정보에 한정된 답변만을 제공하며 불필요한 정보나 장황한 설명을 배제하고 핵심적인 내용만 간결하게 전달하도록 설계되었습니다.
