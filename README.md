@@ -136,6 +136,7 @@
 
 ## 🖥 주요 화면 및 기능 상세
 
+<a name="trade-section-top"></a>
 <details>
 <summary>🔐 로그인 & 회원가입</summary>
   
