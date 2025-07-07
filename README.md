@@ -66,8 +66,10 @@
 - **JSP 기반 다이내믹 페이지 구성**
 - **REST API 설계 및 통신 구조 최적화**
 
+
+## 📊 데이터베이스 
 <details>
-<summary>데이터베이스 ERD</summary>
+<summary>ERD</summary>
   <br>
 <ul>
   <li><b>사용자 관리</b>
@@ -135,7 +137,7 @@
 ## 🖥 주요 화면 및 기능 상세
 
 <details>
-<summary>로그인 & 회원가입</summary>
+<summary>🔐 로그인 & 회원가입</summary>
   
   ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/1로그인화면.png?raw=true)
 
@@ -161,7 +163,7 @@
 </details>
 
 <details>
-<summary>메인화면</summary>
+<summary>🏠 메인화면</summary>
 
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/3_1메인.png?raw=true)
 
@@ -185,7 +187,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 </details>
 
 <details>
-<summary>도서 검색</summary>
+<summary>📚 도서 검색</summary>
 	
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/3_3도서검색.png?raw=true)
 
@@ -195,7 +197,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 </details>
 
 <details>
-<summary>도서 상세 정보</summary>
+<summary>📚 도서 상세 정보</summary>
 
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/3_4도서디테일.png?raw=true)
 
@@ -209,7 +211,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 </details>
 
 <details>
-<summary>공지사항 & 일반 게시판</summary>
+<summary>📣 공지사항 & 일반 게시판</summary>
 
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/4_1공지.png?raw=true)
 
@@ -239,7 +241,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 </details>
 
 <details>
-<summary>거래 게시판</summary>
+<summary>🔄 거래 게시판</summary>
 
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/4_4거래게시판.png?raw=true)
 
@@ -257,7 +259,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 </details>
 
 <details>
-<summary>관심목록</summary>
+<summary>📌 관심목록</summary>
 	
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/5_1일반도서관심.png?raw=true)
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/5_2거래도서관심.png?raw=true)
@@ -268,7 +270,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 </details>
 
 <details>
-<summary>도서대출기록</summary>
+<summary>📖 도서대출기록</summary>
 	
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/6_1기록1.png?raw=true)
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/6_2기록.png?raw=true)
@@ -280,7 +282,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 </details>
 
 <details>
-<summary>기타 관리자 기능</summary>
+<summary>🛠 기타 관리자 기능</summary>
     
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/7_1관리자.png?raw=true)
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/7_2활동로그.png?raw=true)
@@ -294,7 +296,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 </details>
 
 <details>
-<summary>1:1채팅 & 챗봇</summary>
+<summary>💬 1:1채팅 & 챗봇</summary>
    
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_1채팅.png?raw=true)
 	
