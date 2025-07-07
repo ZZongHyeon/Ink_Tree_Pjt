@@ -69,6 +69,7 @@
 
 <details>
 <summary>📊 ERD 구조 설명 보기</summary>
+  <br>
 <ul>
   <li><b>사용자 관리</b>
     <ul>
@@ -121,6 +122,7 @@
   </li>
 </ul>
 <br>
+  
 ## 전체 ERD
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_전체.png?raw=true)
 
