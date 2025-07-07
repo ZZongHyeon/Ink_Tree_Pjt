@@ -67,11 +67,35 @@
 - **JSP 기반 다이내믹 페이지 구성**
 - **REST API 설계 및 통신 구조 최적화**
 
+<details>
+<summary>📊 ERD 구조 설명 보기</summary>
+- USERINFO: 사용자 기본 정보
+- BOOKINFO: 도서 정보
+- BOOK_BORROW / BOOK_RECORD: 대출 및 반납 기록
+- BOOK_REVIEW / BOOK_WISHLIST: 도서리뷰 및 관심목록
+- BOARD / BOARD_COMMENT / BOARD_LIKES: 커뮤니티 기능
+- NOTICE: 공지사항
+- TRADE_POST: 중고 거래 게시판
+- TRADE_FAVORITE: 중고 거래 게시글 관심목록
+- TRADE_RECORD: 중고 거래 기록
+- TRADE_CHATROOM / TRADE_CHATMESSAGE: 실시간 1:1 채팅
+- NOTIFICATIONS: 알림 시스템
+- USER_SESSIONS: 유저 세션 관리
 
+ERD 이미지는 아래와 같습니다.
+## 전체 ERD
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_전체.png?raw=true)
+
+## 1차 ERD
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD1차.png?raw=true)
 
-
+## 2차 ERD
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_2차.png?raw=true)
+</details>
+
+
+
+
 
 
 
