@@ -76,7 +76,7 @@
       <li>USER_SESSIONS: 유저 세션 관리</li>
     </ul>
   </li>
-
+<br>
   <li><b>도서 관리</b>
     <ul>
       <li>BOOKINFO: 도서 정보</li>
@@ -84,7 +84,7 @@
       <li>BOOK_REVIEW / BOOK_WISHLIST: 도서 리뷰 및 관심 도서 목록</li>
     </ul>
   </li>
-
+<br>
   <li><b>커뮤니티 기능</b>
     <ul>
       <li>BOARD: 게시판</li>
@@ -92,13 +92,13 @@
       <li>BOARD_LIKES: 게시글 추천</li>
     </ul>
   </li>
-
+<br>
   <li><b>공지사항</b>
     <ul>
       <li>NOTICE: 운영자 공지사항 관리</li>
     </ul>
   </li>
-
+<br>
   <li><b>중고 도서 거래</b>
     <ul>
       <li>TRADE_POST: 중고 도서 게시글</li>
@@ -106,22 +106,21 @@
       <li>TRADE_RECORD: 거래 완료 기록</li>
     </ul>
   </li>
-
+<br>
   <li><b>실시간 채팅</b>
     <ul>
       <li>TRADE_CHATROOM: 채팅방</li>
       <li>TRADE_CHATMESSAGE: 채팅 메시지</li>
     </ul>
   </li>
-
+<br>
   <li><b>사용자 알림</b>
     <ul>
       <li>NOTIFICATIONS: 이벤트 및 메시지 알림 시스템</li>
     </ul>
   </li>
 </ul>
-
-ERD 이미지는 아래와 같습니다.
+<br>
 ## 전체 ERD
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_전체.png?raw=true)
 
