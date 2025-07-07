@@ -35,13 +35,14 @@
 | **JWT** | 토큰 기반 인증 구조, 무상태 인증 처리 방식 적용 |
 | **WebSocket** | 1:1 실시간 채팅 서비스 |
 
-### 🔗 API 연동 및 외부 서비스
-
-- **Naver SMTP** – 이메일 인증 시스템 구현  
-- **Kakao 주소 API** – 회원가입 주소 자동입력  
-- **OAuth2 (Naver, Kakao, Google)** – 소셜 로그인 연동  
-- **Google Gemini API** – 도서 추천용 AI 챗봇  
-- **WebSocket** – 1:1 실시간 채팅 서비스  
+## 🔌 외부 연동 API
+| API | 설명 |
+|------|------|
+| **Naver SMTP** | 이메일 인증 시스템 구현  |
+| **Kakao 주소 API** | 회원가입 주소 자동입력  |
+| **OAuth2 (Naver, Kakao, Google)** | 소셜 로그인 연동  |
+| **Google Gemini API** | 도서 추천용 AI 챗봇  |
+| **WebSocket** | 1:1 실시간 채팅 서비스  |
 
 ## 💻 개발 도구
 
