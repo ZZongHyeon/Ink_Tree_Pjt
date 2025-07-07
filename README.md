@@ -195,6 +195,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 
 </details>
 
+<details>
 <summary>도서 상세 정보</summary>
 
     ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/3_4도서디테일.png?raw=true)
@@ -277,6 +278,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 
 </details>
 
+<details>
 <summary>기타 관리자 기능/summary>
     ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/7_1관리자.png?raw=true)
     ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/7_2활동로그.png?raw=true)
