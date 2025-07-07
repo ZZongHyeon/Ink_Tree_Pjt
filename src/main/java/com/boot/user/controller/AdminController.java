@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import com.boot.board.service.BoardService;
 import com.boot.z_page.PageDTO;
 import com.boot.z_page.criteria.NoticeCriteriaDTO;
 import com.boot.user.dto.AdminActivityLogDTO;
+import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.service.AdminActivityLogService;
 import com.boot.user.service.AdminService;
 import com.boot.z_util.otherMVC.service.UtilService;
@@ -32,12 +35,14 @@ public class AdminController {
 	private AdminActivityLogService activityLogService;
 
 	@RequestMapping("/admin_view")
-	public String adminView(Model model) {
+	public String adminView(Model model, HttpServletRequest request) {
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 		// 기본 정보 로딩
 		model.addAttribute("totalBooks", service.getTotalBooks());
 		model.addAttribute("totalUsers", service.getTotalUsers());
 		model.addAttribute("borrowedBooks", service.getBorrowedBooks());
 		model.addAttribute("overdueBooks", service.getOverdueBooks());
+		model.addAttribute("user", user);
 		
 		// 최근 활동 로그 가져오기 (5개)
 		try {

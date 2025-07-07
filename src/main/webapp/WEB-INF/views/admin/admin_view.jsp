@@ -20,8 +20,7 @@
             </head>
 
             <body>
-               <% UserDTO user=(UserDTO) session.getAttribute("loginUser"); BoardDTO board=(BoardDTO)
-                  request.getAttribute("board"); %>
+
                   <jsp:include page="../header.jsp" />
                   <div class="container">
                      <!-- Sidebar -->
@@ -36,12 +35,10 @@
                               <i class="ri-user-line"></i>
                            </div>
                            <div class="admin-details">
-                              <h3>
-                                 관리자<%=user.getUserName()%>
-                              </h3>
-                              <p>
-                                 <%=user.getUserEmail()%>
-                              </p>
+							<c:if test="${not empty user}">
+							  <h3>관리자 ${user.userName}</h3>
+							  <p>${user.userEmail}</p>
+							</c:if>
                            </div>
                         </div>
 

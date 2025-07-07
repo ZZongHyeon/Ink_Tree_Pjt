@@ -111,13 +111,13 @@ public class BookReviewController {
 	@PostMapping("/deleteReview")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> deleteReview(@RequestParam("reviewId") int reviewId,
-			HttpSession session) {
+			HttpServletRequest request) {
 		Map<String, Object> response = new HashMap<>();
 
 		try {
 			// 로그인 확인
-			UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-			if (loginUser == null) {
+			BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
+			if (user == null) {
 				response.put("success", false);
 				response.put("message", "로그인이 필요합니다.");
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
@@ -133,7 +133,7 @@ public class BookReviewController {
 			// ReviewDTO 객체 생성 및 설정
 			ReviewDTO reviewDTO = new ReviewDTO();
 			reviewDTO.setReviewId(reviewId);
-			reviewDTO.setUserNumber(loginUser.getUserNumber());
+			reviewDTO.setUserNumber(user.getUserNumber());
 
 			// 리뷰 삭제 서비스 호출
 			int result = service.deleteReview(reviewDTO);
@@ -157,7 +157,7 @@ public class BookReviewController {
 
 	@PostMapping("/insertReview")
 	public ResponseEntity<Map<String, Object>> insertReview(@RequestParam HashMap<String, String> param,
-			HttpSession session) {
+			HttpServletRequest request) {
 
 		Map<String, Object> response = new HashMap<>();
 
@@ -166,7 +166,7 @@ public class BookReviewController {
 			System.out.println("전달된 파라미터: " + param);
 
 			// 로그인 확인
-			UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+			BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 
 			if (!param.containsKey("reviewRating") || param.get("reviewRating").trim().isEmpty()) {
 				response.put("success", false);
@@ -187,7 +187,7 @@ public class BookReviewController {
 			}
 
 			// 사용자 정보 추가
-			param.put("userNumber", String.valueOf(loginUser.getUserNumber()));
+			param.put("userNumber", String.valueOf(user.getUserNumber()));
 
 			// 이미 리뷰를 작성했는지 확인
 		    if (service.checkReview(param) == 1) {
