@@ -43,7 +43,7 @@
 
 
 
-## 💻 개발 도구 및 환경
+## 💻 개발 도구
 
 | 도구 | 역할 |
 |------|------|
@@ -59,19 +59,18 @@
 
 ## ✅ 개발 특징
 
-- **JWT + OAuth2 로그인 구현**
-- **Spring Security 기반 권한 관리 및 접근 제어**
-- **Oracle + MyBatis를 활용한 실시간 데이터 처리**
-- **AI 연동 챗봇 및 실시간 채팅 기능 구현**
-- **JSP 기반 다이내믹 페이지 구성**
-- **REST API 설계 및 통신 구조 최적화**
-
+- **JWT + OAuth2 기반 로그인/인증 시스템**
+- **Spring Security 기반 권한 분기 및 접근 제어 구현**
+- **Oracle + MyBatis 활용한 데이터 핸들링**
+- **실시간 1:1 채팅 및 AI 챗봇 통합 기능 구현**
+- **REST API 설계 최적화 및 클린 아키텍처 적용**
 
 ## 📊 데이터베이스 
 <a name="trade-section-top-erd"></a>
 <details>
 <summary>ERD</summary>
   <br>
+<h1>🔹 주요 테이블 분류</h1>
 <ul>
   <li><b>사용자 관리</b>
     <ul>
@@ -125,17 +124,17 @@
 </ul>
 <br>
   
-## 전체 ERD
+## 📌 전체 ERD
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_전체.png?raw=true)
 
 ### 🔝 [이 섹션 맨 위로 이동](#trade-section-top-erd)
 
-## 1차 ERD
+## 🧩 1차 ERD
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_1차.png?raw=true)
 
 ### 🔝 [이 섹션 맨 위로 이동](#trade-section-top-erd)
 
-## 2차 ERD
+## 🧩 2차 ERD
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_2차.png?raw=true)
 
 ### 🔝 [이 섹션 맨 위로 이동](#trade-section-top-erd)
