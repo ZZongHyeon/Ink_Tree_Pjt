@@ -4,59 +4,88 @@
 
 [application.txt](https://github.com/user-attachments/files/20207307/application.txt)
 
-  <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> 
-  <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white"> 
-  <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> 
+<div align="center">
+  
+  <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white"/>
+  <img src="https://img.shields.io/badge/MyBatis-000000?style=for-the-badge&logo=data&logoColor=white"/>
+  <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white"/>
+  
+</div>
 
-## 📦 개발 환경 구조 요약
+---
 
-| 구분 | 내용
-|-----|-----
-| 개발 언어 | Java (JDK 8 이상), JavaScript
-| 프레임워크 | Spring Boot + MyBatis
-| DB | Oracle 11g 이상
-| 빌드 도구 | Gradle
-| 내장 WAS | Spring Boot 내장 Tomcat
-| 형상관리 | Git / GitHub
-| 협업 도구 | Jira, Notion
+## 📦 개발 환경 구성
 
+| 항목 | 상세 내용 |
+|------|-----------|
+| **개발 언어** | Java (JDK 8+), JavaScript |
+| **프레임워크** | Spring Boot (Spring MVC, Spring Security 포함), MyBatis |
+| **데이터베이스** | Oracle 11g 이상 |
+| **빌드 도구** | Gradle |
+| **WAS** | Spring Boot Embedded Tomcat |
+| **형상 관리** | Git, GitHub |
+| **협업 도구** | Jira, Notion |
+| **API 테스트** | Postman |
+
+---
 
 ## 🛠️ 기술 스택 (Tech Stack)
 
-### 🌐 프론트엔드 (Frontend)
+### 🌐 Frontend
 
-- JSP: 서버 측에서 HTML을 생성하는 렌더링 기술, 동적인 웹 페이지 구현에 사용
-- JavaScript/jQuery: 클라이언트 측에 필요한 동작처리, 동적 콘텐츠 로딩
-- Bootstrap: 반응형 웹 디자인을 위한 프론트엔드 프레임워크
-- MyBatis: SQL Mapper 프레임워크로 프론트와 DB간의 효율적인 데이터 매핑 활용
+| 기술 | 설명 |
+|------|------|
+| **JSP** | 서버 사이드 렌더링 기반 동적 HTML 생성 |
+| **JavaScript / jQuery** | 클라이언트 상호작용 구현 및 Ajax 요청 처리 |
+| **Bootstrap** | 반응형 UI 디자인 구현 |
+| **MyBatis** | View와 DB 간의 데이터 매핑 처리 (JSP ↔ DAO) |
 
+### ⚙ Backend
 
-### ⚙️ 백엔드 (Backend)
+| 기술 | 설명 |
+|------|------|
+| **Spring Framework** | MVC 아키텍처 기반 컨트롤러/서비스 설계 |
+| **Spring Boot** | 설정 자동화, 내장 WAS, RESTful API 설계 |
+| **Spring Security** | 인증/인가 처리 (JWT + OAuth2 지원) |
+| **MyBatis** | SQL Mapper 프레임워크, DAO 역할 |
+| **OracleDB** | 안정적인 트랜잭션 관리와 데이터 저장 |
 
-- Spring Framework: 컨트롤러, 서비스 계층의 구현을 위해 사용, 표준 MVC 패턴 기반으로 구조화(스프링부트로 변환)
-- Spring Boot: 스프링 기반 애플리케이션 개발 간소화 및 자동 구성 제공
-- Spring Security: 인증 및 권한 부여를 위한 보안 프레임워크
-- MyBatis: SQL과 서버 객체간 매핑담당 도구, 시퀀스와 연계가 용이
-- Oracle: 대규모 데이터 관리를 위한 관계형 데이터베이스 사용
+### 🔗 API 연동 및 외부 서비스
 
+- **Naver SMTP** – 이메일 인증 시스템 구현  
+- **Kakao 주소 API** – 회원가입 주소 자동입력  
+- **OAuth2 (Naver, Kakao, Google)** – 소셜 로그인 연동  
+- **Google Gemini API** – 도서 추천용 AI 챗봇  
+- **WebSocket** – 1:1 실시간 채팅 서비스  
 
-### 🔌 API 연동
+---
 
-- Naver API
-- Kakao API
-- Google API
-- Gemini API
+## 💻 개발 도구 및 환경
 
+| 도구 | 역할 |
+|------|------|
+| **IntelliJ IDEA / Eclipse** | Java 백엔드 및 Spring Boot 개발 |
+| **Visual Studio Code** | 프론트엔드, JSP 및 JS 개발 |
+| **Postman** | API 테스트 및 디버깅 |
+| **GitHub** | 프로젝트 버전 관리 및 협업 |
+| **Notion** | 기획/기록/문서화 |
+| **Jira** | 업무 프로세스 관리, 일정 계획 |
+| **Apache Tomcat** | 내장 웹 서버 (Spring Boot Embedded) |
 
-### 🛠️ 개발 도구 (Development Tools)
+---
 
-- IntelliJ IDEA / Eclipse: Java 백엔드 및 Spring 기반 프로젝트 구현
-- Visual Studio Code: JS, CSS, 프론트 등 코드 작성용 에디터
-- Postman: API 테스트 및 개발
-- GitHub: 코드 버전 관리 및 팀 협업
-- Notion: 문서화 및 팀 커뮤니케이션
-- Jira: 이슈 관리 및 구체적인 일정 계획 수립을 위한 협업 도구
-- Apache Tomcat: 웹앱 서버 구동, 테스트 (스프링부트 내장 톰캣 사용)
+## ✅ 개발 특징
+
+- **JWT + OAuth2 로그인 구현**
+- **Spring Security 기반 권한 관리 및 접근 제어**
+- **Oracle + MyBatis를 활용한 실시간 데이터 처리**
+- **AI 연동 챗봇 및 실시간 채팅 기능 구현**
+- **JSP 기반 다이내믹 페이지 구성**
+- **REST API 설계 및 통신 구조 최적화**
+
+---
 
 
 ## ERD (1차)
@@ -68,23 +97,4 @@
 ## ERD 전체
 ![image](https://github.com/user-attachments/assets/d85e13ae-4f98-4baf-982a-6cfd1c324215)
 
-## 🔑회원가입 - 도로명 api
-https://github.com/user-attachments/assets/1e1b3202-5e98-482b-ba6a-8f2281aadce5
 
-## 🏠마이페이지 - 대출중도서, 연체도서, 총 대출 이력, 대출현황&기록
-https://github.com/user-attachments/assets/21322cc8-3d86-4957-b91a-c8b608871d74
-
-## 📖대출&반납
-https://github.com/user-attachments/assets/9cf238c0-6ded-475b-a1fd-eb9e090d7dd1
-
-## 📨게시판 작성, 수정, 삭제, 댓글, 추천
-https://github.com/user-attachments/assets/295d5c3a-c79f-47a0-b290-f535c7cfbd1d
-
-## 📕 도서 등록
-https://github.com/user-attachments/assets/c25e002f-0a1c-4fdb-8285-8b6f5f99a085
-
-## ✏️도서 수정
-https://github.com/user-attachments/assets/6a497dd5-5aa5-4dac-9bef-000b31cdd8e0
-
-## 📢공지사항 작성, 수정, 삭제
-https://github.com/user-attachments/assets/5691abc0-2bc7-49a5-9be8-166daf432095
