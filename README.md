@@ -1,15 +1,12 @@
-## 📦 개발 환경 구성
-
-| 항목 | 상세 내용 |
-|------|-----------|
-| **개발 언어** | Java (JDK 8+), JavaScript |
-| **프레임워크** | Spring Boot (Spring MVC, Spring Security 포함), MyBatis |
-| **데이터베이스** | Oracle 11g 이상 |
-| **빌드 도구** | Gradle |
-| **WAS** | Spring Boot Embedded Tomcat |
-| **형상 관리** | Git, GitHub |
-| **협업 도구** | Jira, Notion |
-| **API 테스트** | Postman |
+📦 시스템 개발 환경
+구분	내용
+Backend	Java (JDK 8+), Spring Boot (MVC, Security), MyBatis
+Frontend	JSP, JavaScript, jQuery, Bootstrap
+Database	Oracle 11g
+Build/Deploy	Gradle, Spring Boot Embedded Tomcat
+Version Control	Git, GitHub
+협업 도구	Jira, Notion
+API 테스트	Postman
 
 
 
