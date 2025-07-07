@@ -1,7 +1,4 @@
 
-[쿼리문.txt](https://github.com/user-attachments/files/20219072/default.txt)
-
-
 [application.txt](https://github.com/user-attachments/files/20207307/application.txt)
 
 <div align="center">
