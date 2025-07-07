@@ -133,9 +133,23 @@
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_2차.png?raw=true)
 </details>
 
+<details>
+<summary>로그인 & 회원가입</summary>
+</details>
 
+<details>
+<summary>로그인 & 회원가입</summary>
+  ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/1로그인화면.png?raw=true)
 
+  구현기능설명 - 로그인
+1. 일반 로그인
+비회원은 회원가입을 통해 로그인을 할 수 있습니다.
+로그인시 JWT토큰을 발급받고 사용자는 해당 서비스를 이용 할 수 있습니다.
+2. 소셜 로그인
+네이버, 카카오, 구글 등을 통해 일반 회원가입을 진행 할 수 있습니다.
+소셜 로그인 또한 JWT토큰을 발급받고 해당 서비스를 이용 할 수 있습니다.
 
-
-
+  ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/2_1회원가입.png?raw=true)
+  ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/2_2이메일인증.png?raw=true)
+</details>
 
