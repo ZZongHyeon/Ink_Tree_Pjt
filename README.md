@@ -56,19 +56,19 @@
 </thead>
 <tbody>
 <tr>
-<td><img src="https://img.shields.io/badge/JSP-007396?style=flat&logo=java&logoColor=white" alt="JSP"> <strong>JSP</strong></td>
+<td><img src="https://img.shields.io/badge/JSP-007396?style=flat&logo=java&logoColor=white" alt="JSP"></td>
 <td>서버 사이드 렌더링 기반 동적 HTML 생성</td>
 </tr>
 <tr>
-<td><img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black" alt="JavaScript"> <img src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jquery&logoColor=white" alt="jQuery"> <strong>JavaScript / jQuery</strong></td>
+<td><img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black" alt="JavaScript"> <img src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jquery&logoColor=white" alt="jQuery"></td>
 <td>클라이언트 상호작용 구현 및 Ajax 요청 처리</td>
 </tr>
 <tr>
-<td><img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white" alt="Bootstrap"> <strong>Bootstrap</strong></td>
+<td><img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white" alt="Bootstrap"></td>
 <td>반응형 UI 디자인 구현</td>
 </tr>
 <tr>
-<td><img src="https://img.shields.io/badge/MyBatis-000000?style=flat&logo=mybatis&logoColor=white" alt="MyBatis"> <strong>MyBatis</strong></td>
+<td><img src="https://img.shields.io/badge/MyBatis-000000?style=flat&logo=mybatis&logoColor=white" alt="MyBatis"></td>
 <td>View와 DB 간의 데이터 매핑 처리 (JSP ↔ DAO)</td>
 </tr>
 </tbody>
@@ -85,31 +85,31 @@
 </thead>
 <tbody>
 <tr>
-<td><img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat&logo=spring-boot&logoColor=white" alt="Spring Boot"> <strong>Spring Boot</strong></td>
+<td><img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat&logo=spring-boot&logoColor=white" alt="Spring Boot"></td>
 <td>RESTful API 구현, 설정 자동화, 내장 톰캣 기반 서버 환경</td>
 </tr>
 <tr>
-<td><img src="https://img.shields.io/badge/Spring_MVC-6DB33F?style=flat&logo=spring&logoColor=white" alt="Spring MVC"> <strong>Spring MVC</strong></td>
+<td><img src="https://img.shields.io/badge/Spring_MVC-6DB33F?style=flat&logo=spring&logoColor=white" alt="Spring MVC">/td>
 <td>계층화된 컨트롤러-서비스 구조로 웹 애플리케이션 구현</td>
 </tr>
 <tr>
-<td><img src="https://img.shields.io/badge/MyBatis-000000?style=flat&logo=mybatis&logoColor=white" alt="MyBatis"> <strong>MyBatis</strong></td>
+<td><img src="https://img.shields.io/badge/MyBatis-000000?style=flat&logo=mybatis&logoColor=white" alt="MyBatis">/td>
 <td>SQL 중심 ORM, DB 연동 및 동적 쿼리 처리</td>
 </tr>
 <tr>
-<td><img src="https://img.shields.io/badge/Oracle-F80000?style=flat&logo=oracle&logoColor=white" alt="Oracle"> <strong>Oracle</strong></td>
+<td><img src="https://img.shields.io/badge/Oracle-F80000?style=flat&logo=oracle&logoColor=white" alt="Oracle"></td>
 <td>게시글/댓글/좋아요/거래 데이터 관리용 RDBMS</td>
 </tr>
 <tr>
-<td><img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=flat&logo=spring-security&logoColor=white" alt="Spring Security"> <strong>Spring Security</strong></td>
+<td><img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=flat&logo=spring-security&logoColor=white" alt="Spring Security"></td>
 <td>사용자 인증/인가 및 세션 관리 구현</td>
 </tr>
 <tr>
-<td><img src="https://img.shields.io/badge/JWT-000000?style=flat&logo=json-web-tokens&logoColor=white" alt="JWT"> <strong>JWT</strong></td>
+<td><img src="https://img.shields.io/badge/JWT-000000?style=flat&logo=json-web-tokens&logoColor=white" alt="JWT"></td>
 <td>토큰 기반 인증 구조, 무상태 인증 처리 방식 적용</td>
 </tr>
 <tr>
-<td><img src="https://img.shields.io/badge/WebSocket-010101?style=flat&logo=socket.io&logoColor=white" alt="WebSocket"> <strong>WebSocket</strong></td>
+<td><img src="https://img.shields.io/badge/WebSocket-010101?style=flat&logo=socket.io&logoColor=white" alt="WebSocket"></td>
 <td>1:1 실시간 채팅 서비스</td>
 </tr>
 </tbody>
@@ -117,32 +117,100 @@
 
 ## 🔌 외부 연동 API
 
-| API | 설명 |
-|------|------|
-| **Naver SMTP** | 이메일 인증 시스템 구현  |
-| **Kakao 주소 API** | 회원가입 주소 자동입력  |
-| **OAuth2 (Naver, Kakao, Google)** | 소셜 로그인 연동  |
-| **Google Gemini API** | 도서 추천용 AI 챗봇  |
-| **WebSocket** | 1:1 실시간 채팅 서비스  |
+<table>
+<thead>
+<tr>
+<th width="30%">API</th>
+<th width="70%">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="https://img.shields.io/badge/Naver-03C75A?style=flat&logo=naver&logoColor=white" alt="Naver SMTP"></td>
+<td>이메일 인증 시스템 구현</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/Kakao-FFCD00?style=flat&logo=kakao&logoColor=black" alt="Kakao"></td>
+<td>회원가입 주소 자동입력</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/OAuth2-4285F4?style=flat&logo=google&logoColor=white" alt="OAuth2"> <img src="https://img.shields.io/badge/Naver-03C75A?style=flat&logo=naver&logoColor=white" alt="Naver"> <img src="https://img.shields.io/badge/Kakao-FFCD00?style=flat&logo=kakao&logoColor=black" alt="Kakao"></td>
+<td>소셜 로그인 연동</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/Google_Gemini-4285F4?style=flat&logo=google&logoColor=white" alt="Google Gemini"></td>
+<td>도서 추천용 AI 챗봇</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/WebSocket-010101?style=flat&logo=socket.io&logoColor=white" alt="WebSocket"></td>
+<td>1:1 실시간 채팅 서비스</td>
+</tr>
+</tbody>
+</table>
 
 ## 💻 개발 도구
 
-| 도구 | 역할 |
-|------|------|
-| **IntelliJ IDEA / Eclipse** | Java 백엔드 및 Spring Boot 개발 |
-| **Visual Studio Code** | 프론트엔드, JSP 및 JS 개발 |
-| **Postman** | API 테스트 및 디버깅 |
-| **GitHub** | 프로젝트 버전 관리 및 협업 |
-| **Notion** | 기획/기록/문서화 |
-| **Jira** | 업무 프로세스 관리, 일정 계획 |
+<table>
+<thead>
+<tr>
+<th width="30%">도구</th>
+<th width="70%">역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="https://img.shields.io/badge/IntelliJ_IDEA-000000?style=flat&logo=intellij-idea&logoColor=white" alt="IntelliJ"> <img src="https://img.shields.io/badge/Eclipse-2C2255?style=flat&logo=eclipse&logoColor=white" alt="Eclipse"></td>
+<td>Java 백엔드 및 Spring Boot 개발</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/Visual_Studio_Code-007ACC?style=flat&logo=visual-studio-code&logoColor=white" alt="VS Code"></td>
+<td>프론트엔드, JSP 및 JS 개발</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=postman&logoColor=white" alt="Postman"></td>
+<td>API 테스트 및 디버깅</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" alt="GitHub"></td>
+<td>프로젝트 버전 관리 및 협업</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white" alt="Notion"></td>
+<td>기획/기록/문서화</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/Jira-0052CC?style=flat&logo=jira&logoColor=white" alt="Jira"></td>
+<td>업무 프로세스 관리, 일정 계획</td>
+</tr>
+</tbody>
+</table>
 
 ## ✅ 개발 특징
 
-- JWT + OAuth2 **기반 로그인/인증 시스템**
-- Spring Security **기반 권한 분기 및 접근 제어 구현**
-- Oracle + MyBatis **활용한 데이터 핸들링**
-- **실시간 1:1 채팅 및 AI 챗봇 통합 기능 구현**
-- **REST API 설계 최적화 및 클린 아키텍처 적용**
+<table>
+<thead>
+<tr>
+<th width="100%">주요 특징</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🔐 JWT + OAuth2 기반 로그인/인증 시스템</td>
+</tr>
+<tr>
+<td>🛡️ Spring Security 기반 권한 분기 및 접근 제어 구현</td>
+</tr>
+<tr>
+<td>🗄️ Oracle + MyBatis 활용한 데이터 핸들링</td>
+</tr>
+<tr>
+<td>💬 실시간 1:1 채팅 및 AI 챗봇 통합 기능 구현</td>
+</tr>
+<tr>
+<td>🏗️ REST API 설계 최적화 및 클린 아키텍처 적용</td>
+</tr>
+</tbody>
+</table>
 
 ## 📊 데이터베이스 
 <a name="trade-section-top-erd"></a>
