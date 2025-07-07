@@ -341,6 +341,8 @@ WebSocket기반 1:1채팅이며 **실시간 알림** 또한 구현했습니다.
 
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_4채팅.png?raw=true)
 
+---
+
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/9_1챗봇.png?raw=true)
 
 1. **Google Gemini API**를 활용하여 도서 관련 질의에만 응답하는 AI 챗봇을 구현하였습니다.
@@ -348,4 +350,5 @@ WebSocket기반 1:1채팅이며 **실시간 알림** 또한 구현했습니다.
 3. 사용자는 신속하고 정확하게 도서 관련 정보를 얻을 수 있고 Gemini API의 자연어 처리 능력을 적극 활용하여 다양한 형태의 도서 관련 질문에도 신뢰성 높은 응답이 가능합니다.
    
 ### 🔝 [이 섹션 맨 위로 이동](#trade-section-top10)
+---
 </details>
