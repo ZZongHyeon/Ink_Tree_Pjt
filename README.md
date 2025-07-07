@@ -231,7 +231,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 
 ---
 
-![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/4_2게시글.png?raw=true)
+![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/4_3게시글.png?raw=true)
 
 1. 게시글 상세 기능에서는 사용자의 반응을 유도하고 콘텐츠의 신뢰도를 높이기 위해 추천 기능을 도입하였습니다.
 2. 사용자는 특정 게시글에 공감하거나 유익하다고 판단될 경우 추천 버튼을 통해 피드백을 줄 수 있으며 이는 커뮤니티 내에서 콘텐츠 품질을 자연스럽게 평가할 수 있는 간접적인 장치로 작용합니다.
