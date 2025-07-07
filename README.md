@@ -141,10 +141,6 @@
 <td><img src="https://img.shields.io/badge/Google_Gemini-4285F4?style=flat&logo=google&logoColor=white" alt="Google Gemini"></td>
 <td>도서 추천용 AI 챗봇</td>
 </tr>
-<tr>
-<td><img src="https://img.shields.io/badge/WebSocket-010101?style=flat&logo=socket.io&logoColor=white" alt="WebSocket"></td>
-<td>1:1 실시간 채팅 서비스</td>
-</tr>
 </tbody>
 </table>
 
