@@ -136,7 +136,7 @@
 ## 🖥️상세구현내용
 
 <details>
-<summary>🖥️로그인 & 회원가입</summary>
+<summary>로그인 & 회원가입</summary>
   
   ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/1로그인화면.png?raw=true)
 
@@ -208,6 +208,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 
 </details>
 
+<details>
 <summary>공지사항 & 일반 게시판</summary>
 
     ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/4_1공지.png?raw=true)
@@ -237,6 +238,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 
 </details>
 
+<details>
 <summary>거래 게시판</summary>
 
     ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/4_4거래게시판.png?raw=true)
@@ -254,6 +256,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 3. 이러한 설계를 통해 사용자 간 거래에서 발생할 수 있는 불신을 줄이고 더 투명한 중고 거래 경험을 제공합니다.
 </details>
 
+<details>
 <summary>관심목록</summary>
     ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/5_1일반도서관심.png?raw=true)
     ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/5_2거래도서관심.png?raw=true)
@@ -263,6 +266,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 3. 사용자는 해당 화면에서 직접 관심 게시글을 삭제할 수 있으며 이를 통해 관심 상품을 간편하게 관리할 수 있는 UX흐름을 제공하였습니다. 추가적으로 관심 목록과 일반 게시판, 상세 페이지 간 이동 동선도 유기적으로 연결되어 이탈없이 자연스러운 사용자 흐름이 가능하도록 설계했으며 관심등록된 거래 게시글은 한 곳에 모아 효율적으로 탐색할 수 있도록 구성했습니다. 이 또한 제목, 카테고리 별로 검색 할 수 있고 판매중, 예약중, 판매완료, 최신순, 낮은 가격순, 높은 가격순, 조회순등으로 정렬 및 탐색 가능 바로 관심목록 삭제도 가능합니다.
 </details>
 
+<details>
 <summary>도서대출기록</summary>
     ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/6_1기록1.png?raw=true)
     ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/6_2기록.png?raw=true)
@@ -285,6 +289,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 
 </details>
 
+<details>
 <summary>1:1채팅 & 챗봇/summary>
     ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_1채팅.png?raw=true)
 	
