@@ -1,13 +1,15 @@
-📦 시스템 개발 환경
-구분	내용
-Backend	Java (JDK 8+), Spring Boot (MVC, Security), MyBatis
-Frontend	JSP, JavaScript, jQuery, Bootstrap
-Database	Oracle 11g
-Build/Deploy	Gradle, Spring Boot Embedded Tomcat
-Version Control	Git, GitHub
-협업 도구	Jira, Notion
-API 테스트	Postman
+## 📦 개발 환경 구성
 
+| 항목 | 상세 내용 |
+|------|-----------|
+| **개발 언어** | Java (JDK 8+), JavaScript |
+| **프레임워크** | Spring Boot (Spring MVC, Spring Security 포함), MyBatis |
+| **데이터베이스** | Oracle 11g 이상 |
+| **빌드 도구** | Gradle |
+| **WAS** | Spring Boot Embedded Tomcat |
+| **형상 관리** | Git, GitHub |
+| **협업 도구** | Jira, Notion |
+| **API 테스트** | Postman |
 
 
 ## 🛠️ 기술 스택 (Tech Stack)
@@ -65,7 +67,7 @@ API 테스트	Postman
 - **REST API 설계 및 통신 구조 최적화**
 
 <details>
-<summary>📊 ERD 구조 설명 보기</summary>
+<summary>데이터베이스 ERD</summary>
   <br>
 <ul>
   <li><b>사용자 관리</b>
@@ -130,7 +132,7 @@ API 테스트	Postman
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/erd/ERD_2차.png?raw=true)
 </details>
 
-## 🖥️상세구현내용
+## 🖥 주요 화면 및 기능 상세
 
 <details>
 <summary>로그인 & 회원가입</summary>
