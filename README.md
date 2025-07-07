@@ -27,11 +27,13 @@
 
 | 기술 | 설명 |
 |------|------|
-| **Spring Framework** | MVC 아키텍처 기반 컨트롤러/서비스 설계 |
-| **Spring Boot** | 설정 자동화, 내장 WAS, RESTful API 설계 |
-| **Spring Security** | 인증/인가 처리 (JWT + OAuth2 지원) |
-| **MyBatis** | SQL Mapper 프레임워크, DAO 역할 |
-| **OracleDB** | 안정적인 트랜잭션 관리와 데이터 저장 |
+| **Spring Boot** | RESTful API 구현, 설정 자동화, 내장 톰캣 기반 서버 환경 |
+| **Spring MVC** | 계층화된 컨트롤러-서비스 구조로 웹 애플리케이션 구현 |
+| **MyBatis** | SQL 중심 ORM, DB 연동 및 동적 쿼리 처리 |
+| **Oracle** | 게시글/댓글/좋아요/거래 데이터 관리용 RDBMS |
+| **Spring Security** | 사용자 인증/인가 및 세션 관리 구현 |
+| **JWT** | 토큰 기반 인증 구조, 무상태 인증 처리 방식 적용 |
+| **WebSocket** | 1:1 실시간 채팅 서비스 |
 
 ### 🔗 API 연동 및 외부 서비스
 
@@ -40,8 +42,6 @@
 - **OAuth2 (Naver, Kakao, Google)** – 소셜 로그인 연동  
 - **Google Gemini API** – 도서 추천용 AI 챗봇  
 - **WebSocket** – 1:1 실시간 채팅 서비스  
-
-
 
 ## 💻 개발 도구
 
@@ -53,15 +53,12 @@
 | **GitHub** | 프로젝트 버전 관리 및 협업 |
 | **Notion** | 기획/기록/문서화 |
 | **Jira** | 업무 프로세스 관리, 일정 계획 |
-| **Apache Tomcat** | 내장 웹 서버 (Spring Boot Embedded) |
-
-
 
 ## ✅ 개발 특징
 
-- **JWT + OAuth2 기반 로그인/인증 시스템**
-- **Spring Security 기반 권한 분기 및 접근 제어 구현**
-- **Oracle + MyBatis 활용한 데이터 핸들링**
+- JWT + OAuth2 **기반 로그인/인증 시스템**
+- Spring Security **기반 권한 분기 및 접근 제어 구현**
+- Oracle + MyBatis **활용한 데이터 핸들링**
 - **실시간 1:1 채팅 및 AI 챗봇 통합 기능 구현**
 - **REST API 설계 최적화 및 클린 아키텍처 적용**
 
@@ -178,11 +175,11 @@
 
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/3_1메인.png?raw=true)
 
-1. 토큰
-로그인시 사용자의 **토큰 만료시간**과 해당 **토큰의 만료값을 초기화**시켜 다시 30분의 시간을 가지도록 구현하였습니다.
+1. 토큰<br>
+로그인시 사용자의 **토큰 만료시간**과 해당 **토큰의 만료값을 초기화**시켜 다시 30분의 시간을 가지도록 구현하였습니다.<br>
 UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 위해 축소 및 일정 width이하가 되면 숨김처리 되도록 구현하였습니다.
-2. 검색
-텍스트입력기반 검색을 통하여 사용자가 원하는 **도서 제목, 저자, 출판사** 등으로 검색하여 도서를 검색 할 수 있습니다.
+2. 검색<br>
+텍스트입력기반 검색을 통하여 사용자가 원하는 **도서 제목, 저자, 출판사** 등으로 검색하여 도서를 검색 할 수 있습니다.<br>
 실제 도서에서도 분류별로 나뉘기에 **대분류, 중분류**로 나누어 사용자 경험을 향상시켰습니다.
 
 ---
@@ -318,7 +315,7 @@ UI상 창모드 및 모바일로 사용 시 사용자경험을 상승시키기 �
 
 <a name="trade-section-top9"></a>
 <details>
-<summary>🛠 기타 관리자 기능</summary>
+<summary>🛠 관리자 기능</summary>
     
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/7_1관리자.png?raw=true)
 ![InkTree ERD](https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/7_2활동로그.png?raw=true)
