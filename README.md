@@ -47,24 +47,73 @@
 
 ### 🌐 Frontend
 
-| 기술 | 설명 |
-|------|------|
-| **JSP** | 서버 사이드 렌더링 기반 동적 HTML 생성 |
-| **JavaScript / jQuery** | 클라이언트 상호작용 구현 및 Ajax 요청 처리 |
-| **Bootstrap** | 반응형 UI 디자인 구현 |
-| **MyBatis** | View와 DB 간의 데이터 매핑 처리 (JSP ↔ DAO) |
+<table>
+<thead>
+<tr>
+<th align="center">기술</th>
+<th align="center">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><strong>JSP</strong></td>
+<td>서버 사이드 렌더링 기반 동적 HTML 생성</td>
+</tr>
+<tr>
+<td align="center"><strong>JavaScript / jQuery</strong></td>
+<td>클라이언트 상호작용 구현 및 Ajax 요청 처리</td>
+</tr>
+<tr>
+<td align="center"><strong>Bootstrap</strong></td>
+<td>반응형 UI 디자인 구현</td>
+</tr>
+<tr>
+<td align="center"><strong>MyBatis</strong></td>
+<td>View와 DB 간의 데이터 매핑 처리 (JSP ↔ DAO)</td>
+</tr>
+</tbody>
+</table>
 
-### ⚙ Backend
+### ⚙️ Backend
 
-| 기술 | 설명 |
-|------|------|
-| **Spring Boot** | RESTful API 구현, 설정 자동화, 내장 톰캣 기반 서버 환경 |
-| **Spring MVC** | 계층화된 컨트롤러-서비스 구조로 웹 애플리케이션 구현 |
-| **MyBatis** | SQL 중심 ORM, DB 연동 및 동적 쿼리 처리 |
-| **Oracle** | 게시글/댓글/좋아요/거래 데이터 관리용 RDBMS |
-| **Spring Security** | 사용자 인증/인가 및 세션 관리 구현 |
-| **JWT** | 토큰 기반 인증 구조, 무상태 인증 처리 방식 적용 |
-| **WebSocket** | 1:1 실시간 채팅 서비스 |
+<table>
+<thead>
+<tr>
+<th align="center">기술</th>
+<th align="center">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><strong>Spring Boot</strong></td>
+<td>RESTful API 구현, 설정 자동화, 내장 톰캣 기반 서버 환경</td>
+</tr>
+<tr>
+<td align="center"><strong>Spring MVC</strong></td>
+<td>계층화된 컨트롤러-서비스 구조로 웹 애플리케이션 구현</td>
+</tr>
+<tr>
+<td align="center"><strong>MyBatis</strong></td>
+<td>SQL 중심 ORM, DB 연동 및 동적 쿼리 처리</td>
+</tr>
+<tr>
+<td align="center"><strong>Oracle</strong></td>
+<td>게시글/댓글/좋아요/거래 데이터 관리용 RDBMS</td>
+</tr>
+<tr>
+<td align="center"><strong>Spring Security</strong></td>
+<td>사용자 인증/인가 및 세션 관리 구현</td>
+</tr>
+<tr>
+<td align="center"><strong>JWT</strong></td>
+<td>토큰 기반 인증 구조, 무상태 인증 처리 방식 적용</td>
+</tr>
+<tr>
+<td align="center"><strong>WebSocket</strong></td>
+<td>1:1 실시간 채팅 서비스</td>
+</tr>
+</tbody>
+</table>
 
 ## 🔌 외부 연동 API
 
