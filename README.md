@@ -679,8 +679,11 @@
 
 <div align="center">
 <a href="#trade-section-top10">
-<img src="https://img.shields.io/badge/🔼위로 이동-4A90E2?style=for-the-badge&logoColor=white" alt="맨 위로">
+<img src="https://img.shields.io/badge/🔼위로 이동-4A90E2?style=for-the-badge&logoColor=white" alt="해당 섹션 위로">
 </a>
+<a href="#top">
+    <img src="https://img.shields.io/badge/⬆️맨 위로 이동-4A90E2?style=for-the-badge&logoColor=white" alt="맨 위로">
+  </a>
 </div>
 
 ---
