@@ -11,52 +11,6 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>💻 개발 언어</strong></td>
-<td><img src="https://img.shields.io/badge/Java-ED8B00?style=flat&logo=java&logoColor=white" alt="Java"> Java (JDK 8+)</td>
-</tr>
-<tr>
-<td><strong>🚀 프레임워크</strong></td>
-<td><img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat&logo=spring-boot&logoColor=white" alt="Spring Boot"> Spring Boot (Spring MVC, Spring Security 포함)</td>
-</tr>
-<tr>
-<td><strong>🗄️ ORM</strong></td>
-<td><img src="https://img.shields.io/badge/MyBatis-000000?style=flat&logo=mybatis&logoColor=white" alt="MyBatis"> MyBatis</td>
-</tr>
-<tr>
-<td><strong>💾 데이터베이스</strong></td>
-<td><img src="https://img.shields.io/badge/Oracle-F80000?style=flat&logo=oracle&logoColor=white" alt="Oracle"> Oracle 11g 이상</td>
-</tr>
-<tr>
-<td><strong>🔨 빌드 도구</strong></td>
-<td><img src="https://img.shields.io/badge/Gradle-02303A?style=flat&logo=gradle&logoColor=white" alt="Gradle"> Gradle</td>
-</tr>
-<tr>
-<td><strong>🌐 WAS</strong></td>
-<td><img src="https://img.shields.io/badge/Apache_Tomcat-F8DC75?style=flat&logo=apache-tomcat&logoColor=black" alt="Tomcat"> Spring Boot Embedded Tomcat</td>
-</tr>
-<tr>
-<td><strong>📂 형상 관리</strong></td>
-<td><img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white" alt="Git"> <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" alt="GitHub"> Git, GitHub Actions CI/CD</td>
-</tr>
-<tr>
-<td><strong>🤝 협업 도구</strong></td>
-<td><img src="https://img.shields.io/badge/Jira-0052CC?style=flat&logo=jira&logoColor=white" alt="Jira"> <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white" alt="Notion"> Jira (이슈 관리), Notion (문서화)</td>
-</tr>
-<tr>
-<td><strong>🧪 API 테스트</strong></td>
-<td><img src="https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=postman&logoColor=white" alt="Postman"> Postman</td>
-</tr>
-</tbody>
-</table>
-<!-- <table>
-<thead>
-<tr>
-<th width="25%">카테고리</th>
-<th width="75%">상세 내용</th>
-</tr>
-</thead>
-<tbody>
-<tr>
 <td><img src="https://img.shields.io/badge/💻_개발_언어-4A90E2?style=flat&logoColor=white" alt="개발 언어"></td>
 <td>Java (JDK 8+)</td>
 </tr>
@@ -94,7 +48,6 @@
 </tr>
 </tbody>
 </table>
--->
 
 ## 🛠️ 기술 스택
 
