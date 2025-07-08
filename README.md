@@ -11,28 +11,40 @@
 </thead>
 <tbody>
 <tr>
-<td><img src="https://img.shields.io/badge/🔧_백엔드-4A90E2?style=flat&logoColor=white" alt="백엔드"></td>
-<td> Java (JDK 8+), Spring Boot (Spring MVC, Spring Security 포함)</td>
+<td><img src="https://img.shields.io/badge/💻_개발_언어-4A90E2?style=flat&logoColor=white" alt="개발 언어"></td>
+<td>Java (JDK 8+)</td>
 </tr>
 <tr>
-<td><img src="https://img.shields.io/badge/🗄️_데이터베이스-7ED321?style=flat&logoColor=white" alt="데이터베이스"></td>
-<td> Oracle 11g 이상, MyBatis ORM</td>
+<td><img src="https://img.shields.io/badge/🚀_프레임워크-7ED321?style=flat&logoColor=white" alt="프레임워크"></td>
+<td>Spring Boot (Spring MVC, Spring Security 포함)</td>
 </tr>
 <tr>
-<td><img src="https://img.shields.io/badge/🏗️_빌드_&_WAS-F5A623?style=flat&logoColor=white" alt="빌드 & WAS"></td>
-<td> Gradle, Spring Boot Embedded Tomcat</td>
+<td><img src="https://img.shields.io/badge/🗄️_ORM-F5A623?style=flat&logoColor=white" alt="ORM"></td>
+<td>MyBatis</td>
 </tr>
 <tr>
-<td><img src="https://img.shields.io/badge/🔄_형상관리-D0021B?style=flat&logoColor=white" alt="형상관리"></td>
-<td> Git, GitHub Actions CI/CD</td>
+<td><img src="https://img.shields.io/badge/💾_데이터베이스-D0021B?style=flat&logoColor=white" alt="데이터베이스"></td>
+<td>Oracle 11g 이상</td>
 </tr>
 <tr>
-<td><img src="https://img.shields.io/badge/🤝_협업_도구-9013FE?style=flat&logoColor=white" alt="협업 도구"></td>
-<td> Jira (이슈 관리), Notion (문서화)</td>
+<td><img src="https://img.shields.io/badge/🔨_빌드_도구-9013FE?style=flat&logoColor=white" alt="빌드 도구"></td>
+<td>Gradle</td>
 </tr>
 <tr>
-<td><img src="https://img.shields.io/badge/🧪_테스트-50E3C2?style=flat&logoColor=white" alt="테스트"></td>
-<td> Postman (API 테스트)</td>
+<td><img src="https://img.shields.io/badge/🌐_WAS-50E3C2?style=flat&logoColor=white" alt="WAS"></td>
+<td>Spring Boot Embedded Tomcat</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/📂_형상_관리-BD10E0?style=flat&logoColor=white" alt="형상 관리"></td>
+<td>Git, GitHub Actions CI/CD</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/🤝_협업_도구-4A90E2?style=flat&logoColor=white" alt="협업 도구"></td>
+<td>Jira (이슈 관리), Notion (문서화)</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/🧪_API_테스트-7ED321?style=flat&logoColor=white" alt="API 테스트"></td>
+<td>Postman</td>
 </tr>
 </tbody>
 </table>
