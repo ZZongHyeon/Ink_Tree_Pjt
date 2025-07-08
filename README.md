@@ -669,7 +669,7 @@
 
 
 <div align="center">
-<img src="https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/9_1챗봇.png?raw=true" alt="AI 챗봇" width="60%">
+<img src="https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/9_1챗봇.png?raw=true" alt="AI 챗봇" width="45%">
 </div>
 
 #### 🤖 AI 챗봇
