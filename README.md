@@ -652,23 +652,21 @@
 <summary><strong>💬 1:1채팅 & 챗봇</strong></summary>
 
 <div align="center">
-<img src="https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_1채팅.png?raw=true" alt="채팅 시작" width="60%">
+<img src="https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_1채팅.png?raw=true" alt="채팅 시작" width="45%">
+<img src="https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_2채팅.png?raw=true" alt="채팅 화면" width="45%">
 </div>
 
-해당 버튼을 누르면 해당 판매자와의 채팅이 열리게 됩니다.
+해당 버튼을 누르면 해당 판매자와의 채팅이 열리고 메시지를 보낼 수 있습니다
 
 <div align="center">
-<img src="https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_2채팅.png?raw=true" alt="채팅 화면" width="45%">
 <img src="https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_3채팅.png?raw=true" alt="채팅 알림" width="45%">
+  <img src="https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_4채팅.png?raw=true" alt="채팅 목록" width="45%">
 </div>
 
 #### 💬 실시간 채팅
 - 메시지를 받은 판매자는 알림이 뜨고 메시지를 보낼 수 있게 됩니다
 - WebSocket기반 1:1채팅이며 **실시간 알림** 또한 구현했습니다
 
-<div align="center">
-<img src="https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/8_4채팅.png?raw=true" alt="채팅 목록" width="60%">
-</div>
 
 <div align="center">
 <img src="https://github.com/pingpingeee/Ink_Tree_Pjt/blob/main/lib/images/front/9_1챗봇.png?raw=true" alt="AI 챗봇" width="60%">
