@@ -1,6 +1,6 @@
 ## 📦 개발 환경 구성
 
-<table>
+<!-- <table>
 <thead>
 <tr>
 <th width="20%">카테고리</th>
@@ -40,8 +40,44 @@
 <td>Postman (API 테스트)</td>
 </tr>
 </tbody>
-</table>
+</table> -->
 
+## 📦 개발 환경 구성
+
+<table>
+<thead>
+<tr>
+<th width="25%">카테고리</th>
+<th width="75%">상세 내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="https://img.shields.io/badge/🔧_백엔드-4A90E2?style=flat&logoColor=white" alt="백엔드"></td>
+<td><img src="https://img.shields.io/badge/Java-ED8B00?style=flat&logo=java&logoColor=white" alt="Java"> <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat&logo=spring-boot&logoColor=white" alt="Spring Boot"> Java (JDK 8+), Spring Boot (Spring MVC, Spring Security 포함)</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/🗄️_데이터베이스-7ED321?style=flat&logoColor=white" alt="데이터베이스"></td>
+<td><img src="https://img.shields.io/badge/Oracle-F80000?style=flat&logo=oracle&logoColor=white" alt="Oracle"> <img src="https://img.shields.io/badge/MyBatis-000000?style=flat&logo=mybatis&logoColor=white" alt="MyBatis"> Oracle 11g 이상, MyBatis ORM</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/🏗️_빌드_&_WAS-F5A623?style=flat&logoColor=white" alt="빌드 & WAS"></td>
+<td><img src="https://img.shields.io/badge/Gradle-02303A?style=flat&logo=gradle&logoColor=white" alt="Gradle"> <img src="https://img.shields.io/badge/Apache_Tomcat-F8DC75?style=flat&logo=apache-tomcat&logoColor=black" alt="Tomcat"> Gradle, Spring Boot Embedded Tomcat</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/🔄_형상관리-D0021B?style=flat&logoColor=white" alt="형상관리"></td>
+<td><img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white" alt="Git"> <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" alt="GitHub"> Git, GitHub Actions CI/CD</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/🤝_협업_도구-9013FE?style=flat&logoColor=white" alt="협업 도구"></td>
+<td><img src="https://img.shields.io/badge/Jira-0052CC?style=flat&logo=jira&logoColor=white" alt="Jira"> <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white" alt="Notion"> Jira (이슈 관리), Notion (문서화)</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/🧪_테스트-50E3C2?style=flat&logoColor=white" alt="테스트"></td>
+<td><img src="https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=postman&logoColor=white" alt="Postman"> Postman (API 테스트)</td>
+</tr>
+</tbody>
+</table>
 
 ## 🛠️ 기술 스택
 
