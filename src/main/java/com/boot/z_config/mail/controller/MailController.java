@@ -27,7 +27,7 @@ public class MailController {
 	@RequestMapping("/mailConfirm")
 	@ResponseBody
 	public ResponseEntity<?> mailConfirm(@RequestParam("email") String email) throws Exception {
-	    System.out.println("이메일 인증 요청: " + email);
+//	    System.out.println("이메일 인증 요청: " + email);
 	    
 	    // 이메일 중복 체크
 	    boolean isEmailExists = service.checkEmail(email);

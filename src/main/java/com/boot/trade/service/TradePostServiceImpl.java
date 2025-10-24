@@ -20,7 +20,6 @@ public class TradePostServiceImpl implements TradePostService {
 	@Override
 	public void tradePostWrite(HashMap<String, String> param) {
 		TradePostDAO dao = sqlSession.getMapper(TradePostDAO.class);
-		System.out.println("paramserIm @# +>" + param);
 		dao.tradePostWrite(param);
 	}
 

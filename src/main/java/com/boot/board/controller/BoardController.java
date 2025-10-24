@@ -51,10 +51,14 @@ public class BoardController {
 		this.boardCommentServiceImpl = boardCommentServiceImpl;
 	}
 
+	@RequestMapping("/board_write")
+	public String boardViewWrite() {
+		return "board/board_write";
+	}
+	
 	@PostMapping("/bc_delete")
 	public ResponseEntity<Map<String, Object>> bc_delete(@RequestParam("commentNumber") int commentNumber) {
 		Map<String, Object> response = new HashMap<>();
-
 		try {
 			HashMap<String, String> param = new HashMap<>();
 			param.put("commentNumber", String.valueOf(commentNumber));

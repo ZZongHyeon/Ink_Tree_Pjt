@@ -31,13 +31,14 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
+@RequestMapping("/trade")
 public class TradePostController {
 
     private static final String NULL = null;
 	@Autowired
     private TradePostService service;
 
-    @RequestMapping("/trade_post_view")
+    @RequestMapping("/post_view")
     public String tradePostList(Model model, SearchBookCriteriaDTO criteriaDTO) {
         // 게시글 목록 조회
         ArrayList<TradePostDTO> list = service.tradePostView(criteriaDTO);
@@ -75,7 +76,7 @@ public class TradePostController {
     @RequestMapping("/trade_post_write_ok")
     public String tradePostWrite(@RequestParam HashMap<String, String> param) {
         service.tradePostWrite(param);
-        return "redirect:trade_post_view";
+        return "redirect:/trade/post_view";
     }
 
     @PostMapping("/trade_post_delete")
@@ -111,7 +112,7 @@ public class TradePostController {
         rttr.addAttribute("postID", param.get("postID"));
         rttr.addAttribute("pageNum", param.get("pageNum"));
         rttr.addAttribute("amount", param.get("amount"));
-        return "redirect:/trade_post_detail_view";
+        return "redirect:/trade/trade_post_detail_view";
     }
 
     @RequestMapping("/trade_post_update")

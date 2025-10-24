@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+	
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +30,7 @@ import com.boot.z_page.PageDTO;
 import com.boot.z_page.criteria.NoticeCriteriaDTO;
 
 @Controller
+@RequestMapping("/book/review")
 public class BookReviewController {
 	private final BoardCommentServiceImpl boardCommentServiceImpl;
 
@@ -66,20 +66,20 @@ public class BookReviewController {
 
 	@PostMapping("/updateReview")
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> updateReview(ReviewDTO reviewDTO, HttpSession session) {
+	public ResponseEntity<Map<String, Object>> updateReview(ReviewDTO reviewDTO, HttpServletRequest request) {
 		Map<String, Object> response = new HashMap<>();
 
 		try {
 			// 로그인 확인
-			UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-			if (loginUser == null) {
+			BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
+			if (user == null) {
 				response.put("success", false);
 				response.put("message", "로그인이 필요합니다.");
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
 			}
 
 			// 사용자 번호 설정
-			reviewDTO.setUserNumber(loginUser.getUserNumber());
+			reviewDTO.setUserNumber(user.getUserNumber());
 
 			// 현재 날짜를 java.sql.Date로 설정
 			long millis = System.currentTimeMillis();
@@ -124,7 +124,7 @@ public class BookReviewController {
 			}
 
 			// 관리자 권한 확인 (필요한 경우)
-			// if (loginUser.getUserAdmin() != 1) {
+			// if (user.getUserAdmin() != 1) {
 			// response.put("success", false);
 			// response.put("message", "권한이 없습니다.");
 			// return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
@@ -214,7 +214,7 @@ public class BookReviewController {
 		}
 	}
 
-	@RequestMapping("/book_detail")
+	@RequestMapping("/detail")
 	public String bookDetail(NoticeCriteriaDTO noticeCriteriaDTO, @RequestParam HashMap<String, String> param,
 			Model model, HttpServletRequest request) {
 		System.out.println("param => " + param);
@@ -244,19 +244,19 @@ public class BookReviewController {
 	@PostMapping("/review_helpful")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> addReviewHelpful(@RequestParam("reviewId") int reviewId,
-			HttpSession session) {
+			HttpServletRequest request) {
 		Map<String, Object> response = new HashMap<>();
 
 		try {
 			// 로그인 확인
-			UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-			if (loginUser == null) {
+			UserDTO user = (UserDTO) request.getAttribute("user");
+			if (user == null) {
 				response.put("success", false);
 				response.put("message", "로그인이 필요합니다.");
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
 			}
 
-			int userNumber = loginUser.getUserNumber();
+			int userNumber = user.getUserNumber();
 
 			// 도움됨 추가
 			boolean result = service.addReviewHelpful(reviewId, userNumber);
@@ -282,19 +282,19 @@ public class BookReviewController {
 	@PostMapping("/review_unhelpful")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> removeReviewHelpful(@RequestParam("reviewId") int reviewId,
-			HttpSession session) {
+			HttpServletRequest request) {
 		Map<String, Object> response = new HashMap<>();
 
 		try {
 			// 로그인 확인
-			UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-			if (loginUser == null) {
+			UserDTO user = (UserDTO) request.getAttribute("user");
+			if (user == null) {
 				response.put("success", false);
 				response.put("message", "로그인이 필요합니다.");
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
 			}
 
-			int userNumber = loginUser.getUserNumber();
+			int userNumber = user.getUserNumber();
 
 			// 도움됨 취소
 			boolean result = service.removeReviewHelpful(reviewId, userNumber);

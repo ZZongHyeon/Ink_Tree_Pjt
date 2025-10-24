@@ -72,30 +72,7 @@ public class UserController {
 //			return "redirect:loginView?error=invalid";
 //		}
 //	}
-	
-	@RequestMapping("/loginForm")
-	public String loginPage(HttpServletRequest request) {
-		String clientIp = getClientIp(request);
-		ConnectionTracker.addIp(clientIp);
 
-		request.getSession().setAttribute("clientIp", clientIp);
-
-		System.out.println(clientIp + " online");
-		return "user/login";
-	}
-
-	@RequestMapping("/disconnect")
-	@ResponseBody
-	public void disconnect(HttpServletRequest request) {
-		String clientIp = getClientIp(request);
-//		ConnectionTracker.removeIp(clientIp);
-//		System.out.println("off : " + clientIp);
-	}
-
-	@RequestMapping("/joinForm")
-	public String join() {
-		return "user/join";
-	}
 	@RequestMapping("/joinProc")
 	public ResponseEntity<String> join(HttpServletRequest request, @RequestParam HashMap<String, String> param) {
 		System.out.println("@#param => " + param);
@@ -297,7 +274,28 @@ public class UserController {
 
 		return response;
 	}
-	
+	@RequestMapping("/loginForm")
+	public String loginPage(HttpServletRequest request) {
+		String clientIp = getClientIp(request);
+		ConnectionTracker.addIp(clientIp);
+
+		request.getSession().setAttribute("clientIp", clientIp);
+
+		//System.out.println(clientIp + " online");
+		return "user/login";
+	}
+
+	@RequestMapping("/disconnect")
+	@ResponseBody
+	public void disconnect(HttpServletRequest request) {
+		String clientIp = getClientIp(request);
+	}
+
+	@RequestMapping("/joinForm")
+	public String join() {
+		return "user/join";
+	}
+
 	private String getClientIp(HttpServletRequest request) {
 		String ip = request.getHeader("X-Forwarded-For");
 		if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {

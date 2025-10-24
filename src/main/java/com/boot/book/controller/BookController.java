@@ -41,6 +41,7 @@ import com.boot.user.dto.UserDTO;
 import com.boot.z_util.otherMVC.service.UtilService;
 
 @Controller
+@RequestMapping("/book")
 public class BookController {
 
 	private final BoardCommentServiceImpl boardCommentServiceImpl;
@@ -56,14 +57,23 @@ public class BookController {
 		this.boardCommentServiceImpl = boardCommentServiceImpl;
 	}
 
-	@RequestMapping("/book_insert")
+	@RequestMapping("/insert_view")
+	public String insertBookView() {
+		return "book/book_insert";
+	}
+
+//	@RequestMapping("/update_view")
+//	public String updateBook() {
+//		return "book/book_update";
+//	}
+	@RequestMapping("/insert_ok")
 	public String insertBook(HttpServletRequest request, @RequestParam HashMap<String, String> param) {
 		service.insertBook(param);
 
 		return "admin/admin_view";
 	}
 
-	@RequestMapping("/update_book")
+	@RequestMapping("/update_view")
 	public String updateBookView(@RequestParam HashMap<String, String> param, BookDTO book, Model model,
 			HttpServletRequest request) {
 		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
@@ -77,7 +87,7 @@ public class BookController {
 		return "book/book_update";
 	}
 
-	@RequestMapping("/update_book_ok")
+	@RequestMapping("/update_ok")
 	public String updateBook(@RequestParam HashMap<String, String> param) {
 		System.out.println("param : " + param);
 		service.updateBook(param);
@@ -115,6 +125,7 @@ public class BookController {
 
 		param.put("userNumber", String.valueOf(user.getUserNumber()));
 
+		System.out.println("test : "+param);
 		try {
 			service.deleteBook(param);
 			return ResponseEntity.ok("successDelete");

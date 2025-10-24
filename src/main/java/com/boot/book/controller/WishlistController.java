@@ -24,6 +24,7 @@ import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.dto.UserDTO;
 
 @Controller
+@RequestMapping("/book/wishlist")
 public class WishlistController {
 
 	@Autowired

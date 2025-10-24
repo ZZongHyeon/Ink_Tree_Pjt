@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.boot.board.service.BoardCommentServiceImpl;
@@ -26,6 +27,7 @@ import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.dto.UserDTO;
 
 @Controller
+@RequestMapping("/trade/favorite")
 public class TradeFavoriteController {
 
     private final BoardCommentServiceImpl boardCommentServiceImpl;
@@ -38,7 +40,7 @@ public class TradeFavoriteController {
     }
 
 	// 관심목록 페이지 조회
-	@GetMapping("/trade_post_favorite_view")
+	@GetMapping("/post_favorite_view")
 	public String FavoriteView(SearchBookCriteriaDTO criteriaDTO, Model model, HttpServletRequest request) {
 		// 로그인 체크
 		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
