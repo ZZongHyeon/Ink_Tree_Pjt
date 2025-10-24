@@ -9,7 +9,7 @@
     <![CDATA[
     SELECT * FROM board_comment
     WHERE boardNumber = #{param.boardNumber}
-    AND commentstatus = 'ACTIVE'
+    AND commentstatus = 'Y'
     AND (
         commentSubNumber = 0 AND commentNumber IN (
             SELECT commentNumber FROM (
@@ -19,7 +19,7 @@
                     FROM board_comment
                     WHERE boardNumber = #{param.boardNumber} 
                     AND commentSubNumber = 0
-                    AND commentstatus = 'ACTIVE'
+                    AND commentstatus = 'Y'
                     ORDER BY commentNumber DESC
                 ) a
                 WHERE rownum <= (#{criteria.pageNum} * #{criteria.amount})
@@ -34,7 +34,7 @@
                     FROM board_comment
                     WHERE boardNumber = #{param.boardNumber} 
                     AND commentSubNumber = 0
-                    AND commentstatus = 'ACTIVE'
+                    AND commentstatus = 'Y'
                     ORDER BY commentNumber DESC
                 ) a
                 WHERE rownum <= (#{criteria.pageNum} * #{criteria.amount})
@@ -63,7 +63,7 @@
             commentNumber, commentSubNumber, commentSubStepNumber,
             boardNumber, userNumber, userName, commentContent
         ) values (
-            (SELECT NVL(MAX(commentNumber), 0) + 1 FROM board_comment), 
+            COMMENT_SEQ.NEXTVAL, 
             #{commentSubNumber}, #{commentSubStepNumber},
             #{boardNumber}, #{userNumber}, #{userName}, #{commentContent}
         )
@@ -71,15 +71,15 @@
 
     <!-- 대댓글 작성 -->
     <insert id="bcReplyWrite">
-        insert into board_comment (
-            commentNumber, commentSubNumber, commentSubStepNumber,
-            boardNumber, userNumber, userName, commentContent
-        ) values (
-            (SELECT NVL(MAX(commentNumber), 0) + 1 FROM board_comment), 
-            #{commentSubNumber}, 
-            (SELECT NVL(MAX(commentSubStepNumber), 0) + 1 FROM board_comment WHERE commentSubNumber = #{commentSubNumber}),
-            #{boardNumber}, #{userNumber}, #{userName}, #{commentContent}
-        )
+		insert into board_comment (
+		    commentNumber, commentSubNumber, commentSubStepNumber,
+		    boardNumber, userNumber, userName, commentContent
+		) values (
+		    COMMENT_SEQ.NEXTVAL,
+		    #{commentSubNumber},
+		    NULL,  -- 트리거가 자동 계산
+		    #{boardNumber}, #{userNumber}, #{userName}, #{commentContent}
+		)
     </insert>
 
 	<!-- 댓글 수정 쿼리문만 작성-->
@@ -92,19 +92,19 @@
 	<!-- 댓글 삭제 -->
     <update id="bcDelete">
 		UPDATE board_comment 
-	    SET commentstatus = 'DELETED' 
+	    SET commentstatus = 'N' 
 	    WHERE commentNumber = #{commentNumber}
-        AND commentSTATUS = 'ACTIVE'
+        AND commentSTATUS = 'Y'
     </update>
     
 <select id="getTotalCount" resultType="int">
     select count(*) from board_comment 
     where boardNumber = #{boardNumber} AND commentSubNumber = 0
-    AND commentSTATUS = 'ACTIVE'
+    AND commentSTATUS = 'Y'
 </select>
 <select id="getAllCount" resultType="int">
     select count(*) from board_comment 
     where boardNumber = #{boardNumber}
-    AND commentSTATUS = 'ACTIVE'
+    AND commentSTATUS = 'Y'
 </select>
 </mapper>

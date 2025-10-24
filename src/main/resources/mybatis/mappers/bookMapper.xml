@@ -11,9 +11,8 @@
 		bookComent, bookWrite, bookPub,
 		bookDate, bookMajorCategory,
 		bookSubCategory, bookCount, bookIsbn)
-		values ((select
-		nvl(max(bookNumber), 0)+1
-		from bookinfo),
+		values (
+		BOOKNUMBER_SEQ.NEXTVAL,
 		#{bookTitle}, #{bookComent},
 		#{bookWrite}, #{bookPub},
 		#{bookDate}, #{bookMajorCategory},
@@ -185,9 +184,8 @@
 	<insert id="bookBorrow">
 		insert into book_borrow(BORROWNUMBER, USERNUMBER,
 		BOOKNUMBER)
-		values ((select nvl(max(BORROWNUMBER), 0)+1
-		from
-		book_borrow),${userNumber},${bookNumber})
+		values (
+		BORROWNUMBER_SEQ.nextval,${userNumber},${bookNumber})
 	</insert>
 
 	<!-- 책 반납 -->

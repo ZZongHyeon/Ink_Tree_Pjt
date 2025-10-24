@@ -25,8 +25,7 @@
 		userDetailAddress
 		)
 		VALUES (
-		(SELECT NVL(MAX(userNumber), 0) + 1 FROM
-		userinfo),
+		USERNUMBER_SEQ.NEXTVAL,
 		#{userId}, #{userPw}, #{userName}, #{userTel},
 		#{userEmail},
 		#{userBirth}, #{userZipCode}, #{userAddress}, #{userDetailAddress}

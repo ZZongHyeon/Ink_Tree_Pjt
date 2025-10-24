@@ -15,7 +15,7 @@
 		INSERT INTO userinfo (
 		userNumber, userId, userName, userEmail, userRegdate
 		) VALUES (
-		(SELECT NVL(MAX(userNumber), 0) + 1 FROM userinfo),
+		USERNUMBER_SEQ.NEXTVAL,
 		#{userId},
 		#{userName},
 		#{userEmail, jdbcType=VARCHAR},

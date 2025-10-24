@@ -27,6 +27,7 @@
 		        FROM (
 		            SELECT boardNumber, userNumber, userName, boardTitle, boardWriteDate, boardHit, boardViews, boardLikes
 		            FROM board
+		           	WHERE STATUS = 'Y'
 		            ]]>
 		            <include refid="criteriaDTO"></include>
 		            <![CDATA[
@@ -35,6 +36,7 @@
 		        where rownum <= (#{pageNum} * #{amount})
 		    )aa
 		    where rn > (#{pageNum} - 1) * #{amount}
+		    
 		]]>
 	</select>
 
@@ -82,7 +84,8 @@
 	<update id="boardModify"> update board set boardTitle=#{boardTitle},
 		boardContent=#{boardContent} where boardNumber=#{boardNumber}
 	</update>
-	<update id="boardDelete"> delete from board where boardNumber=#{boardNumber}
+	<update id="boardDelete">
+	UPDATE BOARD SET STATUS = 'N' WHERE boardNumber = #{boardNumber}
 	</update>
 	<update id="boardHit">
 		UPDATE board
