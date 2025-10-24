@@ -26,7 +26,7 @@
             <!-- 상단 네비게이션 -->
             <div class="detail-nav">
 <!--                <a href="board_view?pageNum=${param.pageNum}&amount=${param.amount}" class="back-link">-->
-                <a href="trade_post_view?pageNum=${param.pageNum}&amount=${param.amount}&status=${param.status}&sort=${param.sort}" class="back-link">
+                <a href="/trade/post_view?pageNum=${param.pageNum}&amount=${param.amount}&status=${param.status}&sort=${param.sort}" class="back-link">
                     <i class="fas fa-arrow-left"></i> 목록으로 돌아가기
                 </a>
                 <div class="post-info">
@@ -100,7 +100,7 @@
 				        <button class="like-button ${isLiked ? 'active' : ''}" onclick="toggleLike(${post.postID})">
 				            <i class="fas fa-heart"></i> 관심등록
 				        </button>
-						<a href="trade_chat?postID=${post.postID}&sellerNumber=${post.userNumber}&buyerNumber=${user.userNumber}" class="chat-btn">
+						<a href="/chat/trade_chat?postID=${post.postID}&sellerNumber=${post.userNumber}&buyerNumber=${user.userNumber}" class="chat-btn">
 						    <i class="fas fa-comment"></i> 채팅하기
 						</a>
 				    </div>
@@ -252,13 +252,13 @@
             
             $.ajax({
                 type: "post",
-                url: "trade_post_delete",
+                url: "/trade/trade_post_delete",
                 data: { postID: postID },
                 success: function(response) {
                     if (response.success) {
                         alert("게시글이 삭제되었습니다.");
                         // location.href = "trade_post_view?pageNum=${param.pageNum}&amount=${param.amount}";
-                        location.href = "trade_post_view";
+                        location.href = "/trade/post_view";
                     } else {
                         alert("게시글 삭제에 실패했습니다: " + response.message);
                     }

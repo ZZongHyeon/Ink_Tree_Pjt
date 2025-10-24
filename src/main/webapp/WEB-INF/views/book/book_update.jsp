@@ -23,10 +23,10 @@
 		$.ajax({
 			type : "post",
 			data : formData,
-			url : "update_book_ok",
+			url : "update_ok",
 			success : function(data) {
 				alert("수정완료");
-				location.href = "book_detail?bookNumber=" + ${book.bookNumber}
+				location.href = "/book/review/detail?bookNumber=" + ${book.bookNumber}
 			},
 			error : function() {
 				alert("오류발생");

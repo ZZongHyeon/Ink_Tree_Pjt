@@ -193,8 +193,7 @@
                                         // 페이지번호 처리
                                         $(".paginate_button a").on("click", function (e) {
                                             e.preventDefault();
-                                            console.log("click했음");
-                                            console.log("@# href => " + $(this).attr("href"));
+//                                             console.log("@# href => " + $(this).attr("href"));
 
                                             // actionForm.find("input[name='pageNum']").val(this).attr("href");
                                             actionForm.find("input[name='pageNum']").val($(this).attr("href"));
@@ -206,8 +205,7 @@
                                         // 게시글 처리
                                         $(".move_link").on("click", function (e) {
                                             e.preventDefault();
-                                            console.log("move_link click");
-                                            console.log("@# click => " + $(this).attr("href"));
+//                                             console.log("@# click => " + $(this).attr("href"));
 
                                             var targetBno = $(this).attr("href");
 

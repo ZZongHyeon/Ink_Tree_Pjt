@@ -131,14 +131,14 @@
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.log('세션 확인 중 오류가 발생했습니다:', error);
+                    // // console.log('세션 확인 중 오류가 발생했습니다:', error);
                     // 오류 발생 시 조용히 처리하고 사용자 경험에 영향을 주지 않음
                     hasConnectionError = true;
                     hasExistingSession = false;
 
                     // 개발 중에만 상세 오류 확인
                     if (xhr.responseText) {
-                        console.log('응답 내용:', xhr.responseText.substring(0, 100) + '...');
+                        // // console.log('응답 내용:', xhr.responseText.substring(0, 100) + '...');
                     }
                 }
             });
@@ -174,7 +174,7 @@
                 try {
                     checkSessionValidity();
                 } catch (e) {
-                    console.log('세션 체크 중 오류:', e);
+                    // // console.log('세션 체크 중 오류:', e);
                 }
             }, sessionCheckInterval);
         }

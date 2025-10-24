@@ -32,11 +32,11 @@ function fn_submit() {
     var formData = $("#search-form").serialize(); // 모든 폼 요소 직렬화
     $.ajax({
         type: "GET",
-        url: "book_search_view",
+        url: "/book/book_search_view",
         data: formData,
         success: function(data) {
             // 결과 페이지로 이동하거나, 결과를 동적으로 처리해도 OK
-            location.href = "book_search_view?" + formData;
+            location.href = "/book/book_search_view?" + formData;
         },
         error: function(xhr) {
             alert("검색 요청 중 오류가 발생했습니다.");
@@ -224,7 +224,7 @@ function fn_submit() {
 						<h3>내 대출 현황</h3>
 						<p>현재 대출 중인 도서와 반납 예정일을 확인하세요.</p>
 						<!-- 						<a href="mypage?tab=history" class="btn-sm">바로가기</a> -->
-						<a href="user_book_borrowing" class="btn-sm">바로가기</a>
+						<a href="/book/user_book_borrowing" class="btn-sm">바로가기</a>
 					</div>
 				</div>
 
@@ -235,7 +235,7 @@ function fn_submit() {
 					<div class="feature-content">
 						<h3>도서 대출</h3>
 						<p>원하는 도서를 대출하여 이용하세요.</p>
-						<a href="book_search_view" class="btn-sm">바로가기</a>
+						<a href="/book/book_search_view" class="btn-sm">바로가기</a>
 					</div>
 				</div>
 
@@ -246,7 +246,7 @@ function fn_submit() {
 					<div class="feature-content">
 						<h3>도서 추천</h3>
 						<p>회원님의 관심사에 맞는 도서를 추천해 드립니다.</p>
-						<a href="user_book_recommend" class="btn-sm">바로가기</a>
+						<a href="/book/user_book_recommend" class="btn-sm">바로가기</a>
 					</div>
 				</div>
 			</div>
@@ -303,7 +303,7 @@ function fn_submit() {
                                                 </c:otherwise>
 											</c:choose>
 										</div>
-										<a href="/book_detail?bookNumber=${book.bookNumber}"
+										<a href="/book/review/detail?bookNumber=${book.bookNumber}"
 											class="book-detail-button">상세보기</a>
 									</div>
 								</div>

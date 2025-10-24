@@ -153,7 +153,7 @@
 						return response.json();
 					})
 					.then(function(data) {
-						console.log('알림 전송 성공:', data);
+						// console.log('알림 전송 성공:', data);
 						// 알림 성공 시 별도의 팝업 띄우지 않음 (자동으로 알림이 표시됨)
 					})
 					.catch(function(error) {

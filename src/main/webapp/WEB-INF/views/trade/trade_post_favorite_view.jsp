@@ -338,8 +338,8 @@
         // 페이지번호 처리
         $(".paginate_button a").on("click", function (e) {
             e.preventDefault();
-            console.log("click했음");
-            console.log("@# href => " + $(this).attr("href"));
+            // console.log("click했음");
+            // console.log("@# href => " + $(this).attr("href"));
 
             actionForm.find("input[name='pageNum']").val($(this).attr("href"));
             actionForm.submit();
@@ -395,7 +395,7 @@
 		    function executeRemoveFromWishlist(postId) {
 		        $.ajax({
 		            type: "POST",
-		            url: "/remove_favorite",
+		            url: "/trade/favorite/remove_favorite",
 		            contentType: "application/json",
 		            data: JSON.stringify({
 		                postId: postId

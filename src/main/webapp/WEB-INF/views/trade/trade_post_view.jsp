@@ -28,7 +28,7 @@
                 <h1 class="trade-title"><i class="fas fa-exchange-alt"></i> 거래 게시판</h1>
                 <div class="trade-actions">
                     <c:if test="${not empty user}">
-                        <button class="write-button" onclick="location.href='/trade_post_write'">
+                        <button class="write-button" onclick="location.href='/trade/trade_post_write'">
                             <i class="fas fa-pen"></i> 판매글 작성
                         </button>
                     </c:if>
@@ -242,8 +242,8 @@
             // 페이지번호 처리
             $(".paginate_button a").on("click", function (e) {
                 e.preventDefault();
-                console.log("click했음");
-                console.log("@# href => " + $(this).attr("href"));
+                // console.log("click했음");
+                // console.log("@# href => " + $(this).attr("href"));
 
                 actionForm.find("input[name='pageNum']").val($(this).attr("href"));
                 actionForm.submit();

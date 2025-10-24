@@ -360,7 +360,6 @@
 											                $(".like-button").removeClass("active");
 											            }
 											            
-											            console.log(data);
 											        },
 											        error: (xhr) => {
 											            if (xhr.status === 401) {
@@ -462,7 +461,6 @@
 											            return response.json();
 											        })
 											        .then(function(data) {
-											            console.log('알림 전송 성공:', data);
 											            // 알림 성공 시 별도의 팝업 띄우지 않음 (자동으로 알림이 표시됨)
 											        })
 											        .catch(function(error) {
@@ -506,8 +504,6 @@
 												// 게시글 번호
 												const boardNumber = replyData.boardNumber;
 												
-												console.log("댓글 작성자 번호: " + commentUserNumber);
-												console.log("답글 작성자 번호: " + replyUserNumber);
 											    // AJAX 요청
 											    $.ajax({
 											        type: "post",
@@ -537,8 +533,6 @@
 											    return false;
 											}
 											function replyCommentNotification(commentUserNumber, replyUserNumber, replyCommentWriteUserName, boardNumber) {
-											    console.log("댓글 작성자 번호: " + commentUserNumber);
-											    console.log("답글 작성자 번호: " + replyUserNumber);
 											    
 											    if (commentUserNumber !== replyUserNumber) {
 											        fetch('/notifications', {
@@ -561,13 +555,13 @@
 											            return response.json();
 											        })
 											        .then(function(data) {
-											            console.log('알림 전송 성공:', data);
+											            // console.log('알림 전송 성공:', data);
 											        })
 											        .catch(function(error) {
 											            console.error('알림 전송 실패:', error);
 											        });
 											    } else {
-											        console.log("같은 사용자이므로 알림을 보내지 않습니다.");
+											        // console.log("같은 사용자이므로 알림을 보내지 않습니다.");
 											    }
 											}
 												
@@ -596,8 +590,6 @@
 											// 페이지번호 처리
 											$(".paginate_button a").on("click", function (e) {
 											    e.preventDefault();
-											    console.log("click했음");
-											    console.log("@# href => " + $(this).attr("href"));
 
 											    // 댓글 페이지 번호 설정 (pageNum 대신 commentPageNum 사용)
 											    actionForm.find("input[name='commentPageNum']").val($(this).attr("href"));
@@ -610,8 +602,6 @@
 											// 게시글 처리
 											$(".move_link").on("click", function (e) {
 												e.preventDefault();
-												console.log("move_link click");
-												console.log("@# click => " + $(this).attr("href"));
 
 												var targetBno = $(this).attr("href");
 
@@ -672,7 +662,6 @@
 
 											// 댓글 수정 폼 표시
 											function showEditCommentForm(commentNumber, commentContent) {
-											  console.log("수정 시작: 댓글 번호 =", commentNumber);
 											  
 											  // 현재 수정 중인 댓글 정보 저장
 											  currentEditingComment = commentNumber;
@@ -701,8 +690,6 @@
 											  tempDiv.innerHTML = commentContent;
 											  var plainText = tempDiv.textContent || tempDiv.innerText || "";
 											  
-											  console.log("원본 텍스트:", plainText);
-											  
 											  // 수정 폼 HTML
 											  var formHtml = '<div class="edit-form-container">' +
 											    '<textarea id="edit-textarea-' + commentNumber + '" class="edit-comment-textarea">' + plainText + '</textarea>' +
@@ -717,7 +704,6 @@
 											  // 텍스트 영역에 포커스
 											  var textarea = document.getElementById("edit-textarea-" + commentNumber);
 											  if (textarea) {
-											    console.log("텍스트 영역 찾음:", textarea.id);
 											    textarea.focus();
 											    textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
 											  } else {
@@ -727,7 +713,6 @@
 
 											// 수정 취소
 											function cancelEdit(commentNumber, originalHtml) {
-											  console.log("수정 취소: 댓글 번호 =", commentNumber);
 											  
 											  var commentElement = document.getElementById("comment-" + commentNumber);
 											  if (!commentElement) {
@@ -753,7 +738,6 @@
 
 											// 수정 내용 저장
 											function saveEdit(commentNumber) {
-											  console.log("수정 저장: 댓글 번호 =", commentNumber);
 											  
 											  var textarea = document.getElementById("edit-textarea-" + commentNumber);
 											  if (!textarea) {
@@ -764,7 +748,6 @@
 											  }
 											  
 											  var editedContent = textarea.value;
-											  console.log("수정된 내용:", editedContent);
 											  
 											  // 빈 내용 체크
 											  if (!editedContent.trim()) {
@@ -782,7 +765,6 @@
 											      commentContent: editedContent
 											    },
 											    success: function(response) {
-											      console.log("수정 성공:", response);
 											      alert("댓글이 수정되었습니다.");
 											      
 											      // 페이지 새로고침 (조회수 증가 방지)
@@ -801,7 +783,7 @@
 
 											// 댓글 삭제 확인
 											function confirmDeleteComment(commentNumber, isReply) {
-											  console.log("삭제 확인: 댓글 번호 =", commentNumber, "대댓글 여부 =", isReply);
+											  // console.log("삭제 확인: 댓글 번호 =", commentNumber, "대댓글 여부 =", isReply);
 											  
 											  var messageText = isReply ? "이 답글을 삭제하시겠습니까?" : "이 댓글을 삭제하시겠습니까?";
 											  var confirmText = isReply ? "답글" : "댓글";
@@ -813,7 +795,7 @@
 
 											// 댓글 삭제 실행
 											function deleteComment(commentNumber) {
-											  console.log("삭제 실행: 댓글 번호 =", commentNumber);
+											  // console.log("삭제 실행: 댓글 번호 =", commentNumber);
 											  
 											  $.ajax({
 											    type: "post",
@@ -822,7 +804,7 @@
 											      commentNumber: commentNumber
 											    },
 											    success: function(response) {
-											      console.log("삭제 성공:", response);
+											      // console.log("삭제 성공:", response);
 											      alert("댓글이 삭제되었습니다.");
 											      
 											      // 페이지 새로고침 (조회수 증가 방지)
@@ -927,7 +909,7 @@
 											  `;
 											  document.head.appendChild(style);
 											  
-											  console.log("댓글 수정/삭제 기능 초기화 완료");
+											  // console.log("댓글 수정/삭제 기능 초기화 완료");
 											});
 										</script>
 									</body>

@@ -79,7 +79,7 @@
                     <i class="nav-icon fa-solid fa-clipboard-list"></i>
                     <span>게시판</span>
                 </a>
-                <a href="/trade_post_view" class="nav-link ${currentPage == '/trade_post_view' ? 'active' : ''}">
+                <a href="/trade/post_view" class="nav-link ${currentPage == '/trade_post_view' ? 'active' : ''}">
                     <i class="nav-icon fa-solid fa-cart-shopping"></i>
                     <span>거래게시판</span>
                 </a>
@@ -191,7 +191,7 @@
 
                             <div class="dropdown-section">
                                 <div class="dropdown-section-title">서비스</div>
-                                <a href="/book_wishlist" class="dropdown-item">
+                                <a href="/book/wishlist/book_wishlist" class="dropdown-item">
                                     <div class="dropdown-icon-wrapper">
                                         <i class="dropdown-icon fa-solid fa-heart"></i>
                                     </div>
@@ -200,7 +200,7 @@
                                         <div class="dropdown-item-description">내가 찜한 도서 목록</div>
                                     </div>
                                 </a>
-								<a href="/trade_post_favorite_view" class="dropdown-item">
+								<a href="/trade/favorite/post_favorite_view" class="dropdown-item">
 								    <div class="dropdown-icon-wrapper">
 								        <i class="dropdown-icon fa-solid fa-store"></i>
 								    </div>
@@ -209,7 +209,7 @@
 								        <div class="dropdown-item-description">거래게시판을 통해 찜한 도서 목록</div>
 								    </div>
 								</a>
-								<a href="/user_book_borrowing" class="dropdown-item">
+								<a href="/book/user_book_borrowing" class="dropdown-item">
 								    <div class="dropdown-icon-wrapper">
 								        <i class="dropdown-icon fa-solid fa-book-open-reader"></i>
 								    </div>
@@ -223,7 +223,7 @@
                                 <c:if test="${user.userAdmin == 1}">
                             <div class="dropdown-section">
                                 <div class="dropdown-section-title">관리자</div>
-                                <a href="admin_view" class="dropdown-item admin-item">
+                                <a href="/admin_view" class="dropdown-item admin-item">
                                     <div class="dropdown-icon-wrapper">
                                         <i class="dropdown-icon fa-solid fa-gear"></i>
                                     </div>
@@ -273,7 +273,7 @@
         <a href="javascript:void(0)" class="chat-menu-item" id="ai-chat-option">
             <i class="fas fa-robot"></i> AI 채팅
         </a>
-        <a href="/chat_list" class="chat-menu-item">
+        <a href="/chat/chat_list" class="chat-menu-item">
             <i class="fas fa-comments"></i> 일반 채팅<span id="chatMenuNotification" class="chat-menu-notification"></span>
         </a>
     </div>
@@ -807,7 +807,6 @@
 <script>
     // 알림 항목 이벤트 설정 함수 (새로 추가)
     function setupNotificationListeners() {
-        console.log('알림 이벤트 리스너 설정 중...');
 
         // 알림 항목 클릭 이벤트 - 읽음 처리 및 페이지 이동
         const notificationItems = document.querySelectorAll('.notification-item');

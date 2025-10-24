@@ -216,13 +216,13 @@
         function removeFromWishlist(bookNumber) {
             $.ajax({
                 type: "post",
-                url: "/remove_wishlist",
+                url: "/book/wishlist/remove_wishlist",
                 data: {
                     bookNumber: bookNumber
                 },
                 dataType: "text",
                 success: function(response) {
-                    console.log("위시리스트 삭제 응답:", response);
+                    // console.log("위시리스트 삭제 응답:", response);
                     if (response === "Success") {
                         showModal('success', '삭제 완료', '도서가 관심목록에서 삭제되었습니다.');
                         // 1.5초 후 페이지 새로고침
@@ -239,9 +239,9 @@
                     }
                 },
                 error: function(xhr, textStatus, errorThrown) {
-                    console.error('위시리스트 삭제 오류:', xhr.status);
-                    console.error('상태:', textStatus);
-                    console.error('에러:', errorThrown);
+                    // console.error('위시리스트 삭제 오류:', xhr.status);
+                    // console.error('상태:', textStatus);
+                    // console.error('에러:', errorThrown);
                     showModal('error', '서버 오류', '서버 오류가 발생했습니다.');
                 }
             });
@@ -278,8 +278,8 @@
         // 페이지번호 처리
 		$(".paginate_button a").on("click", function (e) {
 		    e.preventDefault();
-		    console.log("click했음");
-		    console.log("@# href => " + $(this).attr("href"));
+		    // console.log("click했음");
+		    // console.log("@# href => " + $(this).attr("href"));
 
 		    actionForm.find("input[name='page']").val($(this).attr("href"));
 		    actionForm.submit();

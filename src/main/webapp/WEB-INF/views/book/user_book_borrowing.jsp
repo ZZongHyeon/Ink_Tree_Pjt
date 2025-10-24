@@ -283,7 +283,7 @@
 								<div class="status-badge returned">
 									<i class="fas fa-check-circle"></i> 반납 완료
 								</div>
-								<a href="/book_detail?bookNumber=${bookBorrowRecord.bookNumber}" class="return-button" style="background-color: var(--secondary-color);">
+								<a href="/book/review/detail?bookNumber=${bookBorrowRecord.bookNumber}" class="return-button" style="background-color: var(--secondary-color);">
 									<i class="fas fa-info-circle"></i> 상세정보
 								</a>
 							</div>
@@ -360,7 +360,7 @@ var actionForm = $("#actionForm");
 // 페이지번호 처리
 $(".paginate_button a").on("click", function (e) {
     e.preventDefault();
-    console.log("click했음");
+    // console.log("click했음");
     
     // 페이지 번호 설정
     actionForm.find("input[name='pageNum']").val($(this).attr("href"));
@@ -382,8 +382,8 @@ $(".paginate_button a").on("click", function (e) {
 // 게시글 처리
 $(".move_link").on("click", function (e) {
     e.preventDefault();
-    console.log("move_link click");
-    console.log("@# click => " + $(this).attr("href"));
+    // console.log("move_link click");
+    // console.log("@# click => " + $(this).attr("href"));
 
     var targetBno = $(this).attr("href");
 

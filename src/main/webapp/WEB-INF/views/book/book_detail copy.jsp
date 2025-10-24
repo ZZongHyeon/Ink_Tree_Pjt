@@ -1199,7 +1199,7 @@
             
             $.ajax({
                 type: "post",
-                url: "/book/book_borrow",
+                url: "book_borrow",
                 data: $("#borrowForm").serialize(),
                 success: function(responseText) {
                     if (responseText === "successBorrow") {
@@ -1247,7 +1247,7 @@
 		            
 		           $.ajax({
 		            type: "post",
-		            url: "/book/wishlist/add_wishlist",
+		            url: "/add_wishlist",
 		            data: {
 		                bookNumber: bookNumber
 		            },

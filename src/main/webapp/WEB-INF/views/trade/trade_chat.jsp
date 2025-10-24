@@ -42,7 +42,7 @@
             </div>
             
             <!-- 게시글 정보 -->
-					<a href="trade_post_detail_view?postID=${post.postID}&pageNum=1&amount=8&status=&sort=" class="back-link">
+					<a href="/trade/trade_post_detail_view?postID=${post.postID}&pageNum=1&amount=8&status=&sort=" class="back-link">
 <!--			            <div class="post-info-bar">-->
 			                <div class="post-thumbnail">
 			                    <!-- 게시글 썸네일 이미지 -->
@@ -141,14 +141,14 @@
 		            roomId: roomId
 		        },
 		        success: function(response) {
-		            console.log('활성 채팅방 설정 성공');
+		            // console.log('활성 채팅방 설정 성공');
 		            // 알림 업데이트
 		            if (window.updateChatNotifications) {
 		                window.updateChatNotifications();
 		            }
 		        },
 		        error: function(error) {
-		            console.error('활성 채팅방 설정 실패', error);
+		            // console.error('활성 채팅방 설정 실패', error);
 		        }
 		    });
 		}
@@ -160,10 +160,10 @@
 		        type: 'POST',
 		        async: false, // 페이지 이동 전에 요청이 완료되도록 동기 요청
 		        success: function(response) {
-		            console.log('활성 채팅방 정보 제거 성공');
+		            // console.log('활성 채팅방 정보 제거 성공');
 		        },
 		        error: function(error) {
-		            console.error('활성 채팅방 정보 제거 실패', error);
+		            // console.error('활성 채팅방 정보 제거 실패', error);
 		        }
 		    });
 		}
@@ -171,21 +171,21 @@
 		// 모든 메시지 읽음 처리 함수
 		function markAllMessagesAsRead() {
 		    $.ajax({
-		        url: '/mark_all_messages_read',
+		        url: '/chat/mark_all_messages_read',
 		        type: 'POST',
 		        data: {
 		            roomId: currentRoomId,
 		            userNumber: currentUserNumber
 		        },
 		        success: function(response) {
-		            console.log('모든 메시지 읽음 처리 성공');
+		            // console.log('모든 메시지 읽음 처리 성공');
 		            // 알림 업데이트
 		            if (window.updateChatNotifications) {
 		                window.updateChatNotifications();
 		            }
 		        },
 		        error: function(error) {
-		            console.error('모든 메시지 읽음 처리 실패', error);
+		            // console.error('모든 메시지 읽음 처리 실패', error);
 		        }
 		    });
 		}
@@ -201,14 +201,14 @@
 		            userNumber: currentUserNumber
 		        },
 		        success: function(response) {
-		            console.log('메시지 읽음 처리 성공');
+		            // console.log('메시지 읽음 처리 성공');
 		            // 알림 업데이트
 		            if (window.updateChatNotifications) {
 		                window.updateChatNotifications();
 		            }
 		        },
 		        error: function(error) {
-		            console.error('메시지 읽음 처리 실패', error);
+		            // console.error('메시지 읽음 처리 실패', error);
 		        }
 		    });
 		}
@@ -229,27 +229,27 @@
 
 		// WebSocket 연결
 		function connect() {
-		    console.log('WebSocket 연결 시도...');
+		    // console.log('WebSocket 연결 시도...');
 		    const socket = new SockJS('/ws-chat');
 		    stompClient = Stomp.over(socket);
 		    
 		    // 디버깅을 위한 로그 활성화
 		    stompClient.debug = function(str) {
-		        console.log('STOMP: ' + str);
+		        // console.log('STOMP: ' + str);
 		    };
 		    
 		    stompClient.connect({}, function(frame) {
-		        console.log('WebSocket 연결 성공: ' + frame);
+		        // console.log('WebSocket 연결 성공: ' + frame);
 		        
 		        // 채팅방에 들어왔을 때 모든 메시지 읽음 처리
 		        markAllMessagesAsRead();
 		        
 		        // 채팅방 구독
 		        stompClient.subscribe('/topic/room/' + currentRoomId, function(message) {
-		            console.log('채팅방 메시지 수신:', message);
+		            // console.log('채팅방 메시지 수신:', message);
 		            try {
 		                const messageData = JSON.parse(message.body);
-		                console.log('파싱된 메시지 데이터:', messageData);
+		                // console.log('파싱된 메시지 데이터:', messageData);
 		                displayMessage(messageData);
 		                
 		                // 내가 보낸 메시지가 아닌 경우에만 읽음 처리
@@ -258,17 +258,17 @@
 		                    markMessageAsRead(messageData.messageId);
 		                }
 		            } catch (e) {
-		                console.error('메시지 파싱 오류:', e);
-		                console.log('원본 메시지:', message.body);
+		                // console.error('메시지 파싱 오류:', e);
+		                // console.log('원본 메시지:', message.body);
 		            }
 		        });
 		        
 		        // 개인 메시지 구독
 		        stompClient.subscribe('/user/' + currentUserNumber + '/queue/messages', function(message) {
-		            console.log('개인 메시지 수신:', message);
+		            // console.log('개인 메시지 수신:', message);
 		            try {
 		                const messageData = JSON.parse(message.body);
-		                console.log('파싱된 메시지 데이터:', messageData);
+		                // console.log('파싱된 메시지 데이터:', messageData);
 		                displayMessage(messageData);
 		                
 		                // 내가 보낸 메시지가 아닌 경우에만 읽음 처리
@@ -277,8 +277,8 @@
 		                    markMessageAsRead(messageData.messageId);
 		                }
 		            } catch (e) {
-		                console.error('메시지 파싱 오류:', e);
-		                console.log('원본 메시지:', message.body);
+		                // console.error('메시지 파싱 오류:', e);
+		                // console.log('원본 메시지:', message.body);
 		            }
 		        });
 		        
@@ -287,7 +287,7 @@
 		        
 		    }, function(error) {
 		        // 연결 오류 처리
-		        console.error('WebSocket 연결 오류:', error);
+		        // console.error('WebSocket 연결 오류:', error);
 		        alert('실시간 채팅 연결에 실패했습니다. 페이지를 새로고침하거나 나중에 다시 시도해주세요.');
 		    });
 		}
@@ -331,18 +331,18 @@
 		function displayMessage(messageData) {
 		    // 메시지 ID가 없는 경우 처리
 		    if (!messageData.messageId) {
-		        console.error('메시지 ID가 없습니다:', messageData);
+		        // console.error('메시지 ID가 없습니다:', messageData);
 		        // 임시 ID 생성
 		        messageData.messageId = 'temp-' + new Date().getTime();
 		    }
 		    
 		    // 이미 표시된 메시지는 건너뛰기
 		    if (isMessageDisplayed(messageData.messageId)) {
-		        console.log('이미 표시된 메시지:', messageData.messageId);
+		        // console.log('이미 표시된 메시지:', messageData.messageId);
 		        return;
 		    }
 		    
-		    console.log('새 메시지 표시:', messageData.messageId);
+		    // console.log('새 메시지 표시:', messageData.messageId);
 		    
 		    // 메시지 표시
 		    const messageClass = messageData.senderNumber == currentUserNumber ? 'my-message' : 'other-message';

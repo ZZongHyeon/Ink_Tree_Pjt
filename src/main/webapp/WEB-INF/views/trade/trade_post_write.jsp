@@ -121,7 +121,7 @@
 
 					<div class="form-actions">
 						<button type="button" class="btn btn-secondary"
-							onclick="location.href='trade_post_view'">
+							onclick="location.href='/trade/post_view'">
 							<i class="fas fa-times"></i> 취소
 						</button>
 						<button type="button" class="btn btn-primary" onclick="fn_submit()">
@@ -322,7 +322,7 @@
 				contentType: false,  // 필수: Content-Type 헤더 설정 방지
 				success: function(data) {
 					alert("판매글이 등록되었습니다.");
-					location.href = "trade_post_view";
+					location.href = "/trade/post_view";
 				},
 				error: function() {
 					alert("판매글 등록 중 오류가 발생했습니다.");

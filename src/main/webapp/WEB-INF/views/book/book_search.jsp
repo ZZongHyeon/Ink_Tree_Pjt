@@ -213,7 +213,7 @@ function fn_submit() {
                                                 </c:otherwise>
 											</c:choose>
 										</div>
-										<a href="/book_detail?bookNumber=${book.bookNumber}"
+										<a href="/book/review/detail?bookNumber=${book.bookNumber}"
 											class="book-detail-button">상세보기</a>
 									</div>
 								</div>
