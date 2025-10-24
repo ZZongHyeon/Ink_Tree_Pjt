@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.dto.UserDTO;
 import com.boot.user.service.UserService;
+import com.boot.z_util.ConnectionTracker;
 import com.boot.z_util.otherMVC.service.UtilService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -71,7 +72,30 @@ public class UserController {
 //			return "redirect:loginView?error=invalid";
 //		}
 //	}
+	
+	@RequestMapping("/loginForm")
+	public String loginPage(HttpServletRequest request) {
+		String clientIp = getClientIp(request);
+		ConnectionTracker.addIp(clientIp);
 
+		request.getSession().setAttribute("clientIp", clientIp);
+
+		System.out.println(clientIp + " online");
+		return "user/login";
+	}
+
+	@RequestMapping("/disconnect")
+	@ResponseBody
+	public void disconnect(HttpServletRequest request) {
+		String clientIp = getClientIp(request);
+//		ConnectionTracker.removeIp(clientIp);
+//		System.out.println("off : " + clientIp);
+	}
+
+	@RequestMapping("/joinForm")
+	public String join() {
+		return "user/join";
+	}
 	@RequestMapping("/joinProc")
 	public ResponseEntity<String> join(HttpServletRequest request, @RequestParam HashMap<String, String> param) {
 		System.out.println("@#param => " + param);
@@ -272,5 +296,24 @@ public class UserController {
 		}
 
 		return response;
+	}
+	
+	private String getClientIp(HttpServletRequest request) {
+		String ip = request.getHeader("X-Forwarded-For");
+		if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr(); // ���� fallback
+		}
+
+		if (ip != null && ip.contains(",")) {
+			ip = ip.split(",")[0];
+		}
+
+		return ip;
 	}
 }

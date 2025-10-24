@@ -34,8 +34,6 @@
 			<body>
     <jsp:include page="../header.jsp" />
 
-				<% UserDTO user=(UserDTO) session.getAttribute("loginUser"); if (user==null) {
-					response.sendRedirect("loginView"); return; } %>
 
 					<div class="container">
 						<div class="board-container">
@@ -55,8 +53,7 @@
 								</div>
 
 								<form id="frm">
-									<input type="hidden" name="userNumber" value="<%=user.getUserNumber()%>">
-									<input type="hidden" name="userName" value="<%=user.getUserName()%>">
+									<input type="hidden" name="userName" value="${user.userNumber}">
 									<input type="hidden" name="boardNumber" value="${board.boardNumber}" />
 									<input type="hidden" name="boardContent" id="boardContent">
 
@@ -112,11 +109,11 @@
 
 							$.ajax({
 								type: "post",
-								url: "board_update_ok",
+								url: "/board/update_ok",
 								data: formData,
 								success: function (data) {
 									alert("게시글이 성공적으로 수정되었습니다.");
-									location.href = "board_detail_view?boardNumber=" + boardNumber;
+									location.href = "/board/detail_view?boardNumber=" + boardNumber;
 								},
 								error: function () {
 									alert("오류가 발생했습니다. 다시 시도해주세요.");

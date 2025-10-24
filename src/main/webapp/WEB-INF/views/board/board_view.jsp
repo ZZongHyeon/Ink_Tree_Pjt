@@ -34,7 +34,7 @@
                                                 
 												<c:if test="${user != null}">
 												
-                                                    <button class="write-button" onclick="location.href='/board_write'">
+                                                    <button class="write-button" onclick="location.href='/board/write'">
                                                         <i class="fas fa-pen"></i> 글쓰기
                                                     </button>
 													</c:if>                                                
@@ -110,7 +110,7 @@
                                                             <!-- <td class="board-number">${status.count}</td> -->
                                                             <td class="board-number">${board.boardNumber}</td>
                                                             <td class="board-title-col">
-                                                                <a href="board_detail_view?boardNumber=${board.boardNumber}&pageNum=${pageMaker.criteriaDTO.pageNum}&amount=${pageMaker.criteriaDTO.amount}${not empty pageMaker.criteriaDTO.type ? '&type='.concat(pageMaker.criteriaDTO.type) : ''}${not empty pageMaker.criteriaDTO.keyword ? '&keyword='.concat(pageMaker.criteriaDTO.keyword) : ''}"
+                                                                <a href="/board/detail_view?boardNumber=${board.boardNumber}&pageNum=${pageMaker.criteriaDTO.pageNum}&amount=${pageMaker.criteriaDTO.amount}${not empty pageMaker.criteriaDTO.type ? '&type='.concat(pageMaker.criteriaDTO.type) : ''}${not empty pageMaker.criteriaDTO.keyword ? '&keyword='.concat(pageMaker.criteriaDTO.keyword) : ''}"
                                                                     class="title-link">
                                                                     ${board.boardTitle}
                                                                     <c:if
@@ -221,7 +221,7 @@
                                             actionForm.append("<input type='hidden' name='boardNo' value='" + targetBno + "'>");
                                             // actionForm.submit();
                                             // 컨트롤러에 content_view로 찾아감
-                                            actionForm.attr("action", "board_detail_view").submit();
+                                            actionForm.attr("action", "/board/detail_view").submit();
                                         });
 
                                         // 검색처리

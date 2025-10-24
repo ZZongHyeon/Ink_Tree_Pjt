@@ -21,13 +21,7 @@
 </head>
 <body>
     <jsp:include page="../header.jsp" />
-	<%
-	UserDTO user = (UserDTO) session.getAttribute("loginUser");
-	if (user == null) {
-		response.sendRedirect("loginView");
-		return;
-	}
-	%>
+
 
 	<div class="container">
 		<div class="board-container">
@@ -39,9 +33,9 @@
 
 				<form id="frm">
 					<input type="hidden" name="userNumber"
-						value="<%=user.getUserNumber()%>"> 
+						value="${user.userNumber}"> 
 					<input type="hidden"
-						name="userName" value="<%=user.getUserName()%>">
+						name="userName" value="${user.userName}">
 					<input type="hidden" name="boardContent" id="boardContent">
 
 					<div class="form-group">
@@ -59,7 +53,7 @@
 
 					<div class="form-actions">
 						<button type="button" class="btn btn-secondary"
-							onclick="location.href='board_view'">
+							onclick="location.href='board/view'">
 							<i class="fas fa-times"></i> 취소
 						</button>
 						<button type="button" class="btn btn-primary" onclick="fn_submit()">
@@ -105,11 +99,11 @@
 
 			$.ajax({
 				type : "post",
-				url : "board_write_ok",
+				url : "/board/write_ok",
 				data : formData,
 				success : function(data) {
 					alert("게시글이 등록되었습니다.");
-					location.href = "board_view";
+					location.href = "/board/view";
 				},
 				error : function() {
 					alert("게시글 등록 중 오류가 발생했습니다.");

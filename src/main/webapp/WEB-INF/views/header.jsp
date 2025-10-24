@@ -75,7 +75,7 @@
                     <i class="nav-icon fa-solid fa-bullhorn"></i>
                     <span>공지사항</span>
                 </a>
-                <a href="/board_view" class="nav-link ${currentPage == '/board_view' ? 'active' : ''}">
+                <a href="/board/view" class="nav-link ${currentPage == '/board_view' ? 'active' : ''}">
                     <i class="nav-icon fa-solid fa-clipboard-list"></i>
                     <span>게시판</span>
                 </a>

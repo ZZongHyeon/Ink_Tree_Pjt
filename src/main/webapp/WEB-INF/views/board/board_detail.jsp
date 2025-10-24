@@ -78,19 +78,16 @@
 														</button>
 
 														<div class="action-buttons">
-															<% UserDTO user=(UserDTO) session.getAttribute("loginUser"); BoardDTO
-																board=(BoardDTO) request.getAttribute("board"); if (user !=null &&
-																(user.getUserNumber()==board.getUserNumber() || user.getUserAdmin()==1))
-																{ %>
+															<c:if test="${not empty user and (user.userNumber eq board.userNumber or user.userAdmin eq 1)}">
 																<button class="action-button edit-button"
-																	onclick="location.href='/board_update?boardNumber=${board.boardNumber}'">
+																	onclick="location.href='/board/update?boardNumber=${board.boardNumber}'">
 																	<i class="fas fa-edit"></i> 수정
 																</button>
 																<button class="action-button delete-button"
 																	onclick="deletePost(${board.boardNumber})">
 																	<i class="fas fa-trash"></i> 삭제
 																</button>
-																<% } %>
+																</c:if>
 <!--																	<button class="action-button list-button" onclick="history.back()">-->
 																	<button class="action-button list-button" onclick="goToList()">
 																		<i class="fas fa-list"></i> 목록
@@ -169,7 +166,7 @@
 																										
 																									</c:if>
 																								</span>
-																								<c:if test="${(loginUser.userNumber == comment.userNumber) || (loginUser.userAdmin == 1)}">
+																								<c:if test="${(user.userNumber == comment.userNumber) || (user.userAdmin == 1)}">
 																								    <div class="comment-actions">
 																								        <button type="button" class="comment-action-button edit-button" 
 																								                onclick="showEditCommentForm(${comment.commentNumber}, '${fn:replace(comment.commentContent, "'", "\\'")}')">
@@ -191,7 +188,7 @@
 																				</div>
 
 																				<!-- 답글 버튼 -->
-																				<% if (user !=null) { %>
+																				<c:if test="${not empty user}">
 																					<button class="reply-button"
 																						onclick="showReplyForm(${comment.commentNumber}, '${comment.userName}', 0)">
 																						<i class="fas fa-reply"></i> 답글
@@ -204,9 +201,9 @@
 																							<input type="hidden" name="boardNumber"
 																								value="${board.boardNumber}"> <input
 																								type="hidden" name="userNumber"
-																								value="<%=user.getUserNumber()%>">
+																								value="${user.getUserNumber()}">
 																							<input type="hidden" name="userName"
-																								value="<%=user.getUserName()%>"> <input
+																								value="${user.getUserName()}"> <input
 																								type="hidden" name="commentSubNumber"
 																								value="${comment.commentNumber}">
 																							<input type="hidden"
@@ -232,8 +229,7 @@
 																							<div style="clear: both;"></div>
 																						</form>
 																					</div>
-																					<% } %>
-
+																					</c:if>
 																						
 																						<c:forEach items="${commentList}" var="reply">
 																							<c:if test="${reply.commentSubNumber == comment.commentNumber}">
@@ -269,7 +265,7 @@
 																															</c:choose>
 																														</c:if>
 																													</span>
-																													<c:if test="${(loginUser.userNumber == reply.userNumber) || (loginUser.userAdmin == 1)}">
+																													<c:if test="${(user.userNumber == reply.userNumber) || (user.userAdmin == 1)}">
 																													    <div class="comment-actions">
 																													        <button type="button" class="comment-action-button edit-button" 
 																													                onclick="showEditCommentForm(${reply.commentNumber}, '${fn:replace(reply.commentContent, "'", "\\'")}')">
@@ -323,7 +319,7 @@
 																        </c:if>
 																    </ul>
 																</div>
-																<form id="actionForm" action="board_detail_view" method="get">
+																<form id="actionForm" action="/board/detail_view" method="get">
 																    <input type="hidden" name="boardNumber" value="${board.boardNumber}">
 																    <input type="hidden" name="pageNum" value="${param.pageNum}">
 																    <input type="hidden" name="commentPageNum" value="${pageMaker.criteriaDTO.commentPageNum}">
@@ -345,7 +341,7 @@
 											function likePost(boardNumber) {
 											    $.ajax({
 											        type: "post",
-											        url: "/boardLikes",
+											        url: "/board/likes",
 											        data: { boardNumber: boardNumber },
 											        success: (data) => {
 											            // 좋아요 수 업데이트
@@ -380,11 +376,11 @@
 												if (confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
 													$.ajax({
 														type: "post",
-														url: "delete_post",
+														url: "/board/delete",
 														data: { boardNumber: boardNumber },
 														success: (data) => {
 															alert("정상적으로 삭제되었습니다.");
-															location.href = "board_view";
+															location.href = "/board/view";
 														},
 														error: () => {
 															alert("오류 발생");
@@ -413,7 +409,7 @@
 											    // AJAX 요청
 											    $.ajax({
 											        type: "post",
-											        url: "/comment_write_ok",
+											        url: "/board/comment_write_ok",
 											        data: commentData,
 											        success: function(response) {
 											            // 댓글 입력창 초기화
@@ -456,7 +452,7 @@
 											            message: commentWriteUserName + '님이 나의 게시글['+boardTitle+']에 댓글을 남겼습니다.',
 											            title: '댓글 알림',
 											            type: 'COMMENT',
-											            url: '/board_detail_view?boardNumber='+boardNumber,
+											            url: '/board/detail_view?boardNumber='+boardNumber,
 											            sent: false,
 											            read: false,
 											            toAll: false // 전체
@@ -515,7 +511,7 @@
 											    // AJAX 요청
 											    $.ajax({
 											        type: "post",
-											        url: "/comment_write_ok",
+											        url: "/board/comment_write_ok",
 											        data: replyData,
 											        success: function(response) {
 											            // 답글 폼 숨기기
@@ -555,7 +551,7 @@
 											                message: replyCommentWriteUserName + '님이 나의 댓글에 답글을 남겼습니다.',
 											                title: '대댓글 알림',
 											                type: 'COMMENT',
-											                url: '/board_detail_view?boardNumber='+boardNumber,
+											                url: '/board/detail_view?boardNumber='+boardNumber,
 											                sent: false,
 											                read: false,
 											                toAll: false
@@ -608,7 +604,7 @@
 											    actionForm.find("input[name='skipViewCount']").val("true");
 
 											    // 버그처리(게시글 클릭 후 뒤로가기 누른 후 다른 페이지 클릭 할 때 content_view2가 작동되는 것을 해결)
-											    actionForm.attr("action", "board_detail_view").submit();
+											    actionForm.attr("action", "/board/detail_view").submit();
 											}); // end of paginate_button click
 
 											// 게시글 처리
@@ -629,27 +625,24 @@
 												actionForm.append("<input type='hidden' name='boardNo' value='" + targetBno + "'>");
 												// actionForm.submit();
 												// 컨트롤러에 content_view로 찾아감
-												actionForm.attr("action", "board_detail_view").submit();
+												actionForm.attr("action", "/board/detail_view").submit();
 											});
 											
 											// 페이지 로드 시 추천 상태 확인
 											$(document).ready(function() {
-											    // 로그인한 사용자만 확인
-											    <% if (user != null) { %>
+											    <c:if test="${not empty user}">
 											        const boardNumber = ${board.boardNumber};
-											        
 											        $.ajax({
 											            type: "get",
-											            url: "/checkLikeStatus",
+											            url: "/board/checkLikeStatus",
 											            data: { boardNumber: boardNumber },
 											            success: function(hasLiked) {
 											                if (hasLiked === true || hasLiked === "true") {
-											                    // 이미 추천한 경우 버튼 활성화 스타일 적용
 											                    $(".like-button").addClass("active");
 											                }
 											            }
 											        });
-											    <% } %>
+											    </c:if>
 											});
 											
 											// 목록 버튼 클릭 시 게시판 목록으로 이동
@@ -661,7 +654,7 @@
 											    const type = urlParams.get('type') || '';
 											    const keyword = urlParams.get('keyword') || '';
 											    
-											    let url = "board_view?pageNum=" + pageNum + "&amount=" + amount;
+											    let url = "/board/view?pageNum=" + pageNum + "&amount=" + amount;
 											    
 											    if(type && keyword) {
 											        url += "&type=" + encodeURIComponent(type) + "&keyword=" + encodeURIComponent(keyword);
@@ -783,7 +776,7 @@
 											  // AJAX 요청으로 댓글 수정
 											  $.ajax({
 											    type: "post",
-											    url: "/bc_modify",
+											    url: "/board/bc_modify",
 											    data: {
 											      commentNumber: commentNumber,
 											      commentContent: editedContent
@@ -824,7 +817,7 @@
 											  
 											  $.ajax({
 											    type: "post",
-											    url: "/bc_delete",
+											    url: "/board/bc_delete",
 											    data: {
 											      commentNumber: commentNumber
 											    },

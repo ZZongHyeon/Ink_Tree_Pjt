@@ -38,14 +38,14 @@ public class MailServiceImpl implements MailService {
 		msgg += "<head>";
 		msgg += "  <meta charset='UTF-8'>";
 		msgg += "  <meta name='viewport' content='width=device-width, initial-scale=1.0'>";
-		msgg += "  <title>메트로하우스 회원가입 인증</title>";
+		msgg += "  <title>잉크트리 회원가입 인증</title>";
 		msgg += "</head>";
 		msgg += "<body style='margin: 0; padding: 0; font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; background-color: #f4f4f4;'>";
 		msgg += "  <table role='presentation' cellspacing='0' cellpadding='0' border='0' align='center' width='100%' style='max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; box-shadow:0 4px 8px rgba(0, 0, 0, 0.05); border: 1px solid lightgray;'>";
 		msgg += "    <tr>";
 		msgg += "      <td style='padding: 40px 30px 20px 30px; text-align: center;'>";
 		msgg += "        <h1 style='color: #333333; font-size: 28px; margin: 0; font-weight: 600;'>안녕하세요</h1>";
-		msgg += "        <h2 style='color: #333333; font-size: 24px; margin: 10px 0 30px 0; font-weight: 500;'>메트로하우스입니다</h2>";
+		msgg += "        <h2 style='color: #333333; font-size: 24px; margin: 10px 0 30px 0; font-weight: 500;'>잉크트리입니다</h2>";
 		msgg += "        <div style='height: 3px; width: 80px; background-color: #4A90E2; margin: 0 auto 30px auto;'></div>";
 		msgg += "        <p style='color: #666666; font-size: 16px; line-height: 1.5; margin-bottom: 30px;'>아래 코드를 회원가입 창으로 돌아가 입력해주세요</p>";
 		msgg += "      </td>";
@@ -63,7 +63,7 @@ public class MailServiceImpl implements MailService {
 		msgg += "    <tr>";
 		msgg += "      <td style='padding: 30px; text-align: center;'>";
 		msgg += "        <p style='color: #999999; font-size: 14px; margin: 0;'>본 메일은 발신 전용이며, 문의사항은 고객센터를 이용해 주세요.</p>";
-		msgg += "        <p style='color: #999999; font-size: 14px; margin: 10px 0 0 0;'>© 2025 메트로하우스. All rights reserved.</p>";
+		msgg += "        <p style='color: #999999; font-size: 14px; margin: 10px 0 0 0;'>© 2025 잉크트리. All rights reserved.</p>";
 		msgg += "      </td>";
 		msgg += "    </tr>";
 		msgg += "  </table>";
@@ -72,7 +72,7 @@ public class MailServiceImpl implements MailService {
 
 		message.setText(msgg, "utf-8", "html");// 내용, charset 타입, subtype
 		// 보내는 사람의 이메일 주소, 보내는 사람 이름
-		message.setFrom(new InternetAddress("tjrdlchlrh00@naver.com", "Metro_House"));// 보내는 사람
+		message.setFrom(new InternetAddress("nskynet5374@naver.com", "Metro_House"));// 보내는 사람
 
 		return message;
 	}

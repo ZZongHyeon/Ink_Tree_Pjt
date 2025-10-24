@@ -59,6 +59,7 @@ public class JwtTokenUtil {
     public void init() {
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(this::cleanupCache, 5, 5, TimeUnit.MINUTES);
+        System.out.println("test");
     }
     
     // 캐시 정리 메서드
