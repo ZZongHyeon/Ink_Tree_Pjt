@@ -215,7 +215,7 @@
                     </c:if>
                 </ul>
             </div>
-            <form id="actionForm" action="trade_post_view" method="get">
+            <form id="actionForm" action="post_view" method="get">
                 <input type="hidden" name="pageNum" value="${pageMaker.searchBookCriteriaDTO.pageNum}">
                 <input type="hidden" name="amount" value="${pageMaker.searchBookCriteriaDTO.amount}">
                 <input type="hidden" name="status" value="${param.status}">
