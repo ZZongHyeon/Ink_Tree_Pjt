@@ -158,6 +158,7 @@ public class BoardController {
 	@RequestMapping("/update_ok")
 	public String boardViewUpdate(@RequestParam HashMap<String, String> param, RedirectAttributes rttr) {
 		service.boardModify(param);
+		System.out.println("test : "+ param);
 		rttr.addAttribute("boardNumber", param.get("boardNumber"));
 		rttr.addAttribute("pageNum", param.get("pageNum"));
 		rttr.addAttribute("amount", param.get("amount"));

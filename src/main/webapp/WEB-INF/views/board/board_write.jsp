@@ -38,7 +38,7 @@
 			<div class="board-form">
 				<div class="form-header">
 					<h1 class="form-title"><i class="fas fa-pen-to-square"></i> 게시글 작성</h1>
-					<p class="form-description">메트로하우스 커뮤니티에 의견을 공유해보세요.</p>
+					<p class="form-description">잉크트리 커뮤니티에 의견을 공유해보세요.</p>
 				</div>
 
 				<form id="frm">

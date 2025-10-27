@@ -721,17 +721,11 @@ color: var(--success);
         justify-content: center;
     }
     
-    .post-actions {
-        flex-direction: column;
-    }
-    
     .action-btn {
-        width: 100%;
         justify-content: center;
     }
     
     .status-dropdown {
-        width: 100%;
     }
     
     .related-posts-grid {

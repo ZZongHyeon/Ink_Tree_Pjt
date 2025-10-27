@@ -10,7 +10,7 @@
 									<head>
 										<meta charset="UTF-8">
 										<meta name="viewport" content="width=device-width, initial-scale=1.0">
-										<title>메트로하우스</title>
+										<title>잉크트리</title>
 										<link rel="stylesheet" type="text/css" href="/resources/css/board_detail.css">
 										<link rel="stylesheet"
 											href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -80,8 +80,8 @@
 														<div class="action-buttons">
 															<c:if test="${not empty user and (user.userNumber eq board.userNumber or user.userAdmin eq 1)}">
 																<button class="action-button edit-button"
-																	onclick="location.href='/board/update?boardNumber=${board.boardNumber}'">
-																	<i class="fas fa-edit"></i> 수정
+																	onclick="location.href='/board/update?boardNumber=${board.boardNumber}&pageNum=${pageMaker.criteriaDTO.pageNum}&amount=${pageMaker.criteriaDTO.amount}${not empty pageMaker.criteriaDTO.type ? '&type='.concat(pageMaker.criteriaDTO.type) : ''}${not empty pageMaker.criteriaDTO.keyword ? '&keyword='.concat(pageMaker.criteriaDTO.keyword) : ''}'">
+																	수정
 																</button>
 																<button class="action-button delete-button"
 																	onclick="deletePost(${board.boardNumber})">
@@ -101,7 +101,7 @@
 														<i class="fas fa-comment-dots"></i> 댓글
 														<span class="comment-count">${allCount}</span>
 													</h2>
-
+													
 													<c:choose>
 													    <c:when test="${user != null}">
 													        <div class="comment-form">

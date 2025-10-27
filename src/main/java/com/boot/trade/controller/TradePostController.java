@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.boot.trade.dto.TradePostDTO;
 import com.boot.trade.service.TradePostService;
 import com.boot.user.dto.BasicUserDTO;
+import com.boot.z_config.security.OAuth2AuthenticationSuccessHandler;
 import com.boot.z_page.PageDTO;
 import com.boot.z_page.criteria.SearchBookCriteriaDTO;
 
@@ -30,9 +31,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/trade")
 public class TradePostController {
 
+    private final OAuth2AuthenticationSuccessHandler OAuth2AuthenticationSuccessHandler;
+
     private static final String NULL = null;
 	@Autowired
     private TradePostService service;
+
+    TradePostController(OAuth2AuthenticationSuccessHandler OAuth2AuthenticationSuccessHandler) {
+        this.OAuth2AuthenticationSuccessHandler = OAuth2AuthenticationSuccessHandler;
+    }
 
     @RequestMapping("/post_view")
     public String tradePostList(Model model, SearchBookCriteriaDTO criteriaDTO) {
@@ -103,6 +110,8 @@ public class TradePostController {
 
     @RequestMapping("/trade_post_update_ok")
     public String tradePostUpdate(@RequestParam HashMap<String, String> param, RedirectAttributes rttr) {
+    	System.out.println("test : " + param);
+    
         service.tradePostModify(param);
         rttr.addAttribute("postID", param.get("postID"));
         rttr.addAttribute("pageNum", param.get("pageNum"));

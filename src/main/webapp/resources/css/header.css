@@ -144,7 +144,7 @@ body {
 }
 
 .logo-text::after {
-  content: "메트로하우스";
+  content: "잉크트리";
   position: absolute;
   top: 0;
   left: 0;

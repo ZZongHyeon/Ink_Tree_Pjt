@@ -56,7 +56,7 @@
 									<!--					</div>-->
 									<h1 class="form-title">게시글 수정</h1>
 									<p class="form-description">
-										<i class="fas fa-info-circle"></i> 메트로하우스 커뮤니티에서 자유롭게 의견을 나누고 소통해보세요.
+										<i class="fas fa-info-circle"></i> 잉크트리 커뮤니티에서 자유롭게 의견을 나누고 소통해보세요.
 									</p>
 								</div>
 
@@ -64,6 +64,10 @@
 									<input type="hidden" name="userName" value="${user.userNumber}">
 									<input type="hidden" name="boardNumber" value="${board.boardNumber}" />
 									<input type="hidden" name="boardContent" id="boardContent">
+									<input type="hidden" name="pageNum" value="${param.pageNum}">
+									<input type="hidden" name="amount" value="${param.amount}">
+									<input type="hidden" name="type" value="${param.type}">
+									<input type="hidden" name="keyword" value="${param.keyword}">
 
 									<div class="form-group">
 										<label for="boardTitle" class="form-label">
@@ -111,9 +115,13 @@
 							document.getElementById('boardContent').value = content;
 
 							// boardNumber 값을 미리 가져오기
-							var boardNumber = $("input[name='boardNumber']").val();
+							let boardNumber = $("input[name='boardNumber']").val();
+							let pageNum = $("input[name='pageNum']").val();
+							let amount = $("input[name='amount']").val();
+							let type = $("input[name='type']").val();
+							let keyword = $("input[name='keyword']").val();
 
-							var formData = $("#frm").serialize();
+							let formData = $("#frm").serialize();
 
 							$.ajax({
 								type: "post",
@@ -121,7 +129,11 @@
 								data: formData,
 								success: function (data) {
 									alert("게시글이 성공적으로 수정되었습니다.");
-									location.href = "/board/detail_view?boardNumber=" + boardNumber;
+									location.href = "/board/detail_view?boardNumber=" + boardNumber + 
+													"&pageNum=" + pageNum + 
+													"&amount=" + amount + 
+													"&type=" + type + 
+													"&keyword=" + keyword;
 								},
 								error: function () {
 									alert("오류가 발생했습니다. 다시 시도해주세요.");

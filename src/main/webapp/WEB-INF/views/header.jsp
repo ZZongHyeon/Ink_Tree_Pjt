@@ -344,7 +344,7 @@
         // 알림 확인 함수
         function checkChatNotifications() {
             <% if (user != null) { %>
-            console.log('알림 확인 함수 실행 중...');
+            //console.log('알림 확인 함수 실행 중...');
             
             // 직접 XMLHttpRequest 사용
             var xhr = new XMLHttpRequest();
@@ -363,7 +363,7 @@
 						var chatMenuNotification = document.getElementById('chatMenuNotification');
 						
                         if (!chatNotification) {
-                            console.error('chatNotification 요소를 찾을 수 없습니다');
+                            ////console.error('chatNotification 요소를 찾을 수 없습니다');
                             return;
                         }
                         
@@ -381,18 +381,18 @@
                             chatNotification.classList.remove('has-new');
                             chatMenuNotification.style.display = 'none';
                             chatMenuNotification.classList.remove('has-new');
-                            console.log('읽지 않은 메시지 없음 또는 데이터 오류:', data);
+                            //console.log('읽지 않은 메시지 없음 또는 데이터 오류:', data);
                         }
                     } catch (e) {
-                        console.error('JSON 파싱 오류:', e, '원본 텍스트:', xhr.responseText);
+                        //console.error('JSON 파싱 오류:', e, '원본 텍스트:', xhr.responseText);
                     }
                 } else {
-                    console.error('서버 응답 오류:', xhr.status, xhr.statusText);
+                    ////console.error('서버 응답 오류:', xhr.status, xhr.statusText);
                 }
             };
             
             xhr.onerror = function() {
-                console.error('네트워크 오류 발생');
+                //console.error('네트워크 오류 발생');
             };
             
             xhr.send();
@@ -400,20 +400,20 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM 로드됨');
+            //console.log('DOM 로드됨');
             
             // 알림 배지 초기화
             var chatNotification = document.getElementById('chatNotification');
             if (chatNotification) {
                 // 초기 상태 명시적 설정
                 chatNotification.style.display = 'none';
-                console.log('알림 배지 초기화 완료');
+                //console.log('알림 배지 초기화 완료');
             }
             var chatMenuNotification = document.getElementById('chatMenuNotification');
             if (chatMenuNotification) {
                 // 초기 상태 명시적 설정
                 chatMenuNotification.style.display = 'none';
-                console.log('알림 배지 초기화 완료');
+                //console.log('알림 배지 초기화 완료');
             }
 
             // 즉시 알림 확인 실행
@@ -524,7 +524,7 @@
                             messagesContainer.scrollTop = messagesContainer.scrollHeight;
                         })
                         .catch(error => {
-                            console.error('챗봇 응답 오류:', error);
+                            //console.error('챗봇 응답 오류:', error);
                             
                             // 오류 발생 시 기본 응답
                             const errorMessage = document.createElement('div');
@@ -587,7 +587,7 @@
         notificationItems.forEach(item => {
             if (item.dataset.id) {
                 processedNotifications.add(parseInt(item.dataset.id));
-                console.log(`초기 알림 ID 기록:`+item.dataset.id);
+                //console.log(`초기 알림 ID 기록:`+item.dataset.id);
             }
         });
 
@@ -646,7 +646,7 @@
                         }
                     })
                     .catch(error => {
-                        console.error('알림 모두 읽음 처리 중 오류 발생:', error);
+                        //console.error('알림 모두 읽음 처리 중 오류 발생:', error);
                     });
                 <% } %>
             });
@@ -801,7 +801,7 @@
                 }
             })
             .catch(error => {
-                console.error('알림 개수 업데이트 오류:', error);
+                //console.error('알림 개수 업데이트 오류:', error);
             });
     }
 </script>
@@ -811,7 +811,7 @@
 
         // 알림 항목 클릭 이벤트 - 읽음 처리 및 페이지 이동
         const notificationItems = document.querySelectorAll('.notification-item');
-        console.log(notificationItems.length+`개의 알림 항목 발견`);
+        // console.log(notificationItems.length+`개의 알림 항목 발견`);
 
         // 모든 알림 항목 선택
         notificationItems.forEach(item => {
@@ -858,11 +858,11 @@
                                     // 읽지 않은 알림 수 업데이트
                                     updateNotificationBadge();
                                 } else {
-                                    console.error(`알림 ID: ${notificationId} 읽음 처리 실패`);
+                                    //console.error(`알림 ID: ${notificationId} 읽음 처리 실패`);
                                 }
                             })
                             .catch(error => {
-                                console.error('알림 읽음 처리 오류:', error);
+                                //console.error('알림 읽음 처리 오류:', error);
                             });
                     }
 
@@ -919,7 +919,7 @@
                 }
             })
             .catch(error => {
-                console.error('알림 읽음 처리 오류:', error);
+                //console.error('알림 읽음 처리 오류:', error);
             });
     }
 
@@ -927,9 +927,9 @@
     function connectToNotificationStream(userNumber) {
         const savedUserNumber = userNumber;
 
-        console.log('SSE 연결 시도, 사용자 번호:', savedUserNumber);
+        //console.log('SSE 연결 시도, 사용자 번호:', savedUserNumber);
         const sseUrl = `/notifications/stream/` + savedUserNumber;
-        console.log("URL", sseUrl);
+        //console.log("URL", sseUrl);
         const eventSource = new EventSource(sseUrl);
 
         // 연결 성공 이벤트
@@ -950,18 +950,18 @@
                 updateNotificationBadge();
 
             } catch (error) {
-                console.error('알림 데이터 처리 오류:', error);
+                //console.error('알림 데이터 처리 오류:', error);
             }
         });
 
         // 오류 이벤트
         eventSource.onerror = function(error) {
-            console.error('알림 연결 오류:', error);
+            // //console.error('알림 연결 오류:', error);
 
             // 연결 종료 후 재연결 시도
             eventSource.close();
             setTimeout(() => {
-                console.log('알림 서버에 재연결 시도... 사용자 번호:', savedUserNumber);
+                //console.log('알림 서버에 재연결 시도... 사용자 번호:', savedUserNumber);
                 connectToNotificationStream(userNumber);
             }, 5000);
         };

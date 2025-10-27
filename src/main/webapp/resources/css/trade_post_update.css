@@ -11,7 +11,32 @@ body {
     color: #333;
     line-height: 1.6;
 }
+/* Quill 에디터 스타일 커스터마이징 */
+.ql-toolbar.ql-snow {
+    border: 2px solid var(--gray-200) !important;
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+    background-color: var(--gray-100);
+    padding: 10px !important;
+}
 
+.ql-container.ql-snow {
+    border: 2px solid var(--gray-200) !important;
+    border-top: none !important;
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    min-height: 300px;
+}
+
+.ql-editor {
+    min-height: 300px;
+    font-size: 15px;
+    padding: 16px !important;
+}
+
+.ql-editor:focus {
+    border-color: var(--primary);
+}
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -221,7 +246,6 @@ body {
     }
     
     .form-row {
-        flex-direction: column;
         gap: 10px;
     }
     
@@ -230,7 +254,6 @@ body {
     }
     
     .status-group {
-        flex-direction: column;
     }
     
     .form-actions {
