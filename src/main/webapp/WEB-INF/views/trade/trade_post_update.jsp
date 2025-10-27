@@ -16,7 +16,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/resources/css/trade_post_update.css">
 </head>
-
+<style>
+	.ql-container {
+		height: 400px;
+	}
+	
+	.ql-editor {
+		min-height: 400px;
+	}
+</style>
 <body>
     <jsp:include page="../header.jsp" />
 

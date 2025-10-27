@@ -19,6 +19,15 @@
 <script src="/resources/js/trade_post_write.js"></script>
 
 </head>
+<style>
+	.ql-container {
+		height: 400px;
+	}
+	
+	.ql-editor {
+		min-height: 400px;
+	}
+</style>
 <body>
     <jsp:include page="../header.jsp" />
 	<div class="container">
