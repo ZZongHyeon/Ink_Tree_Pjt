@@ -71,15 +71,16 @@
 				    <i class="nav-icon fa-solid fa-house"></i>
 				    <span>메인</span>
 				</a>
-                <a href="/admin_notice" class="nav-link ${currentPage == '/admin_notice' ? 'active' : ''}">
+                <!-- <a href="/admin/admin_notice" class="nav-link ${currentPage == '/admin_notice' ? 'active' : ''}"> -->
+                <a href="/admin/admin_notice" class="nav-link ${fn:startsWith(currentPage, '/admin/') ? 'active' : ''}">
                     <i class="nav-icon fa-solid fa-bullhorn"></i>
                     <span>공지사항</span>
                 </a>
-                <a href="/board/view" class="nav-link ${currentPage == '/board_view' ? 'active' : ''}">
-                    <i class="nav-icon fa-solid fa-clipboard-list"></i>
-                    <span>게시판</span>
-                </a>
-                <a href="/trade/post_view" class="nav-link ${currentPage == '/trade_post_view' ? 'active' : ''}">
+				<a href="/board/view" class="nav-link ${fn:startsWith(currentPage, '/board/') ? 'active' : ''}">
+				    <i class="nav-icon fa-solid fa-clipboard-list"></i>
+				    <span>게시판</span>
+				</a>
+                <a href="/trade/post_view" class="nav-link ${fn:startsWith(currentPage, '/trade/') ? 'active' : ''}">
                     <i class="nav-icon fa-solid fa-cart-shopping"></i>
                     <span>거래게시판</span>
                 </a>
@@ -223,7 +224,7 @@
                                 <c:if test="${user.userAdmin == 1}">
                             <div class="dropdown-section">
                                 <div class="dropdown-section-title">관리자</div>
-                                <a href="/admin_view" class="dropdown-item admin-item">
+                                <a href="/admin/admin_view" class="dropdown-item admin-item">
                                     <div class="dropdown-icon-wrapper">
                                         <i class="dropdown-icon fa-solid fa-gear"></i>
                                     </div>
