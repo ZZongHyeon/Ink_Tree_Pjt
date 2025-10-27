@@ -92,31 +92,32 @@ public class JwtTokenUtil {
     }
 
     // 만료시간 연장
-    public String refreshToken(String token) {
-        try {
-            // 기존 토큰에서 클레임 추출
-            Claims claims = getAllClaimsFromToken(token);
-            if (claims == null) {
-                return null;
-            }
-            
-            // 새로운 만료 시간 설정
-            Date now = new Date();
-            Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
-            
-            // 새 토큰 생성
-            return Jwts.builder()
-                    .setClaims(claims)
-                    .setIssuedAt(now)
-                    .setExpiration(expiryDate)
-                    .signWith(getSigningKey(), SignatureAlgorithm.HS512)
-                    .compact();
-        } catch (Exception e) {
-            logger.error("토큰 갱신 중 오류 발생: {}", e.getMessage());
-            return null;
-        }
-    }
-    
+//    public String refreshToken(String token) {
+//    	System.out.println("test : " + secret);
+//        try {
+//            // 기존 토큰에서 클레임 추출
+//            Claims claims = getAllClaimsFromToken(token);
+//            if (claims == null) {
+//                return null;
+//            }
+//            
+//            // 새로운 만료 시간 설정
+//            Date now = new Date();
+//            Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
+//            
+//            // 새 토큰 생성
+//            return Jwts.builder()
+//                    .setClaims(claims)
+//                    .setIssuedAt(now)
+//                    .setExpiration(expiryDate)
+//                    .signWith(getSigningKey(), SignatureAlgorithm.HS512)
+//                    .compact();
+//        } catch (Exception e) {
+//            logger.error("토큰 갱신 중 오류 발생: {}", e.getMessage());
+//            return null;
+//        }
+//    }
+//    
     // 토큰에서 모든 클레임 추출
     private Claims getAllClaimsFromToken(String token) {
         try {
@@ -136,15 +137,15 @@ public class JwtTokenUtil {
     }
 
     // 토큰 만료 여부 확인 - 개선된 버전
-    private Boolean isTokenExpired(String token) {
-        try {
-            final Date expiration = getClaimFromToken(token, Claims::getExpiration);
-            return expiration == null || expiration.before(new Date());
-        } catch (ExpiredJwtException e) {
-            logger.debug("토큰이 만료되었습니다: {}", e.getMessage());
-            return true;
-        }
-    }
+//    private Boolean isTokenExpired(String token) {
+//        try {
+//            final Date expiration = getClaimFromToken(token, Claims::getExpiration);
+//            return expiration == null || expiration.before(new Date());
+//        } catch (ExpiredJwtException e) {
+//            logger.debug("토큰이 만료되었습니다: {}", e.getMessage());
+//            return true;
+//        }
+//    }
 
     // 인증 정보로부터 토큰 생성
     public String generateToken(Authentication authentication) {
