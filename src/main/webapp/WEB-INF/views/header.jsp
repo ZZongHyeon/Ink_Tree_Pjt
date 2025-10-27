@@ -179,7 +179,7 @@
                         <div class="dropdown-menu-container">
                             <div class="dropdown-section">
                                 <div class="dropdown-section-title">내 계정</div>
-                                <a href="mypage" class="dropdown-item">
+                                <a href="/mypage" class="dropdown-item">
                                     <div class="dropdown-icon-wrapper">
                                         <i class="dropdown-icon fa-solid fa-user"></i>
                                     </div>

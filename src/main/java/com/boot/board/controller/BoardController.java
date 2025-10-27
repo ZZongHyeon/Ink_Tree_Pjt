@@ -135,7 +135,6 @@ public class BoardController {
 	@RequestMapping("/write")
 	public String boardViewWrite(HttpServletRequest request, Model model) {
 		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
-		System.out.println(user);
 		model.addAttribute("user", user);
 		
 		return "board/board_write";

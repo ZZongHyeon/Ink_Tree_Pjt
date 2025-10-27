@@ -50,7 +50,7 @@ java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")); %>
           <div class="chat-user-time">
             <span class="chat-user">
               <c:choose>
-                <c:when test="${loginUser.userNumber == room.sellerNumber}">
+                <c:when test="${user.userNumber == room.sellerNumber}">
                   ${room.buyerName}
                 </c:when>
                 <c:otherwise>${room.sellerName}</c:otherwise>

@@ -27,7 +27,7 @@
 					<span class="title-icon"><i class="fas fa-book-reader"></i></span>
 					<span class="title-text">맞춤 도서 추천 시스템</span>
 				</h1>
-				<p class="recommendation-subtitle">${loginUser.userName}님의 관심
+				<p class="recommendation-subtitle">${user.userName}님의 관심
 					카테고리와 인기 도서를 기반으로 추천해드립니다.</p>
 			</div>
 		</div>
@@ -68,7 +68,7 @@
 					<span class="title-icon"><i class="fas fa-bookmark"></i></span> <span
 						class="title-text">${topMajorCategory} 당신을 위한 추천</span>
 				</h2>
-				<p class="form-description">${loginUser.userName}님이 가장 많이 읽은 주요
+				<p class="form-description">${user.userName}님이 가장 많이 읽은 주요
 					카테고리 기반 추천 도서입니다.</p>
 			</div>
 
@@ -114,7 +114,7 @@
 					<span class="title-icon"><i class="fas fa-tags"></i></span> <span
 						class="title-text">${topSubCategory} 이런 건 어떠세요</span>
 				</h2>
-				<p class="form-description">${loginUser.userName}님이 관심이 있을 수도 있는
+				<p class="form-description">${user.userName}님이 관심이 있을 수도 있는
 					책리스트 입니다.</p>
 			</div>
 
