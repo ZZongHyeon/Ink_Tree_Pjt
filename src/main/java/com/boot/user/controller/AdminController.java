@@ -23,6 +23,7 @@ import com.boot.z_page.criteria.NoticeCriteriaDTO;
 import com.boot.z_util.otherMVC.service.UtilService;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 	@Autowired
 	private UtilService service;

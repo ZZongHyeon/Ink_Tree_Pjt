@@ -79,13 +79,13 @@
 <%-- 	    </c:if> --%>
 	    
 	    <div class="notice-actions">
-	        <a href="/admin_notice" class="action-btn list-btn">
+	        <a href="/admin/admin_notice" class="action-btn list-btn">
 	            <i class="fas fa-list"></i> 목록으로
 	        </a>
 	        
 			<c:if test="${requestScope.user != null and requestScope.user.userAdmin == 1}">
 			    <div class="admin-actions">
-			        <a href="/admin_update?noticeNum=${notice.noticeNum}" class="action-btn edit-btn">
+			        <a href="/admin/admin_update?noticeNum=${notice.noticeNum}" class="action-btn edit-btn">
 			            <i class="fas fa-edit"></i> 수정하기
 			        </a>
 			        <a href="#" onclick="confirmDelete(${notice.noticeNum}); return false;" class="action-btn delete-btn">
@@ -102,7 +102,7 @@
 	                <span class="nav-label">
 	                <i class="fas fa-chevron-up"></i>이전글
 	                </span>
-	                <a href="/admin_notice_detail?noticeNum=${prevNotice.noticeNum}" class="nav-link">${prevNotice.noticeTitle}</a>
+	                <a href="/admin/admin_notice_detail?noticeNum=${prevNotice.noticeNum}" class="nav-link">${prevNotice.noticeTitle}</a>
 	                <span class="nav-date"><fmt:formatDate value="${prevNotice.noticeRegdate}" pattern="yyyy-MM-dd"/></span>
 	            </div>
 	        </c:if>
@@ -111,7 +111,7 @@
 	                <span class="nav-label">
 	                <i class="fas fa-chevron-down"></i>다음글
 	                </span>
-	                <a href="/admin_notice_detail?noticeNum=${nextNotice.noticeNum}" class="nav-link">${nextNotice.noticeTitle}</a>
+	                <a href="/admin/admin_notice_detail?noticeNum=${nextNotice.noticeNum}" class="nav-link">${nextNotice.noticeTitle}</a>
 	                <span class="nav-date"><fmt:formatDate value="${nextNotice.noticeRegdate}" pattern="yyyy-MM-dd"/></span>
 	            </div>
 	        </c:if>
@@ -121,7 +121,7 @@
 	<script>
 	    function confirmDelete(noticeNum) {
 	        if (confirm('정말로 이 공지사항을 삭제하시겠습니까?')) {
-	            location.href = '/admin_delete?noticeNum=' + noticeNum;
+	            location.href = '/admin/admin_delete?noticeNum=' + noticeNum;
 	        }
 	    }
 	</script>

@@ -82,7 +82,7 @@
 							<c:when test="${not empty noticeList}">
 								<c:forEach items="${noticeList}" var="notice">
 									<div class="notice-card">
-										<a href="/admin_notice_detail?noticeNum=${notice.noticeNum}"
+										<a href="/admin/admin_notice_detail?noticeNum=${notice.noticeNum}"
 											class="notice-link">
 											<div class="notice-content">
 												<c:choose>

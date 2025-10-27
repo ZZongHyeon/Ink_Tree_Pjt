@@ -99,11 +99,11 @@
 
 			$.ajax({
 				type : "post",
-				url : "admin_update_ok",
+				url : "/admin/admin_update_ok",
 				data : formData,
 				success : function(data) {
 					alert("저장완료");
-					location.href = "admin_notice";
+					location.href = "/admin/admin_notice";
 				},
 				error : function() {
 					alert("오류발생");

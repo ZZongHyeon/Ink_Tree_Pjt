@@ -11,9 +11,9 @@
     }
     
     .container {
-        max-width: 900px;
-        margin: 30px auto;
-        padding: 0 20px;
+		max-width: 1000px;
+		margin: 40px auto;
+		padding: 0 20px;
     }
     
     .notice-header {
@@ -249,6 +249,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         transition: color 0.3s;
+		overflow: visible !important;  /* 텍스트 잘림 방지 */
     }
     
     .nav-link:hover {
