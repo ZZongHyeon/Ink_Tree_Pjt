@@ -7,13 +7,13 @@
 
 	<sql id="criteriaDTO">
 	   <if test='type == "T"'>
-	      where boardTitle like '%' || #{keyword} || '%'
+	      AND boardTitle like '%' || #{keyword} || '%'
 	   </if>
 	   <if test='type == "C"'>
-	      where boardContent like '%' || #{keyword} || '%'
+	      AND boardContent like '%' || #{keyword} || '%'
 	   </if>
 	   <if test='type == "W"'>
-	      where userName like '%' || #{keyword} || '%'
+	      AND userName like '%' || #{keyword} || '%'
 	   </if>
 	</sql>
 	
@@ -42,6 +42,7 @@
 
     <select id="getTotalCount" resultType="int">
     	select count(*) from board
+    	WHERE 1=1
     	<include refid="criteriaDTO"></include>
     </select>
 
