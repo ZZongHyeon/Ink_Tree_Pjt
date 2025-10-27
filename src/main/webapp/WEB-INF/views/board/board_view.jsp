@@ -172,7 +172,7 @@
                                                 </c:if>
                                             </ul>
                                         </div>
-                                        <form id="actionForm" action="board_view" method="get">
+                                        <form id="actionForm" action="/board/view" method="get">
                                             <input type="hidden" name="pageNum"
                                                 value="${pageMaker.criteriaDTO.pageNum}">
                                             <input type="hidden" name="amount" value="${pageMaker.criteriaDTO.amount}">
@@ -199,7 +199,7 @@
                                             actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 
                                             // 버그처리(게시글 클릭 후 뒤로가기 누른 후 다른 페이지 클릭 할 때 content_view2가 작동되는 것을 해결)
-                                            actionForm.attr("action", "board_view").submit();
+                                            actionForm.attr("action", "view").submit();
                                         }); // end of paginate_button click
 
                                         // 게시글 처리
@@ -235,7 +235,7 @@
                                             }
 
                                             // searchForm.find("input[name='pageNum']").val("1"); // 검색 시 1페이지로 이동
-                                            searchForm.attr("action", "board_view").submit();
+                                            searchForm.attr("action", "view").submit();
                                         }); // end of searchForm click
 
                                         // type 콤보박스 변경

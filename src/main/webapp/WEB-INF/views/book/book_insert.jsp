@@ -27,7 +27,7 @@
 			url : "/book/insert_ok",
 			success : function(data) {
 				alert("저장완료");
-				location.href = "/admin_view"
+				location.href = "/admin/admin_view"
 			},
 			error : function() {
 				alert("오류발생");
