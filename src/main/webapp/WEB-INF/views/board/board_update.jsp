@@ -30,7 +30,15 @@
 					}
 				</script>
 			</head>
-
+<style>
+	.ql-container {
+		height: 400px;
+	}
+	
+	.ql-editor {
+		min-height: 400px;
+	}
+</style>
 			<body>
     <jsp:include page="../header.jsp" />
 
