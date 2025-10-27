@@ -65,7 +65,7 @@ public class NotificationService {
 	 */
 	public List<NotificationDto> getUnsentNotifications(int userNumber) {
 		List<NotificationDto> notifications = notificationDao.selectUnsentByUserNumber(userNumber);
-		log.info("미전송 알림 조회: 사용자={}, 개수={}", userNumber, notifications.size());
+//		log.info("미전송 알림 조회: 사용자={}, 개수={}", userNumber, notifications.size());
 		return notifications;
 	}
 

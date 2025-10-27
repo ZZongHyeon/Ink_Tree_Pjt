@@ -38,7 +38,7 @@ public class NotificationController {
      */
     @GetMapping(value = "/stream/{userNumber}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter streamNotifications(@PathVariable int userNumber) {
-        log.info("사용자 {} SSE 연결 요청", userNumber);
+//        log.info("사용자 {} SSE 연결 요청", userNumber);
 
         SseEmitter emitter = new SseEmitter(120_000L);
 
@@ -48,12 +48,12 @@ public class NotificationController {
 
         emitter.onCompletion(() -> {
             userEmitterList.remove(emitter);
-            log.info("사용자 {} SSE 연결 종료", userNumber);
+//            log.info("사용자 {} SSE 연결 종료", userNumber);
         });
 
         emitter.onTimeout(() -> {
             userEmitterList.remove(emitter);
-            log.info("사용자 {} SSE 연결 타임아웃", userNumber);
+//            log.info("사용자 {} SSE 연결 타임아웃", userNumber);
             emitter.complete();
         });
 
