@@ -1024,6 +1024,9 @@ body {
   .user-name {
     display: none;
   }
+  .logo-text {
+    font-size: 0px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1065,6 +1068,12 @@ body {
     right: 20px;
     bottom: 90px;
   }
+  .logo-text{
+  font-size: 0px;
+  }
+  .nav-link span {
+    display: none;
+  }
 }
 
 @media (max-width: 576px) {
@@ -1081,6 +1090,7 @@ body {
     font-size: 20px;
   }
 
+  
   .dropdown-menu {
     width: 300px;
     right: -10px;
@@ -1111,6 +1121,10 @@ body {
     right: 16px;
     bottom: 70px;
   }
+  .logo-text{
+  font-size: 0px;
+  }
+  
 }
 
 /* 알림 아이콘 스타일 */
