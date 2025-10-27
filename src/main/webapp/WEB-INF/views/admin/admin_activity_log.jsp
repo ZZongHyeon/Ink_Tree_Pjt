@@ -1,4 +1,4 @@
-<%@page import="com.boot.user.dto.UserDTO" %>
+<%@page import="com.boot.user.dto.BasicUserDTO" %>
    <%@page import="com.boot.user.dto.AdminActivityLogDTO" %>
 <%@page import="com.boot.z_page.PageDTO" %>
 <%@page import="java.util.ArrayList" %>
@@ -102,7 +102,7 @@
 </head>
 
 <body>
-    <% UserDTO user = (UserDTO) session.getAttribute("loginUser"); %>
+    <% BasicUserDTO user = (BasicUserDTO) requset.getAttribute("user"); %>
     <jsp:include page="../header.jsp" />
     <div class="container">
         <!-- Sidebar -->

@@ -1,15 +1,11 @@
 package com.boot.user.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.dto.UserDTO;
@@ -92,7 +86,6 @@ public class UserController {
 	    // request에서 사용자 정보 추출 (SafeUserDTO 또는 UserDTO)
 	    Object userObj = request.getAttribute("user");
 	    
-	    System.out.println("test : "+ userObj);
 	    // 사용자 정보가 없으면 로그인 페이지로 리다이렉트
 	    if (userObj == null) {
 	        return "redirect:/loginForm";
@@ -111,7 +104,7 @@ public class UserController {
 	    // 사용자 ID로 데이터베이스에서 전체 사용자 정보 조회
 	    HashMap<String, String> param = new HashMap<>();
 	    param.put("userId", userId);
-	    UserDTO user = service.getUserInfo(param);
+	    UserDTO user = service.getUserInfo(param); // 전체라 UserDTO 사용
 	    
 	    if (user == null) {
 	        return "redirect:/loginForm";
@@ -155,14 +148,14 @@ public class UserController {
 //	}
 	@RequestMapping("/userUpdate")
 	@ResponseBody
-	public Map<String, Object> updateUserInfo(@RequestParam HashMap<String, String> param, HttpSession session) {
+	public Map<String, Object> updateUserInfo(@RequestParam HashMap<String, String> param) {
 		Map<String, Object> response = new HashMap<>();
 
 		int result = service.updateUserInfo(param);
 		if (result > 0) {
 			response.put("success", true);
 			response.put("message", "회원 정보가 성공적으로 수정되었습니다.");
-			session.invalidate(); // 세션 초기화 → 자동 로그아웃
+//			session.invalidate(); // 세션 초기화 → 자동 로그아웃
 		} else {
 			response.put("success", false);
 			response.put("message", "회원 정보 수정에 실패했습니다.");
@@ -173,9 +166,9 @@ public class UserController {
 
 	@RequestMapping("/userPwUpdate")
 	@ResponseBody // JSON 응답을 반환하기 위해 추가
-	public Map<String, Object> updateUserPwInfo(@RequestParam HashMap<String, String> param, HttpSession session) {
+	public Map<String, Object> updateUserPwInfo(@RequestParam HashMap<String, String> param, HttpServletRequest request) {
 		Map<String, Object> response = new HashMap<>();
-		UserDTO user = (UserDTO) session.getAttribute("loginUser");
+		UserDTO user = (UserDTO) request.getAttribute("user"); // 비번가져와야해서 UserDTO사용
 		int result = -1;
 
 		String inputPw = param.get("userPw");
@@ -199,7 +192,7 @@ public class UserController {
 		if (result > 0) {
 			response.put("success", true);
 			response.put("message", "비밀번호가 성공적으로 변경되었습니다. 다시 로그인해주세요.");
-			session.invalidate(); // 세션 초기화 → 자동 로그아웃
+//			session.invalidate(); // 세션 초기화 → 자동 로그아웃
 		} else {
 			response.put("success", false);
 			response.put("message", "현재 비밀번호가 일치하지 않습니다.");
@@ -210,11 +203,11 @@ public class UserController {
 
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request) {
-		HttpSession session = request.getSession(false);
+		request = (HttpServletRequest) request.getAttribute("user");
 
-		if (session != null) {
-			// 세션에서 사용자 정보 가져오기
-			UserDTO user = (UserDTO) session.getAttribute("loginUser");
+		if (request != null) {
+			// 토큰에서 가져오기
+			UserDTO user = (UserDTO) request.getAttribute("user");
 
 //	        if (user != null) {
 //	            // 데이터베이스에서 세션 정보 삭제
@@ -232,7 +225,7 @@ public class UserController {
 //	        }
 
 			// 세션 무효화
-			session.invalidate();
+//			session.invalidate();
 //	        System.out.println("로그아웃: 세션이 무효화됨");
 		}
 
@@ -266,7 +259,6 @@ public class UserController {
 
 		// 사용자 ID와 비밀번호로 검증
 		boolean isValid = service.verifyPassword(param);
-		log.info("@#test=>" + param);
 		response.put("success", isValid);
 		if (!isValid) {
 			response.put("message", "비밀번호가 일치하지 않습니다.");

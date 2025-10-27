@@ -2,6 +2,7 @@ package com.boot.notification.controller;
 
 import com.boot.notification.dto.NotificationDto;
 import com.boot.notification.service.NotificationService;
+import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.dto.UserDTO;
 import com.boot.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -107,8 +108,8 @@ public class NotificationController {
         log.info("알림 생성 요청: {}", dto);
         NotificationDto createdNoti = null;
         if(dto.isToAll()) {
-            List<UserDTO> users = userService.findAllUserNumber();
-            for(UserDTO user : users) {
+            List<BasicUserDTO> users = userService.findAllUserNumber();
+            for(BasicUserDTO user : users) {
                 dto.setUserNumber(user.getUserNumber());
                 createdNoti =   notificationService.createDetailedNotification(dto);
             }

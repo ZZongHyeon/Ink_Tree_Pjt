@@ -249,7 +249,7 @@ public class BookReviewController {
 
 		try {
 			// 로그인 확인
-			UserDTO user = (UserDTO) request.getAttribute("user");
+			BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 			if (user == null) {
 				response.put("success", false);
 				response.put("message", "로그인이 필요합니다.");
@@ -287,7 +287,7 @@ public class BookReviewController {
 
 		try {
 			// 로그인 확인
-			UserDTO user = (UserDTO) request.getAttribute("user");
+			BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 			if (user == null) {
 				response.put("success", false);
 				response.put("message", "로그인이 필요합니다.");

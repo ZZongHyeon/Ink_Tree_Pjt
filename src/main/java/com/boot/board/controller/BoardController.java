@@ -1,14 +1,10 @@
 package com.boot.board.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,11 +23,10 @@ import com.boot.board.dto.BoardDTO;
 import com.boot.board.service.BoardCommentService;
 import com.boot.board.service.BoardCommentServiceImpl;
 import com.boot.board.service.BoardService;
+import com.boot.user.dto.BasicUserDTO;
 import com.boot.z_page.CommentPageDTO;
 import com.boot.z_page.PageDTO;
 import com.boot.z_page.criteria.CriteriaDTO;
-import com.boot.user.dto.BasicUserDTO;
-import com.boot.user.dto.UserDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -157,9 +152,7 @@ public class BoardController {
 	@RequestMapping("/delete")
 	@ResponseBody  
 	public String boardViewDelete(@RequestParam HashMap<String, String> param) {
-	    System.out.println("test");
 	    service.boardDelete(param);
-	    System.out.println("test");
 	    return "success";  
 	}
 
@@ -197,7 +190,6 @@ public class BoardController {
 
 		BoardDTO dto = service.boardDetailView(param);
 		ArrayList<BoardCommentDTO> commentList = bcService.bcView(param, criteriaDTO);
-		System.out.println("test : " + commentList);
 		int total = bcService.getTotalCount(param);
 		int allTotal = bcService.getAllCount(param);
 		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
@@ -213,7 +205,6 @@ public class BoardController {
 
 	@RequestMapping("/likes")
 	public ResponseEntity<String> boardLikes(@RequestParam HashMap<String, String> param, HttpServletRequest request) {
-//	    UserDTO user = (UserDTO) session.getAttribute("loginUser");
 		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 		if (user == null) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인필요");
@@ -253,8 +244,8 @@ public class BoardController {
 	// 추천 확인(버튼색반전용)
 	@GetMapping("/checkLikeStatus")
 	@ResponseBody
-	public boolean checkLikeStatus(@RequestParam("boardNumber") int boardNumber, HttpSession session) {
-		UserDTO user = (UserDTO) session.getAttribute("loginUser");
+	public boolean checkLikeStatus(@RequestParam("boardNumber") int boardNumber, HttpServletRequest request) {
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 		if (user == null) {
 			return false;
 		}

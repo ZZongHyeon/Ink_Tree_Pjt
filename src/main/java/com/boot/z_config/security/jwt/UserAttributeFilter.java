@@ -39,7 +39,7 @@ public class UserAttributeFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        logger.info("UserAttributeFilter 초기화");
+//        logger.info("UserAttributeFilter 초기화");
     }
 
     @Override

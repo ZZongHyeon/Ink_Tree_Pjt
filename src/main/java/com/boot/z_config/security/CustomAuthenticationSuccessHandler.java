@@ -39,16 +39,16 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         UserDTO dto = userService.getUserInfo(param);
         
         // 사용자 ID 가져오기
-        String userId = dto.getUserId();
+//        String userId = dto.getUserId();
         
         // 세션에 사용자 정보 저장
-        HttpSession session = request.getSession(true);
-        session.setAttribute("loginUser", dto);
+//        HttpSession session = request.getSession(true);
+//        session.setAttribute("loginUser", dto);
         
         // 세션 정보 저장 (필요한 경우 DB에 저장하는 로직 추가)
-        HashMap<String, String> sessionParam = new HashMap<>();
-        sessionParam.put("userId", userId);
-        sessionParam.put("sessionId", session.getId());
+//        HashMap<String, String> sessionParam = new HashMap<>();
+//        sessionParam.put("userId", userId);
+//        sessionParam.put("sessionId", session.getId());
         
         // 메인 페이지로 리다이렉트
         response.sendRedirect("/");

@@ -24,8 +24,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomUserDetailsService implements UserDetailsService {
 
+    private final OAuth2AuthenticationSuccessHandler OAuth2AuthenticationSuccessHandler;
+
     @Autowired
     private UserService userService;
+
+    CustomUserDetailsService(OAuth2AuthenticationSuccessHandler OAuth2AuthenticationSuccessHandler) {
+        this.OAuth2AuthenticationSuccessHandler = OAuth2AuthenticationSuccessHandler;
+    }
     
     @Override
     @Transactional(readOnly = true)
@@ -77,13 +83,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         
         // 관리자 여부에 따른 권한 부여
-        if (user.getUserAdmin() != 0 && user.getUserAdmin() == 1) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-            log.info("관리자 권한 부여: {}", user.getUserId());
-        } else {
-            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-            log.info("일반 사용자 권한 부여: {}", user.getUserId());
-        }
+//        if (user.getUserAdmin() != 0 && user.getUserAdmin() == 1) {
+//            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+//            log.info("관리자 권한 부여: {}", user.getUserId());
+//        } else {
+//            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+//            log.info("일반 사용자 권한 부여: {}", user.getUserId());
+//        }
         
         // 비밀번호 처리 (중요: 이미 암호화된 비밀번호를 그대로 사용)
         String password = user.getUserPw();

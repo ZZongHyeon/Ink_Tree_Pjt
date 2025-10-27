@@ -3,41 +3,27 @@ package com.boot.book.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.boot.board.service.BoardCommentServiceImpl;
 import com.boot.book.dto.BookDTO;
 import com.boot.book.dto.BookRecordDTO;
-import com.boot.book.dto.ReviewDTO;
-import com.boot.book.dto.ReviewStatsDTO;
 import com.boot.book.service.BookRecommendService;
-import com.boot.book.service.BookReviewService;
 import com.boot.book.service.BookService;
+import com.boot.user.dto.BasicUserDTO;
 import com.boot.z_page.PageDTO;
-import com.boot.z_page.criteria.NoticeCriteriaDTO;
 import com.boot.z_page.criteria.SearchBookCriteriaDTO;
 import com.boot.z_page.criteria.UserBookBorrowingCriteriaDTO;
-import com.boot.user.dto.BasicUserDTO;
-import com.boot.user.dto.UserDTO;
 import com.boot.z_util.otherMVC.service.UtilService;
 
 @Controller
@@ -125,7 +111,6 @@ public class BookController {
 
 		param.put("userNumber", String.valueOf(user.getUserNumber()));
 
-		System.out.println("test : "+param);
 		try {
 			service.deleteBook(param);
 			return ResponseEntity.ok("successDelete");

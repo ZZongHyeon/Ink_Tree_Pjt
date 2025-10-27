@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,7 +18,13 @@ import com.boot.user.dto.UserDTO;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private SqlSession sqlSession;
+	private UserDAO dao;
 
+	@PostConstruct
+	public void init() {
+	    dao = sqlSession.getMapper(UserDAO.class);
+	}
+	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
@@ -26,7 +34,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int userJoin(HashMap<String, String> param) {
 		int re = -1;
-		UserDAO dao = sqlSession.getMapper(UserDAO.class);
 
 		// 비밀번호 암호화
 		String rawPassword = param.get("userPw");
@@ -50,28 +57,24 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public ArrayList<UserDTO> userLogin(HashMap<String, String> param) {
-		UserDAO dao = sqlSession.getMapper(UserDAO.class);
 		ArrayList<UserDTO> list = dao.userLogin(param);
 		return list;
 	}
 
 	@Override
 	public UserDTO checkId(HashMap<String, String> param) {
-		UserDAO dao = sqlSession.getMapper(UserDAO.class);
 		UserDTO dto = dao.checkId(param);
 		return dto;
 	}
 
 	@Override
 	public UserDTO getUserInfo(HashMap<String, String> param) {
-		UserDAO dao = sqlSession.getMapper(UserDAO.class);
 		UserDTO dto = dao.getUserInfo(param);
 		return dto;
 	}
 
 	@Override
 	public int updateUserInfo(HashMap<String, String> param) {
-		UserDAO dao = sqlSession.getMapper(UserDAO.class);
 		int re = dao.updateUserInfo(param);
 
 		// 사용자 정보 수정 시 활동 로그 추가
@@ -103,15 +106,8 @@ public class UserServiceImpl implements UserService {
 		return re;
 	}
 
-//	@Override
-//	public int updateUserPwInfo(HashMap<String, String> param) {
-//		UserDAO dao = sqlSession.getMapper(UserDAO.class);
-//		int re = dao.updateUserPwInfo(param);
-//		return re;
-//	}
 	@Override
 	public int updateUserPwInfo(HashMap<String, String> param) {
-		UserDAO dao = sqlSession.getMapper(UserDAO.class);
 		// 새 비밀번호 암호화 - 명시적으로 확인
 		if (!param.containsKey("encodedPassword")) {
 			String newPassword = param.get("userNewPw");
@@ -151,7 +147,6 @@ public class UserServiceImpl implements UserService {
 				return false;
 			}
 
-			UserDAO dao = sqlSession.getMapper(UserDAO.class);
 			// 1. 사용자 ID로 사용자 정보 조회 (암호화된 비밀번호 포함)
 			UserDTO user = dao.getUserInfo(param);
 
@@ -173,14 +168,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean checkEmail(String email) {
-		UserDAO dao = sqlSession.getMapper(UserDAO.class);
 		int count = dao.checkEmail(email);
 		return count > 0;
 	}
 
 	@Override
-	public List<UserDTO> findAllUserNumber() {
-		UserDAO dao = sqlSession.getMapper(UserDAO.class);
+	public List findAllUserNumber() {
 		List<UserDTO> users = dao.findAllUserNumber();
 		return users;
 	}

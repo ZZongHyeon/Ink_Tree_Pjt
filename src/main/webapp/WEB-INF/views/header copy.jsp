@@ -1,4 +1,4 @@
-<%@page import="com.boot.user.dto.BasicUserDTO" %>
+<%@page import="com.boot.user.dto.UserDTO" %>
 <%@page import="com.boot.notification.dto.NotificationDto" %>
 <%@page import="com.boot.notification.service.NotificationService" %>
 <%@page import="org.springframework.web.context.WebApplicationContext" %>
@@ -28,7 +28,7 @@
 </head>
 <body>
 <%
-    BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
+    UserDTO user = (UserDTO) session.getAttribute("loginUser");
     String currentPage = request.getRequestURI();
     // Spring의 NotificationService를 가져오기 위한 코드
     WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(application);

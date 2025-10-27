@@ -48,7 +48,8 @@ public class JwtTokenUtil {
     private UserService userService;
 
     // 시크릿 키 (실제 운영 환경에서는 환경 변수나 설정 파일에서 가져와야 함)
-    private String secret = "metrohouse_jwt_secret_key_should_be_longer_than_32_bytes_for_security";
+	@Value("${jwt_key}")
+    private String secret;
 
     // 토큰 유효 시간 (30분)
     private int jwtExpirationInMs = 30 * 60 * 1000;

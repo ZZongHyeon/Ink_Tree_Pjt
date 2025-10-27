@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,10 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.boot.book.dao.WishlistDAO;
 import com.boot.book.dto.BookDTO;
 import com.boot.book.service.WishlistServiceImpl;
+import com.boot.user.dto.BasicUserDTO;
 import com.boot.z_page.PageDTO;
 import com.boot.z_page.criteria.WishlistCriteriaDTO;
-import com.boot.user.dto.BasicUserDTO;
-import com.boot.user.dto.UserDTO;
 
 @Controller
 @RequestMapping("/book/wishlist")
@@ -35,8 +33,8 @@ public class WishlistController {
 
 	@PostMapping(value = "/add_wishlist", produces = "text/plain;charset=UTF-8")
 	public @ResponseBody String addToWishlist(@RequestParam("bookNumber") int bookNumber, HttpServletRequest request) {
-		System.out.println("=== 위시리스트 추가 요청 받음 ===");
-		System.out.println("bookNumber: " + bookNumber);
+//		System.out.println("=== 위시리스트 추가 요청 받음 ===");
+//		System.out.println("bookNumber: " + bookNumber);
 
 		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 

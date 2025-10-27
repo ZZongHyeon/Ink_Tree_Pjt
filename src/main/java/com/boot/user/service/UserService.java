@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.dto.UserDTO;
 
 public interface UserService {
@@ -23,6 +24,6 @@ public interface UserService {
 
 	public boolean verifyPassword(HashMap<String, String> param);
 
-	public List<UserDTO> findAllUserNumber();
+	public List<BasicUserDTO> findAllUserNumber();
 
 }

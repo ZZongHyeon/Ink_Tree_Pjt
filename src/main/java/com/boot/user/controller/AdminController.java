@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.boot.board.dto.NoticeDTO;
 import com.boot.board.service.BoardService;
-import com.boot.z_page.PageDTO;
-import com.boot.z_page.criteria.NoticeCriteriaDTO;
 import com.boot.user.dto.AdminActivityLogDTO;
 import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.service.AdminActivityLogService;
 import com.boot.user.service.AdminService;
+import com.boot.z_page.PageDTO;
+import com.boot.z_page.criteria.NoticeCriteriaDTO;
 import com.boot.z_util.otherMVC.service.UtilService;
 
 @Controller

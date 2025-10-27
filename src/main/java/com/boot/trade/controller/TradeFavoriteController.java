@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,12 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.boot.board.service.BoardCommentServiceImpl;
-import com.boot.z_page.PageDTO;
-import com.boot.z_page.criteria.SearchBookCriteriaDTO;
 import com.boot.trade.dto.TradeFavoriteDTO;
 import com.boot.trade.service.TradeFavoriteService;
 import com.boot.user.dto.BasicUserDTO;
-import com.boot.user.dto.UserDTO;
+import com.boot.z_page.PageDTO;
+import com.boot.z_page.criteria.SearchBookCriteriaDTO;
 
 @Controller
 @RequestMapping("/trade/favorite")
