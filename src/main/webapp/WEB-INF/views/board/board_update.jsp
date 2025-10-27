@@ -101,16 +101,27 @@
 					<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 					<script type="text/javascript">
 						function fn_submit() {
+							const title = $('#boardTitle').val().trim();
+							if (title === '') {
+								alert('제목을 입력해주세요.');
+								$('#title').focus();
+								e.preventDefault();
+								return false;
+							}
 							const content = quill.root.innerHTML;
 							const plainText = quill.getText().trim();
-
-							// 유효성 검사
-							if (plainText.length < 1) {
-								document.getElementById('contentError').textContent = '내용은 최소 10자 이상 입력해주세요.';
-								return;
-							} else {
-								document.getElementById('contentError').textContent = '';
+							if (plainText === '') {
+								alert('내용은 최소 10자 이상을 입력해주세요.');
+								e.preventDefault();
+								return false;
 							}
+							// // 유효성 검사
+							// if (plainText.length < 1) {
+							// 	document.getElementById('contentError').textContent = '내용은 최소 10자 이상 입력해주세요.';
+							// 	return;
+							// } else {
+							// 	document.getElementById('contentError').textContent = '';
+							// }
 
 							document.getElementById('boardContent').value = content;
 
@@ -129,6 +140,7 @@
 								data: formData,
 								success: function (data) {
 									alert("게시글이 성공적으로 수정되었습니다.");
+									console.log("test"+data)
 									location.href = "/board/detail_view?boardNumber=" + boardNumber + 
 													"&pageNum=" + pageNum + 
 													"&amount=" + amount + 

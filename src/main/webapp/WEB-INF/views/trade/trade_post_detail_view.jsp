@@ -26,7 +26,7 @@
             <!-- 상단 네비게이션 -->
             <div class="detail-nav">
 <!--                <a href="board_view?pageNum=${param.pageNum}&amount=${param.amount}" class="back-link">-->
-                <a href="/trade/post_view?pageNum=${param.pageNum}&amount=${param.amount}&status=${param.status}&sort=${param.sort}" class="back-link">
+                <a href="/trade/post_view?pageNum=${param.pageNum}&amount=${param.amount}&status=${param.status}&sort=${param.sort}$keyword=${param.keyword}&bookMajorCategory=${param.bookMajorCategory}&bookSubCategory=${param.bookSubCategory}" class="back-link">
                     <i class="fas fa-arrow-left"></i> 목록으로 돌아가기
                 </a>
                 <div class="post-info">
@@ -135,7 +135,8 @@
             <!-- 작성자 또는 관리자만 볼 수 있는 버튼 -->
             <c:if test="${user != null && (user.userNumber == post.userNumber || user.userAdmin == 1)}">
                 <div class="post-actions">
-                    <button class="action-btn edit-btn" onclick="location.href='trade_post_update?postID=${post.postID}'">
+                    <!-- http://localhost:8485/trade/post_view?pageNum=1&amount=8&status=all&sort=latest&keyword=asdf&bookMajorCategory=100-%EC%B2%A0%ED%95%99&bookSubCategory=130-%EC%84%B8%EA%B3%84 -->
+                    <button class="action-btn edit-btn" onclick="location.href='trade_post_update?postID=${post.postID}&amount=${param.amount}&status=${param.status}&sort=${param.status}&bookMajorCategory=${param.bookMajorCategory}&bookSubCategory=${param.bookSubCategory}'">
                         <i class="fas fa-edit"></i> 수정하기
                     </button>
                     <button class="action-btn delete-btn" onclick="confirmDelete(${post.postID})">

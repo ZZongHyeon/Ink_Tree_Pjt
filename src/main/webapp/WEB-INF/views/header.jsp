@@ -80,7 +80,7 @@
 				    <i class="nav-icon fa-solid fa-clipboard-list"></i>
 				    <span>게시판</span>
 				</a>
-                <a href="/trade/post_view" class="nav-link ${fn:startsWith(currentPage, '/trade/') ? 'active' : ''}">
+                <a href="/trade/post_view?pageNum=1&amount=8&status=all&sort=latest" class="nav-link ${fn:startsWith(currentPage, '/trade/') ? 'active' : ''}">
                     <i class="nav-icon fa-solid fa-cart-shopping"></i>
                     <span>거래게시판</span>
                 </a>

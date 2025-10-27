@@ -102,6 +102,19 @@
 			        <input type="hidden" name="amount" value="${pageMaker.searchBookCriteriaDTO.amount}">
 			        <input type="hidden" name="status" value="${param.status}">
 			        <input type="hidden" name="sort" value="${param.sort}">
+                <c:if test="${not empty pageMaker.searchBookCriteriaDTO.type}">
+                    <input type="hidden" name="type" value="${param.type}">
+                </c:if>
+                <c:if test="${not empty pageMaker.searchBookCriteriaDTO.keyword}">
+                    <input type="hidden" name="keyword" value="${pageMaker.searchBookCriteriaDTO.keyword}">
+                </c:if>
+                <c:if test="${not empty param.bookMajorCategory}">
+                    <input type="hidden" name="bookMajorCategory" value="${param.bookMajorCategory}">
+                </c:if>
+                <c:if test="${not empty param.bookSubCategory}">
+                    <input type="hidden" name="bookSubCategory" value="${param.bookSubCategory}">
+                </c:if>
+
 			    </form>
 			</div>
 
@@ -127,7 +140,7 @@
                 <c:forEach items="${postList}" var="post" varStatus="status">
                     <div class="trade-item ${post.status == 'SOLD' ? 'sold' : post.status == 'RESERVED' ? 'reserved' : ''}">
 <!--                        <a href="trade_post_detail_view?postID=${post.postID}&pageNum=${pageMaker.searchBookCriteriaDTO.pageNum}&amount=${pageMaker.searchBookCriteriaDTO.amount}${not empty pageMaker.searchBookCriteriaDTO.type ? '&type='.concat(pageMaker.searchBookCriteriaDTO.type) : ''}${not empty pageMaker.searchBookCriteriaDTO.keyword ? '&keyword='.concat(pageMaker.searchBookCriteriaDTO.keyword) : ''}" class="trade-link">-->
-						<c:choose>
+						<!-- <c:choose>
 						    <c:when test="${empty param.status && empty param.sort}">
 						        <a href="trade_post_detail_view?postID=${post.postID}&pageNum=${pageMaker.searchBookCriteriaDTO.pageNum}&amount=${pageMaker.searchBookCriteriaDTO.amount}&status=all&sort=latest" class="trade-link">
 						    </c:when>
@@ -138,11 +151,12 @@
 						        <a href="trade_post_detail_view?postID=${post.postID}&pageNum=${pageMaker.searchBookCriteriaDTO.pageNum}&amount=${pageMaker.searchBookCriteriaDTO.amount}&status=${param.status}&sort=latest" class="trade-link">
 						    </c:when>
 						    <c:otherwise>
-						        <a href="trade_post_detail_view?postID=${post.postID}&pageNum=${pageMaker.searchBookCriteriaDTO.pageNum}&amount=${pageMaker.searchBookCriteriaDTO.amount}&status=${param.status}&sort=${param.sort}" class="trade-link">
-						    </c:otherwise>
-						</c:choose>
-							<input type="hidden" value="">
-<!--                        <a href="trade_post_detail_view?postID=${post.postID}" class="trade-link">-->
+                                <a href="trade_post_detail_view?postID=${post.postID}&pageNum=${pageMaker.searchBookCriteriaDTO.pageNum}&amount=${pageMaker.searchBookCriteriaDTO.amount}&status=${param.status}&sort=${param.sort}" class="trade-link">
+                                </c:otherwise>
+                            </c:choose> -->
+    <!--                        <a href="trade_post_detail_view?postID=${post.postID}" class="trade-link">-->
+                                <!-- http://localhost:8485/trade/post_view?pageNum=1&amount=8&status=all&sort=latest&keyword=asdf&bookMajorCategory=100-%EC%B2%A0%ED%95%99&bookSubCategory=130-%EC%84%B8%EA%B3%84 -->
+                           <a href="trade_post_detail_view?postID=${post.postID}&pageNum=${pageMaker.searchBookCriteriaDTO.pageNum}&amount=${pageMaker.searchBookCriteriaDTO.amount}&status=${param.status}&sort=${param.sort}&keyword=${param.keyword}&bookMajorCategory=${param.bookMajorCategory}&bookSubCategory=${param.bookSubCategory}" class="trade-link">
                             <div class="trade-image">
 
                                 <c:if test="${post.status == 'SOLD'}">
@@ -224,7 +238,7 @@
                     <input type="hidden" name="type" value="${pageMaker.searchBookCriteriaDTO.type}">
                 </c:if>
                 <c:if test="${not empty pageMaker.searchBookCriteriaDTO.keyword}">
-                    <input type="hidden" name="keyword" value="${pageMaker.searchBookCriteriaDTO.keyword}">
+                    <input type="hidden" name="keyword" value="${param.keyword}">
                 </c:if>
                 <c:if test="${not empty param.bookMajorCategory}">
                     <input type="hidden" name="bookMajorCategory" value="${param.bookMajorCategory}">

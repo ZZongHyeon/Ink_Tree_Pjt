@@ -104,7 +104,7 @@
 			                <!-- 링크 시작 - 각 조건에서 전체 콘텐츠를 포함하도록 수정 -->
 			                <c:choose>
 			                    <c:when test="${empty param.status && empty param.sort}">
-			                        <a href="trade_post_detail_view?postID=${item.postId}&pageNum=${pageMaker.searchBookCriteriaDTO.pageNum}&amount=${pageMaker.searchBookCriteriaDTO.amount}&status=all&sort=latest" class="wishlist-link">
+			                        <a href="/trade/trade_post_detail_view?postID=${item.postId}&pageNum=${pageMaker.searchBookCriteriaDTO.pageNum}&amount=${pageMaker.searchBookCriteriaDTO.amount}&status=all&sort=latest" class="wishlist-link">
 			                            <!-- 이미지 및 정보 컨테이너 -->
 			                            <div class="wishlist-image">
 			                                <!-- 기본 이미지 추가 -->
