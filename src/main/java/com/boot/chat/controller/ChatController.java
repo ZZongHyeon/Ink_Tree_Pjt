@@ -142,9 +142,9 @@ public class ChatController {
         // 사용자의 채팅방 목록 조회
         List<ChatRoomResponse> chatRooms = chatService.getChatRoomsByUser((long) user.getUserNumber());
         
-        System.out.println("채팅방 목록 조회 결과: " + chatRooms.size() + "개");
+//        System.out.println("채팅방 목록 조회 결과: " + chatRooms.size() + "개");
         for (ChatRoomResponse room : chatRooms) {
-            System.out.println("채팅방: " + room);
+//            System.out.println("채팅방: " + room);
         }
         
         model.addAttribute("chatRooms", chatRooms);
@@ -286,7 +286,7 @@ public class ChatController {
         try {
             // 세션에서 활성 채팅방 ID 제거
             session.removeAttribute("activeRoomId");
-            System.out.println("활성 채팅방 정보 제거");
+//            System.out.println("활성 채팅방 정보 제거");
             return ResponseEntity.ok(Map.of("success", true));
         } catch (Exception e) {
             e.printStackTrace();

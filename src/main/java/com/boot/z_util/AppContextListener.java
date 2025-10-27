@@ -7,12 +7,12 @@ public class AppContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        System.out.println("AppContextListener reset");
+//        System.out.println("AppContextListener reset");
         ConsoleCommandListener.start(); 
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        System.out.println("AppContextListener exit");
+//        System.out.println("AppContextListener exit");
     }
 }

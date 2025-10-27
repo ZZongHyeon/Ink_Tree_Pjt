@@ -85,9 +85,6 @@ public class BookReviewController {
 			long millis = System.currentTimeMillis();
 			reviewDTO.setReviewModifiedDate(new java.sql.Date(millis));
 
-			// 디버깅을 위한 로그 출력
-			System.out.println("수정 요청 데이터: " + reviewDTO);
-
 			// 리뷰 수정 서비스 호출
 			int result = service.updateReview(reviewDTO);
 
@@ -163,8 +160,6 @@ public class BookReviewController {
 
 		try {
 
-			System.out.println("전달된 파라미터: " + param);
-
 			// 로그인 확인
 			BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 
@@ -217,7 +212,6 @@ public class BookReviewController {
 	@RequestMapping("/detail")
 	public String bookDetail(NoticeCriteriaDTO noticeCriteriaDTO, @RequestParam HashMap<String, String> param,
 			Model model, HttpServletRequest request) {
-		System.out.println("param => " + param);
 		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 		model.addAttribute("user", user);
 		
@@ -233,9 +227,6 @@ public class BookReviewController {
 
 		model.addAttribute("book", dto);
 		model.addAttribute("reviewList", list);
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println("list[" + i + "] : " + list.get(i));
-		}
 		model.addAttribute("total", total);
 		model.addAttribute("pageMaker", new PageDTO(total, noticeCriteriaDTO));
 		return "book/book_detail";

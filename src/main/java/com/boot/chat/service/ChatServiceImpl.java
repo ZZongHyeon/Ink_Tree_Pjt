@@ -36,7 +36,7 @@ public class ChatServiceImpl implements ChatService {
      */
     public int countTotalUnreadMessagesByUser(Long userNumber) {
         try {
-            System.out.println("countTotalUnreadMessagesByUser 호출: userNumber=" + userNumber);
+//            System.out.println("countTotalUnreadMessagesByUser 호출: userNumber=" + userNumber);
             int count = chatMessageDAO.countTotalUnreadMessagesByUser(userNumber);
 //            System.out.println("조회된 읽지 않은 메시지 수: " + count);
             return count;
@@ -84,10 +84,10 @@ public class ChatServiceImpl implements ChatService {
 	@Transactional
 	public ChatMessageResponse saveAndSendMessage(ChatMessageRequest request) {
 
-	    System.out.println("===== 메시지 저장 요청 =====");
-	    System.out.println("roomId: " + request.getRoomId());
-	    System.out.println("senderNumber: " + request.getSenderNumber());
-	    System.out.println("message: " + request.getMessage());
+//	    System.out.println("===== 메시지 저장 요청 =====");
+//	    System.out.println("roomId: " + request.getRoomId());
+//	    System.out.println("senderNumber: " + request.getSenderNumber());
+//	    System.out.println("message: " + request.getMessage());
 
 	    // 1. 채팅방 정보 조회
 	    ChatRoomResponse chatRoom = chatRoomDAO.selectChatRoomById(request.getRoomId());
@@ -113,11 +113,11 @@ public class ChatServiceImpl implements ChatService {
 	    if (senderNumber.equals(sellerNumber)) {
 	        // 송신자가 판매자인 경우, 수신자는 구매자
 	        receiverNumber = buyerNumber;
-	        System.out.println("송신자(판매자): " + senderNumber + ", 수신자(구매자): " + receiverNumber);
+//	        System.out.println("송신자(판매자): " + senderNumber + ", 수신자(구매자): " + receiverNumber);
 	    } else if (senderNumber.equals(buyerNumber)) {
 	        // 송신자가 구매자인 경우, 수신자는 판매자
 	        receiverNumber = sellerNumber;
-	        System.out.println("송신자(구매자): " + senderNumber + ", 수신자(판매자): " + receiverNumber);
+//	        System.out.println("송신자(구매자): " + senderNumber + ", 수신자(판매자): " + receiverNumber);
 	    } else {
 	        // 송신자가 채팅방의 판매자나 구매자가 아닌 경우 (오류 상황)
 	        throw new RuntimeException("메시지 송신자가 채팅방의 판매자나 구매자가 아닙니다.");
@@ -163,17 +163,17 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	@Transactional
 	public ChatRoomResponse createChatRoom(ChatRoomRequest request) {
-		System.out.println("===== 채팅방 생성 요청 =====");
-		System.out.println("postId: " + request.getPostId());
-		System.out.println("sellerNumber: " + request.getSellerNumber());
-		System.out.println("buyerNumber: " + request.getBuyerNumber());
+//		System.out.println("===== 채팅방 생성 요청 =====");
+//		System.out.println("postId: " + request.getPostId());
+//		System.out.println("sellerNumber: " + request.getSellerNumber());
+//		System.out.println("buyerNumber: " + request.getBuyerNumber());
 
 		// 1. 판매자와 구매자가 USERINFO 테이블에 존재하는지 확인
 		Map<String, Object> seller = chatRoomDAO.selectUserInfo(request.getSellerNumber());
 		Map<String, Object> buyer = chatRoomDAO.selectUserInfo(request.getBuyerNumber());
 
-		System.out.println("판매자 정보: " + seller);
-		System.out.println("구매자 정보: " + buyer);
+//		System.out.println("판매자 정보: " + seller);
+//		System.out.println("구매자 정보: " + buyer);
 
 		if (seller == null) {
 			throw new RuntimeException("판매자가 존재하지 않습니다: " + request.getSellerNumber());
@@ -188,7 +188,7 @@ public class ChatServiceImpl implements ChatService {
 				request.getBuyerNumber());
 
 		if (existingRoom != null) {
-			System.out.println("기존 채팅방 발견: " + existingRoom.getRoomId());
+//			System.out.println("기존 채팅방 발견: " + existingRoom.getRoomId());
 			return existingRoom;
 		}
 
@@ -201,11 +201,11 @@ public class ChatServiceImpl implements ChatService {
 		chatRoom.setLastMessageAt(LocalDateTime.now());
 		chatRoom.setStatus("ACTIVE");
 
-		System.out.println("새 채팅방 생성 시도: " + chatRoom);
+//		System.out.println("새 채팅방 생성 시도: " + chatRoom);
 
 		try {
 			chatRoomDAO.insertChatRoom(chatRoom);
-			System.out.println("채팅방 생성 성공: " + chatRoom.getRoomId());
+//			System.out.println("채팅방 생성 성공: " + chatRoom.getRoomId());
 		} catch (Exception e) {
 			System.err.println("채팅방 생성 실패: " + e.getMessage());
 			e.printStackTrace();
@@ -267,9 +267,9 @@ public class ChatServiceImpl implements ChatService {
 		// 1. 채팅방 목록 조회 (추가 정보 포함)
 		List<Map<String, Object>> roomsWithDetails = chatRoomDAO.selectChatRoomsWithDetails(userNumber);
 
-		System.out.println("조회된 채팅방 수: " + roomsWithDetails.size());
+//		System.out.println("조회된 채팅방 수: " + roomsWithDetails.size());
 		for (Map<String, Object> room : roomsWithDetails) {
-			System.out.println("채팅방 데이터: " + room);
+//			System.out.println("채팅방 데이터: " + room);
 		}
 		List<ChatRoomResponse> result = new ArrayList<>();
 
@@ -278,13 +278,13 @@ public class ChatServiceImpl implements ChatService {
 			ChatRoomResponse response = new ChatRoomResponse();
 
 			// 각 필드 설정 시 로그 추가
-			System.out.println("roomId: " + room.get("roomId") + ", 타입: "
-					+ (room.get("roomId") != null ? room.get("roomId").getClass().getName() : "null"));
+//			System.out.println("roomId: " + room.get("roomId") + ", 타입: "
+//					+ (room.get("roomId") != null ? room.get("roomId").getClass().getName() : "null"));
 
 			// null 체크를 추가하여 안전하게 변환
 			if (room.get("roomId") != null) {
 				response.setRoomId(((Number) room.get("roomId")).longValue());
-				System.out.println("roomId 설정 완료: " + response.getRoomId());
+//				System.out.println("roomId 설정 완료: " + response.getRoomId());
 			}
 
 			if (room.get("postId") != null) {

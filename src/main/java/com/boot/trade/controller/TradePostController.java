@@ -103,7 +103,6 @@ public class TradePostController {
 
     @RequestMapping("/trade_post_update_ok")
     public String tradePostUpdate(@RequestParam HashMap<String, String> param, RedirectAttributes rttr) {
-    	System.out.println("param : =>" + param);
         service.tradePostModify(param);
         rttr.addAttribute("postID", param.get("postID"));
         rttr.addAttribute("pageNum", param.get("pageNum"));
@@ -133,7 +132,6 @@ public class TradePostController {
         
         // 관련 게시물(판매중인 다른 게시글) 조회 추가
         
-        System.out.println("param : "+param);
         ArrayList<TradePostDTO> availablePosts = service.getAvailablePosts(param);
         model.addAttribute("availablePosts", availablePosts);
         

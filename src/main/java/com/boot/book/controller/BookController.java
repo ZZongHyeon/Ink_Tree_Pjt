@@ -68,7 +68,6 @@ public class BookController {
 			return "main";
 		}
 		book = service.bookDetailInfo(param);
-		System.out.println("book : " + book);
 		model.addAttribute("book", book);
 		return "book/book_update";
 	}
@@ -214,12 +213,10 @@ public class BookController {
 		Top5Recommend = bookRecommendService.Top5Recommend(param);
 		Top5Random = bookRecommendService.Top5Random(param);
 
-		System.out.println("majorCategoryNumber : " + majorCategoryNumber);
-
 		// 전체 리스트 내용 출력
-		System.out.println("Top3 대출 도서: " + top3Borrow);
-		System.out.println("Top5 추천 도서: " + Top5Recommend); // 소분류
-		System.out.println("Top5 랜덤 도서: " + Top5Random); // 대분류
+//		System.out.println("Top3 대출 도서: " + top3Borrow);
+//		System.out.println("Top5 추천 도서: " + Top5Recommend); // 소분류
+//		System.out.println("Top5 랜덤 도서: " + Top5Random); // 대분류
 
 		model.addAttribute("top3Borrow", top3Borrow);
 		model.addAttribute("Top5Recommend", Top5Recommend);
@@ -260,7 +257,7 @@ public class BookController {
 		model.addAttribute("userOver", userOver);
 		model.addAttribute("userRecordCount", userRecordCount);
 
-		System.out.println("userBorrowedBooks => " + bookBorrowedList);
+//		System.out.println("userBorrowedBooks => " + bookBorrowedList);
 		
 		// 활성 탭 정보 모델에 추가 (없으면 기본값은 'borrowed')
 		model.addAttribute("activeTab", activeTab != null ? activeTab : "borrowed");

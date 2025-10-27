@@ -33,15 +33,11 @@ public class WishlistController {
 
 	@PostMapping(value = "/add_wishlist", produces = "text/plain;charset=UTF-8")
 	public @ResponseBody String addToWishlist(@RequestParam("bookNumber") int bookNumber, HttpServletRequest request) {
-//		System.out.println("=== 위시리스트 추가 요청 받음 ===");
-//		System.out.println("bookNumber: " + bookNumber);
-
 		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 
 		try {
 
 			String result = wishlistService.addWishlist(user.getUserNumber(), bookNumber);
-			System.out.println("추가 결과: " + result);
 			return result;
 		} catch (Exception e) {
 			System.err.println("위시리스트 추가 중 오류 발생: " + e.getMessage());
@@ -52,14 +48,10 @@ public class WishlistController {
 
 	@PostMapping(value = "/remove_wishlist", produces = "text/plain;charset=UTF-8")
 	public @ResponseBody String removeFromWishlist(@RequestParam("bookNumber") int bookNumber, HttpServletRequest request) {
-		System.out.println("=== 위시리스트 삭제 요청 받음 ===");
-		System.out.println("bookNumber: " + bookNumber);
-
 		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 		try {
 
 			String result = wishlistService.removeWishlist(user.getUserNumber(), bookNumber);
-			System.out.println("삭제 결과: " + result);
 			return result;
 		} catch (Exception e) {
 			System.err.println("위시리스트 삭제 중 오류 발생: " + e.getMessage());
@@ -70,13 +62,10 @@ public class WishlistController {
 
 	@PostMapping(value = "/check_wishlist", produces = "text/plain;charset=UTF-8")
 	public @ResponseBody String checkWishlist(@RequestParam("bookNumber") int bookNumber, HttpServletRequest request) {
-		System.out.println("=== 위시리스트 상태 확인 요청 받음 ===");
-		System.out.println("bookNumber: " + bookNumber);
 
 		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 		try {
 			boolean isInWishlist = wishlistDAO.isAlreadyInWishlist(user.getUserNumber(), bookNumber);
-			System.out.println("위시리스트 상태 확인 결과: " + isInWishlist);
 
 			return isInWishlist ? "in_wishlist" : "not_in_wishlist";
 		} catch (Exception e) {
@@ -114,23 +103,9 @@ public class WishlistController {
 	        List<BookDTO> wishlist = wishlistDAO.getWishlist(criteria, param);
 	        int total = wishlistDAO.getWishlistCount(param);
 	        
-	        System.out.println("위시리스트 디버그 정보 ===================");
-	        System.out.println("유저 번호: " + user.getUserNumber());
-	        System.out.println("검색어: " + keyword);
-	        System.out.println("대분류: " + bookMajorCategory);
-	        System.out.println("중분류: " + bookSubCategory);
-	        System.out.println("위시리스트 개수: " + (wishlist != null ? wishlist.size() : "null"));
-	        System.out.println("전체 개수: " + total);
-	        System.out.println("======================================");
-
 	        // 모델에 데이터 추가
 	        model.addAttribute("wishlist", wishlist);
 	        model.addAttribute("pageMaker", new PageDTO(total, criteria));
-
-	        // 데이터가 비어있는지 확인
-	        if (wishlist == null || wishlist.isEmpty()) {
-	            System.out.println("위시리스트가 비어있습니다.");
-	        }
 
 	        return "book/book_wishlist";
 	    } catch (Exception e) {

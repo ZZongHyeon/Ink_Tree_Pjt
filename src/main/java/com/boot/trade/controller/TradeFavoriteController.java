@@ -55,10 +55,10 @@ public class TradeFavoriteController {
 
 		// 관심목록 조회
 		List<TradeFavoriteDTO> favoriteItems = service.getFavoriteWithPaging(criteriaDTO);
-		System.out.println(favoriteItems.size());
-		for(int i=0;i<favoriteItems.size();i++) {
-			System.out.println("favoriteItems["+i+"] : " + favoriteItems.get(i));
-		}
+//		System.out.println(favoriteItems.size());
+//		for(int i=0;i<favoriteItems.size();i++) {
+//			System.out.println("favoriteItems["+i+"] : " + favoriteItems.get(i));
+//		}
 
         int total = service.getTotalCount(criteriaDTO);
         model.addAttribute("pageMaker", new PageDTO(total, criteriaDTO));
