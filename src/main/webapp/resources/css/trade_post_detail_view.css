@@ -720,6 +720,10 @@ color: var(--success);
         width: 100%;
         justify-content: center;
     }
+    .like-button {
+        width: 100%;
+        justify-content: center;
+    }
     
     .action-btn {
         justify-content: center;
