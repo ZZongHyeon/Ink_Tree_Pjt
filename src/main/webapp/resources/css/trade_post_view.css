@@ -1,29 +1,18 @@
 :root {
-  /* Primary Colors - Softer blue theme */
   --primary-color: #3b82f6;
   --primary-light: #93c5fd;
   --primary-dark: #2563eb;
-
-  /* Secondary Colors */
   --secondary-color: #5a6878;
   --secondary-light: #8896a6;
   --secondary-dark: #3d4852;
-
-  /* Functional Colors */
   --success-color: #22c55e; /* 판매중 */
   --info-color: #4299c9; /* 예약중 */
   --warning-color: #e9c46a; /* 예약중 */
   --danger-color: #e76f6f; /* 판매완료 */
-
-  /* Text Colors */
   --text-color: #3a4049;
   --text-light: #8898aa;
-
-  /* Background Colors */
   --background: #ffffff;
   --background-alt: #f7fafc;
-
-  /* Border & UI Elements */
   --border-color: #e9ecef;
   --border-radius: 8px;
   --box-shadow: 0 1px 6px rgba(0, 0, 0, 0.03);
@@ -241,7 +230,6 @@ body {
   border: none;
   padding: 12px 24px;
   border-radius: var(--border-radius);
-  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
@@ -257,7 +245,7 @@ body {
 }
 
 .search-button i {
-  margin-right: 6px;
+	font-size: 14px;
 }
 
 /* 정렬 옵션 */
@@ -532,91 +520,8 @@ body {
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-/* 반응형 디자인 */
-@media (max-width: 768px) {
-  .trade-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-    padding: 20px;
-  }
-  
-  .trade-actions {
-    width: 100%;
-  }
-  
-  .write-button {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .trade-info-banner {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .filter-options {
-    overflow-x: auto;
-    padding: 15px;
-    white-space: nowrap;
-    display: flex;
-    flex-wrap: nowrap;
-  }
-  
-  #searchForm {
-    flex-direction: column;
-    margin: 20px;
-  }
-  
-  .sort-options {
-    padding: 0 15px 15px;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-  
-  .trade-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 15px;
-    padding: 0 15px 20px;
-  }
-  
-  .trade-image {
-    height: 140px;
-  }
-  
-  .trade-info {
-    padding: 10px;
-  }
-  
-  .trade-title {
-    font-size: 14px;
-    height: 40px;
-  }
-  
-  .trade-price {
-    font-size: 16px;
-  }
-  
-  .trade-meta, .trade-seller {
-    font-size: 11px;
-  }
-}
 
-/* 모바일 레이아웃 */
-@media (max-width: 576px) {
-  .trade-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-  
-  .trade-image {
-    height: 120px;
-  }
-  
-  .status-overlay {
-    font-size: 14px;
-  }
-}
+
 
 /* 애니메이션 효과 */
 @keyframes fadeIn {
@@ -753,22 +658,6 @@ body {
   min-width: 0; /* 너무 넓어지는 것 방지 */
 }
 
-/* 반응형 스타일 */
-@media (max-width: 768px) {
-  .filter-labels-row,
-  .filters-row {
-    flex-direction: column;
-    gap: 5px;
-  }
-  
-  .filter-label {
-    margin-bottom: 0;
-  }
-  
-  .filter-select {
-    margin-bottom: 5px;
-  }
-}
 .book-categories {
     display: flex;
     gap: 0.4rem;
@@ -783,4 +672,90 @@ body {
     padding: 0.15rem 0.4rem;
     border-radius: 50px;
     white-space: nowrap;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .trade-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 20px;
+  }
+  
+  .trade-actions {
+    width: 100%;
+  }
+  
+  .write-button {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .trade-info-banner {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .filter-options {
+    overflow-x: auto;
+    padding: 15px;
+    white-space: nowrap;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  
+  #searchForm {
+    flex-direction: column;
+    margin: 20px;
+  }
+  
+  .sort-options {
+    padding: 0 15px 15px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .trade-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+    padding: 0 15px 20px;
+  }
+  
+  .trade-image {
+    height: 140px;
+  }
+  
+  .trade-info {
+    padding: 10px;
+  }
+  
+  .trade-title {
+    font-size: 14px;
+    height: 40px;
+  }
+  
+  .trade-price {
+    font-size: 16px;
+  }
+  
+  .trade-meta, .trade-seller {
+    font-size: 11px;
+  }
+}
+
+/* 모바일 레이아웃 */
+@media (max-width: 576px) {
+  .trade-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .trade-image {
+    height: 120px;
+  }
+  
+  .status-overlay {
+    font-size: 14px;
+  }
 }

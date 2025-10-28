@@ -95,7 +95,7 @@ body {
 
 .back-link:hover {
     color: white;
-    background-color: var(--primary-light);
+    background-color: var(--primary);
 }
 
 .back-link i {

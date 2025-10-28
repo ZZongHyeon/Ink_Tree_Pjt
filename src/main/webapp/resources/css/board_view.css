@@ -187,13 +187,13 @@ body {
   background-color: var(--primary-color);
   color: white;
   border: none;
-  padding: 12px 24px;
+  padding: 12px 16px;
   border-radius: var(--border-radius);
-  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  white-space: nowrap;
 }
 
 .search-button:hover {
@@ -207,7 +207,7 @@ body {
 }
 
 .search-button i {
-  margin-right: 6px;
+	font-size: 16px;
 }
 
 /* 테이블 스타일 */

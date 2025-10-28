@@ -231,7 +231,7 @@ body {
 }
 
 .search-button i {
-  margin-right: 6px;
+	font-size: 14px;
 }
 
 /* 정렬 옵션 */
