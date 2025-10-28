@@ -80,11 +80,9 @@
 		function fn_submit() {
 			
 			// 제목 길이 검증 추가
-			var titleInput = document.getElementById('boardTitle');
-			var titleLength = titleInput.value.length;
-			var maxTitleLength = 35;
-
-
+			let titleInput = document.getElementById('boardTitle');
+			let titleLength = titleInput.value.length;
+			let maxTitleLength = 35;
 
 			if (titleLength > maxTitleLength) {
 			    // 템플릿 리터럴 대신 문자열 연결 사용
@@ -96,8 +94,11 @@
 			const plainText = quill.getText().trim();
 
 			// 유효성 검사
-			if (plainText.length < 1) {
+			if (plainText.length < 10) {
 				document.getElementById('contentError').textContent = '내용은 최소 10자 이상 입력해주세요.';
+				return;
+			} else if(plainText.length > 1000){
+				document.getElementById('contentError').textContent = '내용은 1000자 이내로 입력해주세요.';
 				return;
 			} else {
 				document.getElementById('contentError').textContent = '';

@@ -138,15 +138,15 @@
                 <div class="post-actions">
                     <!-- <button class="action-btn edit-btn" onclick="location.href='trade_post_update?postID=${post.postID}&amount=${param.amount}&status=${param.status}&sort=${param.status}&bookMajorCategory=${param.bookMajorCategory}&bookSubCategory=${param.bookSubCategory}'"> -->
                     <button class="action-btn edit-btn" onclick="location.href='trade_post_update?postID=${post.postID}&pageNum=${param.pageNum}&amount=${param.amount}&status=${param.status}&sort=${param.status}&keyword=${param.keyword}'">
-                        <i class="fas fa-edit"></i> 수정하기
+                        <i class="fas fa-edit"></i> 수정
                     </button>
                     <button class="action-btn delete-btn" onclick="confirmDelete(${post.postID})">
-                        <i class="fas fa-trash"></i> 삭제하기
+                        <i class="fas fa-trash"></i> 삭제
                     </button>
 			            <c:if test="${user != null && (user.userNumber == post.userNumber)}">
 	                        <div class="status-change-container">
 	                            <button class="action-btn status-btn" onclick="toggleStatusDropdown()">
-	                                <i class="fas fa-tag"></i> 상태 변경
+	                                <i class="fas fa-tag"></i> 상태변경
 	                            </button>
 	                            <div class="status-dropdown" id="statusDropdown">
 	                                <div class="status-option ${post.status == 'AVAILABLE' ? 'active' : ''}" 

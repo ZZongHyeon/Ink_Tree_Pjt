@@ -679,11 +679,7 @@ body {
 
 /* 반응형 스타일 */
 @media (max-width: 768px) {
-  .filter-labels-row,
-  .filters-row {
-    flex-direction: column;
-    gap: 5px;
-  }
+
 
   .filter-label {
     margin-bottom: 0;

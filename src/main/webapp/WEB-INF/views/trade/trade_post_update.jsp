@@ -54,7 +54,7 @@
                     <!-- 카테고리와 가격을 한 줄에 배치 -->
                     <div class="form-row">
                         <div class="form-group form-group-half">
-                            <label for="bookMajorCategory" class="form-label">카테고리</label>
+                            <label for="bookMajorCategory" class="form-label">대분류</label>
                             <select id="bookMajorCategory" name="bookMajorCategory" class="form-control" required>
                                 <option value="">대분류 선택</option>
                                 <option value="000-총류" ${post.bookMajorCategory == '000-총류' ? 'selected' : ''}>000 - 총류</option>
@@ -71,7 +71,7 @@
                         </div>
                         
                         <div class="form-group form-group-half">
-                            <label for="bookSubCategory" class="form-label">세부 카테고리</label>
+                            <label for="bookSubCategory" class="form-label">중분류</label>
                             <select id="bookSubCategory" name="bookSubCategory" class="form-control">
                                 <option value="">전체</option>
                                 <!-- 대분류에 따라 동적으로 변경됩니다 -->
@@ -209,13 +209,13 @@
                     e.preventDefault();
                     return false;
                 }
-                
-                // 가격 검사
-                const price = $('#price').val();
-                if (price === '' || isNaN(price) || parseInt(price) < 0) {
-                    alert('유효한 가격을 입력해주세요.');
-                    $('#price').focus();
-                    e.preventDefault();
+
+                let titleInput = document.getElementById('title');
+                let titleLength = titleInput.value.length;
+                let maxTitleLength = 35;
+                if (titleLength > maxTitleLength) {
+                    alert("제목은 " + maxTitleLength + "자 이내로 입력해주세요. (현재: " + titleLength + "자)");
+                    titleInput.focus();
                     return false;
                 }
                 
@@ -224,6 +224,23 @@
                 if (bookMajorCategory === '') {
                     alert('대분류를 선택해주세요.');
                     $('#bookMajorCategory').focus();
+                    e.preventDefault();
+                    return false;
+                }
+
+                const bookSubCategory = $('#bookSubCategory').val();
+                if (bookMajorCategory === '') {
+                    alert('중분류를 선택해주세요.');
+                    $('#bookSubCategory').focus();
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // 가격 검사
+                const price = $('#price').val();
+                if (price === '' || isNaN(price) || parseInt(price) < 0) {
+                    alert('유효한 가격을 입력해주세요.');
+                    $('#price').focus();
                     e.preventDefault();
                     return false;
                 }

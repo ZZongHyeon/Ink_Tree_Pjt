@@ -81,7 +81,7 @@
 															<c:if test="${not empty user and (user.userNumber eq board.userNumber or user.userAdmin eq 1)}">
 																<button class="action-button edit-button"
 																	onclick="location.href='/board/update?boardNumber=${board.boardNumber}&pageNum=${pageMaker.criteriaDTO.pageNum}&amount=${pageMaker.criteriaDTO.amount}${not empty pageMaker.criteriaDTO.type ? '&type='.concat(pageMaker.criteriaDTO.type) : ''}${not empty pageMaker.criteriaDTO.keyword ? '&keyword='.concat(pageMaker.criteriaDTO.keyword) : ''}'">
-																	수정
+																	<i class="fas fa-edit"></i>수정
 																</button>
 																<button class="action-button delete-button"
 																	onclick="deletePost(${board.boardNumber})">

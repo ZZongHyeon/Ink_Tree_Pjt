@@ -52,7 +52,7 @@
                     
                     <div class="form-row">
                         <div class="form-group form-group-half">
-                            <label for="BookMajorCategory" class="form-label">카테고리</label>
+                            <label for="BookMajorCategory" class="form-label">대분류</label>
                             <select class="form-control" id="BookMajorCategory" name="BookMajorCategory" required>
                                 <option value="" disabled selected>카테고리 선택</option>
                                 <option value="000-총류">000 - 총류</option>
@@ -69,7 +69,7 @@
                         </div>
                         
                         <div class="form-group form-group-half">
-                            <label for="BookSubCategory" class="form-label">세부 카테고리</label>
+                            <label for="BookSubCategory" class="form-label">중분류</label>
                             <select class="form-control" id="BookSubCategory" name="BookSubCategory">
                                 <option value="">전체</option>
                                 <!-- 대분류에 따라 동적으로 변경됩니다 -->
@@ -264,30 +264,39 @@
 		});
 
 		function fn_submit() {
-			// 제목 길이 검증
-			var titleInput = document.getElementById('title');
-			var titleLength = titleInput.value.length;
-			var maxTitleLength = 35;
 
+
+            const title = $('#title').val().trim();
+                if (title === '') {
+                    alert('제목을 입력해주세요.');
+                    $('#title').focus();
+                    e.preventDefault();
+                    return false;
+                }
+
+			// 제목 길이 검증
+			let titleInput = document.getElementById('title');
+			let titleLength = titleInput.value.length;
+			let maxTitleLength = 35;
 			if (titleLength > maxTitleLength) {
 			    alert("제목은 " + maxTitleLength + "자 이내로 입력해주세요. (현재: " + titleLength + "자)");
 			    titleInput.focus();
 			    return;
 			}
             
-            // 가격 검증
-            var priceInput = document.getElementById('price');
-            if (priceInput.value === "" || parseInt(priceInput.value) < 0) {
-                alert("유효한 가격을 입력해주세요.");
-                priceInput.focus();
-                return;
-            }
-            
             // 카테고리 검증
             var BookMajorCategoryInput = document.getElementById('BookMajorCategory');
             if (BookMajorCategoryInput.value === "") {
                 alert("카테고리를 선택해주세요.");
                 BookMajorCategoryInput.focus();
+                return;
+            }
+
+            // 가격 검증
+            var priceInput = document.getElementById('price');
+            if (priceInput.value === "" || parseInt(priceInput.value) < 0) {
+                alert("유효한 가격을 입력해주세요.");
+                priceInput.focus();
                 return;
             }
             

@@ -101,27 +101,28 @@
 					<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 					<script type="text/javascript">
 						function fn_submit() {
-							const title = $('#boardTitle').val().trim();
-							if (title === '') {
-								alert('제목을 입력해주세요.');
-								$('#title').focus();
-								e.preventDefault();
-								return false;
+							let titleInput = document.getElementById('boardTitle');
+							let titleLength = titleInput.value.length;
+							let maxTitleLength = 35;
+
+							if (titleLength > maxTitleLength) {
+								// 템플릿 리터럴 대신 문자열 연결 사용
+								alert("제목은 " + maxTitleLength + "자 이내로 입력해주세요. (현재: " + titleLength + "자)");
+								titleInput.focus();
+								return;
 							}
+
 							const content = quill.root.innerHTML;
 							const plainText = quill.getText().trim();
-							if (plainText === '') {
-								alert('내용은 최소 10자 이상을 입력해주세요.');
-								e.preventDefault();
-								return false;
+							if (plainText.length < 10) {
+								document.getElementById('contentError').textContent = '내용은 최소 10자 이상 입력해주세요.';
+								return;
+							} else if(plainText.length > 1000){
+								document.getElementById('contentError').textContent = '내용은 1000자 이내로 입력해주세요.';
+								return;
+							} else {
+								document.getElementById('contentError').textContent = '';
 							}
-							// // 유효성 검사
-							// if (plainText.length < 1) {
-							// 	document.getElementById('contentError').textContent = '내용은 최소 10자 이상 입력해주세요.';
-							// 	return;
-							// } else {
-							// 	document.getElementById('contentError').textContent = '';
-							// }
 
 							document.getElementById('boardContent').value = content;
 
