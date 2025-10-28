@@ -286,21 +286,22 @@
 			        </c:if>
 			    </ul>
 			</div>
-            <form id="actionForm" action="trade_post_favorite_view" method="get">
-                <input type="hidden" name="pageNum" value="${pageMaker.searchBookCriteriaDTO.pageNum}">
-                <input type="hidden" name="amount" value="${pageMaker.searchBookCriteriaDTO.amount}">
-                <input type="hidden" name="status" value="${param.status}">
-                <input type="hidden" name="sort" value="${param.sort}">
-                <c:if test="${not empty pageMaker.searchBookCriteriaDTO.keyword}">
-                    <input type="hidden" name="keyword" value="${pageMaker.searchBookCriteriaDTO.keyword}">
-                </c:if>
-                <c:if test="${not empty param.bookMajorCategory}">
-                    <input type="hidden" name="bookMajorCategory" value="${param.bookMajorCategory}">
-                </c:if>
-                <c:if test="${not empty param.bookSubCategory}">
-                    <input type="hidden" name="bookSubCategory" value="${param.bookSubCategory}">
-                </c:if>
-            </form>
+			<form id="actionForm" action="/trade/favorite/post_favorite_view" method="get">
+				<input type="hidden" name="pageNum" value="${pageMaker.searchBookCriteriaDTO.pageNum}">
+				<input type="hidden" name="amount" value="${pageMaker.searchBookCriteriaDTO.amount}">
+				<!-- <CHANGE> 기본값 추가: status가 없으면 'all', sort가 없으면 'latest' -->
+				<input type="hidden" name="status" value="${empty param.status ? 'all' : param.status}">
+				<input type="hidden" name="sort" value="${empty param.sort ? 'latest' : param.sort}">
+				<c:if test="${not empty pageMaker.searchBookCriteriaDTO.keyword}">
+					<input type="hidden" name="keyword" value="${pageMaker.searchBookCriteriaDTO.keyword}">
+				</c:if>
+				<c:if test="${not empty param.bookMajorCategory}">
+					<input type="hidden" name="bookMajorCategory" value="${param.bookMajorCategory}">
+				</c:if>
+				<c:if test="${not empty param.bookSubCategory}">
+					<input type="hidden" name="bookSubCategory" value="${param.bookSubCategory}">
+				</c:if>
+			</form>
         </div>
     </div>
 
