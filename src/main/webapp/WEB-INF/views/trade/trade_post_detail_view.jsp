@@ -340,11 +340,14 @@
             data: { postID: postID },
             success: function(list) {
 
-                let html = "";
+                var html = '<li class="chat-user-item none-option" onclick="selectReviewUser(' + 
+                        postID + ', ' + null + ', ' + null + ')" style="color: #999;">'
+                        + '<i class="fas fa-times-circle"></i> 없음 (거래 취소)'
+                        + '</li>';
                 list.forEach(user => {
                     html +=
-                        '<li class="chat-user-item" onclick="selectReviewUser('
-                        + postID + ', ' + user.buyerNumber + ')">'
+                    '<li class="chat-user-item" onclick="selectReviewUser('
+                        + postID + ', ' + user.buyerNumber + ', \'' + user.buyerName + '\')">'
                         + '<i class="fas fa-user"></i> ' + user.buyerName
                         + '</li>';
                 });
@@ -361,9 +364,28 @@
     function closeReviewModal() {
         document.getElementById('reviewSelectModal').style.display = 'none';
     }
-    function selectReviewUser(postID, targetUserId) {
-        console.log("test : " + targetUserId)
-        if (!confirm("선택한 사용자에게 평가를 진행하시겠습니까?")) {
+    function selectReviewUser(postID, buyerNumber, buyerName) {
+        if(buyerNumber === null && buyerName === null){
+
+            if (!confirm("구매자 없이 거래를 종료하시겠습니까?")) {
+                return;
+            }
+
+            $.ajax({
+                type: "post",
+                url: "update_trade_status",
+                data: { postID: postID, status: 'SOLD' },
+                success: function(response) {
+                    alert("상태가 변경되었습니다.");
+                    location.reload();
+                },
+                error: function() {
+                    alert("상태 변경 중 오류");
+                }
+            });
+            return;
+        }
+        if (!confirm(buyerName + "님과 거래를 완료하셨습니까?")) {
             return;
         }
 
@@ -375,7 +397,7 @@
             success: function(resp) {
 
                 // 태그 리뷰 페이지로 이동
-                location.href = "/trade/review?postID=" + postID + "&targetUserId=" + targetUserId;
+                location.href = "/trade/review?postID=" + postID + "&targetUserId=" + buyerNumber;
 
             },
             error: function() {
