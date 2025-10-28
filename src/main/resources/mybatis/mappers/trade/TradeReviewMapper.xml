@@ -17,7 +17,28 @@
 	    WHERE cr.POSTID = #{postId}
 	</select>
 
+	<insert id="insertTradeRecord">
+	INSERT INTO TRADE_RECORD (
+		RECORD_ID, 
+	    POSTID, 
+	    SELLERNUMBER
+	    BUYER_NUMBER, 
+	    CREATEDAT
+	    )
+	VALUES
+	    (
+	    SEQ_TRADE_RECORD_ID.NEXTVAL, 
+	    #{postId},
+	    #{SELLERNUMBER},
+	    #{buyerNumber}, 
+	    SYSDATE)
+	</insert>
 
+<!-- SELLERNUMBER, BUYERNUMBER, COMPLETEDAT,-->
+
+
+
+<!-- ㄴㅁㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄹ -->
 
     <!-- ✅ 2. 거래 완료 후 보여줄 태그 마스터 조회 -->
     <select id="getTags" resultType="com.boot.trade.dto.TradeTagsDTO">

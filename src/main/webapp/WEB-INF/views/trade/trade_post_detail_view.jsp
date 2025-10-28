@@ -232,6 +232,20 @@
         </div>
     </div>
 
+<!-- 구매자 평점 태그 선택 팝업 -->
+<div class="modal" id="tagReviewModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>거래 평가</h3>
+            <span class="close-modal" onclick="closeTagModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <p>상대방에 대한 거래 평점을 선택해주세요.</p>
+            <button onclick="goTagReview()">평가하기</button>
+            <button onclick="skipTagReview()" style="background:#aaa;">건너뛰기</button>
+        </div>
+    </div>
+</div>
 
     <!-- 페이지 이동을 위한 폼 -->
     <form id="actionForm" method="get">
@@ -392,18 +406,48 @@
         // 판매완료 상태 업데이트
         $.ajax({
             type: "post",
-            url: "update_trade_status",
-            data: { postID: postID, status: 'SOLD' },
-            success: function(resp) {
+            url: "/trade/review/record/insert",
+            data: { postID: postID, buyerNumber: buyerNumber },
+            success: function() {
 
-                // 태그 리뷰 페이지로 이동
-                location.href = "/trade/review?postID=" + postID + "&targetUserId=" + buyerNumber;
+                $.ajax({
+                    type: "post",
+                    url: "update_trade_status",
+                    data: { postID: postID, status: 'SOLD' },
+                    success: function(resp) {
 
+                        openTagPopup(postID, buyerNumber);
+
+                    },
+                    error: function() {
+                        alert("상태 변경 중 오류");
+                    }
+                });
             },
             error: function() {
-                alert("상태 변경 중 오류");
+                alert("거래기록 저장 오류");
             }
         });
+    }
+
+    function openTagPopup(postID, buyerNumber) {
+        document.getElementById('tagReviewModal').style.display = 'flex';
+        
+        // 저장해두기
+        window._reviewPostId = postID;
+        window._reviewBuyerNumber = buyerNumber;
+    }
+    function closeTagModal() {
+        document.getElementById('tagReviewModal').style.display = 'none';
+    }
+
+    function goTagReview(){
+        location.href = "/trade/review?postID=" + window._reviewPostId + "&targetUserId=" + window._reviewBuyerNumber;
+    }
+
+    function skipTagReview(){
+        alert("평가를 건너뛰었습니다.");
+        location.reload();
     }
 
         // 관심 상품 토글

@@ -1,11 +1,14 @@
 package com.boot.trade.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,5 +28,26 @@ public class TradeReviewController {
 		System.out.println("test : "+ service.getChatUser(postID));
 		System.out.println("test : "+ postID);
 	    return service.getChatUser(postID);
+	}
+	
+	@PostMapping("/record/insert")
+	@ResponseBody
+	public Map<String, Object> insertTradeRecord(int postID, int buyerNumber) {
+	    Map<String, Object> map = new HashMap<>();
+
+	    try {
+	        service.insertTradeRecord(postID, buyerNumber);
+	        map.put("success", true);
+	    } catch(Exception e) {
+	        map.put("success", false);
+	    }
+
+	    return map;
+	    
+	    /**
+	     * 
+	     * TODO::
+	     * 기록 저장, 태그 20개 불러오기, 선택(3개), 패스하면 그냥 저장, 
+	     */
 	}
 }

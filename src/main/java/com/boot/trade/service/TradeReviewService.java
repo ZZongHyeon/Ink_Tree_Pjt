@@ -31,6 +31,11 @@ public class TradeReviewService {
 		return dao.getChatUser(postId);
 	}
 	
+	// 기록에 입력
+	public void insertTradeRecord(int postId, int buyerNumber) {
+	    dao.insertTradeRecord(postId, buyerNumber);
+	}
+
 	// 거래 완료 후 보여질 태그들
 	public List<TradeTagsDTO> getTags(){
     	return null;
