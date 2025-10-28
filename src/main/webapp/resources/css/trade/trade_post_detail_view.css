@@ -11,6 +11,14 @@ body {
     color: #333;
     line-height: 1.6;
 }
+.chat-user-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+.chat-user-item:hover {
+    background: #f9f9f9;
+}
 
 .container {
     max-width: 1200px;

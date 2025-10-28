@@ -218,6 +218,21 @@
     </div>
 
 
+        <!-- 구매자 선택 팝업 -->
+    <div class="modal" id="reviewSelectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>구매자 선택</h3>
+                <span class="close-modal" onclick="closeReviewModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>해당 거래의 구매자를 선택해주세요.</p>
+                <ul id="chatUserList"></ul>
+            </div>
+        </div>
+    </div>
+
+
     <!-- 페이지 이동을 위한 폼 -->
     <form id="actionForm" method="get">
         <input type="hidden" name="postID" value="${post.postID}">
@@ -288,6 +303,13 @@
 
         // 게시글 상태 변경
         function changeStatus(postID, status) {
+
+            // 판매완료일 경우: getChatUser 먼저 호출
+            if (status === 'SOLD') {
+                openReviewPopup(postID);
+                return;
+            }
+
             $.ajax({
                 type: "post",
                 url: "update_trade_status",
@@ -309,6 +331,64 @@
                 }
             });
         }
+
+    // 구매자 선택 모달 열기
+    function openReviewPopup(postID) {
+        $.ajax({
+            type: "get",
+            url: "/trade/review/getChatUser",
+            data: { postID: postID },
+            success: function(list) {
+
+                if (list.length === 0) {
+                    alert("이 게시글에 참여한 채팅 상대가 없습니다.");
+                    return;
+                }
+
+                let html = "";
+                list.forEach(user => {
+                    html += `
+                        <li class="chat-user-item" onclick="selectReviewUser(${postID}, ${user.userNumber})">
+                            <i class="fas fa-user"></i> ${user.userName}
+                        </li>
+                    `;
+                });
+
+                $("#chatUserList").html(html);
+                document.getElementById('reviewSelectModal').style.display = 'flex';
+            },
+            error: function() {
+                alert("채팅 참여자 조회 중 오류가 발생했습니다.");
+            }
+        });
+    }
+
+    // 팝업 닫기
+    function closeReviewModal() {
+        document.getElementById('reviewSelectModal').style.display = 'none';
+    }
+    function selectReviewUser(postID, targetUserId) {
+
+        if (!confirm("선택한 사용자에게 평가를 진행하시겠습니까?")) {
+            return;
+        }
+
+        // 판매완료 상태 업데이트
+        $.ajax({
+            type: "post",
+            url: "update_trade_status",
+            data: { postID: postID, status: 'SOLD' },
+            success: function(resp) {
+
+                // 태그 리뷰 페이지로 이동
+                location.href = "/trade/review?postID=" + postID + "&targetUserId=" + targetUserId;
+
+            },
+            error: function() {
+                alert("상태 변경 중 오류");
+            }
+        });
+    }
 
         // 관심 상품 토글
 		function toggleLike(postID) {
