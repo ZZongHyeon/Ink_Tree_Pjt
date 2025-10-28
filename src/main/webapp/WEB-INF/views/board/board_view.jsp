@@ -108,7 +108,8 @@
                                                     <c:forEach items="${boardList}" var="board" varStatus="status">
                                                         <tr>
                                                             <!-- <td class="board-number">${status.count}</td> -->
-                                                            <td class="board-number">${board.boardNumber}</td>
+                                                            <!-- <td class="board-number">${board.boardNumber}</td> -->
+                                                             <td class="board-number">${(param.pageNum - 1) * param.amount + status.count}</td>
                                                             <td class="board-title-col">
                                                                 <a href="/board/detail_view?boardNumber=${board.boardNumber}&pageNum=${pageMaker.criteriaDTO.pageNum}&amount=${pageMaker.criteriaDTO.amount}${not empty pageMaker.criteriaDTO.type ? '&type='.concat(pageMaker.criteriaDTO.type) : ''}${not empty pageMaker.criteriaDTO.keyword ? '&keyword='.concat(pageMaker.criteriaDTO.keyword) : ''}"
                                                                     class="title-link">
