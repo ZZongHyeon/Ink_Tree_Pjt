@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/resources/css/trade_post_update.css">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 </head>
 <style>
 	.ql-container {
@@ -36,7 +38,7 @@
                     <p class="form-description">판매하실 상품 정보를 수정해주세요. 정확한 정보를 입력하면 더 빠른 거래가 가능합니다.</p>
                 </div>
 
-                <form id="updateForm" action="trade_post_update_ok" method="post">
+                <form id="updateForm" action="trade_post_update_ok" method="post" onsubmit="return updateContentBeforeSubmit();">
                     <!-- 히든 필드 -->
                     <input type="hidden" name="postID" value="${post.postID}">
                     <input type="hidden" name="pageNum" value="${param.pageNum}">
@@ -111,7 +113,8 @@
                     <!-- 내용 입력 -->
                     <div class="form-group">
                         <label for="content" class="form-label">상품 설명</label>
-                        <textarea id="content" name="content" class="form-textarea" required>${post.content}</textarea>
+                        <input type="hidden" id="content" name="content">
+                        <div id="editor" class="editor-container">${post.content}</div>
                     </div>
                     
                     <!-- 버튼 그룹 -->
@@ -246,6 +249,34 @@
                 return true;
             });
         });
+
+        var quill = new Quill('#editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    ['link', 'image'],
+                    ['clean']
+                ]
+            },
+            placeholder: '내용을 입력해주세요...'
+        });
+
+        function updateContentBeforeSubmit() {
+            const content = quill.root.innerHTML.trim();
+            const plainText = quill.getText().trim();
+
+            if (plainText === '') {
+                alert('내용을 입력해주세요.');
+                return false;
+            }
+
+            document.getElementById('content').value = content; // Hidden input에 HTML 저장
+            return true; // 폼 제출 진행
+        }
+
     </script>
 </body>
 

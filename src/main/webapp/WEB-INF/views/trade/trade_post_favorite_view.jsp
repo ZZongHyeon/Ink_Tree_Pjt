@@ -34,8 +34,7 @@
             </div>
 
             <div class="search-section">
-                <form id="searchForm" method="get" action="/trade_post_favorite_view">
-                    <!-- 검색 입력 필드 (가로로 길게) -->
+                <form id="searchForm" method="get" action="/trade/favorite/post_favorite_view">
                     <div class="search-input-wrapper">
                         <input type="text" class="search-input" id="keyword" name="keyword" 
                                value="${pageMaker.searchBookCriteriaDTO.keyword}" 

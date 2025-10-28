@@ -118,18 +118,6 @@ public class TradePostController {
         rttr.addAttribute("amount", param.get("amount"));
         return "redirect:/trade/trade_post_detail_view";
     }
-
-    
-	@RequestMapping("/update_ok")
-	public String boardViewUpdate(@RequestParam HashMap<String, String> param, RedirectAttributes rttr) {
-		service.boardModify(param);
-		System.out.println("test : "+ param);
-		rttr.addAttribute("boardNumber", param.get("boardNumber"));
-		rttr.addAttribute("pageNum", param.get("pageNum"));
-		rttr.addAttribute("amount", param.get("amount"));
-		return "redirect:/board/detail_view";
-	}
-	
 	
     @RequestMapping("/trade_post_update")
     public String tradePostUpdateForm(@RequestParam HashMap<String, String> param, Model model) {
