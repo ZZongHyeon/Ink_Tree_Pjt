@@ -11,9 +11,9 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" type="text/css"
-	href="/resources/css/book_search.css">
+	href="/resources/css/book/book_search.css">
 <link rel="stylesheet" type="text/css"
-	href="/resources/css/board_view.css">
+	href="/resources/css/book/board_view.css">
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
 	rel="stylesheet">

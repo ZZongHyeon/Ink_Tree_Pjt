@@ -15,7 +15,7 @@
 	rel="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
 <link rel="stylesheet" type="text/css"
-	href="/resources/css/user_book_recommend.css">
+	href="/resources/css/book/user_book_recommend.css">
 </head>
 <body>
     <jsp:include page="../header.jsp" />

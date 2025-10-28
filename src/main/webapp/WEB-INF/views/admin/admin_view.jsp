@@ -15,7 +15,7 @@
                <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
                   rel="stylesheet">
                <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-               <link rel="stylesheet" type="text/css" href="/resources/css/admin_view.css">
+               <link rel="stylesheet" type="text/css" href="/resources/css/admin/admin_view.css">
                <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
             </head>
 

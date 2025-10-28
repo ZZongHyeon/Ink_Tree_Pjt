@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관심목록 - 잉크트리</title>
-    <link rel="stylesheet" type="text/css" href="/resources/css/trade_post_favorite_view.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/trade/trade_post_favorite_view.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="/resources/js/trade_post_favorite_view.js"></script>

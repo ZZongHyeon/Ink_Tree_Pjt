@@ -8,7 +8,7 @@
 <title>회원 정보 수정</title>
 <script src="/resources/js/user_update.js"></script>
 <link rel="stylesheet" type="text/css"
-	href="/resources/css/user_update.css">
+	href="/resources/css/user/user_update.css">
 </head>
 
 <body>

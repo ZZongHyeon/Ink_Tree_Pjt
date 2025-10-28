@@ -17,7 +17,7 @@
 <link rel="stylesheet" type="text/css"
 	href="/resources/css/main.css">
 <link rel="stylesheet" type="text/css"
-	href="/resources/css/book_search.css">
+	href="/resources/css/book/book_search.css">
 <script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {

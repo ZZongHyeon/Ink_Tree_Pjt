@@ -15,7 +15,7 @@
     <title>거래 게시글 상세 - 잉크트리</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="/resources/css/trade_post_detail_view.css">
+	<link rel="stylesheet" type="text/css" href="/resources/css/trade/trade_post_detail_view.css">
 </head>
 
 <body>

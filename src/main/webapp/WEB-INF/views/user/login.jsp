@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>잉크트리 - 로그인</title>
-    <link rel="stylesheet" type="text/css" href="/resources/css/loginview.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/user/loginview.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/resources/js/login.js"></script>
 </head>

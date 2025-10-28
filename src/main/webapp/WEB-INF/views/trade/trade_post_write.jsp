@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>판매글 작성 - 잉크트리</title>
 <link rel="stylesheet" type="text/css"
-	href="/resources/css/trade_post_write.css">
+	href="/resources/css/trade/trade_post_write.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">

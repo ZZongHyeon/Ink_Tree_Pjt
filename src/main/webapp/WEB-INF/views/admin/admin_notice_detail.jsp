@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${notice.noticeTitle} - 공지사항</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" type="text/css" href="/resources/css/admin_notice_detail.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/admin/admin_notice_detail.css">
 <script src="/resources/js/admin_notice_datail.js"></script>
 </head>
 <body>

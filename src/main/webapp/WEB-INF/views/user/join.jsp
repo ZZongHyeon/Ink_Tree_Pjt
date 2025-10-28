@@ -10,7 +10,7 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="/resources/css/joinview.css">
+	<link rel="stylesheet" type="text/css" href="/resources/css/user/joinview.css">
 	<script src="/resources/js/join.js"></script>
 </head>
 

@@ -35,5 +35,10 @@ public class ViewController {
 
 		return "main";
 	}
+	@RequestMapping("/privacy")
+	public String privacy() {
+		
+		return "privacy";
+	}
 
 }

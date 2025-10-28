@@ -23,7 +23,7 @@ java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")); %>
     <link
       rel="stylesheet"
       type="text/css"
-      href="/resources/css/trade_chat_list.css"
+      href="/resources/css/trade/trade_chat_list.css"
     />
     <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
   </head>

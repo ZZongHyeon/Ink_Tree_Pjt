@@ -6,7 +6,7 @@
 <meta charset="EUC-KR">
 <title>도서 등록</title>
 <link rel="stylesheet" type="text/css"
-	href="/resources/css/book_insert.css">
+	href="/resources/css/book/book_insert.css">
 <!-- <link rel="stylesheet" type="text/css" href="/css/book_insert.css"> -->
 <script src="/resources/js/book_insert.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>

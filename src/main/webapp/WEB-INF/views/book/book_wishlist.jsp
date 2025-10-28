@@ -16,7 +16,7 @@
 	rel="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
 <link rel="stylesheet" type="text/css"
-	href="/resources/css/book_wishlist.css">
+	href="/resources/css/book/book_wishlist.css">
 </head>
 <body>
     <jsp:include page="../header.jsp" />

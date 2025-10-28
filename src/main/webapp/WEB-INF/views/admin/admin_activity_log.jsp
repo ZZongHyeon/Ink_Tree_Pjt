@@ -16,8 +16,8 @@
     <title>도서관리 시스템 - 활동 로그test</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/resources/css/admin_view.css">
-    <link rel="stylesheet" type="text/css" href="/resources/css/board_view.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/admin/admin_view.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/board/board_view.css">
     <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
     
     <style>

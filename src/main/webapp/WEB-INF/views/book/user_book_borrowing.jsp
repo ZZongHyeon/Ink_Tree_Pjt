@@ -16,9 +16,9 @@
 	rel="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
 <link rel="stylesheet" type="text/css"
-	href="/resources/css/user_book_borrowing.css">
+	href="/resources/css/book/user_book_borrowing.css">
 <link rel="stylesheet" type="text/css"
-	href="/resources/css/board_view.css">
+	href="/resources/css/board/board_view.css">
 <script type="text/javascript">
 	function return_submit(button) {
 		const form = button.closest("form");

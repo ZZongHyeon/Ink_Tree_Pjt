@@ -16,8 +16,8 @@
     
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="/resources/css/board_view.css">
-	<link rel="stylesheet" type="text/css" href="/resources/css/book_detail.css">
+	<link rel="stylesheet" type="text/css/book" href="/resources/css/board_view.css">
+	<link rel="stylesheet" type="text/css/book" href="/resources/css/book_detail.css">
 </head>
 
 <body>

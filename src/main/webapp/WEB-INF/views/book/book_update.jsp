@@ -7,7 +7,7 @@
 <title>도서 정보 수정</title>
 <script src="/resources/js/book_update.js"></script>
 <link rel="stylesheet" type="text/css"
-	href="/resources/css/book_update.css">
+	href="/resources/css/book/book_update.css">
 <script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
 <script type="text/javascript">
 	function fn_submit() {
