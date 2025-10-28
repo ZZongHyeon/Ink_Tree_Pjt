@@ -5,17 +5,18 @@
 
 <mapper namespace="com.boot.trade.dao.TradeReviewDAO">
 
-    <select id="getChatUser" resultType="com.boot.chat.dto.ChatRoomRequest">
-		SELECT 
-		    cr.ROOMID,
-		    cr.POSTID,
-		    cr.BUYERNUMBER,
-		    cr.SELLERNUMBER,
-		    u.USERNAME AS userName
-		FROM TRADE_CHATROOM cr
-		JOIN USERINFO u ON u.USERNUMBER = cr.BUYERNUMBER
-		WHERE cr.POSTID = #{postId}
-    </select>
+	<select id="getChatUser" parameterType="int" resultType="com.boot.chat.dto.ChatRoomRequest">
+	    SELECT 
+	        cr.ROOMID,
+	        cr.POSTID,
+	        cr.SELLERNUMBER,
+	        cr.BUYERNUMBER AS buyerNumber,
+	        u.USERNAME AS buyerName
+	    FROM TRADE_CHATROOM cr
+	    JOIN USERINFO u ON u.USERNUMBER = cr.BUYERNUMBER
+	    WHERE cr.POSTID = #{postId}
+	</select>
+
 
 
     <!-- ✅ 2. 거래 완료 후 보여줄 태그 마스터 조회 -->

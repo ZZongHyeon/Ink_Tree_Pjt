@@ -7,5 +7,6 @@ public class ChatRoomRequest {
     private Long postId;
     private Long sellerNumber;
     private Long buyerNumber;
+    private String buyerName;
     private String postTitle;
 }

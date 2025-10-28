@@ -340,20 +340,14 @@
             data: { postID: postID },
             success: function(list) {
 
-                if (list.length === 0) {
-                    alert("이 게시글에 참여한 채팅 상대가 없습니다.");
-                    return;
-                }
-
                 let html = "";
                 list.forEach(user => {
-                    html += `
-                        <li class="chat-user-item" onclick="selectReviewUser(${postID}, ${user.userNumber})">
-                            <i class="fas fa-user"></i> ${user.userName}
-                        </li>
-                    `;
+                    html +=
+                        '<li class="chat-user-item" onclick="selectReviewUser('
+                        + postID + ', ' + user.buyerNumber + ')">'
+                        + '<i class="fas fa-user"></i> ' + user.buyerName
+                        + '</li>';
                 });
-
                 $("#chatUserList").html(html);
                 document.getElementById('reviewSelectModal').style.display = 'flex';
             },
@@ -368,7 +362,7 @@
         document.getElementById('reviewSelectModal').style.display = 'none';
     }
     function selectReviewUser(postID, targetUserId) {
-
+        console.log("test : " + targetUserId)
         if (!confirm("선택한 사용자에게 평가를 진행하시겠습니까?")) {
             return;
         }
