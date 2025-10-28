@@ -201,7 +201,7 @@ CREATE TABLE Trade_Favorite (
 
 -- 거래내역
 CREATE TABLE Trade_record (
-    transactionID NUMBER PRIMARY KEY,
+    RECORD_ID NUMBER PRIMARY KEY,
     postID NUMBER NOT NULL,
     sellerNumber NUMBER NOT NULL,  -- sellerID에서 sellerNumber로 변경
     buyerNumber NUMBER NOT NULL,   -- buyerID에서 buyerNumber로 변경
