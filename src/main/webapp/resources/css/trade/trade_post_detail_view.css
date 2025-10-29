@@ -776,26 +776,9 @@ color: var(--success);
     .tag-item {
         position: relative;
         display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 18px;
-        background: #f8fafc;
-        border: 2px solid #e2e8f0;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 500;
-        color: #475569;
-        transition: all 0.2s ease;
         user-select: none;
     }
 
-    .tag-item:hover {
-        border-color: #cbd5e1;
-        background: #f1f5f9;
-        transform: translateY(-1px);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
 
     .tag-checkbox {
         display: none;
@@ -1069,15 +1052,7 @@ color: var(--success);
         box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
     }
 
-    /* 체크 아이콘 */
-    .tag-item label::before {
-        content: '\f00c';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-        font-size: 12px;
-        opacity: 0;
-        transition: opacity 0.2s ease;
-    }
+
 
     .tag-item input:checked + label::before {
         opacity: 1;

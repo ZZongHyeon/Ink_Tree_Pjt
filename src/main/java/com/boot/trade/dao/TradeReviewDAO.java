@@ -16,13 +16,17 @@ public interface TradeReviewDAO {
     List<ChatRoomRequest> getChatUser(int postId);
 
     // 기록에 입력
-    void insertTradeRecord(@Param("postId") int postId, @Param("buyerNumber") int buyerNumber);
+    void insertTradeRecord(@Param("postId") int postId, @Param("targetUserId") int targetUserId, @Param("userNumber")int userNumber);
     
     // 거래 완료 후 선택할 태그 목록 조회
     List<TradeTagsDTO> getTags();
 
     // 사용자가 등록한 태그 저장
-    void insertTag(TradeTagsDTO dto);
+    int insertReviewTags(@Param("postId") int postId,
+            @Param("tradeRecordId") int tradeRecordId,
+            @Param("reviewerId") int reviewerId,
+            @Param("revieweeId") int revieweeId,
+            @Param("tagCodes") List<Integer> tagCodes);
 
     // 마이페이지 – 내가 받은 모든 태그 통계
     List<TradeReviewDTO> getUserTagStatistics(int userId);

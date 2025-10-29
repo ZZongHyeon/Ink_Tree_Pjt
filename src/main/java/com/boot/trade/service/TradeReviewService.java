@@ -32,8 +32,8 @@ public class TradeReviewService {
 	}
 	
 	// 기록에 입력
-	public void insertTradeRecord(int postId, int buyerNumber) {
-	    dao.insertTradeRecord(postId, buyerNumber);
+	public void insertTradeRecord(int postId, int targetUserId, int userNumber) {
+	    dao.insertTradeRecord(postId, targetUserId, userNumber);
 	}
 
 	// 거래 완료 후 보여질 태그들
@@ -42,8 +42,11 @@ public class TradeReviewService {
     }
 
     // 입력한 태그들
-	public void insertTag(List<TradeTagsDTO> tags) {
-	}
+    public void saveReviewTags(int postId, int tradeRecordId, int reviewerId, int revieweeId, List<Integer> tagCodes) {
+        if (tagCodes == null || tagCodes.isEmpty()) return;
+        if (tagCodes.size() > 5) tagCodes = tagCodes.subList(0, 5);
+        dao.insertReviewTags(postId, tradeRecordId, reviewerId, revieweeId, tagCodes);
+    }
     
     // 마이페이지에 보여질 내 전체 태그들
 	public List<TradeReviewDTO> getUserTagStatistics(int userId) {

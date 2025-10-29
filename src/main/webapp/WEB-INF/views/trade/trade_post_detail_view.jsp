@@ -413,6 +413,7 @@
         }
 
         // 판매완료 상태 업데이트
+        // 여기도 기록으로 남길것인가?
         $.ajax({
             type: "post",
             url: "/trade/review/record/insert",
@@ -509,75 +510,32 @@ function loadTradeTags() {
     }
 
     function updateSelectedTagPreview() {
-        if ($(".tag-checkbox:checked").length > 5) {
-            alert("태그는 최대 5개까지만 선택할 수 있습니다.");
+        let selected = $(".tag-checkbox:checked");
+        let html = "";
+
+        if (selected.length > 5) {
+            alert("최대 5개까지 선택 가능합니다!");
             $(this).prop("checked", false);
             return;
         }
 
-        let selectedTags = [];
-        $(".tag-checkbox:checked").each(function() {
-            selectedTags.push({
-                label: $(this).data("label"),
-                type: $(this).data("type")
-            });
+        selected.each(function() {
+            let label = $(this).data("label");
+            html += "<span class='chosen-tag'>" + label + "</span>";
+            $(this).closest(".tag-item").addClass("selected");
         });
 
-        if (selectedTags.length > 0) {
-            let html = '';
-            selectedTags.forEach(function(tag) {
-                let typeClass = tag.type === 'GOOD' ? 'good' : 'bad';
-                html += '<span class="chosen-tag ' + typeClass + '">' + tag.label + '</span>';
-            });
-            $(".selected-tags-preview").html(html);
-        } else {
-            $(".selected-tags-preview").html('<span class="chosen-empty">아직 선택된 태그가 없습니다.</span>');
-        }
+        $(".tag-item").each(function() {
+            if (!$(this).find(".tag-checkbox").prop("checked")) {
+                $(this).removeClass("selected");
+            }
+        });
+
+        if (selected.length === 0)
+            html = "<span style='color:#aaa;'>선택된 태그 없음</span>";
+
+        $("#selectedTagPreview").html(html);
     }
-
-// 최대 5개 제한 + 실시간 선택 표시
-$(document).on("change", ".tag-checkbox", function () {
-
-    let selected = $(".tag-checkbox:checked");
-
-    if (selected.length > 5) {
-        alert("최대 5개까지만 선택 가능합니다.");
-        this.checked = false;
-        return;
-    }
-
-    updateSelectedTagPreview();
-
-    $(this).closest(".tag-item").toggleClass("active");
-});
-
-function updateSelectedTagPreview() {
-    let selected = $(".tag-checkbox:checked");
-    let html = "";
-
-    if (selected.length > 5) {
-        alert("최대 5개까지 선택 가능합니다!");
-        $(this).prop("checked", false);
-        return;
-    }
-
-    selected.each(function() {
-        let label = $(this).data("label");
-        html += "<span class='chosen-tag'>" + label + "</span>";
-        $(this).closest(".tag-item").addClass("selected");
-    });
-
-    $(".tag-item").each(function() {
-        if (!$(this).find(".tag-checkbox").prop("checked")) {
-            $(this).removeClass("selected");
-        }
-    });
-
-    if (selected.length === 0)
-        html = "<span style='color:#aaa;'>선택된 태그 없음</span>";
-
-    $("#selectedTagPreview").html(html);
-}
 
 
 

@@ -21,16 +21,18 @@
 	INSERT INTO TRADE_RECORD (
 		RECORD_ID, 
 	    POSTID, 
-	    SELLERNUMBER
-	    BUYER_NUMBER, 
+	    SELLERNUMBER,
+	    BUYER_NUMBER,
+	    STATUS, 
 	    CREATEDAT
 	    )
 	VALUES
 	    (
 	    SEQ_TRADE_RECORD_ID.NEXTVAL, 
 	    #{postId},
-	    #{SELLERNUMBER},
-	    #{buyerNumber}, 
+	    #{userNumber},
+	    #{targetUserId},
+	    'SOLD', 
 	    SYSDATE)
 	</insert>
 
@@ -45,28 +47,27 @@
 		FROM TRADE_TAG_MASTER
     </select>
 
-
+  <insert id="insertReviewTags">
+    INSERT INTO TRADE_REVIEW_TAG
+      (TAG_ID, POSTID, TRADE_RECORD_ID, REVIEWER_ID, REVIEWEE_ID, TAG_TYPE, TAG_LABEL, STATUS, CREATED_AT)
+    SELECT
+      SEQ_TRADE_REVIEW_ID.NEXTVAL,
+      #{postId},
+      #{tradeRecordId},
+      #{reviewerId},
+      #{revieweeId},
+      tm.TAG_TYPE,
+      tm.TAG_LABEL,
+      'Y',
+      SYSDATE
+      FROM TRADE_TAG_MASTER tm
+     WHERE tm.TAG_CODE IN
+      <foreach collection="tagCodes" item="code" open="(" separator="," close=")">
+        #{code}
+      </foreach>
+  </insert>
 
 <!-- ㄴㅁㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄹ -->
-
-
-
-    <!-- ✅ 3. 태그 평가 저장 -->
-    <insert id="insertTag">
-        INSERT INTO TRADE_TAG_LOG(
-            TRADE_RECORD_ID,
-            TAG_CODE,
-            REVIEWER_ID,
-            REVIEWEE_ID,
-            CREATED_AT
-        ) VALUES (
-            #{tradeRecordId},
-            #{tagCode},
-            #{reviewerId},
-            #{revieweeId},
-            SYSDATE
-        )
-    </insert>
 
 
     <!-- ✅ 4. 마이페이지 – 내가 받은 전체 태그 통계 -->
