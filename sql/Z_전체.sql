@@ -266,6 +266,20 @@ CREATE TABLE TRADE_TAG_MASTER (
     tag_explan VARCHAR2(100) NOT NULL  
 );
 
+CREATE TABLE TRADE_REVIEW_TAG (
+    tag_code NUMBER PRIMARY KEY,
+    postId NUMBER,
+    trade_record_id NUMBER NOT NULL,  -- 거래 완료된 기록 (TRADE_RECORD 참조)
+    reviewer_id NUMBER NOT NULL,      -- 평가를 남긴 사람 (판매자 or 구매자)
+    reviewee_id NUMBER NOT NULL,      -- 평가를 받은 사람
+    tag_type VARCHAR2(10) NOT NULL,   -- 'GOOD' or 'BAD'
+    tag_label VARCHAR2(100) NOT NULL, -- 예: '응답 빠름', '포장 부실'
+    STATUS VARCHAR2(1) DEFAULT 'Y',
+    created_at DATE DEFAULT SYSDATE,
+    CONSTRAINT fk_postId FOREIGN KEY (postId) REFERENCES TRADE_POST(postId),
+    CONSTRAINT fk_reviewer FOREIGN KEY (reviewer_id) REFERENCES USERINFO(usernumber),
+    CONSTRAINT fk_reviewee FOREIGN KEY (reviewee_id) REFERENCES USERINFO(usernumber)
+);
 
 
 -------------------------------------------------값추가
@@ -330,7 +344,6 @@ CREATE INDEX IDX_NOTI_USER ON NOTIFICATIONS(USER_NUMBER);
 CREATE INDEX IDX_NOTI_SENT ON NOTIFICATIONS(SENT);
 CREATE INDEX IDX_NOTI_READ ON NOTIFICATIONS(READ);
 CREATE INDEX IDX_REVIEWEE ON TRADE_REVIEW_TAG (reviewee_id);
-CREATE INDEX IDX_REVIEW_TRADE ON TRADE_REVIEW_TAG (trade_record_id);
 
 
 -- 세션 어쩌구
