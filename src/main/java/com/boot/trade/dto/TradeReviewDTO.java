@@ -8,12 +8,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TradeReviewDTO {
-	private int tagId;
+	private int tagCode;
 	private int tradeRecordId;
 	private int reviewerId;
 	private int revieweeId;
 	private String tagType;
 	private String tagLabel;
 	private String createdAt;
+	
+	private int cnt; 
 	
 }

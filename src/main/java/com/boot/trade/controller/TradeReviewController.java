@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.boot.chat.dto.ChatRoomRequest;
+import com.boot.trade.dto.TradeReviewDTO;
 import com.boot.trade.dto.TradeTagsDTO;
 import com.boot.trade.service.TradeReviewService;
 import com.boot.user.dto.BasicUserDTO;
@@ -33,26 +34,21 @@ public class TradeReviewController {
 	    return service.getChatUser(postID);
 	}
 	
-	@PostMapping("/record/insert")
-	@ResponseBody
-	public Map<String, Object> insertTradeRecord(int postID, int buyerNumber) {
-	    Map<String, Object> map = new HashMap<>();
-
-	    try {
+//	@PostMapping("/record/insert")
+//	@ResponseBody
+//	public Map<String, Object> insertTradeRecord(int postID, int buyerNumber) {
+//	    Map<String, Object> map = new HashMap<>();
+//
+//	    try {
 //	        service.insertTradeRecord(postID, buyerNumber);
-	        map.put("success", true);
-	    } catch(Exception e) {
-	        map.put("success", false);
-	    }
-
-	    return map;
-	    
-	    /**
-	     * 
-	     * TODO::
-	     * 기록 저장, 태그 20개 불러오기, 선택(3개), 패스하면 그냥 저장, 
-	     */
-	}
+//	        map.put("success", true);
+//	    } catch(Exception e) {
+//	        map.put("success", false);
+//	    }
+//
+//	    return map;
+//	    
+//	}
 	
 	@PostMapping("/getTags/data")
 	@ResponseBody
@@ -98,4 +94,12 @@ public class TradeReviewController {
         return res;
     }
 
+	@GetMapping("/getTopTags/data")
+	@ResponseBody
+	public List<TradeReviewDTO> getTopTags(HttpServletRequest request) {
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
+		
+		return service.getTopTags(user.getUserNumber());
+	}
+	
 }

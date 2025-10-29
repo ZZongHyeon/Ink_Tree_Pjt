@@ -28,11 +28,12 @@ public interface TradeReviewDAO {
             @Param("revieweeId") int revieweeId,
             @Param("tagCodes") List<Integer> tagCodes);
 
+    // 게시글 상세페이지 – Top N 태그
+    List<TradeReviewDTO> getTopTags(@Param("userNumber") int userNumber);
+    
     // 마이페이지 – 내가 받은 모든 태그 통계
     List<TradeReviewDTO> getUserTagStatistics(int userId);
 
-    // 게시글 상세페이지 – Top N 태그
-    List<TradeReviewDTO> getTopTags(@Param("userId") int userId, @Param("limit") int limit);
 
     // 태그 중복 등록 방지 (한 거래에서 한 번만)
     int alreadyReviewed(@Param("tradeRecordId") int tradeRecordId, @Param("reviewerId") int reviewerId);

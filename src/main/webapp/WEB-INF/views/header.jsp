@@ -26,7 +26,7 @@
         });
     </script>
 </head>
-<body>
+<header>
 <%
     BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
     String currentPage = request.getRequestURI();
@@ -974,5 +974,5 @@
 </script>
 
 
-</body>
+</header>
 </html>

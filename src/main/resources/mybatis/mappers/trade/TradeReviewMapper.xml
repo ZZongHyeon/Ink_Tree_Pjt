@@ -36,8 +36,6 @@
 	    SYSDATE)
 	</insert>
 
-<!-- SELLERNUMBER, BUYERNUMBER, COMPLETEDAT,-->
-
     <select id="getTags" resultType="com.boot.trade.dto.TradeTagsDTO">
 		SELECT
 		   TAG_CODE AS tagCode,
@@ -49,10 +47,11 @@
 
   <insert id="insertReviewTags">
     INSERT INTO TRADE_REVIEW_TAG
-      (TAG_ID, POSTID, TRADE_RECORD_ID, REVIEWER_ID, REVIEWEE_ID, TAG_TYPE, TAG_LABEL, STATUS, CREATED_AT)
+      (TAG_ID, POSTID, TAG_CODE, TRADE_RECORD_ID, REVIEWER_ID, REVIEWEE_ID, TAG_TYPE, TAG_LABEL, STATUS, CREATED_AT)
     SELECT
       SEQ_TRADE_REVIEW_ID.NEXTVAL,
       #{postId},
+      tm.TAG_CODE,
       #{tradeRecordId},
       #{reviewerId},
       #{revieweeId},
@@ -67,6 +66,21 @@
       </foreach>
   </insert>
 
+    <select id="getTopTags" resultType="com.boot.trade.dto.TradeReviewDTO">
+		SELECT TAG_LABEL as tagLabel, CNT
+		FROM (
+		  SELECT TAG_LABEL, COUNT(*) AS CNT
+		  FROM TRADE_REVIEW_TAG
+		  WHERE REVIEWEE_ID = #{userNumber}
+		    AND TAG_TYPE = 'GOOD'
+		  GROUP BY TAG_LABEL
+		  ORDER BY COUNT(*) DESC, TAG_LABEL
+		)
+		<![CDATA[
+		WHERE ROWNUM <= 3
+		]]>
+    </select>
+    
 <!-- ㄴㅁㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄹ -->
 
 
@@ -84,19 +98,6 @@
     </select>
 
 
-    <!-- ✅ 5. 디테일뷰 – 태그 상위 N개 -->
-    <select id="getTopTags" resultType="com.boot.trade.dto.TradeReviewDTO">
-        SELECT
-            tm.TAG_CODE,
-            tm.TAG_LABEL,
-            COUNT(*) AS count
-        FROM TRADE_TAG_LOG tl
-        JOIN TRADE_TAG_MASTER tm ON tm.TAG_CODE = tl.TAG_CODE
-        WHERE tl.REVIEWEE_ID = #{userId}
-        GROUP BY tm.TAG_CODE, tm.TAG_LABEL
-        ORDER BY COUNT(*) DESC
-        FETCH FIRST #{limit} ROWS ONLY
-    </select>
 
 
     <!-- ✅ 6. 동일 거래에 같은 리뷰어가 이미 평가했는지 -->

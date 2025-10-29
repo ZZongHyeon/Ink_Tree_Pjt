@@ -48,13 +48,13 @@ public class TradeReviewService {
         dao.insertReviewTags(postId, tradeRecordId, reviewerId, revieweeId, tagCodes);
     }
     
+    // 디테일뷰에 보여질 태그 탑3
+	public List<TradeReviewDTO> getTopTags(int userNumber) {
+		return dao.getTopTags(userNumber);
+	}
+	
     // 마이페이지에 보여질 내 전체 태그들
 	public List<TradeReviewDTO> getUserTagStatistics(int userId) {
-		return null;
-	}
-    
-    // 디테일뷰에 보여질 태그 탑3
-	public List<TradeReviewDTO> getTopTags(int userId, int limit) {
 		return null;
 	}
     
