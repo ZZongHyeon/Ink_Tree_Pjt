@@ -36,20 +36,19 @@
 
 <!-- SELLERNUMBER, BUYERNUMBER, COMPLETEDAT,-->
 
+    <select id="getTags" resultType="com.boot.trade.dto.TradeTagsDTO">
+		SELECT
+		   TAG_CODE AS tagCode,
+		   TAG_TYPE AS tagType,
+		   TAG_LABEL AS tagLabel,
+		   TAG_EXPLAN AS tagExplan
+		FROM TRADE_TAG_MASTER
+    </select>
+
 
 
 <!-- ㄴㅁㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄹ -->
 
-    <!-- ✅ 2. 거래 완료 후 보여줄 태그 마스터 조회 -->
-    <select id="getTags" resultType="com.boot.trade.dto.TradeTagsDTO">
-        SELECT 
-            TAG_CODE,
-            TAG_TYPE,
-            TAG_LABEL,
-            TAG_EXPLAN
-        FROM TRADE_TAG_MASTER
-        ORDER BY TAG_CODE ASC
-    </select>
 
 
     <!-- ✅ 3. 태그 평가 저장 -->

@@ -38,7 +38,7 @@ public class TradeReviewService {
 
 	// 거래 완료 후 보여질 태그들
 	public List<TradeTagsDTO> getTags(){
-    	return null;
+    	return dao.getTags();
     }
 
     // 입력한 태그들

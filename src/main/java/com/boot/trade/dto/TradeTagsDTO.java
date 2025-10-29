@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class TradeTagsDTO {
 	private int tagCode;
 	private String tagType;
-	private String tabgLabel;
+	private String tagLabel;
 	private String tagExplan;
 }

@@ -54,7 +54,6 @@ public class WishlistServiceImpl implements WishlistService {
 
 			boolean exists = wishlistDao.isAlreadyInWishlist(userNumber, bookNumber);
 			if (!exists) {
-				System.out.println("위시리스트에 존재하지 않음");
 				return "not_exists";
 			}
 

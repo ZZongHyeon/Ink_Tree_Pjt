@@ -17,7 +17,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/resources/css/trade/trade_post_detail_view.css">
 </head>
-
 <body>
 			<jsp:include page="../header.jsp" />
 
@@ -233,19 +232,30 @@
     </div>
 
 <!-- 구매자 평점 태그 선택 팝업 -->
-<div class="modal" id="tagReviewModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>거래 평가</h3>
-            <span class="close-modal" onclick="closeTagModal()">&times;</span>
-        </div>
-        <div class="modal-body">
-            <p>상대방에 대한 거래 평점을 선택해주세요.</p>
-            <button onclick="goTagReview()">평가하기</button>
-            <button onclick="skipTagReview()" style="background:#aaa;">건너뛰기</button>
+    <div class="modal" id="tagReviewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>거래 평가</h3>
+                <span class="close-modal" onclick="closeTagModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="selectedTagPreview" class="selected-tags-preview">
+                    <span class="chosen-empty">선택된 태그가 없습니다.</span>
+                </div>
+                <p>상대방에게 해당되는 태그를 선택해주세요.</p>
+
+                <div id="tagListContainer">
+                    <div id="goodTagList" class="tag-column"></div>
+                    <div id="badTagList" class="tag-column"></div>
+                </div>
+
+
+                <button onclick="submitTagReview()">평가 등록</button>
+                <button onclick="skipTagReview()" style="background:#aaa;">건너뛰기</button>
+            </div>
         </div>
     </div>
-</div>
+
 
     <!-- 페이지 이동을 위한 폼 -->
     <form id="actionForm" method="get">
@@ -436,7 +446,168 @@
         // 저장해두기
         window._reviewPostId = postID;
         window._reviewBuyerNumber = buyerNumber;
+
+        loadTradeTags(); 
     }
+
+function loadTradeTags() {
+        $.ajax({
+            type: "post",
+            url: "/trade/review/getTags/data",
+            success: function(tags) {
+                let goodTags = tags.filter(tag => tag.tagType === 'GOOD');
+                let badTags = tags.filter(tag => tag.tagType === 'BAD');
+                
+                let html = '';
+                
+                // GOOD 태그 섹션
+                if (goodTags.length > 0) {
+                    html += '<div class="tag-section">' +
+                           '<div class="tag-section-header good">' +
+                           '<i class="fas fa-thumbs-up"></i>' +
+                           '<h4>좋았던 점</h4>' +
+                           '</div>' +
+                           '<div class="tag-wrapper">';
+                    
+                    goodTags.forEach(function(tag) {
+                        html += '<div class="tag-item good">' +
+                               '<input type="checkbox" class="tag-checkbox" id="tag-' + tag.tagCode + '" value="' + tag.tagCode + '" data-label="' + tag.tagLabel + '">' +
+                               '<label for="tag-' + tag.tagCode + '">' + tag.tagLabel + '</label>' +
+                               '</div>';
+                    });
+                    
+                    html += '</div></div>';
+                }
+                
+                // BAD 태그 섹션
+                if (badTags.length > 0) {
+                    html += '<div class="tag-section">' +
+                           '<div class="tag-section-header bad">' +
+                           '<i class="fas fa-thumbs-down"></i>' +
+                           '<h4>아쉬웠던 점</h4>' +
+                           '</div>' +
+                           '<div class="tag-wrapper">';
+                    
+                    badTags.forEach(function(tag) {
+                        html += '<div class="tag-item bad">' +
+                               '<input type="checkbox" class="tag-checkbox" id="tag-' + tag.tagCode + '" value="' + tag.tagCode + '" data-label="' + tag.tagLabel + '" data-type="' + tag.tagType + '">' +
+                               '<label for="tag-' + tag.tagCode + '">' + tag.tagLabel + '</label>' +
+                               '</div>';
+                    });
+                    
+                    html += '</div></div>';
+                }
+
+                $("#tagListContainer").html(html);
+
+                $(".tag-checkbox").on("change", updateSelectedTagPreview);
+            },
+            error: function() {
+                $("#tagListContainer").html("<p>태그를 불러오지 못했습니다.</p>");
+            }
+        });
+    }
+
+    function updateSelectedTagPreview() {
+        let selectedTags = [];
+        $(".tag-checkbox:checked").each(function() {
+            selectedTags.push($(this).data("label"));
+        });
+
+        if (selectedTags.length > 0) {
+            $(".selected-tags-preview").html(selectedTags.map(tag => `<span class="chosen-tag">${tag}</span>`).join(" "));
+        } else {
+            $(".selected-tags-preview").html('<span class="chosen-empty">아직 선택된 태그가 없습니다.</span>');
+        }
+    }
+
+// 최대 5개 제한 + 실시간 선택 표시
+$(document).on("change", ".tag-checkbox", function () {
+
+    let selected = $(".tag-checkbox:checked");
+
+    if (selected.length > 5) {
+        alert("최대 5개까지만 선택 가능합니다.");
+        this.checked = false;
+        return;
+    }
+
+    updateSelectedTagPreview();
+
+    $(this).closest(".tag-item").toggleClass("active");
+});
+
+function updateSelectedTagPreview() {
+    let selected = $(".tag-checkbox:checked");
+    let html = "";
+
+    if (selected.length > 5) {
+        alert("최대 5개까지 선택 가능합니다!");
+        $(this).prop("checked", false);
+        return;
+    }
+
+    selected.each(function() {
+        let label = $(this).data("label");
+        html += "<span class='chosen-tag'>" + label + "</span>";
+        $(this).closest(".tag-item").addClass("selected");
+    });
+
+    $(".tag-item").each(function() {
+        if (!$(this).find(".tag-checkbox").prop("checked")) {
+            $(this).removeClass("selected");
+        }
+    });
+
+    if (selected.length === 0)
+        html = "<span style='color:#aaa;'>선택된 태그 없음</span>";
+
+    $("#selectedTagPreview").html(html);
+}
+
+
+
+
+
+
+    function submitTagReview() {
+        let selected = [];
+
+        $(".tag-checkbox:checked").each(function() {
+            selected.push($(this).val());
+        });
+
+        if (selected.length === 0) {
+            alert("한 개 이상의 태그를 선택해주세요!");
+            return;
+        }
+
+        if (selected.length > 5) {
+            alert("태그는 최대 5개까지만 선택 가능합니다.");
+            return;
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/trade/review/insertTag",
+            traditional: true,  // 배열 전송 위함
+            data: {
+                postID: window._reviewPostId,
+                targetUserId: window._reviewBuyerNumber,
+                tags: selected
+            },
+            success: function(resp){
+                alert("평가가 등록되었습니다!");
+                closeTagModal();
+                location.reload();
+            },
+            error: function(){
+                alert("태그 평가 등록 중 오류");
+            }
+        });
+    }
+
+
     function closeTagModal() {
         document.getElementById('tagReviewModal').style.display = 'none';
     }

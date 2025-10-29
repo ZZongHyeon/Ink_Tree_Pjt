@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.boot.chat.dto.ChatRoomRequest;
+import com.boot.trade.dto.TradeTagsDTO;
 import com.boot.trade.service.TradeReviewService;
 
 @Controller
@@ -25,8 +26,6 @@ public class TradeReviewController {
 	@GetMapping("/getChatUser")
 	@ResponseBody
 	public List<ChatRoomRequest> getChatUser(@RequestParam int postID) {
-		System.out.println("test : "+ service.getChatUser(postID));
-		System.out.println("test : "+ postID);
 	    return service.getChatUser(postID);
 	}
 	
@@ -49,5 +48,11 @@ public class TradeReviewController {
 	     * TODO::
 	     * 기록 저장, 태그 20개 불러오기, 선택(3개), 패스하면 그냥 저장, 
 	     */
+	}
+	
+	@PostMapping("/getTags/data")
+	@ResponseBody
+	public List<TradeTagsDTO> getTags() {
+		return service.getTags();
 	}
 }
