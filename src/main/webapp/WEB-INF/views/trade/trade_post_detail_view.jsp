@@ -249,7 +249,6 @@
                     <div id="badTagList" class="tag-column"></div>
                 </div>
 
-
                 <button onclick="submitTagReview()">평가 등록</button>
                 <button onclick="skipTagReview()" style="background:#aaa;">건너뛰기</button>
             </div>
@@ -471,7 +470,7 @@ function loadTradeTags() {
                     
                     goodTags.forEach(function(tag) {
                         html += '<div class="tag-item good">' +
-                               '<input type="checkbox" class="tag-checkbox" id="tag-' + tag.tagCode + '" value="' + tag.tagCode + '" data-label="' + tag.tagLabel + '">' +
+                               '<input type="checkbox" class="tag-checkbox" id="tag-' + tag.tagCode + '" value="' + tag.tagCode + '" data-label="' + tag.tagLabel + '" data-type="' + tag.tagType + '">' +
                                '<label for="tag-' + tag.tagCode + '">' + tag.tagLabel + '</label>' +
                                '</div>';
                     });
@@ -490,10 +489,11 @@ function loadTradeTags() {
                     
                     badTags.forEach(function(tag) {
                         html += '<div class="tag-item bad">' +
-                               '<input type="checkbox" class="tag-checkbox" id="tag-' + tag.tagCode + '" value="' + tag.tagCode + '" data-label="' + tag.tagLabel + '" data-type="' + tag.tagType + '">' +
-                               '<label for="tag-' + tag.tagCode + '">' + tag.tagLabel + '</label>' +
-                               '</div>';
+                            '<input type="checkbox" class="tag-checkbox" id="tag-' + tag.tagCode + '" value="' + tag.tagCode + '" data-label="' + tag.tagLabel + '" data-type="' + tag.tagType + '">' +
+                            '<label for="tag-' + tag.tagCode + '">' + tag.tagLabel + '</label>' +
+                        '</div>';
                     });
+
                     
                     html += '</div></div>';
                 }
@@ -509,13 +509,27 @@ function loadTradeTags() {
     }
 
     function updateSelectedTagPreview() {
+        if ($(".tag-checkbox:checked").length > 5) {
+            alert("태그는 최대 5개까지만 선택할 수 있습니다.");
+            $(this).prop("checked", false);
+            return;
+        }
+
         let selectedTags = [];
         $(".tag-checkbox:checked").each(function() {
-            selectedTags.push($(this).data("label"));
+            selectedTags.push({
+                label: $(this).data("label"),
+                type: $(this).data("type")
+            });
         });
 
         if (selectedTags.length > 0) {
-            $(".selected-tags-preview").html(selectedTags.map(tag => `<span class="chosen-tag">${tag}</span>`).join(" "));
+            let html = '';
+            selectedTags.forEach(function(tag) {
+                let typeClass = tag.type === 'GOOD' ? 'good' : 'bad';
+                html += '<span class="chosen-tag ' + typeClass + '">' + tag.label + '</span>';
+            });
+            $(".selected-tags-preview").html(html);
         } else {
             $(".selected-tags-preview").html('<span class="chosen-empty">아직 선택된 태그가 없습니다.</span>');
         }
