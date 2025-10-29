@@ -81,24 +81,19 @@
 		]]>
     </select>
     
-<!-- ㄴㅁㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄹ -->
-
-
-    <!-- ✅ 4. 마이페이지 – 내가 받은 전체 태그 통계 -->
+    
     <select id="getUserTagStatistics" resultType="com.boot.trade.dto.TradeReviewDTO">
-        SELECT 
-            tm.TAG_CODE,
-            tm.TAG_LABEL,
-            COUNT(*) AS count
-        FROM TRADE_TAG_LOG tl
-        JOIN TRADE_TAG_MASTER tm ON tm.TAG_CODE = tl.TAG_CODE
-        WHERE tl.REVIEWEE_ID = #{userId}
-        GROUP BY tm.TAG_CODE, tm.TAG_LABEL
-        ORDER BY COUNT(*) DESC
-    </select>
-
-
-
+	    SELECT 
+	        tm.TAG_CODE,
+	        tm.TAG_LABEL as tagLabel,
+	        COUNT(*) AS cnt
+	    FROM TRADE_REVIEW_TAG tl
+	    JOIN TRADE_TAG_MASTER tm ON tm.TAG_CODE = tl.TAG_CODE
+	    WHERE tl.REVIEWEE_ID = #{userNumber}
+	    GROUP BY tm.TAG_CODE, tm.TAG_LABEL
+	    ORDER BY COUNT(*) DESC
+	</select>
+<!-- ㄴㅁㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄹ -->
 
     <!-- ✅ 6. 동일 거래에 같은 리뷰어가 이미 평가했는지 -->
     <select id="alreadyReviewed" resultType="int">

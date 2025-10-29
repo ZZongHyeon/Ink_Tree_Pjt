@@ -34,21 +34,22 @@ public class TradeReviewController {
 	    return service.getChatUser(postID);
 	}
 	
-//	@PostMapping("/record/insert")
-//	@ResponseBody
-//	public Map<String, Object> insertTradeRecord(int postID, int buyerNumber) {
-//	    Map<String, Object> map = new HashMap<>();
-//
-//	    try {
+	@PostMapping("/record/insert")
+	@ResponseBody
+	public Map<String, Object> insertTradeRecord(int postID, int buyerNumber) {
+	    Map<String, Object> map = new HashMap<>();
+
+	    try {
+	    	// 일단 여긴 ajax에서 타는중임
 //	        service.insertTradeRecord(postID, buyerNumber);
-//	        map.put("success", true);
-//	    } catch(Exception e) {
-//	        map.put("success", false);
-//	    }
-//
-//	    return map;
-//	    
-//	}
+	        map.put("success", true);
+	    } catch(Exception e) {
+	        map.put("success", false);
+	    }
+
+	    return map;
+	    
+	}
 	
 	@PostMapping("/getTags/data")
 	@ResponseBody
@@ -94,12 +95,20 @@ public class TradeReviewController {
         return res;
     }
 
-	@GetMapping("/getTopTags/data")
+	@PostMapping("/getTopTags/data")
 	@ResponseBody
 	public List<TradeReviewDTO> getTopTags(HttpServletRequest request) {
 		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 		
 		return service.getTopTags(user.getUserNumber());
+	}
+	
+	@PostMapping("/getUserTagStatistics/data")
+	@ResponseBody
+	public List<TradeReviewDTO> getUserTagStatistics(HttpServletRequest request) {
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
+		
+		return service.getUserTagStatistics(user.getUserNumber());
 	}
 	
 }

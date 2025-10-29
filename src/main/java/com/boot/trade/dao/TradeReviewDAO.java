@@ -32,7 +32,7 @@ public interface TradeReviewDAO {
     List<TradeReviewDTO> getTopTags(@Param("userNumber") int userNumber);
     
     // 마이페이지 – 내가 받은 모든 태그 통계
-    List<TradeReviewDTO> getUserTagStatistics(int userId);
+    List<TradeReviewDTO> getUserTagStatistics(int userNumber);
 
 
     // 태그 중복 등록 방지 (한 거래에서 한 번만)

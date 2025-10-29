@@ -54,8 +54,8 @@ public class TradeReviewService {
 	}
 	
     // 마이페이지에 보여질 내 전체 태그들
-	public List<TradeReviewDTO> getUserTagStatistics(int userId) {
-		return null;
+	public List<TradeReviewDTO> getUserTagStatistics(int userNumber) {
+		return dao.getUserTagStatistics(userNumber);
 	}
     
     // 중복방지 하나에 하나만
