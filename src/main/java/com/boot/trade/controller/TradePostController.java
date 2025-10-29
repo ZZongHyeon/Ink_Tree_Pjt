@@ -2,6 +2,7 @@ package com.boot.trade.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.boot.trade.dto.TradePostDTO;
+import com.boot.trade.dto.TradeReviewDTO;
 import com.boot.trade.service.TradePostService;
+import com.boot.trade.service.TradeReviewService;
 import com.boot.user.dto.BasicUserDTO;
 import com.boot.z_config.security.OAuth2AuthenticationSuccessHandler;
 import com.boot.z_page.PageDTO;
@@ -37,6 +40,9 @@ public class TradePostController {
 	@Autowired
     private TradePostService service;
 
+	@Autowired
+	private TradeReviewService tradeReviewService;
+	
     TradePostController(OAuth2AuthenticationSuccessHandler OAuth2AuthenticationSuccessHandler) {
         this.OAuth2AuthenticationSuccessHandler = OAuth2AuthenticationSuccessHandler;
     }
@@ -160,6 +166,10 @@ public class TradePostController {
             isLiked = service.tradePostCheckFavorite(likeParam);
         }
         model.addAttribute("isLiked", isLiked);
+
+        // 판매자의 상위 GOOD 태그 3개 가져오기
+        List<TradeReviewDTO> topTags = tradeReviewService.getTopTags(user.getUserNumber());
+        model.addAttribute("topTags", topTags);
         
         return "trade/trade_post_detail_view";
     }

@@ -14,6 +14,7 @@ public class TradeReviewDTO {
 	private int revieweeId;
 	private String tagType;
 	private String tagLabel;
+	private String tagExplan;
 	private String createdAt;
 	
 	private int cnt; 

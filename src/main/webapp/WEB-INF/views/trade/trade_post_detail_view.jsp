@@ -82,18 +82,21 @@
                     <div class="seller-details">
                         <div class="seller-name">${post.userName}</div>
                         <div class="seller-rating">
-                            <i class="fas fa-star"></i>
-                            <c:choose>
-                                <c:when test="${not empty sellerRating}">
-                                    <fmt:formatNumber value="${sellerRating}" pattern="#.#" /> (${sellerReviewCount})
-                                </c:when>
-                                <c:otherwise>
-                                    평가 없음
-                                </c:otherwise>
-                            </c:choose>
+                            <c:if test="${not empty topTags}">
+                                <div class="seller-tags">
+                                    <i class="fas fa-comment-dots"></i>
+                                    <c:forEach var="tag" items="${topTags}" varStatus="status">
+                                        <span class="tag-item" data-tooltip="${tag.tagExplan}">
+                                            ${tag.tagLabel} 
+                                            <span class="tag-count">${tag.cnt}</span>
+                                        </span>
+                                    </c:forEach>
+                                </div>
+                            </c:if>
                         </div>
                     </div>
                 </div>
+
 				
 				<c:if test="${user != null && user.userNumber != post.userNumber}">
 				    <div class="action-buttons">
@@ -276,6 +279,8 @@
     </form>
 
     <script>
+        
+
         // 게시글 삭제 확인 모달 표시
         function confirmDelete(postID) {
             document.getElementById('deleteModal').style.display = 'flex';

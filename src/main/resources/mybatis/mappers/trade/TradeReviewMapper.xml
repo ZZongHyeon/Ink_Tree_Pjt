@@ -67,19 +67,28 @@
   </insert>
 
     <select id="getTopTags" resultType="com.boot.trade.dto.TradeReviewDTO">
-		SELECT TAG_LABEL as tagLabel, CNT
+		SELECT 
+		    tm.TAG_LABEL  AS tagLabel,
+		    tm.TAG_CODE   AS tagCode,
+		    tm.TAG_EXPLAN AS tagExplan,
+		    t1.CNT        AS cnt
 		FROM (
-		  SELECT TAG_LABEL, COUNT(*) AS CNT
-		  FROM TRADE_REVIEW_TAG
-		  WHERE REVIEWEE_ID = #{userNumber}
-		    AND TAG_TYPE = 'GOOD'
-		  GROUP BY TAG_LABEL
-		  ORDER BY COUNT(*) DESC, TAG_LABEL
-		)
+		    SELECT 
+		        TAG_CODE,
+		        COUNT(*) AS CNT
+		    FROM TRADE_REVIEW_TAG
+		    WHERE REVIEWEE_ID = #{userNumber}
+		      AND TAG_TYPE = 'GOOD'
+		    GROUP BY TAG_CODE
+		    ORDER BY COUNT(*) DESC
+		) t1
+		JOIN TRADE_TAG_MASTER tm
+		  ON tm.TAG_CODE = t1.TAG_CODE
 		<![CDATA[
 		WHERE ROWNUM <= 3
 		]]>
-    </select>
+		ORDER BY t1.CNT DESC, tm.TAG_LABEL
+    </select>  
     
     
     <select id="getUserTagStatistics" resultType="com.boot.trade.dto.TradeReviewDTO">

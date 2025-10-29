@@ -745,407 +745,512 @@ color: var(--success);
     }
 }
 
-    #tagListContainer {
-        padding: 24px;
-        background: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        margin: 20px 0;
-    }
+#tagListContainer {
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin: 20px 0;
+}
 
-    .tag-section-title {
-        font-size: 16px;
-        font-weight: 600;
-        color: #1a1a1a;
-        margin-bottom: 16px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
+.tag-section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-    .tag-section-title i {
-        color: #2563eb;
-    }
+.tag-section-title i {
+    color: #2563eb;
+}
 
-    .tag-wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-    }
+.tag-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
 
-    .tag-item {
-        position: relative;
-        display: inline-flex;
-        user-select: none;
-    }
+.tag-item {
+    position: relative;
+    display: inline-flex;
+    user-select: none;
+}
 
 
-    .tag-checkbox {
-        display: none;
-    }
+.tag-checkbox {
+    display: none;
+}
 
-    .tag-checkbox:checked + .tag-label {
-        background: #2563eb;
-        border-color: #2563eb;
-        color: white;
-    }
+.tag-checkbox:checked + .tag-label {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: white;
+}
 
-    .tag-checkbox:checked + .tag-label:hover {
-        background: #1d4ed8;
-        border-color: #1d4ed8;
-    }
+.tag-checkbox:checked + .tag-label:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+}
 
-    .tag-checkbox:checked + .tag-label .tag-icon {
-        color: white;
-    }
+.tag-checkbox:checked + .tag-label .tag-icon {
+    color: white;
+}
 
-    .tag-label {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 18px;
-        background: #f8fafc;
-        border: 2px solid #e2e8f0;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 500;
-        color: #475569;
-        transition: all 0.2s ease;
-        user-select: none;
-    }
+.tag-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #475569;
+    transition: all 0.2s ease;
+    user-select: none;
+}
 
-    .tag-label:hover {
-        border-color: #cbd5e1;
-        background: #f1f5f9;
-        transform: translateY(-1px);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
+.tag-label:hover {
+    border-color: #cbd5e1;
+    background: #f1f5f9;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
 
-    .tag-icon {
-        font-size: 16px;
-        color: #64748b;
-        transition: color 0.2s ease;
-    }
+.tag-icon {
+    font-size: 16px;
+    color: #64748b;
+    transition: color 0.2s ease;
+}
 
-    .tag-check-icon {
-        font-size: 14px;
+.tag-check-icon {
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.tag-checkbox:checked + .tag-label .tag-check-icon {
+    opacity: 1;
+}
+
+/* 태그 리뷰 모달 전체 디자인 */
+#tagReviewModal .modal-content {
+    max-width: 700px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+#tagReviewModal .modal-header {
+    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+    background: var(--primary);
+    color: white;
+    padding: 24px 32px;
+    border-radius: 16px 16px 0 0;
+}
+
+#tagReviewModal .modal-header h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#tagReviewModal .modal-header h3::before {
+    content: '\f005';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+}
+
+#tagReviewModal .modal-body {
+    padding: 32px;
+    background: #f8fafc;
+}
+
+/* 선택된 태그 미리보기 */
+.selected-tags-preview {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    min-height: 80px;
+    border: 2px dashed #e2e8f0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.chosen-empty {
+    color: #94a3b8;
+    font-size: 14px;
+    font-style: italic;
+    width: 100%;
+    text-align: center;
+}
+
+.chosen-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+    background: var(--primary);
+    color: white;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+    animation: tagAppear 0.3s ease;
+}
+
+.chosen-tag::before {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 11px;
+}
+
+@keyframes tagAppear {
+    from {
         opacity: 0;
-        transition: opacity 0.2s ease;
+        transform: scale(0.8);
     }
-
-    .tag-checkbox:checked + .tag-label .tag-check-icon {
+    to {
         opacity: 1;
+        transform: scale(1);
     }
+}
 
-    /* 태그 리뷰 모달 전체 디자인 */
+/* 태그 컨테이너 */
+#tagListContainer {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.tag-section {
+    margin-bottom: 24px;
+}
+
+.tag-section:last-child {
+    margin-bottom: 0;
+}
+
+.tag-section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.tag-section-header i {
+    font-size: 18px;
+}
+
+.tag-section-header h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.tag-section-header.good {
+    color: #059669;
+}
+
+.tag-section-header.good i {
+    color: #059669;
+}
+
+.tag-section-header.bad {
+    color: #dc2626;
+}
+
+.tag-section-header.bad i {
+    color: #dc2626;
+}
+
+/* 태그 아이템 */
+.tag-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tag-item {
+    position: relative;
+}
+
+.tag-item input[type="checkbox"] {
+    display: none;
+}
+
+.tag-item label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    user-select: none;
+    border: 2px solid;
+}
+
+/* GOOD 태그 스타일 */
+.tag-item.good label {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+    color: #166534;
+}
+
+.tag-item.good label:hover {
+    background: #dcfce7;
+    border-color: #86efac;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(5, 150, 105, 0.15);
+}
+
+.tag-item.good input:checked + label {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-color: #059669;
+    color: white;
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+}
+
+/* BAD 태그 스타일 */
+.tag-item.bad label {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #991b1b;
+}
+
+.tag-item.bad label:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 38, 38, 0.15);
+}
+
+.tag-item.bad input:checked + label {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border-color: #dc2626;
+    color: white;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+
+
+.tag-item input:checked + label::before {
+    opacity: 1;
+}
+
+/* 버튼 스타일 */
+#tagReviewModal .modal-body > button {
+    width: 100%;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+#tagReviewModal .modal-body > button:first-of-type {
+    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+#tagReviewModal .modal-body > button:first-of-type:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+#tagReviewModal .modal-body > button:first-of-type::before {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+}
+
+#tagReviewModal .modal-body > button:last-of-type {
+    background: #e2e8f0;
+    color: #64748b;
+}
+
+#tagReviewModal .modal-body > button:last-of-type:hover {
+    background: #cbd5e1;
+    transform: translateY(-1px);
+}
+
+#tagReviewModal .modal-body > button:last-of-type::before {
+    content: '\f04d';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+}
+
+/* 안내 텍스트 */
+#tagReviewModal .modal-body > p {
+    text-align: center;
+    color: #64748b;
+    font-size: 14px;
+    margin: 16px 0;
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
     #tagReviewModal .modal-content {
-        max-width: 700px;
-        width: 90%;
-        max-height: 85vh;
-        overflow-y: auto;
+        width: 95%;
+        max-height: 90vh;
     }
-
+    
     #tagReviewModal .modal-header {
-        /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
-        background: var(--primary);
-        color: white;
-        padding: 24px 32px;
-        border-radius: 16px 16px 0 0;
+        padding: 20px 24px;
     }
-
+    
     #tagReviewModal .modal-header h3 {
-        margin: 0;
-        font-size: 24px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 12px;
+        font-size: 20px;
     }
-
-    #tagReviewModal .modal-header h3::before {
-        content: '\f005';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-    }
-
+    
     #tagReviewModal .modal-body {
-        padding: 32px;
-        background: #f8fafc;
+        padding: 24px 20px;
     }
-
-    /* 선택된 태그 미리보기 */
-    .selected-tags-preview {
-        background: white;
-        border-radius: 12px;
-        padding: 20px;
-        margin-bottom: 24px;
-        min-height: 80px;
-        border: 2px dashed #e2e8f0;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        align-items: center;
-    }
-
-    .chosen-empty {
-        color: #94a3b8;
-        font-size: 14px;
-        font-style: italic;
-        width: 100%;
-        text-align: center;
-    }
-
-    .chosen-tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 8px 16px;
-        /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
-        background: var(--primary);
-        color: white;
-        border-radius: 20px;
-        font-size: 13px;
-        font-weight: 500;
-        box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
-        animation: tagAppear 0.3s ease;
-    }
-
-    .chosen-tag::before {
-        content: '\f00c';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-        font-size: 11px;
-    }
-
-    @keyframes tagAppear {
-        from {
-            opacity: 0;
-            transform: scale(0.8);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-
-    /* 태그 컨테이너 */
-    #tagListContainer {
-        background: white;
-        border-radius: 12px;
-        padding: 24px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    }
-
-    .tag-section {
-        margin-bottom: 24px;
-    }
-
-    .tag-section:last-child {
-        margin-bottom: 0;
-    }
-
-    .tag-section-header {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 16px;
-        padding-bottom: 12px;
-        border-bottom: 2px solid #e2e8f0;
-    }
-
-    .tag-section-header i {
-        font-size: 18px;
-    }
-
-    .tag-section-header h4 {
-        margin: 0;
-        font-size: 16px;
-        font-weight: 600;
-        color: #1e293b;
-    }
-
-    .tag-section-header.good {
-        color: #059669;
-    }
-
-    .tag-section-header.good i {
-        color: #059669;
-    }
-
-    .tag-section-header.bad {
-        color: #dc2626;
-    }
-
-    .tag-section-header.bad i {
-        color: #dc2626;
-    }
-
-    /* 태그 아이템 */
+    
     .tag-wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px;
     }
-
-    .tag-item {
-        position: relative;
-    }
-
-    .tag-item input[type="checkbox"] {
-        display: none;
-    }
-
+    
     .tag-item label {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 18px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 500;
-        transition: all 0.2s ease;
-        user-select: none;
-        border: 2px solid;
+        padding: 8px 14px;
+        font-size: 13px;
     }
-
-    /* GOOD 태그 스타일 */
-    .tag-item.good label {
-        background: #f0fdf4;
-        border-color: #bbf7d0;
-        color: #166534;
-    }
-
-    .tag-item.good label:hover {
-        background: #dcfce7;
-        border-color: #86efac;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(5, 150, 105, 0.15);
-    }
-
-    .tag-item.good input:checked + label {
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-        border-color: #059669;
-        color: white;
-        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
-    }
-
-    /* BAD 태그 스타일 */
-    .tag-item.bad label {
-        background: #fef2f2;
-        border-color: #fecaca;
-        color: #991b1b;
-    }
-
-    .tag-item.bad label:hover {
-        background: #fee2e2;
-        border-color: #fca5a5;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(220, 38, 38, 0.15);
-    }
-
-    .tag-item.bad input:checked + label {
-        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-        border-color: #dc2626;
-        color: white;
-        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-    }
+}
 
 
 
-    .tag-item input:checked + label::before {
-        opacity: 1;
-    }
+.seller-tags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 13px;
+    color: #555;
+}
 
-    /* 버튼 스타일 */
-    #tagReviewModal .modal-body > button {
-        width: 100%;
-        padding: 14px 24px;
-        border: none;
-        border-radius: 8px;
-        font-size: 15px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        margin-top: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-    }
+.seller-tags i {
+    color: #3b82f6;
+    font-size: 16px;
+    margin-right: 4px;
+}
 
-    #tagReviewModal .modal-body > button:first-of-type {
-        /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
-        background: var(--primary);
-        color: white;
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-    }
+.seller-tags .tag-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #2563eb;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 6px 12px;
+    font-weight: 500;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
 
-    #tagReviewModal .modal-body > button:first-of-type:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
-    }
+.seller-tags .tag-item:hover {
+    /* background: #dbeafe; */
+    /* border-color: #93c5fd; */
+    transform: translateY(-2px);
+    background-color: #2563eb;
+    color: #fff;
+    border-color: #2563eb;
+}
 
-    #tagReviewModal .modal-body > button:first-of-type::before {
-        content: '\f00c';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-    }
+.seller-tags .tag-item:hover .tag-count {
+    color: #2563eb;
+    background: white;
+}
 
-    #tagReviewModal .modal-body > button:last-of-type {
-        background: #e2e8f0;
-        color: #64748b;
-    }
+.seller-tags .tag-count {
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background: #2563eb;
+    color: white;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+}
 
-    #tagReviewModal .modal-body > button:last-of-type:hover {
-        background: #cbd5e1;
-        transform: translateY(-1px);
-    }
+.tag-item::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 160%; /* 아래로 이동 */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    background-color: #111827;
+    color: #f9fafb;
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+    z-index: 20;
+}
 
-    #tagReviewModal .modal-body > button:last-of-type::before {
-        content: '\f04d';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-    }
 
-    /* 안내 텍스트 */
-    #tagReviewModal .modal-body > p {
-        text-align: center;
-        color: #64748b;
-        font-size: 14px;
-        margin: 16px 0;
-        padding: 12px;
-        background: white;
-        border-radius: 8px;
-        border-left: 4px solid #667eea;
-    }
-
-    /* 반응형 */
-    @media (max-width: 768px) {
-        #tagReviewModal .modal-content {
-            width: 95%;
-            max-height: 90vh;
-        }
-        
-        #tagReviewModal .modal-header {
-            padding: 20px 24px;
-        }
-        
-        #tagReviewModal .modal-header h3 {
-            font-size: 20px;
-        }
-        
-        #tagReviewModal .modal-body {
-            padding: 24px 20px;
-        }
-        
-        .tag-wrapper {
-            gap: 8px;
-        }
-        
-        .tag-item label {
-            padding: 8px 14px;
-            font-size: 13px;
-        }
-    }
+/* 화살표 (툴팁 위쪽에 표시되도록) */
+.tag-item::before {
+    content: "";
+    position: absolute;
+    top: 120%; /* 툴팁 바로 위 */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent #111827 transparent;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+    z-index: 19;
+}
+/* hover 시 활성화 */
+.tag-item:hover::after,
+.tag-item:hover::before {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-3px);
+}
