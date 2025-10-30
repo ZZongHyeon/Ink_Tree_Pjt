@@ -95,13 +95,13 @@ public class TradeReviewController {
         return res;
     }
 
-	@PostMapping("/getTopTags/data")
-	@ResponseBody
-	public List<TradeReviewDTO> getTopTags(HttpServletRequest request) {
-		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
-		
-		return service.getTopTags(user.getUserNumber());
-	}
+//	@PostMapping("/getTopTags/data")
+//	@ResponseBody
+//	public List<TradeReviewDTO> getTopTags(HttpServletRequest request) {
+//		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
+//		
+//		return service.getTopTags(user.getUserNumber());
+//	}
 	
 	@PostMapping("/getUserTagStatistics/data")
 	@ResponseBody
