@@ -475,7 +475,7 @@ function loadTradeTags() {
                            '<div class="tag-wrapper">';
                     
                     goodTags.forEach(function(tag) {
-                        html += '<div class="tag-item good">' +
+                        html += '<div class="tag-item good" data-tooltip="' + tag.tagExplan +'">' +
                                '<input type="checkbox" class="tag-checkbox" id="tag-' + tag.tagCode + '" value="' + tag.tagCode + '" data-label="' + tag.tagLabel + '" data-type="' + tag.tagType + '">' +
                                '<label for="tag-' + tag.tagCode + '">' + tag.tagLabel + '</label>' +
                                '</div>';
@@ -494,7 +494,7 @@ function loadTradeTags() {
                            '<div class="tag-wrapper">';
                     
                     badTags.forEach(function(tag) {
-                        html += '<div class="tag-item bad">' +
+                        html += '<div class="tag-item bad" data-tooltip="' + tag.tagExplan +'">' +
                             '<input type="checkbox" class="tag-checkbox" id="tag-' + tag.tagCode + '" value="' + tag.tagCode + '" data-label="' + tag.tagLabel + '" data-type="' + tag.tagType + '">' +
                             '<label for="tag-' + tag.tagCode + '">' + tag.tagLabel + '</label>' +
                         '</div>';

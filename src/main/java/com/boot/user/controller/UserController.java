@@ -116,8 +116,6 @@ public class UserController {
 	    
 	    List<TradeReviewDTO> tagList = tradeReviewService.getUserTagStatistics(user.getUserNumber());
 	    
-	    System.out.println("test : "+ tagList);
-	    
 	    model.addAttribute("tag", tagList);
 	    model.addAttribute("user", user);
 	    
