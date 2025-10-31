@@ -1,6 +1,7 @@
 package com.boot.user.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.boot.trade.dto.TradeReviewDTO;
+import com.boot.trade.service.TradeReviewService;
 import com.boot.user.dto.BasicUserDTO;
 import com.boot.user.dto.UserDTO;
 import com.boot.user.service.UserService;
@@ -35,6 +38,8 @@ public class UserController {
 	private BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	private UtilService utilService;
+	@Autowired
+	private TradeReviewService tradeReviewService;
 
 //	@RequestMapping("/login_ok")
 //	public String login(HttpServletRequest request, @RequestParam HashMap<String, String> param) {
@@ -109,7 +114,11 @@ public class UserController {
 	        return "redirect:/loginForm";
 	    }
 	    
-	    // 사용자 정보를 모델에 추가
+	    List<TradeReviewDTO> tagList = tradeReviewService.getUserTagStatistics(user.getUserNumber());
+	    
+	    System.out.println("test : "+ tagList);
+	    
+	    model.addAttribute("tag", tagList);
 	    model.addAttribute("user", user);
 	    
 	    // 사용자 통계 정보 조회

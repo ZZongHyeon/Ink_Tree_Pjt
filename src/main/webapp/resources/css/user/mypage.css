@@ -667,11 +667,8 @@ body {
     padding: 0 16px;
     margin: 24px auto;
   }
-  
-  .content-section {
-    padding: 24px;
-  }
-  
+ 
+ 
   .stats-container {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -731,4 +728,251 @@ body {
 
 .profile-avatar {
   animation: pulse 2s infinite;
+}
+.trade-review-section {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+/* 2열 그리드 레이아웃 */
+.review-tags-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* 각 컬럼 스타일 */
+.review-tags-column {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  border: 1px solid var(--gray-100);
+  transition: var(--transition);
+}
+
+.review-tags-column:hover {
+  box-shadow: var(--box-shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* 컬럼 헤더 */
+.column-header {
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 2px solid;
+}
+
+.column-header.good {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-bottom-color: #86efac;
+  color: #166534;
+}
+
+.column-header.bad {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border-bottom-color: #fca5a5;
+  color: #991b1b;
+}
+
+.column-header i {
+  font-size: 24px;
+}
+
+.column-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* 태그 리스트 */
+.tags-list {
+  padding: 20px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 개별 태그 아이템 */
+.review-tag-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  transition: var(--transition);
+  border: 2px solid;
+  position: relative;
+  overflow: hidden;
+}
+
+.review-tag-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  transition: width 0.3s ease;
+}
+
+.review-tag-item:hover::before {
+  width: 100%;
+  opacity: 0.1;
+}
+
+/* 긍정 태그 스타일 */
+.review-tag-item.good {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
+.review-tag-item.good:hover {
+  background: #dcfce7;
+  border-color: #86efac;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+}
+
+.review-tag-item.good .tag-icon {
+  color: #10b981;
+  font-size: 18px;
+}
+
+/* 부정 태그 스타일 */
+.review-tag-item.bad {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #991b1b;
+}
+
+
+
+.review-tag-item.bad:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+}
+
+.review-tag-item.bad .tag-icon {
+  color: #ef4444;
+  font-size: 18px;
+}
+
+/* 태그 라벨 */
+.tag-label {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* 태그 카운트 배지 */
+.tag-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: var(--transition);
+}
+
+.review-tag-item.good .tag-count {
+  background: #10b981;
+  color: white;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+}
+
+.review-tag-item.bad .tag-count {
+  background: #ef4444;
+  color: white;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+}
+
+.review-tag-item:hover .tag-count {
+  transform: scale(1.1);
+}
+
+/* 빈 상태 */
+.empty-tags {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  color: var(--gray-400);
+  text-align: center;
+  min-height: 200px;
+}
+
+.empty-tags i {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.empty-tags p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 992px) {
+  .review-tags-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .trade-review-section {
+    margin-top: 32px;
+    margin-bottom: 32px;
+  }
+
+  .column-header {
+    padding: 16px 20px;
+  }
+
+  .column-header h3 {
+    font-size: 16px;
+  }
+
+  .tags-list {
+    padding: 16px;
+    min-height: 150px;
+  }
+
+  .review-tag-item {
+    padding: 12px 16px;
+  }
+
+  .tag-label {
+    font-size: 14px;
+  }
+
+  .tag-count {
+    min-width: 28px;
+    height: 28px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 576px) {
+  .column-header i {
+    font-size: 20px;
+  }
+
+  .review-tag-item .tag-icon {
+    font-size: 16px;
+  }
 }

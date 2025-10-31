@@ -96,12 +96,13 @@
 	    SELECT 
 	        tm.TAG_CODE,
 	        tm.TAG_LABEL as tagLabel,
+	        tm.TAG_TYPE as tagType,
 	        COUNT(*) AS cnt
 	    FROM TRADE_REVIEW_TAG tl
 	    JOIN TRADE_TAG_MASTER tm ON tm.TAG_CODE = tl.TAG_CODE
 	    WHERE tl.REVIEWEE_ID = #{userNumber}
 	    AND STATUS = 'Y'
-	    GROUP BY tm.TAG_CODE, tm.TAG_LABEL
+	    GROUP BY tm.TAG_CODE, tm.TAG_LABEL, tm.TAG_TYPE
 	    ORDER BY COUNT(*) DESC
 	</select>
 <!-- ㄴㅁㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄹ -->
