@@ -17,7 +17,7 @@ public interface TradeReviewDAO {
     List<ChatRoomRequest> getChatUser(int postId);
 
     // 기록에 입력
-    void insertTradeRecord(@Param("postId") int postId, @Param("targetUserId") int targetUserId, @Param("userNumber")int userNumber);
+    void insertTradeRecord(HashMap<String, Object>param);
     
     // 거래 완료 후 선택할 태그 목록 조회
     List<TradeTagsDTO> getTags();

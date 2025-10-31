@@ -33,8 +33,12 @@ public class TradeReviewService {
 	}
 	
 	// 기록에 입력
-	public void insertTradeRecord(int postId, int targetUserId, int userNumber) {
-	    dao.insertTradeRecord(postId, targetUserId, userNumber);
+	public void insertTradeRecord(HashMap<String, Object>param) {
+	    dao.insertTradeRecord(param);
+	    System.out.println("all : "+ param);
+	    System.out.println("postId : "+ param.get("postId"));
+	    System.out.println("buyerNumber : "+ param.get("buyerNumber"));
+	    System.out.println("userNumber : "+ param.get("userNumber"));
 	}
 
 	// 거래 완료 후 보여질 태그들

@@ -22,18 +22,26 @@
 		RECORD_ID, 
 	    POSTID, 
 	    SELLERNUMBER,
-	    BUYER_NUMBER,
+	    BUYERNUMBER,
 	    STATUS, 
-	    CREATEDAT
+	    CREATEDAT,
+	    TAGYN
 	    )
 	VALUES
 	    (
 	    SEQ_TRADE_RECORD_ID.NEXTVAL, 
 	    #{postId},
 	    #{userNumber},
-	    #{targetUserId},
+	    #{buyerNumber},
 	    'SOLD', 
-	    SYSDATE)
+	    SYSDATE,
+	    <if test="tagYN == null">
+	    'N'
+	    </if>
+	    <if test="tagYN != null">
+	    'Y'
+	    </if>
+	    )
 	</insert>
 
     <select id="getTags" resultType="com.boot.trade.dto.TradeTagsDTO">

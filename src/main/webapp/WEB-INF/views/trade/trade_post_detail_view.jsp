@@ -440,9 +440,19 @@
         if (!confirm(buyerName + "님과 거래를 완료하셨습니까?")) {
             return;
         }
+        $.ajax({
+            type: "post",
+            url: "update_trade_status",
+            data: { postID: postID, status: 'SOLD' },
+            success: function(resp) {
 
-        openTagPopup(postID, buyerNumber);
+                openTagPopup(postID, buyerNumber);
 
+            },
+            error: function() {
+                alert("상태 변경 중 오류");
+            }
+        });
     }
 
     function openTagPopup(postID, buyerNumber) {
@@ -574,7 +584,21 @@ function loadTradeTags() {
                 tags: selected
             },
             success: function(resp){
-                
+                $.ajax({
+                    type: "post",
+                    url: "/trade/review/record/insert",
+                    data: { 
+                        postId: window._reviewPostId,
+                        buyerNumber: window._reviewBuyerNumber,
+                        tagYN: 'Y',
+                    },
+                    success: function() {
+
+                    },
+                    error: function() {
+                        alert("거래기록 저장 오류");
+                    }
+                });
                 alert("평가가 등록되었습니다!");
                 closeTagModal();
                 location.reload();
@@ -594,9 +618,23 @@ function loadTradeTags() {
         location.href = "/trade/review?postID=" + window._reviewPostId + "&targetUserId=" + window._reviewBuyerNumber;
     }
 
-    function skipTagReview(){
-        alert("평가를 건너뛰었습니다.");
-        location.reload();
+    function skipTagReview(postID, buyerNumber){
+        $.ajax({
+            type: "post",
+            url: "/trade/review/record/insert",
+            data: { 
+                postId: window._reviewPostId,
+                buyerNumber: window._reviewBuyerNumber,
+            },
+            success: function() {
+                console.log("test")
+                alert("평가를 건너뛰었습니다.");
+                location.reload();
+            },
+            error: function() {
+                alert("거래기록 저장 오류");
+            }
+        });
     }
 
         // 관심 상품 토글
@@ -663,29 +701,3 @@ function loadTradeTags() {
 </body>
 
 </html>
-
-
-        <!-- $.ajax({
-            type: "post",
-            url: "/trade/review/record/insert",
-            data: { postID: postID, buyerNumber: buyerNumber },
-            success: function() {
-
-                $.ajax({
-                    type: "post",
-                    url: "update_trade_status",
-                    data: { postID: postID, status: 'SOLD' },
-                    success: function(resp) {
-
-                        openTagPopup(postID, buyerNumber);
-
-                    },
-                    error: function() {
-                        alert("상태 변경 중 오류");
-                    }
-                });
-            },
-            error: function() {
-                alert("거래기록 저장 오류");
-            }
-        }); -->

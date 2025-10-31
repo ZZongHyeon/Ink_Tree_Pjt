@@ -34,21 +34,14 @@ public class TradeReviewController {
 	    return service.getChatUser(postID);
 	}
 	
+	// 유저를 선택하고 거래를 끝냈을 때 기록에 삽입할 예정
 	@PostMapping("/record/insert")
 	@ResponseBody
-	public Map<String, Object> insertTradeRecord(int postID, int buyerNumber) {
-	    Map<String, Object> map = new HashMap<>();
-
-	    try {
-	    	// 일단 여긴 ajax에서 타는중임
-//	        service.insertTradeRecord(postID, buyerNumber);
-	        map.put("success", true);
-	    } catch(Exception e) {
-	        map.put("success", false);
-	    }
-
-	    return map;
-	    
+	public void insertTradeRecord(@RequestParam HashMap<String, Object>param, HttpServletRequest request) {
+	    BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
+	    param.put("userNumber", user.getUserNumber());
+	    System.out.println("test : "+param);
+	    service.insertTradeRecord(param);
 	}
 	
 	@PostMapping("/getTags/data")
