@@ -54,7 +54,6 @@ public class TradeReviewController {
 	@PostMapping("/getTags/data")
 	@ResponseBody
 	public List<TradeTagsDTO> getTags() {
-		System.out.println("test:"+service.getTags());
 		return service.getTags();
 	}
 	

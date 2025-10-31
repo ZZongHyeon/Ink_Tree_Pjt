@@ -71,14 +71,7 @@ public class TradePostController {
     	if(user.getUserAddress() != NULL) {
     		userAddress = user.getUserAddress();
     	}
-//    	String[] strArr = userAddress.split("구");
-//    	
-//    	System.out.println("userAddress : " + userAddress);
-//    	System.out.println("strArr[0] : " + strArr[0]);
-//    	System.out.println("strArr[1] : " + strArr[1]);
-//    	System.out.println("indexOf : " + userAddress.indexOf("구"));
-//    	System.out.println("subString - indexOf : " + userAddress.substring(0, userAddress.indexOf("구")+1));
-    	
+
     	model.addAttribute("addr", userAddress.substring(0, userAddress.indexOf("구")+1));
         return "trade/trade_post_write";
     }
@@ -116,8 +109,6 @@ public class TradePostController {
 
     @RequestMapping("/trade_post_update_ok")
     public String tradePostUpdate(@RequestParam HashMap<String, String> param, RedirectAttributes rttr) {
-    	System.out.println("test : " + param);
-    
         service.tradePostModify(param);
         rttr.addAttribute("postID", param.get("postID"));
         rttr.addAttribute("pageNum", param.get("pageNum"));
