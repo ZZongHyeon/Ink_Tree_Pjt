@@ -345,18 +345,28 @@
                     postID: postID,
                     status: status
                 },
-                success: function(response) {
-                    if (response.success) {
-                        alert("상태가 변경되었습니다.");
-                        location.reload();
-                    } else {
-                        alert("상태 변경에 실패했습니다: " + response.message);
+            success: function(response) {
+                if (response.success) {
+                    alert("상태가 변경되었습니다.");
+
+                    // 현재 URL에 skipViewCount=true 추가
+                    let currentUrl = window.location.href;
+
+                    if (!currentUrl.includes("skipViewCount=true")) {
+                        if (currentUrl.includes("?")) {
+                            currentUrl += "&skipViewCount=true";
+                        } else {
+                            currentUrl += "?skipViewCount=true";
+                        }
                     }
-                },
-                error: function(xhr, status, error) {
-                    alert("상태 변경 중 오류가 발생했습니다.");
-                    console.error("Error:", error);
+
+                    // 새로고침 (조회수 증가 안 됨)
+                    window.location.href = currentUrl;
+                } else {
+                    alert("상태 변경에 실패했습니다: " + response.message);
                 }
+            }
+
             });
         }
 
@@ -404,11 +414,25 @@
                 url: "update_trade_status",
                 data: { postID: postID, status: 'SOLD' },
                 success: function(response) {
-                    alert("상태가 변경되었습니다.");
-                    location.reload();
-                },
-                error: function() {
-                    alert("상태 변경 중 오류");
+                    if (response.success) {
+                        alert("상태가 변경되었습니다.");
+
+                        // 현재 URL에 skipViewCount=true 추가
+                        let currentUrl = window.location.href;
+
+                        if (!currentUrl.includes("skipViewCount=true")) {
+                            if (currentUrl.includes("?")) {
+                                currentUrl += "&skipViewCount=true";
+                            } else {
+                                currentUrl += "?skipViewCount=true";
+                            }
+                        }
+
+                        // 새로고침 (조회수 증가 안 됨)
+                        window.location.href = currentUrl;
+                    } else {
+                        alert("상태 변경에 실패했습니다: " + response.message);
+                    }
                 }
             });
             return;
@@ -574,6 +598,7 @@ function loadTradeTags() {
                 tags: selected
             },
             success: function(resp){
+                
                 alert("평가가 등록되었습니다!");
                 closeTagModal();
                 location.reload();
