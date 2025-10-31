@@ -115,9 +115,7 @@ public class TradeReviewController {
 		int check = service.isTradeCompleted(postId);
 		if(check == 1) {
 			response.put("success", true);
- 		} else if(check >= 2) {
- 			response.put("success", false);
-		} else {
+ 		} else {
 			response.put("success", false);
 		}
 		return response;

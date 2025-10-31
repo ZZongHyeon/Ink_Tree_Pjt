@@ -12,3 +12,4 @@ function reloadWithoutViewCount() {
 
     window.location.href = currentUrl;
 }
+

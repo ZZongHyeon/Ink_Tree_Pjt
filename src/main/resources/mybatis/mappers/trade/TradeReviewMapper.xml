@@ -127,7 +127,7 @@
 	    SET STATUS = 'SELLING',
 	    	TAGYN = 'N'
 	    WHERE POSTID = #{postId}
-	      AND BUYERNUMBER = #{userNumber}
+	      AND SELLERNUMBER = #{userNumber}
 	      AND STATUS = 'COMPLETED'
 	      AND TAGYN = 'Y'
 	</update>

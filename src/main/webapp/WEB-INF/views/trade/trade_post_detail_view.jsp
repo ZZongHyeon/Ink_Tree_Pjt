@@ -347,11 +347,11 @@ function changeStatus(postID, status) {
         url: "/trade/review/isTradeCompleted",
         data: { postId: postID },
         success: function(checkResponse) {
-
+            console.log(checkResponse)
             // 이미 판매완료 상태라면 경고
             if (checkResponse.success) {
                 if (!confirm("이미 판매완료된 거래입니다.\n태그 및 기록이 초기화될 수 있습니다. 상태를 변경하시겠습니까?")) {
-                    return; // 취소 시 즉시 중단
+                    return;
                 }
             }
 
@@ -445,20 +445,7 @@ function changeStatus(postID, status) {
                 success: function(response) {
                     if (response.success) {
                         alert("상태가 변경되었습니다.");
-
-                        // 현재 URL에 skipViewCount=true 추가
-                        let currentUrl = window.location.href;
-
-                        if (!currentUrl.includes("skipViewCount=true")) {
-                            if (currentUrl.includes("?")) {
-                                currentUrl += "&skipViewCount=true";
-                            } else {
-                                currentUrl += "?skipViewCount=true";
-                            }
-                        }
-
-                        // 새로고침 (조회수 증가 안 됨)
-                        window.location.href = currentUrl;
+                        reloadWithoutViewCount();
                     } else {
                         alert("상태 변경에 실패했습니다: " + response.message);
                     }
@@ -469,6 +456,12 @@ function changeStatus(postID, status) {
         if (!confirm(buyerName + "님과 거래를 완료하셨습니까?")) {
             return;
         }
+
+        // 전역변수
+        window._reviewPostId = postID;
+        window._reviewBuyerNumber = buyerNumber;
+        window._reviewBuyerName = buyerName;
+
         $.ajax({
             type: "post",
             url: "update_trade_status",
@@ -606,7 +599,7 @@ function loadTradeTags() {
         $.ajax({
             type: "post",
             url: "/trade/review/insertTag",
-            traditional: true,  // 배열 전송 위함
+            traditional: true,
             data: {
                 postID: window._reviewPostId,
                 targetUserId: window._reviewBuyerNumber,
@@ -628,6 +621,14 @@ function loadTradeTags() {
                         alert("거래기록 저장 오류");
                     }
                 });
+                commentNotification(
+                    ${post.userNumber},                // sellerNumber
+                    "${post.userName}",                // sellerName
+                    ${post.postID},                    // postId
+                    "${post.title}",                   // postTitle
+                    window._reviewBuyerNumber          // buyerNumber
+                );
+
                 alert("평가가 등록되었습니다!");
                 closeTagModal();
                 location.reload();
@@ -726,6 +727,40 @@ function loadTradeTags() {
                 };
             });
         });
+
+        function commentNotification(sellerNumber, sellerName, postId, postTitle, buyerNumber) {
+            
+            if(buyerNumber != sellerNumber) {
+            fetch('/notifications', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userNumber: buyerNumber,
+                    message: sellerName + '님이 판매게시글['+postTitle+']에 대한 태그평가를 남겼어요.\n태그평가를 전달하세요.',
+                    title: '태그평가알림',
+                    type: 'COMMENT',
+                    url: '/trade/trade_post_detail_view?postID='+postId,
+                    sent: false,
+                    read: false,
+                    toAll: false // 전체
+                })
+            })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    // 알림 성공 시 별도의 팝업 띄우지 않음 (자동으로 알림이 표시됨)
+                })
+                .catch(function(error) {
+                    console.error('알림 전송 실패:', error);
+
+                });
+                }else {
+                    console.log("같은 사용자")
+                }
+        }
     </script>
 </body>
 
