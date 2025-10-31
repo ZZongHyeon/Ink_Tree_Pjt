@@ -441,32 +441,8 @@
             return;
         }
 
-        // 판매완료 상태 업데이트
-        // 여기도 기록으로 남길것인가?
-        $.ajax({
-            type: "post",
-            url: "/trade/review/record/insert",
-            data: { postID: postID, buyerNumber: buyerNumber },
-            success: function() {
+        openTagPopup(postID, buyerNumber);
 
-                $.ajax({
-                    type: "post",
-                    url: "update_trade_status",
-                    data: { postID: postID, status: 'SOLD' },
-                    success: function(resp) {
-
-                        openTagPopup(postID, buyerNumber);
-
-                    },
-                    error: function() {
-                        alert("상태 변경 중 오류");
-                    }
-                });
-            },
-            error: function() {
-                alert("거래기록 저장 오류");
-            }
-        });
     }
 
     function openTagPopup(postID, buyerNumber) {
@@ -687,3 +663,29 @@ function loadTradeTags() {
 </body>
 
 </html>
+
+
+        <!-- $.ajax({
+            type: "post",
+            url: "/trade/review/record/insert",
+            data: { postID: postID, buyerNumber: buyerNumber },
+            success: function() {
+
+                $.ajax({
+                    type: "post",
+                    url: "update_trade_status",
+                    data: { postID: postID, status: 'SOLD' },
+                    success: function(resp) {
+
+                        openTagPopup(postID, buyerNumber);
+
+                    },
+                    error: function() {
+                        alert("상태 변경 중 오류");
+                    }
+                });
+            },
+            error: function() {
+                alert("거래기록 저장 오류");
+            }
+        }); -->
