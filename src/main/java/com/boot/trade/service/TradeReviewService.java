@@ -35,10 +35,6 @@ public class TradeReviewService {
 	// 기록에 입력
 	public void insertTradeRecord(HashMap<String, Object>param) {
 	    dao.insertTradeRecord(param);
-	    System.out.println("all : "+ param);
-	    System.out.println("postId : "+ param.get("postId"));
-	    System.out.println("buyerNumber : "+ param.get("buyerNumber"));
-	    System.out.println("userNumber : "+ param.get("userNumber"));
 	}
 
 	// 거래 완료 후 보여질 태그들
@@ -69,13 +65,16 @@ public class TradeReviewService {
 	}
     
     // 다시 판매중으로 바꿀 때 태그 상태 업데이트
-    public int deleteReviewTags(HashMap<String, String> param) {
-    	return dao.deleteReviewTags(param);
+    public int updateReviewTagsForTagTable(HashMap<String, Object> param) {
+    	return dao.updateReviewTagsForTagTable(param);
+    }
+    public int updateReviewTagsForRecordTable(HashMap<String, Object> param) {
+    	return dao.updateReviewTagsForRecordTable(param);
     }
     
     // 완료된 거래인지 상태체크
-	public boolean isTradeCompleted(int tradeRecordId) {
-		return false;
+	public int isTradeCompleted(int tradeRecordId) {
+		return dao.isTradeCompleted(tradeRecordId);
 	}
     
     // 알림

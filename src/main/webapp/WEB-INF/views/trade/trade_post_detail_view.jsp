@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/resources/css/trade/trade_post_detail_view.css">
+    <script src="/resources/js/common.js"></script>
 </head>
 <body>
 			<jsp:include page="../header.jsp" />
@@ -329,15 +330,30 @@
             });
         }
 
-        // 게시글 상태 변경
-        function changeStatus(postID, status) {
 
-            // 판매완료일 경우: getChatUser 먼저 호출
-            if (status === 'SOLD') {
-                openReviewPopup(postID);
-                return;
+
+function changeStatus(postID, status) {
+
+    // 판매완료일 경우: getChatUser 먼저 호출
+    if (status === 'SOLD') {
+        openReviewPopup(postID);
+        return;
+    }
+
+    $.ajax({
+        type: "get",
+        url: "/trade/review/isTradeCompleted",
+        data: { postId: postID },
+        success: function(checkResponse) {
+
+            // 이미 판매완료 상태라면 경고
+            if (checkResponse.success) {
+                if (!confirm("이미 판매완료된 거래입니다.\n태그 및 기록이 초기화될 수 있습니다. 상태를 변경하시겠습니까?")) {
+                    return; // 취소 시 즉시 중단
+                }
             }
 
+            // confirm 통과했거나 아직 완료되지 않은 경우 상태 변경 실행
             $.ajax({
                 type: "post",
                 url: "update_trade_status",
@@ -345,30 +361,41 @@
                     postID: postID,
                     status: status
                 },
-            success: function(response) {
-                if (response.success) {
-                    alert("상태가 변경되었습니다.");
-
-                    // 현재 URL에 skipViewCount=true 추가
-                    let currentUrl = window.location.href;
-
-                    if (!currentUrl.includes("skipViewCount=true")) {
-                        if (currentUrl.includes("?")) {
-                            currentUrl += "&skipViewCount=true";
-                        } else {
-                            currentUrl += "?skipViewCount=true";
+                success: function(response) {
+                    if (response.success) {
+                        
+                        // 이미 판매완료된 거래일 경우만 초기화 실행
+                        if (checkResponse.success) {
+                            $.ajax({
+                                type: "post",
+                                url: "/trade/review/updateReviewTags",
+                                data: { postId: postID },
+                                success: function() {
+                                    console.log("거래 기록 초기화 완료");
+                                },
+                                error: function() {
+                                    alert("데이터 초기화 중 오류 발생");
+                                }
+                            });
                         }
+
+                        alert("상태가 변경되었습니다.");
+                        reloadWithoutViewCount();
+
+                    } else {
+                        alert("상태 변경에 실패했습니다: " + response.message);
                     }
-
-                    // 새로고침 (조회수 증가 안 됨)
-                    window.location.href = currentUrl;
-                } else {
-                    alert("상태 변경에 실패했습니다: " + response.message);
+                },
+                error: function() {
+                    alert("상태 변경 중 오류가 발생했습니다.");
                 }
-            }
-
             });
+        },
+        error: function() {
+            alert("판매완료 상태 확인 중 오류가 발생했습니다.");
         }
+    });
+}
 
     // 구매자 선택 모달 열기
     function openReviewPopup(postID) {

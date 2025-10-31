@@ -40,7 +40,6 @@ public class TradeReviewController {
 	public void insertTradeRecord(@RequestParam HashMap<String, Object>param, HttpServletRequest request) {
 	    BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
 	    param.put("userNumber", user.getUserNumber());
-	    System.out.println("test : "+param);
 	    service.insertTradeRecord(param);
 	}
 	
@@ -108,19 +107,29 @@ public class TradeReviewController {
 //		return service.getUserTagStatistics(user.getUserNumber());
 //	}
 	
-	// 이미 한건지 확인
-	@GetMapping("/alreadyReviewed")
+	// 완료된 거래인지 확인
+	@GetMapping("/isTradeCompleted")
 	@ResponseBody
-	public int alreadyReviewed(@RequestParam HashMap<String, String> param) {
-		int check = service.alreadyReviewed(param);
-		return check;
+	public Map<String, Object> isTradeCompleted(@RequestParam int postId) {
+		Map<String, Object> response = new HashMap<>();
+		int check = service.isTradeCompleted(postId);
+		if(check == 1) {
+			response.put("success", true);
+ 		} else if(check >= 2) {
+ 			response.put("success", false);
+		} else {
+			response.put("success", false);
+		}
+		return response;
 	}
 	
 	// 다시 판매중 또는 예약중 일때 상태 변환
-	@PostMapping("/deleteReviewTags")
+	@PostMapping("/updateReviewTags")
 	@ResponseBody
-	public int deleteReviewTags(@RequestParam HashMap<String, String> param) {
-		int check = service.deleteReviewTags(param);
-		return check;
+	public void deleteReviewTags(@RequestParam HashMap<String, Object> param, HttpServletRequest request) {
+		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
+		param.put("userNumber", user.getUserNumber());
+		service.updateReviewTagsForTagTable(param);
+		service.updateReviewTagsForRecordTable(param);
 	}
 }

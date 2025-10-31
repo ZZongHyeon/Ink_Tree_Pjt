@@ -33,7 +33,7 @@
 	    #{postId},
 	    #{userNumber},
 	    #{buyerNumber},
-	    'SOLD', 
+	    'COMPLETED', 
 	    SYSDATE,
 	    <if test="tagYN == null">
 	    'N'
@@ -115,27 +115,36 @@
 	</select>
 <!-- ㄴㅁㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄹ -->
 
+	<update id="updateReviewTagsForTagTable">
+	    UPDATE TRADE_REVIEW_TAG
+	    SET STATUS = 'N'
+	    WHERE POSTID = #{postId}
+	      AND (REVIEWER_ID = #{userNumber} OR REVIEWEE_ID = #{userNumber})
+	      AND STATUS = 'Y'
+	</update>
+	<update id="updateReviewTagsForRecordTable">
+	    UPDATE TRADE_RECORD
+	    SET STATUS = 'SELLING',
+	    	TAGYN = 'N'
+	    WHERE POSTID = #{postId}
+	      AND BUYERNUMBER = #{userNumber}
+	      AND STATUS = 'COMPLETED'
+	      AND TAGYN = 'Y'
+	</update>
+
+    <select id="isTradeCompleted" resultType="int">
+        SELECT COUNT(*)
+        FROM TRADE_RECORD
+        WHERE postId = #{postID}
+        AND STATUS = 'COMPLETED'
+        AND TAGYN = 'Y'
+    </select>
+
+
     <select id="alreadyReviewed" resultType="int">
         SELECT COUNT(*)
         FROM TRADE_TAG_LOG
         WHERE TRADE_RECORD_ID = #{tradeRecordId}
         AND REVIEWER_ID = #{reviewerId}
     </select>
-
-	<update id="deleteReviewTags">
-	    UPDATE TRADE_REVIEW_TAG
-	    SET STATUS = 'N'
-	    WHERE POSTID = #{postId}
-	      AND REVIEWER_ID = #{userNumber}
-	      AND STATUS = 'Y'
-	</update>
-
-    <!-- ✅ 7. 거래 완료 여부 확인 -->
-    <select id="isTradeCompleted" resultType="int">
-        SELECT COUNT(*)
-        FROM TRADE_RECORD
-        WHERE TRADE_RECORD_ID = #{tradeRecordId}
-        AND STATUS = 'COMPLETED'
-    </select>
-
 </mapper>

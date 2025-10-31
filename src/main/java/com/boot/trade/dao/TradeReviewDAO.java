@@ -40,7 +40,8 @@ public interface TradeReviewDAO {
     int alreadyReviewed(HashMap<String, String> param);
 
     // 다시 판매중으로 바꿀 때 태그 상태 업데이트
-    int deleteReviewTags(HashMap<String, String> param);
+    int updateReviewTagsForTagTable(HashMap<String, Object> param);
+    int updateReviewTagsForRecordTable(HashMap<String, Object> param);
     
     // 거래 완료 상태 체크
     int isTradeCompleted(int tradeRecordId);
