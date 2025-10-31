@@ -77,7 +77,7 @@
 		        TAG_CODE,
 		        COUNT(*) AS CNT
 		    FROM TRADE_REVIEW_TAG
-		    WHERE REVIEWEE_ID = #{userNumber}
+		    WHERE REVIEWEE_ID = TO_NUMBER(#{userNumber})
 		      AND TAG_TYPE = 'GOOD'
 		      AND STATUS = 'Y'
 		    GROUP BY TAG_CODE
