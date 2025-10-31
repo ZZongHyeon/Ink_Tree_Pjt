@@ -166,9 +166,9 @@ public class TradePostController {
             isLiked = service.tradePostCheckFavorite(likeParam);
         }
         model.addAttribute("isLiked", isLiked);
-
+        int userNumber = user.getUserNumber();
         // 판매자의 상위 GOOD 태그 3개 가져오기
-        List<TradeReviewDTO> topTags = tradeReviewService.getTopTags(user.getUserNumber());
+        List<TradeReviewDTO> topTags = tradeReviewService.getTopTags(userNumber);
         model.addAttribute("topTags", topTags);
         
         return "trade/trade_post_detail_view";

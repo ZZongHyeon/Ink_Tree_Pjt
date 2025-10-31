@@ -83,12 +83,12 @@
                         <div class="seller-name">${post.userName}</div>
                         <div class="seller-rating">
                             <c:if test="${not empty topTags}">
+                                <i class="fas fa-comment-dots"></i>가장 많이 받은 긍정 태그 3개가 표시됩니다.
                                 <div class="seller-tags">
-                                    <i class="fas fa-comment-dots"></i>
-                                    <c:forEach var="tag" items="${topTags}" varStatus="status">
-                                        <span class="tag-item" data-tooltip="${tag.tagExplan}">
-                                            ${tag.tagLabel} 
-                                            <span class="tag-count">${tag.cnt}</span>
+                                    <c:forEach var="topTags" items="${topTags}" varStatus="status">
+                                        <span class="tag-item" data-tooltip="${topTags.tagExplan}">
+                                            ${topTags.tagLabel} 
+                                            <span class="tag-count">${topTags.cnt}</span>
                                         </span>
                                     </c:forEach>
                                 </div>
