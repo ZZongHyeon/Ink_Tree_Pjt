@@ -6,19 +6,17 @@
 				<!DOCTYPE html >
 				
 				  <html>
-
-									<head>
-										<meta charset="UTF-8">
-										<meta name="viewport" content="width=device-width, initial-scale=1.0">
-										<title>잉크트리</title>
-										<link rel="stylesheet" type="text/css" href="/resources/css/board/board_detail.css">
-										<link rel="stylesheet"
-											href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-										<link
-											href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap"
-											rel="stylesheet">
-										<script src="/resources/js/board_detail.js"></script>
-									</head>
+					<head>
+						<meta charset="UTF-8">
+						<meta name="viewport" content="width=device-width, initial-scale=1.0">
+						<title>잉크트리</title>
+						<link rel="stylesheet" type="text/css" href="/resources/css/board/board_detail.css">
+						<link rel="stylesheet"
+							href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+						<link
+							href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap"
+							rel="stylesheet">
+					</head>
 
 									<body>
     <jsp:include page="../header.jsp" />

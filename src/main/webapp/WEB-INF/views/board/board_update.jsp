@@ -14,7 +14,6 @@
 					rel="stylesheet">
 				<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 				<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-				<script src="/resources/js/board_update.js"></script>
 				<script>
 					function changeSort(sortType) {
 						// 정렬 옵션 변경 시 처리

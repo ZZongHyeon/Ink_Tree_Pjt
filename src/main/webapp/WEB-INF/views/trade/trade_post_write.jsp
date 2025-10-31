@@ -16,7 +16,6 @@
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
 	rel="stylesheet">
 <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-<script src="/resources/js/trade_post_write.js"></script>
 
 </head>
 <style>

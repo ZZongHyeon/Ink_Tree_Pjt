@@ -12,7 +12,6 @@
     <link rel="stylesheet" type="text/css" href="/resources/css/admin/admin_notice_write.css">
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-    <script src="/resources/js/admin_notice_write.js"></script>
 </head>
 <body>
 <jsp:include page="../header.jsp" />

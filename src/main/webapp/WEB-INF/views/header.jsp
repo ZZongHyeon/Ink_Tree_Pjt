@@ -417,10 +417,10 @@
             }
 
             // 즉시 알림 확인 실행
-            setTimeout(checkChatNotifications, 1000);
+            // setTimeout(checkChatNotifications, 1000);
 
             // 주기적으로 알림 확인 (3초마다)
-            setInterval(checkChatNotifications, 3000);
+            // setInterval(checkChatNotifications, 3000);
             
             // 사용자 드롭다운 메뉴
             const dropdownToggle = document.getElementById('dropdownToggle');

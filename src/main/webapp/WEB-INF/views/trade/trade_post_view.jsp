@@ -16,7 +16,6 @@
     <link rel="stylesheet" type="text/css" href="/resources/css/trade/trade_post_view.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="/resources/js/trade_post_view.js"></script>
 </head>
 
 <body>

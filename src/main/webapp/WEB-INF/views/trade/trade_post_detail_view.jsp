@@ -148,22 +148,24 @@
                     </button>
 			            <c:if test="${user != null && (user.userNumber == post.userNumber)}">
 	                        <div class="status-change-container">
-	                            <button class="action-btn status-btn" onclick="toggleStatusDropdown()">
-	                                <i class="fas fa-tag"></i> 상태변경
-	                            </button>
+                                <button class="action-btn status-btn" onclick="toggleStatusDropdown()">
+                                    <i class="fas fa-tag"></i> 상태변경
+                                </button>
 	                            <div class="status-dropdown" id="statusDropdown">
-	                                <div class="status-option ${post.status == 'AVAILABLE' ? 'active' : ''}" 
-	                                     onclick="changeStatus(${post.postID}, 'AVAILABLE')">
-	                                    판매중
-	                                </div>
-	                                <div class="status-option ${post.status == 'RESERVED' ? 'active' : ''}" 
-	                                     onclick="changeStatus(${post.postID}, 'RESERVED')">
-	                                    예약중
-	                                </div>
-	                                <div class="status-option ${post.status == 'SOLD' ? 'active' : ''}" 
-	                                     onclick="changeStatus(${post.postID}, 'SOLD')">
-	                                    판매완료
-	                                </div>
+                                    <div class="status-option ${post.status == 'AVAILABLE' ? 'active' : ''}" 
+                                    onclick="changeStatus(${post.postID}, 'AVAILABLE')">
+                                    판매중
+                                </div>
+                                <div class="status-option ${post.status == 'RESERVED' ? 'active' : ''}" 
+                                onclick="changeStatus(${post.postID}, 'RESERVED')">
+                                    예약중
+                                </div>
+                                <c:if test="${post.status ne 'SOLD'}">
+                                    <div class="status-option ${post.status == 'SOLD' ? 'active' : ''}" 
+                                    onclick="changeStatus(${post.postID}, 'SOLD')">
+                                    판매완료
+                                    </div>
+                                </c:if>
 	                            </div>
 	                        </div>
 						</c:if>

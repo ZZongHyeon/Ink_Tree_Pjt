@@ -12,7 +12,6 @@
 						href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 					<link rel="stylesheet" type="text/css" href="/resources/css/admin/admin_notice.css">
 					<link rel="stylesheet" type="text/css" href="/resources/css/board/board_view.css">
-					<script src="/resources/js/admin_notice.js"></script>
 					<script src="${pageContext.request.contextPath}/js/jquery.js"></script>
 					<title>공지사항 - 도서관리 시스템</title>
 				</head>

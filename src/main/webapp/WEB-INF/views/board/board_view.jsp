@@ -19,7 +19,6 @@
                                 <link
                                     href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap"
                                     rel="stylesheet">
-                                <script src="/resources/js/board_view.js"></script>
                             </head>
 
                             <body>
