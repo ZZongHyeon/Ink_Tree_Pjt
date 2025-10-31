@@ -111,4 +111,19 @@ public class TradeReviewController {
 		return service.getUserTagStatistics(user.getUserNumber());
 	}
 	
+	// 이미 한건지 확인
+	@GetMapping("/alreadyReviewed")
+	@ResponseBody
+	public int alreadyReviewed(@RequestParam HashMap<String, String> param) {
+		int check = service.alreadyReviewed(param);
+		return check;
+	}
+	
+	// 다시 판매중 또는 예약중 일때 상태 변환
+	@PostMapping("/deleteReviewTags")
+	@ResponseBody
+	public int deleteReviewTags(@RequestParam HashMap<String, String> param) {
+		int check = service.deleteReviewTags(param);
+		return check;
+	}
 }

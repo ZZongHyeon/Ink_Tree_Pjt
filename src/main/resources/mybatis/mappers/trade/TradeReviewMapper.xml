@@ -79,6 +79,7 @@
 		    FROM TRADE_REVIEW_TAG
 		    WHERE REVIEWEE_ID = #{userNumber}
 		      AND TAG_TYPE = 'GOOD'
+		      AND STATUS = 'Y'
 		    GROUP BY TAG_CODE
 		    ORDER BY COUNT(*) DESC
 		) t1
@@ -99,12 +100,12 @@
 	    FROM TRADE_REVIEW_TAG tl
 	    JOIN TRADE_TAG_MASTER tm ON tm.TAG_CODE = tl.TAG_CODE
 	    WHERE tl.REVIEWEE_ID = #{userNumber}
+	    AND STATUS = 'Y'
 	    GROUP BY tm.TAG_CODE, tm.TAG_LABEL
 	    ORDER BY COUNT(*) DESC
 	</select>
 <!-- ㄴㅁㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄹ -->
 
-    <!-- ✅ 6. 동일 거래에 같은 리뷰어가 이미 평가했는지 -->
     <select id="alreadyReviewed" resultType="int">
         SELECT COUNT(*)
         FROM TRADE_TAG_LOG
@@ -112,6 +113,13 @@
         AND REVIEWER_ID = #{reviewerId}
     </select>
 
+	<update id="deleteReviewTags">
+	    UPDATE TRADE_REVIEW_TAG
+	    SET STATUS = 'N'
+	    WHERE POSTID = #{postId}
+	      AND REVIEWER_ID = #{userNumber}
+	      AND STATUS = 'Y'
+	</update>
 
     <!-- ✅ 7. 거래 완료 여부 확인 -->
     <select id="isTradeCompleted" resultType="int">

@@ -1,5 +1,6 @@
 package com.boot.trade.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,9 +60,14 @@ public class TradeReviewService {
 	}
     
     // 중복방지 하나에 하나만
-	public boolean alreadyReviewed(int tradeRecordId, int reviewerId) {
-		return false;
+	public int alreadyReviewed(HashMap<String, String> param) {
+		return dao.alreadyReviewed(param);
 	}
+    
+    // 다시 판매중으로 바꿀 때 태그 상태 업데이트
+    public int deleteReviewTags(HashMap<String, String> param) {
+    	return dao.deleteReviewTags(param);
+    }
     
     // 완료된 거래인지 상태체크
 	public boolean isTradeCompleted(int tradeRecordId) {

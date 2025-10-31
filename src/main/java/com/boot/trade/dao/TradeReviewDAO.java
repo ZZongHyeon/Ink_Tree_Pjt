@@ -1,5 +1,6 @@
 package com.boot.trade.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -36,8 +37,11 @@ public interface TradeReviewDAO {
 
 
     // 태그 중복 등록 방지 (한 거래에서 한 번만)
-    int alreadyReviewed(@Param("tradeRecordId") int tradeRecordId, @Param("reviewerId") int reviewerId);
+    int alreadyReviewed(HashMap<String, String> param);
 
+    // 다시 판매중으로 바꿀 때 태그 상태 업데이트
+    int deleteReviewTags(HashMap<String, String> param);
+    
     // 거래 완료 상태 체크
     int isTradeCompleted(int tradeRecordId);
 }
