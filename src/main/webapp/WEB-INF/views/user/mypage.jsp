@@ -148,67 +148,7 @@
 							<div class="stat-title">총 대출 이력</div>
 						</div>
 					</div>
-<div class="trade-review-section">
-    <div class="section-header">
-        <h2 class="section-title">거래 평가</h2>
-    </div>
 
-    <div class="review-tags-grid">
-        <!-- 긍정 평가 (왼쪽) -->
-        <div class="review-tags-column good-column">
-            <div class="column-header good">
-                <i class="fas fa-thumbs-up"></i>
-                <h3>긍정 태그</h3>
-            </div>
-            <div class="tags-list">
-                <c:set var="hasGood" value="false" />
-                <c:forEach var="tag" items="${tag}">
-                    <c:if test="${tag.tagType eq 'GOOD'}">
-                        <c:set var="hasGood" value="true" />
-                        <div class="review-tag-item good" title="${tag.tagExplan}">
-                            <i class="fas fa-check-circle tag-icon"></i>
-                            <span class="tag-label">${tag.tagLabel}</span>
-                            <span class="tag-count">${tag.cnt}</span>
-                        </div>
-                    </c:if>
-                </c:forEach>
-                <c:if test="${!hasGood}">
-                    <div class="empty-tags">
-                        <i class="fas fa-inbox"></i>
-                        <p>아직 받은 긍정 태그가 없습니다</p>
-                    </div>
-                </c:if>
-            </div>
-        </div>
-
-        <!-- 부정 평가 (오른쪽) -->
-        <div class="review-tags-column bad-column">
-            <div class="column-header bad">
-                <i class="fas fa-thumbs-down"></i>
-                <h3>부정 태그</h3>
-            </div>
-            <div class="tags-list">
-                <c:set var="hasBad" value="false" />
-                <c:forEach var="tag" items="${tag}">
-                    <c:if test="${tag.tagType eq 'BAD'}">
-                        <c:set var="hasBad" value="true" />
-                        <div class="review-tag-item bad" title="${tag.tagExplan}">
-                            <i class="fas fa-times-circle tag-icon"></i>
-                            <span class="tag-label">${tag.tagLabel}</span>
-                            <span class="tag-count">${tag.cnt}</span>
-                        </div>
-                    </c:if>
-                </c:forEach>
-                <c:if test="${!hasBad}">
-                    <div class="empty-tags">
-                        <i class="fas fa-inbox"></i>
-                        <p>아직 받은 부정 태그가 없습니다</p>
-                    </div>
-                </c:if>
-            </div>
-        </div>
-    </div>
-</div>
 
 					<div class="info-grid">
 					    <div class="info-item">
@@ -250,6 +190,68 @@
 					            ${userDetailAddress}
 					        </c:if>
 					    </div>
+					</div>
+
+					<div class="trade-review-section">
+						<div class="section-header">
+							<h2 class="section-title">거래 평가</h2>
+						</div>
+
+						<div class="review-tags-grid">
+							<!-- 긍정 평가 (왼쪽) -->
+							<div class="review-tags-column good-column">
+								<div class="column-header good">
+									<i class="fas fa-thumbs-up"></i>
+									<h3>긍정 태그</h3>
+								</div>
+								<div class="tags-list">
+									<c:set var="hasGood" value="false" />
+									<c:forEach var="tag" items="${tag}">
+										<c:if test="${tag.tagType eq 'GOOD'}">
+											<c:set var="hasGood" value="true" />
+											<div class="review-tag-item good" title="${tag.tagExplan}">
+												<i class="fas fa-check-circle tag-icon"></i>
+												<span class="tag-label">${tag.tagLabel}</span>
+												<span class="tag-count">${tag.cnt}</span>
+											</div>
+										</c:if>
+									</c:forEach>
+									<c:if test="${!hasGood}">
+										<div class="empty-tags">
+											<i class="fas fa-inbox"></i>
+											<p>아직 받은 긍정 태그가 없습니다</p>
+										</div>
+									</c:if>
+								</div>
+							</div>
+
+							<!-- 부정 평가 (오른쪽) -->
+							<div class="review-tags-column bad-column">
+								<div class="column-header bad">
+									<i class="fas fa-thumbs-down"></i>
+									<h3>부정 태그</h3>
+								</div>
+								<div class="tags-list">
+									<c:set var="hasBad" value="false" />
+									<c:forEach var="tag" items="${tag}">
+										<c:if test="${tag.tagType eq 'BAD'}">
+											<c:set var="hasBad" value="true" />
+											<div class="review-tag-item bad" title="${tag.tagExplan}">
+												<i class="fas fa-times-circle tag-icon"></i>
+												<span class="tag-label">${tag.tagLabel}</span>
+												<span class="tag-count">${tag.cnt}</span>
+											</div>
+										</c:if>
+									</c:forEach>
+									<c:if test="${!hasBad}">
+										<div class="empty-tags">
+											<i class="fas fa-inbox"></i>
+											<p>아직 받은 부정 태그가 없습니다</p>
+										</div>
+									</c:if>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 
