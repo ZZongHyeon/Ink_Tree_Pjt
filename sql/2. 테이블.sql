@@ -207,6 +207,7 @@ CREATE TABLE Trade_record (
     buyerNumber NUMBER NOT NULL,   -- buyerID에서 buyerNumber로 변경
     price NUMBER NOT NULL,
     status VARCHAR2(20) DEFAULT 'PENDING', -- PENDING, COMPLETED, CANCELED
+    tagYN VARCHAR2(1) DEFAULT 'N',
     completedAt TIMESTAMP,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_transaction_post FOREIGN KEY (postID) REFERENCES Trade_Post(postID),
