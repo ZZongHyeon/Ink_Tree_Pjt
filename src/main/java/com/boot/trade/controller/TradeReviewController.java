@@ -95,6 +95,8 @@ public class TradeReviewController {
         return res;
     }
 
+    // model로 데이터 쏴줌
+    // trade/Controller/TradePostController
 //	@PostMapping("/getTopTags/data")
 //	@ResponseBody
 //	public List<TradeReviewDTO> getTopTags(HttpServletRequest request) {
@@ -103,13 +105,15 @@ public class TradeReviewController {
 //		return service.getTopTags(user.getUserNumber());
 //	}
 	
-	@PostMapping("/getUserTagStatistics/data")
-	@ResponseBody
-	public List<TradeReviewDTO> getUserTagStatistics(HttpServletRequest request) {
-		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
-		
-		return service.getUserTagStatistics(user.getUserNumber());
-	}
+    // model로 데이터 쏴줌 
+    // user/controller/UserController
+//	@PostMapping("/getUserTagStatistics/data")
+//	@ResponseBody
+//	public List<TradeReviewDTO> getUserTagStatistics(HttpServletRequest request) {
+//		BasicUserDTO user = (BasicUserDTO) request.getAttribute("user");
+//		
+//		return service.getUserTagStatistics(user.getUserNumber());
+//	}
 	
 	// 이미 한건지 확인
 	@GetMapping("/alreadyReviewed")
